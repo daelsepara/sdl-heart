@@ -10,8 +10,9 @@ namespace Item
         NONE = -1,
         BARYSAL_GUN,
         PSIONIC_FOCUS,
+        STUN_GRENADE,
         First = BARYSAL_GUN,
-        LAST = PSIONIC_FOCUS
+        LAST = STUN_GRENADE
     };
 
     class Base
@@ -48,6 +49,7 @@ namespace Item
     // Item defaults
     auto PSIONIC_FOCUS = Item::Base("PSIONIC FOCUS", "PSIONIC FOCUS", Item::Type::PSIONIC_FOCUS);
     auto BARYSAL_GUN = Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, 6);
+    auto STUN_GRENADE = Item::Base("STUN GRENADE", "STUN GRENADE", Item::Type::STUN_GRENADE);
 
     std::vector<Item::Type> UniqueItems = {};
 

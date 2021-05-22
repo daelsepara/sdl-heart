@@ -1273,10 +1273,10 @@ bool aboutScreen(SDL_Window *window, SDL_Renderer *renderer)
 
     auto *about = "Critical IF are gamebooks with a difference. The outcomes are not random. Whether you live or die is a matter not of luck, but of judgement.\n\nTo start your adventure simply choose your character. Each character has a unique selection of four skills; these will decide which options are available to you. Also note your Life Points and your possessions.\n\nLife Points are lost each time you are wounded. If you are ever reduced to zero Life Points, you have been killed and the adventure ends. Sometimes you can recover Life Points during your adventure, but you can never have more Life Points than you started with.\n\nYou can carry up to eight possessions at a time. If you are at this limit and find something else you want, drop one of your other poessessions to make room for the new item.\n\nConsider your slection of skills. They establish your special strengths, and will help you to role-play your choices during the adventrue. If you arrive at an entry which lists options for more than one of your skills, you can choose which skill to use in that situtation.\n\nThat's all you need to know. Now choose your character.";
 
-    auto splash = createImage("images/ice-age.png");
+    auto splash = createImage("images/virtual-reality.png");
 
     auto text = createText(about, "fonts/default.ttf", 18, clrWH, SCREEN_WIDTH * (1.0 - 3 * Margin) - splashw);
-
+    
     // Render the image
     if (window && renderer && splash && text)
     {
@@ -1316,8 +1316,8 @@ bool aboutScreen(SDL_Window *window, SDL_Renderer *renderer)
         SDL_FreeSurface(splash);
         SDL_FreeSurface(text);
 
-        splash = NULL;
         text = NULL;
+        splash = NULL;
     }
 
     return done;
@@ -2068,9 +2068,10 @@ bool mapScreen(SDL_Window *window, SDL_Renderer *renderer)
     auto done = false;
 
     auto splash = createImage("images/map-earth-23rd.png");
+    auto background = createImage("images/background.png");
 
     // Render the image
-    if (window && renderer && splash)
+    if (window && renderer && splash && background)
     {
         SDL_SetWindowTitle(window, "Map: Earth in the 23rd Century");
 
@@ -2086,11 +2087,11 @@ bool mapScreen(SDL_Window *window, SDL_Renderer *renderer)
         while (!done)
         {
             // Fill the surface with background color
-            fillWindow(renderer, intWH);
+            stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
             fitImage(renderer, splash, startx + offset_x, starty, marginw, text_bounds);
 
-            renderButtons(renderer, controls, current, intGR, 8, 4);
+            renderButtons(renderer, controls, current, intWH, 8, 4);
 
             bool scrollUp = false;
             bool scrollDown = false;
@@ -2105,8 +2106,10 @@ bool mapScreen(SDL_Window *window, SDL_Renderer *renderer)
         }
 
         SDL_FreeSurface(splash);
+        SDL_FreeSurface(background);
 
         splash = NULL;
+        background = NULL;
     }
 
     return done;
@@ -2867,6 +2870,8 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
     auto boxh = 0.125 * SCREEN_HEIGHT;
     auto box_space = 10;
 
+    auto background = createImage("images/background.png");
+
     Character::Base saveCharacter;
 
     std::vector<Button> controls = std::vector<Button>();
@@ -2959,8 +2964,8 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     SDL_SetWindowTitle(window, (std::string("Heart of Ice: ") + std::to_string(story->ID)).c_str());
                 }
 
-                // Fill the surface with background color
-                fillWindow(renderer, intWH);
+                //Fill the surface with background
+                stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
                 if (story->Image)
                 {
@@ -2998,7 +3003,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     }
                 }
 
-                renderButtons(renderer, controls, current, intGR, border_space, border_pts);
+                renderButtons(renderer, controls, current, intWH, border_space, border_pts);
 
                 bool scrollUp = false;
                 bool scrollDown = false;
@@ -3322,6 +3327,13 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
         }
     }
 
+    if (background)
+    {
+        SDL_FreeSurface(background);
+
+        background = NULL;
+    }
+
     if (font)
     {
         TTF_CloseFont(font);
@@ -3377,11 +3389,11 @@ bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID)
         controls[2].Type = Control::Type::ABOUT;
         controls[3].Type = Control::Type::QUIT;
 
-        auto quit = false;
+        auto done = false;
 
-        while (!quit)
+        while (!done)
         {
-            // Fill the surface with background color
+            // Fill the surface with background
             fillWindow(renderer, intDB);
 
             fitImage(renderer, splash, startx, starty, splashw, text_bounds);
@@ -3394,7 +3406,7 @@ bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID)
 
             Control::Type result;
 
-            quit = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
+            done = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
 
             if (selected && current >= 0 && current < controls.size())
             {
@@ -3413,7 +3425,7 @@ bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID)
 
                     selected = false;
 
-                    storyID = 0;
+                    storyID = 2300;
 
                     break;
 
@@ -3448,7 +3460,7 @@ bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID)
 
                 case Control::Type::QUIT:
 
-                    quit = true;
+                    done = true;
 
                     break;
 
@@ -3456,7 +3468,7 @@ bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID)
 
                     selected = false;
 
-                    quit = false;
+                    done = false;
 
                     break;
                 }

@@ -390,6 +390,43 @@ public:
     }
 };
 
+class Story002 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story002()
+    {
+        ID = 2;
+
+        Image = "images/barysal.png";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Type = Story::Type::NORMAL;
+
+        PreText = "The figure emerges from the darkness like a ghost. It is wrapped in a rough cape of stitched furs, its shrivelled frame sprouting a spindly neck which supports a large soft head like a leather bag. Pushing back its hood, it reveals a hideous face dominated by a single glowing eye on a flexible stalk.\n\nBoche scrambles to the side of the ledge and then freezes, mesmerized by the creature's eye. The stalk swivels, turning the lethal gaze towards you.";
+
+        Character::LOSE_ITEMS(player, {Item::Type::STUN_GRENADE});
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+        {
+            PreText += "\n\nIt is too late to act, and you are plunged into a hypnotic trance from which you will never recover.";
+
+            Type = Story::Type::DOOM;
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 112; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -430,11 +467,12 @@ void *findStory(int id)
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
+auto story002 = Story002();
 
 void InitializeStories()
 {
     Stories = {&earth23rdCentury,
-               &prologue, &story001};
+               &prologue, &story001, &story002};
 }
 
 #endif

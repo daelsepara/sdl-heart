@@ -13,3 +13,20 @@ This is an implementation of the **Heart of Ice** game book (Critical IF Gameboo
 
 # Current Progress (Screenshots)
 
+**Title screen**
+
+![Title Screen](/screenshots/title-screen.png)
+
+**About screen**
+
+![About Screen](/screenshots/about-screen.png)
+
+**Story screen (Main interface)**
+
+![Story Screen](/screenshots/story-screen.png)
+
+![Story with Large Art](/screenshots/story-screen-splash.png)
+
+**Map screen**
+
+![Map Screen](/screenshots/map-screen.png)
