@@ -15,9 +15,8 @@ namespace Choice
     enum class Type
     {
         NORMAL = 0, // No requirements
-        ITEM,
-        GET_ITEM,
-        GIVE_ITEM,
+        ITEMS,
+        GET_ITEMS,
         SKILL,
         CODEWORD,
         MONEY,
@@ -29,14 +28,10 @@ namespace Choice
         SKILL_ANY,
         SKILL_ALL,
         FIRE_WEAPON,
-        LOSE_ITEM,
+        LOSE_ITEMS,
         LOSE_MONEY,
         LOSE_ALL,
-        LOSE_SKILLS,
-        DONATE,
-        EAT,
-        EAT_HEAL,
-        GIFT
+        LOSE_SKILLS
     };
 
     class Base
@@ -48,11 +43,7 @@ namespace Choice
 
         Skill::Type Skill = Skill::Type::NONE;
 
-        std::vector<std::pair<Item::Base, int>> Gifts = std::vector<std::pair<Item::Base, int>>();
-
         std::vector<Item::Base> Items = std::vector<Item::Base>();
-
-        Item::Base Item;
 
         Codeword::Type Codeword = Codeword::Type::NONE;
 
@@ -60,12 +51,12 @@ namespace Choice
 
         int Destination = -1;
 
-        Base(Choice::Type type, const char *text, int destination, Skill::Type skill, Item::Base item, int value)
+        Base(Choice::Type type, const char *text, int destination, Skill::Type skill, std::vector<Item::Base> items, int value)
         {
             Type = type;
             Text = text;
             Destination = destination;
-            Item = item;
+            Items = items;
             Skill = skill;
             Value = value;
         }
@@ -76,21 +67,21 @@ namespace Choice
             Destination = destination;
         }
 
-        Base(const char *text, int destination, Skill::Type skill, Item::Base item)
+        Base(const char *text, int destination, Skill::Type skill, std::vector<Item::Base> items)
         {
             Text = text;
             Destination = destination;
             Type = Choice::Type::SKILL_ITEM;
-            Item = item;
+            Items = items;
             Skill = skill;
         }
 
-        Base(const char *text, int destination, Item::Base item)
+        Base(const char *text, int destination, std::vector<Item::Base> items)
         {
             Text = text;
             Destination = destination;
-            Type = Choice::Type::ITEM;
-            Item = item;
+            Type = Choice::Type::ITEMS;
+            Items = items;
         }
 
         Base(const char *text, int destination, Skill::Type skill)
@@ -124,14 +115,6 @@ namespace Choice
             Type = type;
         }
 
-        Base(const char *text, int destination, Choice::Type type, Item::Base item)
-        {
-            Text = text;
-            Destination = destination;
-            Type = type;
-            Item = item;
-        }
-
         Base(const char *text, int destination, Choice::Type type, std::vector<Item::Base> items)
         {
             Text = text;
@@ -156,14 +139,6 @@ namespace Choice
             Type = type;
             Items = items;
             Value = value;
-        }
-
-        Base(const char *text, int destination, std::vector<std::pair<Item::Base, int>> gifts)
-        {
-            Text = text;
-            Destination = destination;
-            Type = Choice::Type::GIFT;
-            Gifts = gifts;
         }
     };
 } // namespace Choice

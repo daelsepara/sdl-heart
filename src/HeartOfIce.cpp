@@ -31,11 +31,23 @@ namespace fs = std::filesystem;
 
 // forward declarations
 bool aboutScreen(SDL_Window *window, SDL_Renderer *renderer);
+bool characterScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
 bool glossaryScreen(SDL_Window *window, SDL_Renderer *renderer, std::vector<Skill::Base> Skills);
 bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story, std::vector<Item::Base> &Items, Control::Type mode, int limit);
 bool loseSkills(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, int limit);
 bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID);
+bool mapScreen(SDL_Window *window, SDL_Renderer *renderer);
+bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
+bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
+bool storyScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, int id);
 bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, std::vector<Item::Base> items, int limit);
+bool tradeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Item::Base mine, Item::Base theirs);
+
+Character::Base selectCharacter(SDL_Window *window, SDL_Renderer *renderer);
+Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, bool save_botton);
+
+Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
+Story::Base *renderChoices(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
 
 void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font, Character::Base &player);
 
@@ -494,7 +506,25 @@ std::vector<Button> createItemControls(std::vector<Item::Base> Items)
 
     for (auto idx = 0; idx < Items.size(); idx++)
     {
-        auto text = createText(Items[idx].Description.c_str(), "fonts/default.ttf", font_size, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
+        std::string description = Items[idx].Description;
+
+        if (Items[idx].Charge >= 0)
+        {
+            description += " (";
+
+            if (Items[idx].Charge > 0)
+            {
+                description += std::to_string(Items[idx].Charge) + " charges";
+            }
+            else
+            {
+                description += "empty";
+            }
+
+            description += ")";
+        }
+
+        auto text = createText(description.c_str(), "fonts/default.ttf", font_size, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
 
         auto y = texty + (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H : 2 * text_space);
 
@@ -861,7 +891,25 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
                             controls = createItemControls(Items);
 
-                            temp_message = std::string(item.Description) + " DROPPED!";
+                            std::string description = item.Description;
+
+                            if (item.Charge >= 0)
+                            {
+                                description += " (";
+
+                                if (item.Charge > 0)
+                                {
+                                    description += std::to_string(item.Charge) + " charges";
+                                }
+                                else
+                                {
+                                    description += "empty";
+                                }
+
+                                description += ")";
+                            }
+
+                            temp_message = description + " DROPPED!";
 
                             message = temp_message.c_str();
 
@@ -883,7 +931,25 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
                                 controls = createItemControls(Items);
 
-                                temp_message = std::string(item.Description) + " STOLEN!";
+                                std::string description = item.Description;
+
+                                if (item.Charge >= 0)
+                                {
+                                    description += " (";
+
+                                    if (item.Charge > 0)
+                                    {
+                                        description += std::to_string(item.Charge) + " charges";
+                                    }
+                                    else
+                                    {
+                                        description += "empty";
+                                    }
+
+                                    description += ")";
+                                }
+
+                                temp_message = description + " STOLEN!";
 
                                 message = temp_message.c_str();
 
@@ -1015,7 +1081,25 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                         take += ", ";
                     }
 
-                    take += std::string(selection[i].Description);
+                    std::string description = selection[i].Description;
+
+                    if (selection[i].Charge >= 0)
+                    {
+                        description += " (";
+
+                        if (selection[i].Charge > 0)
+                        {
+                            description += std::to_string(selection[i].Charge) + " charges";
+                        }
+                        else
+                        {
+                            description += "empty";
+                        }
+
+                        description += ")";
+                    }
+
+                    take += description;
                 }
             }
 
@@ -1130,6 +1214,22 @@ void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font
         }
 
         possessions += player.Items[i].Description;
+
+        if (player.Items[i].Charge >= 0)
+        {
+            possessions += " (";
+
+            if (player.Items[i].Charge > 0)
+            {
+                possessions += std::to_string(player.Items[i].Charge) + " charges";
+            }
+            else
+            {
+                possessions += "empty";
+            }
+
+            possessions += ")";
+        }
     }
 
     // Fill the surface with background color
@@ -1276,7 +1376,7 @@ bool aboutScreen(SDL_Window *window, SDL_Renderer *renderer)
     auto splash = createImage("images/virtual-reality.png");
 
     auto text = createText(about, "fonts/default.ttf", 18, clrWH, SCREEN_WIDTH * (1.0 - 3 * Margin) - splashw);
-    
+
     // Render the image
     if (window && renderer && splash && text)
     {
@@ -1358,6 +1458,207 @@ std::string time_string(long deserialised)
 }
 #endif
 
+bool saveGame(Character::Base &player, const char *overwrite)
+{
+    auto seed = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+
+    std::ostringstream buffer;
+
+    fs::create_directory("save");
+
+    if (overwrite != NULL)
+    {
+        buffer << std::string(overwrite);
+    }
+    else
+    {
+        buffer << "save/" << std::to_string(seed) << ".save";
+    }
+
+    nlohmann::json data;
+
+    player.Epoch = seed;
+
+    data["name"] = player.Name;
+    data["description"] = player.Description;
+    data["type"] = player.Type;
+    data["life"] = player.Life;
+    data["money"] = player.Money;
+    data["itemLimit"] = player.ITEM_LIMIT;
+    data["lifeLimit"] = player.MAX_LIFE_LIMIT;
+    data["skillsLimit"] = player.SKILLS_LIMIT;
+    data["codewords"] = player.Codewords;
+    data["epoch"] = player.Epoch;
+
+    auto skills = std::vector<Skill::Type>();
+    auto lostSkills = std::vector<Skill::Type>();
+
+    for (auto i = 0; i < player.Skills.size(); i++)
+    {
+        skills.push_back(player.Skills[i].Type);
+    }
+
+    for (auto i = 0; i < player.LostSkills.size(); i++)
+    {
+        lostSkills.push_back(player.LostSkills[i].Type);
+    }
+
+    data["skills"] = skills;
+    data["lostSkills"] = lostSkills;
+    data["lostMoney"] = player.LostMoney;
+    data["storyID"] = player.StoryID;
+
+    auto items = std::vector<nlohmann::json>();
+    auto lostItems = std::vector<nlohmann::json>();
+
+    for (auto i = 0; i < player.Items.size(); i++)
+    {
+        nlohmann::json item;
+
+        item.emplace("name", player.Items[i].Name);
+        item.emplace("description", player.Items[i].Description);
+        item.emplace("type", player.Items[i].Type);
+        item.emplace("charge", player.Items[i].Charge);
+
+        items.push_back(item);
+    }
+
+    for (auto i = 0; i < player.LostItems.size(); i++)
+    {
+        nlohmann::json item;
+
+        item.emplace("name", player.LostItems[i].Name);
+        item.emplace("description", player.LostItems[i].Description);
+        item.emplace("type", player.LostItems[i].Type);
+        item.emplace("charge", player.LostItems[i].Charge);
+
+        lostItems.push_back(item);
+    }
+
+    data["lostItems"] = lostItems;
+    data["items"] = items;
+
+    std::string filename = buffer.str();
+
+    std::ofstream file(filename);
+
+    file << data.dump();
+
+    file.close();
+
+    return true;
+}
+
+Character::Base loadGame(std::string file_name)
+{
+    std::ifstream ifs(file_name);
+
+    auto character = Character::Base();
+
+    if (ifs.good())
+    {
+        auto data = nlohmann::json::parse(ifs);
+
+        ifs.close();
+
+        std::string name = std::string(data["name"]);
+
+        std::string description = data["description"];
+
+        auto type = static_cast<Character::Type>((int)data["type"]);
+
+        auto skills = std::vector<Skill::Base>();
+        auto items = std::vector<Item::Base>();
+        auto codewords = std::vector<Codeword::Type>();
+
+        auto lostSkills = std::vector<Skill::Base>();
+        auto lostItems = std::vector<Item::Base>();
+
+        for (auto i = 0; i < (int)data["skills"].size(); i++)
+        {
+            auto skill = static_cast<Skill::Type>((int)data["skills"][i]);
+            auto found = Skill::FIND(Skill::ALL, skill);
+
+            if (found >= 0)
+            {
+                skills.push_back(Skill::ALL[found]);
+            }
+        }
+
+        for (auto i = 0; i < (int)data["lostSkills"].size(); i++)
+        {
+            auto skill = static_cast<Skill::Type>((int)data["lostSkills"][i]);
+            auto found = Skill::FIND(Skill::ALL, skill);
+
+            if (found >= 0)
+            {
+                lostSkills.push_back(Skill::ALL[found]);
+            }
+        }
+
+        for (auto i = 0; i < (int)data["items"].size(); i++)
+        {
+            auto item_name = std::string(data["items"][i]["name"]);
+            auto item_description = std::string(data["items"][i]["description"]);
+            auto item_type = static_cast<Item::Type>((int)data["items"][i]["type"]);
+            auto item_charge = (int)data["items"][i]["charge"];
+
+            items.push_back(Item::Base(item_name.c_str(), item_description.c_str(), item_type, item_charge));
+        }
+
+        for (auto i = 0; i < (int)data["lostItems"].size(); i++)
+        {
+            auto item_name = std::string(data["lostItems"][i]["name"]);
+            auto item_description = std::string(data["lostItems"][i]["description"]);
+            auto item_type = static_cast<Item::Type>((int)data["lostItems"][i]["type"]);
+            auto item_charge = (int)data["lostItems"][i]["charge"];
+
+            lostItems.push_back(Item::Base(item_name.c_str(), item_description.c_str(), item_type, item_charge));
+        }
+
+        for (auto i = 0; i < (int)data["codewords"].size(); i++)
+        {
+            auto codeword = static_cast<Codeword::Type>((int)data["codewords"][i]);
+
+            codewords.push_back(codeword);
+        }
+
+        auto money = (int)data["money"];
+        auto life = (int)data["life"];
+
+        character = Character::Base(name.c_str(), type, description.c_str(), skills, items, codewords, life, money);
+
+        character.LostSkills = lostSkills;
+        character.LostItems = lostItems;
+        character.LostMoney = (int)data["lostMoney"];
+
+        character.ITEM_LIMIT = (int)data["itemLimit"];
+        character.MAX_LIFE_LIMIT = (int)data["lifeLimit"];
+        character.SKILLS_LIMIT = (int)data["skillsLimit"];
+        character.StoryID = (int)data["storyID"];
+
+        try
+        {
+
+#ifdef _WIN32
+            character.Epoch = (long long)(data["epoch"]);
+#else
+            character.Epoch = (long)(data["epoch"]);
+#endif
+        }
+        catch (std::exception &ex)
+        {
+            character.Epoch = 0;
+        }
+    }
+    else
+    {
+        character.StoryID = -1;
+    }
+
+    return character;
+}
+
 std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, std::vector<std::string> list, int start, int last, int limit, bool save_button)
 {
     auto controls = std::vector<Button>();
@@ -1372,8 +1673,7 @@ std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, 
 
             auto index = start + i;
 
-            //auto character = loadGame(list[index]);
-            auto character = Character::Base();
+            auto character = loadGame(list[index]);
 
 #ifdef _WIN32
             long long epoch_long;
@@ -1395,9 +1695,9 @@ std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, 
             {
                 auto storyID = std::to_string(character.StoryID);
 
-                game_string += std::string(3 - std::to_string(index + 1).length(), '0') + std::to_string(index + 1) + ". " + character.Name + "\n";
+                game_string += std::string(4 - std::to_string(index + 1).length(), '0') + std::to_string(index + 1) + ". " + character.Name + "\n";
                 game_string += "Date: " + time_string(epoch_long) + "\n";
-                game_string += "Section: " + std::string(3 - storyID.length(), '0') + storyID + ": ";
+                game_string += "Section " + std::string(4 - storyID.length(), '0') + storyID + ": ";
                 game_string += "Life: " + std::to_string(character.Life);
                 game_string += ", Money: " + std::to_string(character.Money);
                 game_string += ", Items: " + std::to_string(character.Items.size());
@@ -1551,8 +1851,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
             {
                 std::string game_string = "";
 
-                //auto character = loadGame(entries[selected_file]);
-                auto character = Character::Base();
+                auto character = loadGame(entries[selected_file]);
 
 #ifdef _WIN32
                 long long epoch_long;
@@ -1575,7 +1874,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
                     auto storyID = std::to_string(character.StoryID);
 
                     game_string = "Date: " + time_string(epoch_long) + "\n";
-                    game_string += std::string(3 - storyID.length(), '0') + storyID + ": " + character.Name;
+                    game_string += std::string(4 - storyID.length(), '0') + storyID + ": " + character.Name;
                     game_string += "\nLife: " + std::to_string(character.Life);
                     game_string += " Money: " + std::to_string(character.Money);
                 }
@@ -1677,9 +1976,9 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
                 {
                     if (selected_file >= 0 && selected_file < entries.size())
                     {
-                        //player = loadGame(entries[selected_file]);
+                        player = loadGame(entries[selected_file]);
 
-                        result = Control::Type::BACK;
+                        result = Control::Type::LOAD;
 
                         done = true;
 
@@ -1690,14 +1989,14 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
                 {
                     if (selected_file != -1)
                     {
-                        //saveGame(player, entries[selected_file].c_str());
+                        saveGame(player, entries[selected_file].c_str());
                     }
                     else
                     {
-                        //saveGame(player, NULL);
+                        saveGame(player, NULL);
                     }
 
-                    result = Control::Type::BACK;
+                    result = Control::Type::SAVE;
 
                     done = true;
 
@@ -1878,7 +2177,25 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
             auto item = i->first;
             auto price = i->second;
 
-            std::string choice = std::string(item.Description) + " (" + std::to_string(price) + " cacao)";
+            std::string choice = item.Description;
+
+            if (item.Charge >= 0)
+            {
+                choice += " (";
+
+                if (item.Charge > 0)
+                {
+                    choice += std::to_string(item.Charge) + " charges";
+                }
+                else
+                {
+                    choice += "empty";
+                }
+
+                choice += ")";
+            }
+
+            choice += " (" + std::to_string(price) + " cacao)";
 
             auto text = createText(choice.c_str(), "fonts/default.ttf", 16, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
 
@@ -2004,7 +2321,25 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                                     inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
                                 }
 
-                                message = std::string(std::string(item.Description) + " purchased.");
+                                std::string description = item.Description;
+
+                                if (item.Charge >= 0)
+                                {
+                                    description += " (";
+
+                                    if (item.Charge > 0)
+                                    {
+                                        description += std::to_string(item.Charge) + " charges";
+                                    }
+                                    else
+                                    {
+                                        description += "empty";
+                                    }
+
+                                    description += ")";
+                                }
+
+                                message = description + " purchased.";
 
                                 start_ticks = SDL_GetTicks();
 
@@ -2250,9 +2585,16 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
 
                             break;
                         }
-                        else if (story->Choices[current].Type == Choice::Type::ITEM)
+                        else if (story->Choices[current].Type == Choice::Type::ITEMS)
                         {
-                            if (Character::VERIFY_ITEMS(player, {story->Choices[current].Item.Type}))
+                            auto items = std::vector<Item::Type>();
+
+                            for (auto i = 0; i < story->Choices[current].Items.size(); i++)
+                            {
+                                items.push_back(story->Choices[current].Items[i].Type);
+                            }
+
+                            if (Character::VERIFY_ITEMS(player, items))
                             {
                                 next = (Story::Base *)findStory(story->Choices[current].Destination);
 
@@ -2314,9 +2656,9 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 error = true;
                             }
                         }
-                        else if (story->Choices[current].Type == Choice::Type::GET_ITEM)
+                        else if (story->Choices[current].Type == Choice::Type::GET_ITEMS)
                         {
-                            Character::GET_ITEMS(player, {story->Choices[current].Item});
+                            Character::GET_ITEMS(player, {story->Choices[current].Items});
 
                             while (!Character::VERIFY_POSSESSIONS(player))
                             {
@@ -2329,7 +2671,7 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
 
                             break;
                         }
-                        else if (story->Choices[current].Type == Choice::Type::GIVE_ITEM || story->Choices[current].Type == Choice::Type::LOSE_ITEM)
+                        else if (story->Choices[current].Type == Choice::Type::LOSE_ITEMS)
                         {
                             auto items = std::vector<Item::Type>();
 
@@ -2520,7 +2862,14 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                         }
                         else if (story->Choices[current].Type == Choice::Type::SKILL_ITEM)
                         {
-                            if (Character::HAS_SKILL(player, story->Choices[current].Skill) && Character::VERIFY_ITEMS(player, {story->Choices[current].Item.Type}))
+                            auto items = std::vector<Item::Type>();
+
+                            for (auto i = 0; i < story->Choices[current].Items.size(); i++)
+                            {
+                                items.push_back(story->Choices[current].Items[i].Type);
+                            }
+
+                            if (Character::HAS_SKILL(player, story->Choices[current].Skill) && Character::VERIFY_ITEMS(player, items))
                             {
                                 next = (Story::Base *)findStory(story->Choices[current].Destination);
 

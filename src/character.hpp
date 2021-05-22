@@ -71,6 +71,18 @@ namespace Character
             Items = items;
             Money = money;
         }
+
+        Base(const char *name, Character::Type type, const char *description, std::vector<Skill::Base> skills, std::vector<Item::Base> items, std::vector<Codeword::Type> codewords, int life, int money)
+        {
+            Name = name;
+            Type = type;
+            Description = description;
+            Skills = skills;
+            Items = items;
+            Codewords = codewords;
+            Life = life;
+            Money = money;
+        }
     };
 
     auto EXPLORER = Character::Base("The Explorer", Character::Type::EXPLORER, "Others might mourn the collapse of civilization, but for you it only opens up new areas of mystery in the world.", {Skill::CLOSE_COMBAT, Skill::LORE, Skill::STREETWISE, Skill::SURVIVAL}, {}, 30);
