@@ -5,7 +5,7 @@ This is an implementation of the **Heart of Ice** game book (Critical IF Gameboo
 # Planned Features
 
 - Keyboard friendly with Mouse and Gamepad support
-- - Fully digitized gameplay
+- Fully digitized gameplay
 - Quality of life improvements to record keeping
 - Load / Save game at any point
 - Sound
