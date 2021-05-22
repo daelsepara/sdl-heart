@@ -1534,7 +1534,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
                 last = entries.size();
             }
 
-            SDL_SetWindowTitle(window, "Necklace of Skulls: LOAD/SAVE game");
+            SDL_SetWindowTitle(window, "Heart of Ice: LOAD/SAVE game");
 
             // Fill the surface with background color
             fillWindow(renderer, intWH);
@@ -1918,7 +1918,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
             }
             else
             {
-                SDL_SetWindowTitle(window, "Necklace of Skulls: Shop");
+                SDL_SetWindowTitle(window, "Heart of Ice: Shop");
             }
 
             fillWindow(renderer, intWH);
@@ -2695,7 +2695,7 @@ bool loseSkills(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
         while (!done)
         {
-            SDL_SetWindowTitle(window, "Necklace of Skulls");
+            SDL_SetWindowTitle(window, "Heart of Ice");
 
             fillWindow(renderer, intWH);
 
@@ -2919,7 +2919,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
             text = createText(story->Text, "fonts/default.ttf", font_size, clrDB, textwidth, TTF_STYLE_NORMAL);
         }
 
-        auto compact = text->h <= text_bounds - 2 * text_space;
+        auto compact = text && text->h <= text_bounds - 2 * text_space;
 
         if (story->Controls == Story::Controls::STANDARD)
         {
@@ -2956,7 +2956,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                 }
                 else
                 {
-                    SDL_SetWindowTitle(window, (std::string("Necklace of Skulls: ") + std::to_string(story->ID)).c_str());
+                    SDL_SetWindowTitle(window, (std::string("Heart of Ice: ") + std::to_string(story->ID)).c_str());
                 }
 
                 // Fill the surface with background color
@@ -3288,7 +3288,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         }
                         else if (story->Type == Story::Type::GOOD)
                         {
-                            message = "You have defeated Necklace of Skulls! This adventure is over. Further adventure awaits!";
+                            message = "You have defeated Heart of Ice! This adventure is over. Further adventure awaits!";
 
                             start_ticks = SDL_GetTicks();
 
@@ -3488,7 +3488,7 @@ int main(int argc, char **argv)
 
     auto quit = false;
 
-    auto storyID = 0;
+    auto storyID = 2300;
 
     if (argc > 1)
     {
