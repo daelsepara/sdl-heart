@@ -41,17 +41,6 @@ namespace Character
 
         int SKILLS_LIMIT = 4;
 
-        int DONATION = 0;
-
-        bool IsBlessed = false;
-
-        bool IsImmortal = false;
-
-        bool RitualBallStarted = false;
-
-        int Ticks = 0;
-        int Cross = 0;
-
         std::vector<Skill::Base> Skills = std::vector<Skill::Base>();
         std::vector<Item::Base> Items = std::vector<Item::Base>();
         std::vector<Codeword::Type> Codewords = std::vector<Codeword::Type>();
@@ -73,25 +62,6 @@ namespace Character
         {
         }
 
-        Base(const char *name, const char *description, std::vector<Skill::Base> skills, std::vector<Item::Base> items, int money)
-        {
-            Name = name;
-            Description = description;
-            Skills = skills;
-            Items = items;
-            Money = money;
-        }
-
-        Base(const char *name, const char *description, std::vector<Skill::Base> skills, std::vector<Item::Base> items, std::vector<Codeword::Type> codewords, int money)
-        {
-            Name = name;
-            Description = description;
-            Skills = skills;
-            Codewords = codewords;
-            Items = items;
-            Money = money;
-        }
-
         Base(const char *name, Character::Type type, const char *description, std::vector<Skill::Base> skills, std::vector<Item::Base> items, int money)
         {
             Name = name;
@@ -101,32 +71,17 @@ namespace Character
             Items = items;
             Money = money;
         }
-
-        Base(const char *name, Character::Type type, const char *description, std::vector<Skill::Base> skills, std::vector<Item::Base> items, std::vector<Codeword::Type> codewords, int money)
-        {
-            Name = name;
-            Type = type;
-            Description = description;
-            Skills = skills;
-            Codewords = codewords;
-            Items = items;
-            Money = money;
-        }
-
-        Base(const char *name, Character::Type type, const char *description, std::vector<Skill::Base> skills, std::vector<Item::Base> items, std::vector<Codeword::Type> codewords, int life, int money)
-        {
-            Name = name;
-            Type = type;
-            Description = description;
-            Skills = skills;
-            Codewords = codewords;
-            Items = items;
-            Life = life;
-            Money = money;
-        }
     };
 
-    std::vector<Character::Base> Classes = {};
+    auto EXPLORER = Character::Base("The Explorer", Character::Type::EXPLORER, "Others might mourn the collapse of civilization, but for you it only opens up new areas of mystery in the world.", {Skill::CLOSE_COMBAT, Skill::LORE, Skill::STREETWISE, Skill::SURVIVAL}, {}, 30);
+    auto BOUNTY_HUNTER = Character::Base("The Bounty Hunter", Character::Type::BOUNTY_HUNTER, "Times are hard and the strong prey upon the weak. It is left to the likes of you to enforce the law.", {Skill::CUNNING, Skill::PILOTING, Skill::SHOOTING, Skill::STREETWISE}, {Item::BARYSAL_GUN}, 30);
+    auto SPY = Character::Base("The Spy", Character::Type::SPY, "Even as the world dies a slow death, governments vie with one another for the wealth and power that remain. You steal secrets and trade them to the highest bidder.", {Skill::AGILITY, Skill::CYBERNETICS, Skill::ROGUERY, Skill::STREETWISE}, {}, 30);
+    auto TRADER = Character::Base("The Trader", Character::Type::TRADER, "Few dare cross the icy wastes between cities, so a daring adventurer can make a tidy profit.", {Skill::ESP, Skill::LORE, Skill::SHOOTING, Skill::STREETWISE}, {Item::BARYSAL_GUN, Item::PSIONIC_FOCUS}, 30);
+    auto VISIONARY = Character::Base("The Visionary", Character::Type::VISIONARY, "Cursed with second sight, you know that mankind has no future unless something is done to save the world.", {Skill::CLOSE_COMBAT, Skill::CUNNING, Skill::ESP, Skill::PARADOXING}, {Item::PSIONIC_FOCUS}, 30);
+    auto SCIENTIST = Character::Base("The Scientist", Character::Type::SCIENTIST, "Most people understand nothing of the machines created by their ancestors, but you've learned that knowledge is power.", {Skill::CYBERNETICS, Skill::LORE, Skill::PILOTING, Skill::SURVIVAL}, {}, 30);
+    auto MUTANT = Character::Base("The Mutant", Character::Type::MUTANT, "Born with strange powers, you are more than human. Others would kill you if they knew your secret.", {Skill::AGILITY, Skill::CUNNING, Skill::PARADOXING, Skill::ROGUERY}, {Item::PSIONIC_FOCUS}, 30);
+
+    std::vector<Character::Base> Classes = {EXPLORER, BOUNTY_HUNTER, SPY, TRADER, VISIONARY, SCIENTIST, MUTANT};
 
     int FIND_ITEM(Character::Base &player, Item::Type item)
     {
@@ -469,10 +424,7 @@ namespace Character
 
     void GAIN_LIFE(Character::Base &player, int life)
     {
-        if ((life < 0 && !player.IsImmortal) || life > 0)
-        {
-            player.Life += life;
-        }
+        player.Life += life;
 
         if (player.Life < 0)
         {

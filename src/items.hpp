@@ -45,6 +45,10 @@ namespace Item
         }
     };
 
+    // Item defaults
+    auto PSIONIC_FOCUS = Item::Base("PSIONIC FOCUS", "PSIONIC FOCUS", Item::Type::PSIONIC_FOCUS);
+    auto BARYSAL_GUN = Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, 6);
+
     std::vector<Item::Type> UniqueItems = {};
 
     bool IsUnique(Item::Type item)
