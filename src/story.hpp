@@ -48,10 +48,11 @@ namespace Choice
 
         Skill::Type Skill = Skill::Type::NONE;
 
-        std::vector<Item::Type> Items = std::vector<Item::Type>();
-        std::vector<std::pair<Item::Type, int>> Gifts = std::vector<std::pair<Item::Type, int>>();
+        std::vector<std::pair<Item::Base, int>> Gifts = std::vector<std::pair<Item::Base, int>>();
 
-        Item::Type Item = Item::Type::NONE;
+        std::vector<Item::Base> Items = std::vector<Item::Base>();
+
+        Item::Base Item;
 
         Codeword::Type Codeword = Codeword::Type::NONE;
 
@@ -59,7 +60,7 @@ namespace Choice
 
         int Destination = -1;
 
-        Base(Choice::Type type, const char *text, int destination, Skill::Type skill, Item::Type item, int value)
+        Base(Choice::Type type, const char *text, int destination, Skill::Type skill, Item::Base item, int value)
         {
             Type = type;
             Text = text;
@@ -75,7 +76,7 @@ namespace Choice
             Destination = destination;
         }
 
-        Base(const char *text, int destination, Skill::Type skill, Item::Type item)
+        Base(const char *text, int destination, Skill::Type skill, Item::Base item)
         {
             Text = text;
             Destination = destination;
@@ -84,7 +85,7 @@ namespace Choice
             Skill = skill;
         }
 
-        Base(const char *text, int destination, Item::Type item)
+        Base(const char *text, int destination, Item::Base item)
         {
             Text = text;
             Destination = destination;
@@ -123,7 +124,7 @@ namespace Choice
             Type = type;
         }
 
-        Base(const char *text, int destination, Choice::Type type, Item::Type item)
+        Base(const char *text, int destination, Choice::Type type, Item::Base item)
         {
             Text = text;
             Destination = destination;
@@ -131,7 +132,7 @@ namespace Choice
             Item = item;
         }
 
-        Base(const char *text, int destination, Choice::Type type, std::vector<Item::Type> items)
+        Base(const char *text, int destination, Choice::Type type, std::vector<Item::Base> items)
         {
             Text = text;
             Destination = destination;
@@ -139,7 +140,7 @@ namespace Choice
             Items = items;
         }
 
-        Base(const char *text, int destination, Choice::Type type, Skill::Type skill, std::vector<Item::Type> items)
+        Base(const char *text, int destination, Choice::Type type, Skill::Type skill, std::vector<Item::Base> items)
         {
             Text = text;
             Destination = destination;
@@ -148,7 +149,7 @@ namespace Choice
             Items = items;
         }
 
-        Base(const char *text, int destination, Choice::Type type, std::vector<Item::Type> items, int value)
+        Base(const char *text, int destination, Choice::Type type, std::vector<Item::Base> items, int value)
         {
             Text = text;
             Destination = destination;
@@ -157,7 +158,7 @@ namespace Choice
             Value = value;
         }
 
-        Base(const char *text, int destination, std::vector<std::pair<Item::Type, int>> gifts)
+        Base(const char *text, int destination, std::vector<std::pair<Item::Base, int>> gifts)
         {
             Text = text;
             Destination = destination;
@@ -200,14 +201,16 @@ namespace Story
         Story::Controls Controls = Story::Controls::NONE;
 
         std::vector<Choice::Base> Choices = std::vector<Choice::Base>();
-        std::vector<std::pair<Item::Type, int>> Shop = std::vector<std::pair<Item::Type, int>>();
-        std::pair<Item::Type, Item::Type> Trade;
+
+        std::vector<std::pair<Item::Base, int>> Shop = std::vector<std::pair<Item::Base, int>>();
+
+        std::pair<Item::Base, Item::Base> Trade;
 
         // Player selects items to take up to a certain limit
-        std::vector<Item::Type> Take = std::vector<Item::Type>();
+        std::vector<Item::Base> Take = std::vector<Item::Base>();
 
         // Player selects items to lose
-        std::vector<Item::Type> ToLose = std::vector<Item::Type>();
+        std::vector<Item::Base> ToLose = std::vector<Item::Base>();
 
         int Limit = 0;
 
