@@ -1,6 +1,7 @@
 #ifndef __CHARACTER__HPP__
 #define __CHARACTER__HPP__
 
+#include <string>
 #include <vector>
 
 #include "codewords.hpp"
