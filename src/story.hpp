@@ -1049,7 +1049,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::GAIN_LIFE(2);
+        Character::GAIN_LIFE(player, 2);
         Character::GET_ITEMS(player, {Item::ANTIDOTE_PILLS});
     }
 
