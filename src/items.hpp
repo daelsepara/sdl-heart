@@ -11,33 +11,39 @@ namespace Item
         BARYSAL_GUN,
         PSIONIC_FOCUS,
         STUN_GRENADE,
+        SHORT_SWORD,
+        FUR_COAT,
+        COLD_WEATHER_SUIT,
+        FLASHLIGHT,
+        ROPE,
+        SPECULUM_JACKET,
+        MANTRAMUKTA_CANNON,
         First = BARYSAL_GUN,
-        LAST = STUN_GRENADE
+        LAST = MANTRAMUKTA_CANNON
     };
 
     class Base
     {
-        public:
+    public:
         std::string Name;
         std::string Description;
-        
+
         Item::Type Type = Item::Type::NONE;
 
         int Charge = -1;
 
         Base()
         {
-
         }
-        
-        Base(const char* name, const char* description, Item::Type type)
+
+        Base(const char *name, const char *description, Item::Type type)
         {
             Name = name;
             Description = description;
             Type = type;
         }
 
-        Base(const char* name, const char* description, Item::Type type, int charge)
+        Base(const char *name, const char *description, Item::Type type, int charge)
         {
             Name = name;
             Description = description;
@@ -50,8 +56,18 @@ namespace Item
     auto PSIONIC_FOCUS = Item::Base("PSIONIC FOCUS", "PSIONIC FOCUS", Item::Type::PSIONIC_FOCUS);
     auto BARYSAL_GUN = Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, 6);
     auto STUN_GRENADE = Item::Base("STUN GRENADE", "STUN GRENADE", Item::Type::STUN_GRENADE);
+    auto SHORT_SWORD = Item::Base("SHORT SWORD", "SHORT SWORD", Item::Type::SHORT_SWORD);
+    auto FUR_COAT = Item::Base("FUR COAT", "FUR COAT", Item::Type::FUR_COAT);
+    auto COLD_WEATHER_SUIT = Item::Base("COLD WEATHER SUUIT", "COLD WEATHER SUIT", Item::Type::COLD_WEATHER_SUIT);
+    auto FLASHLIGHT = Item::Base("FLASHLIGHT", "FLASHLIGHT", Item::Type::FLASHLIGHT);
+    auto ROPE = Item::Base("ROPE", "ROPE", Item::Type::ROPE);
+    auto SPECULUM_JACKET = Item::Base("SPECULUM JACKET", "SPECULUM JACKET", Item::Type::SPECULUM_JACKET);
+    auto MANTRAMUKTA_CANNON = Item::Base("MANTRAMUKTA CANNON", "MANTRAMUKTA CANNON", Item::Type::MANTRAMUKTA_CANNON);
 
-    std::vector<Item::Type> UniqueItems = {};
+    std::vector<Item::Type> UniqueItems = {
+        Item::Type::SHORT_SWORD,
+        Item::Type::SPECULUM_JACKET,
+        Item::Type::MANTRAMUKTA_CANNON};
 
     bool IsUnique(Item::Type item)
     {

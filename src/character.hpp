@@ -22,6 +22,13 @@ namespace Character
         MUTANT
     };
 
+    enum class Vehicle
+    {
+        NONE = -1,
+        BURREK,
+        SKY_CAR
+    };
+
     class Base
     {
     public:
@@ -40,6 +47,8 @@ namespace Character
         int MAX_LIFE_LIMIT = 10;
 
         int SKILLS_LIMIT = 4;
+
+        Character::Vehicle Vehicle = Character::Vehicle::NONE;
 
         std::vector<Skill::Base> Skills = std::vector<Skill::Base>();
         std::vector<Item::Base> Items = std::vector<Item::Base>();
@@ -473,14 +482,9 @@ namespace Character
         LOSE_POSSESSIONS(player);
     }
 
-    void SCORE(Character::Base &player, int &scorer, int score)
+    bool CHECK_VEHICLE(Character::Base &player, Character::Vehicle vehicle)
     {
-        scorer += score;
-
-        if (scorer < 0)
-        {
-            scorer = 0;
-        }
+        return (player.Vehicle == vehicle);
     }
 
 } // namespace Character

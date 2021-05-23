@@ -602,6 +602,274 @@ public:
     }
 };
 
+class Story011 : public Story::Base
+{
+public:
+    Story011()
+    {
+        ID = 11;
+
+        Text = "The fog makes the buildings across the plaza look like lace cut-outs against the night sky. You cross to a line of lights under a colonnade, your footsteps ringing on the slick cobblestones. Finding a row of shops and stalls, you search until you find an answer to your question. \"Seek at the rooms of Pinar the Copt,\" advises a stall-holder, pointing to a narrow door at the end of the colonnade\"He knows the answer to all mysteries.\"\n\nPindar seems to be a local fortune-teller and spinner of yarns. You stand at his door for a few moments, looking at the faded bronze plaque, then step inside. The room is hung with jewel-bright rugs and the air smells of must and incense. Three crabbed old men look up from their hubble-bubble pipe. Without asking your business, they wave you to a cushion.\n\nYou sit down. \"Tell me about the Sphinx.\"\n\n\"She asked a riddle of all who passed, and those who failed to answer were devoured,\" says one of the old men.\n\n\"The answer to her riddle was Man himself,\" says another.\n\nNow Pinar speaks. \"That was the Greek Sphinx. The Egyptian Sphinx is male. He sits at Giza and watches over Kahira, keeping the Saharan snows from overrunning the city.\"\n\nYou smile. \"These are only stories.\"\n\n\"Not the last part,\" insists Pindar in a pragmatic tone. \"A nuclear reactor is set under the Sphinx, and that is what powers the heating elements that keep the Isis River from freezing. The same reactor presumably still supplies power to the military complex inside the Great Pyramid.\"\n\nGiving him a keen look, you say, \"You seem well informed.\"\n\n\"I have lived a long time. If you are interested, the answer to the Sphinx's riddle these days is 'Humbaba'.\"\n\nYou gained the codeword HUMBABA.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::HUMBABA});
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            return 95;
+        }
+        else
+        {
+            return 311;
+        }
+    }
+};
+
+class Story012 : public Story::Base
+{
+public:
+    Story012()
+    {
+        ID = 12;
+
+        Text = "Even after a century or more of disuse, the computers still work. The screen glimmers to life and you key in a connection to Gaia. A stream of meaningless gibberish runs onto the screen, followed by a sequence which seems ominously meaningful.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            return 34;
+        }
+        else
+        {
+            return 55;
+        }
+    }
+};
+
+class Story013 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story013()
+    {
+        ID = 13;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Sunlight, hazed by a high overcast, is thrown up from the snow dunes in an unremitting glare as white and harsh as exposed bone. Squinting does no good. Your eyes feel gritty and tired. On the fourth evening, huddling behind the shelter of a crag of ice, you gaze across the landscape. It is like looking through a film of blood. The next day you find the sunrise burn so hard that you cannot stand to open your eyes.\n\nSnow-blinded, you can only sit and wait for the dazzle to clear. If you were to press on now, you would soon lose your bearings and die. As you wait, the chill crawls deeper into your bones.";
+
+        auto DAMAGE = -3;
+
+        if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+        {
+            DAMAGE = -2;
+        }
+
+        if (!Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}) && !Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
+        {
+            DAMAGE--;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+            {
+                PreText += "\n\n[Vehicle: BURREK] You curl up and share the burrek's body warmth.";
+            }
+
+            PreText += "\n\nYou are relieved to discover after a day and a night your eyesight has recovered enough for you to press on. From now on you are careful to shield your face against the glare.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 403; }
+};
+
+class Story014 : public Story::Base
+{
+public:
+    Story014()
+    {
+        ID = 14;
+
+        Text = "\"There is nothing else to interest you here,\" says Little Gaia when you question her. \"You should get under way.\"\n\nAccepting her advice, you return up to the shaft to the top level.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 361; }
+};
+
+class Story015 : public Story::Base
+{
+public:
+    Story015()
+    {
+        ID = 15;
+
+        Text = "On the third day you do not awaken. The toxins in the air and wildlife here have got into your bloodstream. You moan and gasp, threshing weakly in the depths of a fever from which you will never recover.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+
+        Type = Story::Type::DOOM;
+    }
+};
+
+class Story016 : public Story::Base
+{
+public:
+    Story016()
+    {
+        ID = 16;
+
+        Text = "You descend via a ruined subway entrance whose ventilation ducts connect with part of the catacombs. Golgoth jabs at buttons on his map box, bringing up a crackling image of the tunnel. The air in the ducts is stale, but he assures you that there is a good chance of reaching the underground tunnels close to the Shrine of the Heart. The Gargan sisters are even less enthusiastic about the route you are taking. With their broad shoulders, the duct feels like a long metal coffin.\n\nThe stale air makes it hot work. You are soaked in sweat by the time you finally wriggle out of the duct and drop to the floor of a dimly lit tunnel. The Gargan sisters follow, grunting curses, as Golgoth consults the map box.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 198;
+        }
+        else
+        {
+            return 325;
+        }
+    }
+};
+
+class Story017 : public Story::Base
+{
+public:
+    Story017()
+    {
+        ID = 17;
+
+        Text = "Among the items originally stored in the sky-car's locker were a FLASHLIGHT and a length of ROPE. If you have not equipped yourself with these already, you may as well do so now since, if the baron's hunch is right, the moment of truth is almost upon you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FLASHLIGHT, Item::ROPE};
+
+        Limit = 2;
+    }
+
+    int Continue(Character::Base &player) { return 39; }
+};
+
+class Story018 : public Story::Base
+{
+public:
+    Story018()
+    {
+        ID = 18;
+
+        Text = "\"The Truth is a flame,\" you say.\n\n\"What ignites the flame?\" intones the computer. So far so good.\n\n\"The spark ignites the flame.\"\n\n\"What is the spark?\" it asks.\n\n\"The Heart of Volent.\"\n\nYou wait with bated breath. Then, with a hum, the elevator starts to descend. You are being conveyed to the Shrine of the Heart.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 150; }
+};
+
+class Story019 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story019()
+    {
+        ID = 19;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Captain Novak comes racing towards you out of the smoke. His uniform is torn and signed by the explosion and he has a wild look in his eyes. You are not sure whether to block his way or stand aside, when suddenly a barysal shot streams through the air, piercing his brain. A second shot hits him as he falls, but glances off his armour and ricochets into you.\n\nYou are badly burned.";
+
+        auto DAMAGE = -6;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            DAMAGE = -4;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::MALLET);
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 41; }
+};
+
+class Story020 : public Story::Base
+{
+public:
+    Story020()
+    {
+        ID = 20;
+
+        Text = "Singh was so intent on watching for Golgoth that he did not expect an attack from you. Caught unawares, he is flung to the ground. Rushing in, you snatch up the cannon and finish him with a blast from his own weapon.\n\nThe smoke begins to disperse. At first you see no sign of Golgoth, then he emerges from one of the elevator tubes. He had attached his gun to the wall magnetically and set it for remote fire. Retrieving it, he casts a wary glance at the cannon and then smiles. \"Ultimate power can be quite a temptation,\" he says, glancing significantly from the cannon to the gun in his own hand.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Blast him with the MANTRAMUKTA CANNON", 43));
+        Choices.push_back(Choice::Base("Trust him not to shoot", 431));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -651,11 +919,24 @@ auto story007 = Story007();
 auto story008 = Story008();
 auto story009 = Story009();
 auto story010 = Story010();
+auto story011 = Story011();
+auto story012 = Story012();
+auto story013 = Story013();
+auto story014 = Story014();
+auto story015 = Story015();
+auto story016 = Story016();
+auto story017 = Story017();
+auto story018 = Story018();
+auto story019 = Story019();
+auto story020 = Story020();
 
 void InitializeStories()
 {
-    Stories = {&earth23rdCentury,
-               &prologue, &story001, &story002, &story003, &story004, &story005};
+    Stories = {
+        &earth23rdCentury,
+        &prologue, &story001, &story002, &story003, &story004, &story005, &story006, &story007, &story008, &story009,
+        &story010, &story011, &story012, &story013, &story014, &story015, &story016, &story017, &story018, &story019,
+        &story020};
 }
 
 #endif

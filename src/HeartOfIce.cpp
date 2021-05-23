@@ -1523,6 +1523,7 @@ bool saveGame(Character::Base &player, const char *overwrite)
     data["lifeLimit"] = player.MAX_LIFE_LIMIT;
     data["skillsLimit"] = player.SKILLS_LIMIT;
     data["codewords"] = player.Codewords;
+    data["vehicle"] = player.Vehicle;
     data["epoch"] = player.Epoch;
 
     auto skills = std::vector<Skill::Type>();
@@ -1666,6 +1667,8 @@ Character::Base loadGame(std::string file_name)
         character.LostSkills = lostSkills;
         character.LostItems = lostItems;
         character.LostMoney = (int)data["lostMoney"];
+        
+        character.Vehicle = static_cast<Character::Vehicle>((int)data["vehicle"]);
 
         character.ITEM_LIMIT = (int)data["itemLimit"];
         character.MAX_LIFE_LIMIT = (int)data["lifeLimit"];
