@@ -22,7 +22,6 @@ namespace Choice
         MONEY,
         LIFE,
         ANY_ITEM,
-        ALL_ITEMS,
         ANY_SKILL,
         SKILL_ITEM,
         SKILL_ANY,
@@ -31,7 +30,8 @@ namespace Choice
         LOSE_ITEMS,
         LOSE_MONEY,
         LOSE_ALL,
-        LOSE_SKILLS
+        LOSE_SKILLS,
+        CHARGED_ITEMS
     };
 
     class Base
@@ -1363,6 +1363,234 @@ public:
     int Continue(Character::Base &player) { return 281; }
 };
 
+class Story041 : public Story::Base
+{
+public:
+    Story041()
+    {
+        ID = 41;
+
+        Text = "Boche comes along the passage with gun in hand. He is covered with dust from the explosion and has a gash across his forehead where he was hit by a splinter of masonry, but he is smiling. \"The baron's dead,\" he tells you.\n\n\"How? What happened?\"\n\nHe swells with pride. \"I got him with a grenade. I'd been carrying it all along, but the joke was I didn't even know it myself. It was the only way to foil his mind-reading, you see.\"\n\n\"I don't understand.\"\n\nBoche coughs rock dust out of his throat and then goes on. \"I knew the baron was heading for Du-En and that he'd be the hardest foe I'd have to face, so I got myself hypnotized to forget that I was carrying a grenade. I had post-hypnotic suggestion planted that I should use the grenade at a key moment. He never knew what hit him.\"\n\n\"Ruthlessly cunning.\"\n\nIf you intended any sarcasm, Boche fails to notice it. \"Thanks,\" he says. \"Now, let's get going before the tunnel collapses on us.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 175; }
+};
+
+class Story042 : public Story::Base
+{
+public:
+    Story042()
+    {
+        ID = 42;
+
+        Text = "A barysal beam stabs blindly through the smoke, narrowly missing you. Singh turns and squints in the direction of the shot. \"I still can't see him,\" he mutters grimly.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Return fire (BARYSAL GUN)", 64, Choice::Type::CHARGED_ITEMS, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Advance under the cover of the smoke towards where the shot came from", 86));
+        Choices.push_back(Choice::Base("Back off out of the smoke and look around", 108));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story043 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story043()
+    {
+        ID = 43;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Golgoth fires back, but he has no defence against the unstoppable power of the MANTRAMUKTA CANNON, which literally blasts him apart. His last shot strikes you glancingly, however, and you feel an agonizing pain coursing through your side.";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            DAMAGE = -2;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story044 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story044()
+    {
+        ID = 44;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Gargan XIV's fist lashes out, cracking your head back against the wall.\n\n";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -1;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nAs you are squaring off for a hard fight, you see that Gargan XIII has drawn a knife and is standing over Golgoth, in no hurry to finish him off. Suddenly he looks up with a broad smile.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 154; }
+};
+
+class Story045 : public Story::Base
+{
+public:
+    Story045()
+    {
+        ID = 45;
+
+        Text = "You look at Boche's hand but do not take it. In these latter days, with humanity on the brink of extinction, you have learned to be way of strangers.\n\n\"I travel alone.\"\n\nBoche is not deterred. \"Come, that's hardly friendly. I've paid your bill.\"\n\n\"I did not ask you to. Landlord, return this man's money. I shall settle my own account.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Pay your bill for the night (3 scads)", 67, Choice::Type::LOSE_MONEY, 3));
+        Choices.push_back(Choice::Base("Reconsider and accept Boche's generosity", 23));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story046 : public Story::Base
+{
+public:
+    Story046()
+    {
+        ID = 46;
+
+        Text = "Grabbing handfuls of snow, you rapidly dust it over your clothing and face. The cold nips your skin painfully. Ignoring the discomfort, you pluck some icicles from the overhang above the ledge, lodging these across your hood in front of your face. Taking up an intent rigid pose, you look like just another of the frozen corpses lining the walls of the pass.\n\nBoche is slow on the uptake. \"What are you doing?\"\n\n\"Get going, you fool,\" you hiss out of the side of your mouth. \"You're the decoy.\"\n\nHe hesitates, then drops from the ledge and vanishes out of sight along the pass. Soon afterwards, the mysterious figure draws level with where you are crouching. A gold glimmer shows under its hood as it glances up, then hurries on towards Boche.\n\nYou leap down behind it, and a hard blow with a rock lays it flat in the snow.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 90; }
+};
+
+class Story047 : public Story::Base
+{
+public:
+    Story047()
+    {
+        ID = 47;
+
+        Text = "The Compass Society is an international organization whose membership consists entirely of the rich, powerful and privileged. Possession of one of the coveted gold membership cards marks a person out as someone to be respected, with full access to the Society's wealth and lavish resources. Although the Society is not represented here in Venis, you know that it has premises in Daralbad, Bezant and Kahira.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::ID_CARD}))
+        {
+            return 69;
+        }
+        else
+        {
+            return 414;
+        }
+    }
+};
+
+class Story048 : public Story::Base
+{
+public:
+    Story048()
+    {
+        ID = 48;
+
+        Text = "You stoop to question him. His knife lies beside him, but he is in too much pain to think of retrieving it. He peers at you between his fingers, his face and eyes badly scalded.\n\n\"Who are you?\" you ask. \"Why did you try to kill me?\"\n\n\"Body snatchers,\" he replies, grinding his teeth in agony because of the burns. \"Any healthy stranger is fair game in this part of town.\"\n\nBody snatchers seize live organs for transplants. You know that a high price can be had on the black market for a usable heart, kidney or liver -- and no questions asked of how the body snatchers came by it. It is a foul trade, lacking even the relative honesty of conventional mugging.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[STREETWISE]", 114, Skill::Type::STREETWISE));
+        Choices.push_back(Choice::Base("Consult a VADE-MECUM", 114, {Item::VADE_MECUM}));
+        Choices.push_back(Choice::Base("[ESP]", 136, Skill::Type::ESP));
+        Choices.push_back(Choice::Base("Otherwise", 92));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story049 : public Story::Base
+{
+public:
+    Story049()
+    {
+        ID = 49;
+
+        Text = "You touch a dial on the dashboard. The liquid crystal display shows that the sky-car's power unit is still working. None of the other instruments show damage. The caretek has maintained the sky-car well. There is not even a trace of dust on the vehicle's smooth black finish.\n\nIn a storage locker behind the seat you find food, medical supplies and a variety of other items. Stored in the vacuum packs, they should still be usable despite having been left here since before the Ice Age.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try powering up the sky-car and flying it out of the complex", 71));
+        Choices.push_back(Choice::Base("You would rather just loot the storage locker of useful goods and then leave", 93));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story050 : public Story::Base
+{
+public:
+    Story050()
+    {
+        ID = 50;
+
+        Image = "images/kahira.png";
+
+        Text = "You sit at the front of the carriage and stare through the window at hurtling darkness. There is no way to tell how fast you are travelling, but you estimate from the long smooth acceleration at the start of the journey that it could be around four hundred kilometres an hour. The carriage never gives the slightest jolt.\n\nHours pass before you see the glimmer of lights along the tunnel. The carriage glides to a halt and the doors open with a whir. You emerge and set off along a tunnel very different form the one in Marsay. This subway station has not been maintained by careteks, and dust and rubble cover the tiled walkways.\n\nClimbing a staircase, you find the entrance blocked by fallen masonry and you have to labour for over an hour before there is a gap large enough to squeeze through. You find yourself on an ice-hard plain under the descending chill of dusk. A sprinkling of snow drifts down out of the sky. A few kilometres away, Kahira straddles the River Isis on its thick buttresses, a grey concrete lobster winking with a thousand eyes of light through the haze of mist. You set out at a brisk pace, anxious to reach the gates before curfew.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 229; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -1442,6 +1670,16 @@ auto story037 = Story037();
 auto story038 = Story038();
 auto story039 = Story039();
 auto story040 = Story040();
+auto story041 = Story041();
+auto story042 = Story042();
+auto story043 = Story043();
+auto story044 = Story044();
+auto story045 = Story045();
+auto story046 = Story046();
+auto story047 = Story047();
+auto story048 = Story048();
+auto story049 = Story049();
+auto story050 = Story050();
 
 void InitializeStories()
 {
@@ -1451,7 +1689,8 @@ void InitializeStories()
         &story010, &story011, &story012, &story013, &story014, &story015, &story016, &story017, &story018, &story019,
         &story020, &story021, &story022, &story023, &story024, &story025, &story026, &story027, &story028, &story029,
         &story030, &story031, &story032, &story033, &story034, &story035, &story036, &story037, &story038, &story039,
-        &story040};
+        &story040, &story041, &story042, &story043, &story044, &story045, &story046, &story047, &story048, &story049,
+        &story050};
 }
 
 #endif

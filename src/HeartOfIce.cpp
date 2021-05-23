@@ -1667,7 +1667,7 @@ Character::Base loadGame(std::string file_name)
         character.LostSkills = lostSkills;
         character.LostItems = lostItems;
         character.LostMoney = (int)data["lostMoney"];
-        
+
         character.Vehicle = static_cast<Character::Vehicle>((int)data["vehicle"]);
 
         character.ITEM_LIMIT = (int)data["itemLimit"];
@@ -2658,7 +2658,7 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 error = true;
                             }
                         }
-                        else if (story->Choices[current].Type == Choice::Type::ALL_ITEMS)
+                        else if (story->Choices[current].Type == Choice::Type::CHARGED_ITEMS)
                         {
                             auto items = std::vector<Item::Type>();
 
@@ -2669,15 +2669,36 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
 
                             if (Character::VERIFY_ITEMS(player, items))
                             {
-                                next = (Story::Base *)findStory(story->Choices[current].Destination);
+                                auto charged = false;
 
-                                done = true;
+                                for (auto i = 0; i < story->Choices[current].Items.size(); i++)
+                                {
+                                    if (story->Choices[current].Items[i].Charge > 0)
+                                    {
+                                        charged = true;
+                                    }
+                                }
 
-                                break;
+                                if (charged)
+                                {
+                                    next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                                    done = true;
+
+                                    break;
+                                }
+                                else
+                                {
+                                    message = "The item you are carrying is not charged!";
+
+                                    start_ticks = SDL_GetTicks();
+
+                                    error = true;
+                                }
                             }
                             else
                             {
-                                message = "You do not have all the required items!";
+                                message = "You do not have the required item!";
 
                                 start_ticks = SDL_GetTicks();
 
