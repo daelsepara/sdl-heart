@@ -870,6 +870,226 @@ public:
     }
 };
 
+class Story021 : public Story::Base
+{
+public:
+    Story021()
+    {
+        ID = 21;
+
+        Text = "Choose your target.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Fire at Golgoth", 109));
+        Choices.push_back(Choice::Base("Fire at Boche", 97));
+        Choices.push_back(Choice::Base("Fire at Vajra Singh", 131));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story022 : public Story::Base
+{
+public:
+    Story022()
+    {
+        ID = 22;
+
+        Text = "Grabbing the stage curtain, you haul yourself up hand over hand until you reach the machinery that moves the puppets' wires. Swinging out, you gather up the wires and snag them into the rotating cogs. Down on the stage, the puppets are jerked off their feet and lifted up as their wires snarl inside the machinery.\n\nYou see your companions look around in surprise, then Golgoth thinks to look up. Seeing you, his smile flashes in the strobing light. \"There's our deus ex machina,\" he says. \"You can come down now. And thanks.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 110; }
+};
+
+class Story023 : public Story::Base
+{
+public:
+    Story023()
+    {
+        ID = 23;
+
+        Text = "I overheard you say you were bound for the Saharan Ice Wastes,\" says Boche. \"My own journey takes me in that direction.\"\n\nAs you set off together through the deep drifts of snow, Boche takes your arm and points to a row of black wooden posts. \"That is the road to Venis. We can catch the ferry from there to Kahira.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Agree to go east to Venis", 200));
+        Choices.push_back(Choice::Base("You'd rather go west through the Lyonesse jungle, as the innkeeper recommended", 177));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story024 : public Story::Base
+{
+public:
+    Story024()
+    {
+        ID = 24;
+
+        Text = "To Boche's obvious surprise, you suddenly dive off the ledge and wriggle down into the bank of snow piled against the rock face just below it. Within seconds you are buried out of sight. Lying there, you listen for the approaching footsteps that tell you the mysterious figure is near at hand.\n\nBoche starts to cry out, then gives a gasp and falls silent. You decide to wait no longer, but leap up from your hiding place and deliver a hard blow to the back of the stranger's neck. The stranger falls, and at the same moment you see Boche shake his head as if recovering from a trance.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 90; }
+};
+
+class Story025 : public Story::Base
+{
+public:
+    Story025()
+    {
+        ID = 25;
+
+        Image = "images/barion-siriasis.png";
+
+        Text = "Dawn hides behind a blanket of dark snow-laden cloud. Huddled in warm furs, a group of travellers make their way to the quayside to await the ferry. As you approach the ticket kiosk, you see an old man propped like a limp sack on a bench facing out to sea. He is crippled, having no legs, and his face has the look of a clay effigy that has crumpled in on itself through sheer age. A puff of white hair haloes his liver-spotted pate. Poor old devil, you think as you pass him.\n\n He looks up. Keen hawk's eyes meet your own. \"I don't care for your pity, youngster,\" he snaps.\n\n\"I'm sorry,\" you say, \"I didn't mean --\"\n\nAnd then it hits you.. He can read your mind.\n\n\"\"Of course I can read your mind. Have you never heard of Baron Siriasis?\" Before you can reply, he hauls himself to the edge of the bench. It seems to you that he is about to fall to the ground, and you take half a step forward, but he glares at you and says, \"I don't need your help either!\"\n\nTo your amazement, he rises into the air until he is hovering in front of you, his gaze level with yours. For a moment your eyes lock. You hear his words of warning, not spoken, but burning their way into your mind: Don't go to Du-En if you want to live.\n\nAbruptly he turns and drifts away. A woman standing behind you in the queue glances after him and says, \"That's Baron Siriasis, one of the lords of Bezant. He's said to be the most powerful psionic alive.\"\n\nYou have never before seen a man with enough psychokinetic power to levitate his own body. \"Indeed, who can doubt it?\" you reply.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            return 224;
+        }
+        else
+        {
+            return 202;
+        }
+    }
+};
+
+class Story026 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story026()
+    {
+        ID = 26;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Reaching up, you point the shower nozzle so that a stream of scalding hot water hits one of your assailants in the face. He gives an agonized screech and falls clutching his eyes. By a lucky accident, the shower jet strikes the oil lamp by the door, plunging the shower hall into darkness. As you hear the other man step forward, you get ready to dart aside. He lunges, his knife gashing across your ribs to inflict some damage.\n\n";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            PreText += "[CLOSE COMBAT]";
+
+            DAMAGE = -1;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+            {
+                PreText += "\n\n[CLOSE COMBAT] You are expert enough to parry an attack even in the dark.";
+            }
+
+            PreText += "\n\nBefore the can thrust again, you have caught his wrist. There is a brief struggle -- a crack of bone, a wet sound, a groan. Slowly your attacker goes limp in your grasp, impaled on his own knife.\n\nYou grope your way to the door and relight the lamp. The dead man's blood goes swirling across the shower tiles into the drain. His accomplice whimpers as you approach.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 48; }
+};
+
+class Story027 : public Story::Base
+{
+public:
+    Story027()
+    {
+        ID = 27;
+
+        Text = "You can detect no thoughts from the next room. Either you imagined the voice, or the speaker was one whose thoughts you cannot read.\n\n\"Hurry,\" the voice cries out. \"Not much time.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ignore it and check out the Manta sky-car", 49));
+        Choices.push_back(Choice::Base("Go through to the next room", 5));
+        Choices.push_back(Choice::Base("You think it would be wiser to get out of here", 395));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story028 : public Story::Base
+{
+public:
+    Story028()
+    {
+        ID = 28;
+
+        Text = "You step out of the elevator and follow the signs along empty corridors until you come to a plushly carpeted room with a door opposite. There is a desk where you might expect to see a nurse or clerk, but the room is unoccupied. The door has a plaque: the red crescent is a universal symbol, and beside it is the doctor's name-plate. You push the door open. A woman looks up from the book she was consulting and gives you a smile which is both a greeting and an enquiry.\n\n\"Doctor Jaffe, I presume.\"\n\nShe puts the book into her bag and closes it. \"You caught me just in time. I was about to go home.\"\n\nShe is refreshingly free of the sycophancy that characterizes most of the Society's employees. You mention this to her as she is giving you a check-up and she laughs saying, \"Well, most of the members are so used to wielding power that they bully anyone who'll let them. That wouldn't do for a doctor; I'm supposed to be the bully!\"\n\nDoctor Jaffe also gives you a pack of ANTIDOTE PILLS. \"There are generally useful against most diseases and toxins you'll encounter while in Kahira.\"\n\nYou RECOVER 2 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(2);
+        Character::GET_ITEMS(player, {Item::ANTIDOTE_PILLS});
+    }
+
+    int Continue(Character::Base &player) { return 73; }
+};
+
+class Story029 : public Story::Base
+{
+public:
+    Story029()
+    {
+        ID = 29;
+
+        Text = "The indicator light shows you have fifteen floors to go. About thirty seconds. Long enough to work a miracle if you're lucky. You clear your mind of everything but a single purpose: to direct your willpower through the psionic focus you wear.\n\nThe indicator light shows you have reached the third floor... the second... the first. With a chime, the elevator comes to a halt and the doors start to open.\n\nSuddenly all the lights go out, not only here but in the street outside, plunging the lobby into total darkness.\n\n\"Power cut!\" you hear someone shout. Then someone else snarls an order to open fire, and gunfire spatters the rear wall of the elevator where you were standing only seconds before.\n\nFollowing the wall, you find the door and duck out into the night. Hurrying off, you go half a block through the welcome enveloping mist before allowing the electricity to flow again. That was as narrow an escape as you've ever had. You'll have to sharpen your edge if you are to have any chance of getting the Heart.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 311; }
+};
+
+class Story030 : public Story::Base
+{
+public:
+    Story030()
+    {
+        ID = 30;
+
+        Text = "Cold reptilian thoughts seep into your brain, jolting you awake. Your gaze flicks across the swaying fronds around you, searching for the source of the thoughts. Warned by an intuitive impulse, you glance up in time to see a narrow fang-lined snout dropping on a long neck towards you. Leaping to your feet, you cast a handful of soil into the creature's eyes and race off through the trees.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 228; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -929,6 +1149,16 @@ auto story017 = Story017();
 auto story018 = Story018();
 auto story019 = Story019();
 auto story020 = Story020();
+auto story021 = Story021();
+auto story022 = Story022();
+auto story033 = Story023();
+auto story024 = Story024();
+auto story025 = Story025();
+auto story026 = Story026();
+auto story027 = Story027();
+auto story028 = Story028();
+auto story029 = Story029();
+auto story030 = Story030();
 
 void InitializeStories()
 {
@@ -936,7 +1166,8 @@ void InitializeStories()
         &earth23rdCentury,
         &prologue, &story001, &story002, &story003, &story004, &story005, &story006, &story007, &story008, &story009,
         &story010, &story011, &story012, &story013, &story014, &story015, &story016, &story017, &story018, &story019,
-        &story020};
+        &story020, &story021, &story022, &story023, &story024, &story025, &story026, &story027, &story028, &story029,
+        &story030};
 }
 
 #endif

@@ -18,8 +18,9 @@ namespace Item
         ROPE,
         SPECULUM_JACKET,
         MANTRAMUKTA_CANNON,
+        ANTIDOTE_PILLS,
         First = BARYSAL_GUN,
-        LAST = MANTRAMUKTA_CANNON
+        LAST = ANTIDOTE_PILLS
     };
 
     class Base
@@ -63,6 +64,7 @@ namespace Item
     auto ROPE = Item::Base("ROPE", "ROPE", Item::Type::ROPE);
     auto SPECULUM_JACKET = Item::Base("SPECULUM JACKET", "SPECULUM JACKET", Item::Type::SPECULUM_JACKET);
     auto MANTRAMUKTA_CANNON = Item::Base("MANTRAMUKTA CANNON", "MANTRAMUKTA CANNON", Item::Type::MANTRAMUKTA_CANNON);
+    auto ANTIDOTE_PILLS = Item::Base("ANTIDOTE PILLS", "ANTIDOTE PILLS", Item::Type::ANTIDOTE_PILLS);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,
