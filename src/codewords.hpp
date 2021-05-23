@@ -24,7 +24,8 @@ namespace Codeword
         SCYTHE,
         TALOS,
         URUK,
-        YELLOW
+        YELLOW,
+        SHORTSWORD
     };
 
     std::map<Codeword::Type, const char *> Descriptions = {

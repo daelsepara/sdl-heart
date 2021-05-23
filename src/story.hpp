@@ -149,7 +149,11 @@ namespace Story
     {
         NORMAL = 0,
         GOOD,
-        DOOM
+        DOOM,
+        GODHOOD,
+        SENTINEL,
+        SACRIFICE,
+        UNKNOWN
     };
 
     enum class Controls
@@ -475,6 +479,129 @@ public:
     }
 };
 
+class Story006 : public Story::Base
+{
+public:
+    Story006()
+    {
+        ID = 6;
+
+        Text = "The library is a huge series of halls in the basement of the building. The air is dry and musty, and green-shaded lamps blaze at intervals above the imitation walnut desks. In addition to the thousands of books, there are two or three computer terminals of antique design.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try to establish contact with Gaia", 138));
+        Choices.push_back(Choice::Base("Read up concerning the Heart of Volent", 182));
+        Choices.push_back(Choice::Base("You can leave the library", 73));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            Choices[0].Destination = 116;
+        }
+        else
+        {
+            Choices[0].Destination = 138;
+        }
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            Choices[0].Destination = 160;
+        }
+        else
+        {
+            Choices[0].Destination = 182;
+        }
+    }
+};
+
+class Story007 : public Story::Base
+{
+public:
+    Story007()
+    {
+        ID = 7;
+
+        Text = "The elevator arrives at the lobby and the doors slide open, but the waiting security guards are amazed to find it empty. The security chief barks an order: \"Get upstairs! Check the other floors!\"\n\nYou hear them go charging up the stairs. Waiting until the coast is clear, you lower your back down through the access hatch on on top of the elevator car. Ignoring the spluttered protests of the receptionist, you dart out into the safety of the night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 311; }
+};
+
+class Story008 : public Story::Base
+{
+public:
+    Story008()
+    {
+        ID = 8;
+
+        Text = "During your march east you have taken an hour or two each day to practice with the SHORTSWORD. The exercise has helped keep you warm, as well as acquainting you with the feel of your new weapon. Now you can use the SHORTSWORD in any hand to hand fight, its effect being to reduce any injury you take by 1 Life Point.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::SHORTSWORD});
+    }
+
+    int Continue(Character::Base &player) { return 334; }
+};
+
+class Story009 : public Story::Base
+{
+public:
+    Story009()
+    {
+        ID = 9;
+
+        Text = "A short distance along one of the tunnels you find a doorway. While Fax looks on with fluttering gestures of protest, you force the door and enter a small computer room. A caretek is crawling across the banks of equipment, dutifully sweeping away the dust. You log into the computer. As you suspected, it maintains the city's generator and lighting systems, as well as hydroponic gardens which are presumably the ultimate source of food here.\n\nFax screws up enough courage to peer over your shoulder. \"What are you doing?\"\n\nYour fingers flit across the keyboard. \"Trying to find if there's a communication line to the outside world still working anywhere in the city. Ah, here's one. Now I'm going to contact Gaia.\"\n\nFax utters a doleful bleat. \"Surely Gaia is mad? You are rash to draw her attention. She might switch off the sun!\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Attempt to contact Gaia", 336));
+        Choices.push_back(Choice::Base("Agree that the risk is too great and explore the transit tunnels", 439));
+        Choices.push_back(Choice::Base("Leave Marsay and continue west", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story010 : public Story::Base
+{
+public:
+    Story010()
+    {
+        ID = 10;
+
+        Text = "At dawn the ferry enters the Isis estuary and skims upriver towards Kashira. Taking a stroll on the deck, you notice a waft of warmth rising from the river. It eases the bitter chill of the morning air. Questioning one of the sailors, you learn that heating pipes are laid along the river bed. No one knows the source of energy, but the effect is to keep the Isis from freezing, with the result that river-plants and fish are more plentiful than you would expect. \"That is the basis of Kahira's prosperity,\" he tells you. \"But one day the pipes will fail. Then the river will freeze and Kahira must die.\"\n\nYou glance to the east, where the sun struggles morosely behind a drape of stern grey cloud. \"That is the whole world's eventual fate.\"\n\nKahira hoves into view around a bend in the river. It stands on massive concrete buttresses straddling the Isis, a huge fortress-city with towers like spines along its back, looking like a beast of mechanical Armageddon against the wintry surroundings. The ferry glides to a halt, the gang-ramp is extended, and you disembark in front of the city gates.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            return 251;
+        }
+        else
+        {
+            return 229;
+        }
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -517,8 +644,13 @@ auto prologue = Prologue();
 auto story001 = Story001();
 auto story002 = Story002();
 auto story003 = Story003();
-auto story004 = Story005();
+auto story004 = Story004();
 auto story005 = Story005();
+auto story006 = Story006();
+auto story007 = Story007();
+auto story008 = Story008();
+auto story009 = Story009();
+auto story010 = Story010();
 
 void InitializeStories()
 {
