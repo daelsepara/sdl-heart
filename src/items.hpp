@@ -191,5 +191,22 @@ namespace Item
         return found;
     }
 
+    int FIND_TYPE(std::vector<Item::Base> list, Item::Type item)
+    {
+        auto found = -1;
+
+        for (auto i = 0; i < list.size(); i++)
+        {
+            if (list[i].Type == item)
+            {
+                found = i;
+
+                break;
+            }
+        }
+
+        return found;
+    }
+
 } // namespace Item
 #endif

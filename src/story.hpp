@@ -31,7 +31,7 @@ namespace Choice
         LOSE_MONEY,
         LOSE_ALL,
         LOSE_SKILLS,
-        CHARGED_ITEMS
+        GET_CODEWORD
     };
 
     class Base
@@ -139,6 +139,14 @@ namespace Choice
             Type = type;
             Items = items;
             Value = value;
+        }
+
+        Base(const char *text, int destination, Choice::Type type, Codeword::Type codeword)
+        {
+            Text = text;
+            Destination = destination;
+            Type = type;
+            Codeword = codeword;
         }
     };
 } // namespace Choice
@@ -1390,7 +1398,7 @@ public:
         Text = "A barysal beam stabs blindly through the smoke, narrowly missing you. Singh turns and squints in the direction of the shot. \"I still can't see him,\" he mutters grimly.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Return fire (BARYSAL GUN)", 64, Choice::Type::CHARGED_ITEMS, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Return fire (BARYSAL GUN)", 64, {Item::BARYSAL_GUN}));
         Choices.push_back(Choice::Base("Advance under the cover of the smoke towards where the shot came from", 86));
         Choices.push_back(Choice::Base("Back off out of the smoke and look around", 108));
 
@@ -2168,7 +2176,7 @@ public:
         Text = "\"We've done it!\" you cry. \"Now to destroy the Heart.\"\n\nBut Singh shakes his head. \"Nonsense. I have honoured our agreement thus far, but only to ensure success. Now we must decide which of us survives to claim the power.\"\n\n\"Hardly an even battle.\" You nod at the powerful MANTRAMUKTA CANNON in his hands.\n\nHe tosses the cannon aside. In his belt is tucked a nozzle that tells you it is in fact a modified laser.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 283, Choice::Type::CHARGED_ITEMS, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 283, {Item::BARYSAL_GUN}));
         Choices.push_back(Choice::Base("Otherwise", 305));
 
         Controls = Story::Controls::STANDARD;
@@ -2786,6 +2794,250 @@ public:
     }
 };
 
+class Story100 : public Story::Base
+{
+public:
+    Story100()
+    {
+        ID = 100;
+
+        Image = "images/bometh.png";
+
+        Text = "You continue on, watching the sun slide dankly down into the west. A silvery afterglow rims the skyline. Pale humps of snow extend to the murky horizon, divided by hollows brimming with violet shadow. Catching a movement out of the corner of your eye you freeze, slowly turning to see a huge sabre-fanged bometh standing on a rise not fifty metres away. You slink back behind an ice boulder, not certain if the creature saw you.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU) && !Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            Choices.push_back(Choice::Base("[SHOOTING] Shoot at the bometh", 79, Skill::Type::SHOOTING));
+            Choices.push_back(Choice::Base("Use a STUN GRENADE", 145, {Item::STUN_GRENADE}));
+            Choices.push_back(Choice::Base("Close with it", 277));
+            Choices.push_back(Choice::Base("Track it (BINOCULARS)", 319, {Item::BINOCULARS}));
+            Choices.push_back(Choice::Base("Creep off before it spots you", 289));
+        }
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 123;
+        }
+        else
+        {
+            return 256;
+        }
+    }
+};
+
+class Story101 : public Story::Base
+{
+public:
+    Story101()
+    {
+        ID = 101;
+
+        Text = "You stroll around the market, but there is little on offer here. If you wish to buy a FUR COAT, it will cost 5 scads. You can buy FOOD PACKs for 4 scads each; these consist of fish, oil and grain dried into blocks, each giving rations for several days.\n\nA small girl follows you along the dusty street singing a ditty:\n\n\"Out across the Ice Wastes,\nYellow steam and snow,\nCough your gust and freeze to death,\nA silly way to go.\"\n\nNo doubt the same rhyme has been repeated by children here for many generations. For some reason you find it more discouraging than any amount of sage advice. Not for the first time, you find yourself wondering if you are mad to consider a journey across the daunting Saharan plains. Still, when life on Earth is guttering like a candle about to blow out, only a fool makes plans for the future. You square your shoulders and turn to the west.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::SHOP;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Shop = {{Item::FUR_COAT, 5}, {Item::FOOD_PACK, 4}};
+    }
+
+    int Continue(Character::Base &player) { return 234; }
+};
+
+class Story102 : public Story::Base
+{
+public:
+    Story102()
+    {
+        ID = 102;
+
+        Text = "You are halfway across the tarmac when you realize your mistake. The pilot of the flyer has already engaged the boosters. You see him at the cockpit window, his face contorting in surprise and shock at the sight of you racing towards the craft. Your last image is of him jabbing desperately at the controls, but he is too late to abort the booster ignition. An instant later, a blast of white-hot gas bursts from the landing jets and billows up to press a wave of solid heat into your face. Blinding light burns into your retinas, followed by darkness and oblivion.\n\nYou LOSE 5 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -5);
+    }
+
+    int Continue(Character::Base &player) { return 122; }
+};
+
+class Story103 : public Story::Base
+{
+public:
+    Story103()
+    {
+        ID = 103;
+
+        Text = "You build a lean-to beside the bubbling pool in the shelter of dwarf conifers. You soon discover that the water of the pool is tainted with volcanic gases, but when you need to drink it is easy enough to collect snow from beyond the edge of the oasis and bring it back to camp to melt.\n\nFood is more difficult to come by. The birds you saw when you first arrived prove to be very timid, and canny enough not to let you catch them. If someone had told you even two weeks ago that you would be eagerly chewing grubs and insects for sustenance, you would have laughed them to scorn. At least the hot gases rising from clefts in the rocks mean that you can bake the insects before eating them.\n\nYou RECOVER 2 Life Points.\n\nOn the morning of your second day at the oasis, you notice a slight feeling of nausea, and begin to wonder whether the sulphur-tinged air is affecting your health.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Leave the oasis and head on", 426, Choice::Type::GET_CODEWORD, Codeword::Type::HOURGLASS));
+        Choices.push_back(Choice::Base("Stay for a few days more", 15));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, 2);
+    }
+};
+
+class Story104 : public Story::Base
+{
+public:
+    Story104()
+    {
+        ID = 104;
+
+        Text = "Boche struts around the fire under the colonnade while outlining his plans for how you will share the power of the Heart. Lost in your own deep reverie, you hardly hear his words. Finally you look up and ask him, \"Why do you want ultimate power, Boche?\"\n\nHe stops short and looks at you sharply. For a moment you think he is about to give you a straight answer, but no. \"What are you saying? Are you having doubts? Surely not, when we are on the verge of triumph. You must not be so timid!\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("NEMESIS: Suggest an alliance", 236, Codeword::Type::NEMESIS));
+        Choices.push_back(Choice::Base("You would rather get some sleep", 192));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story105 : public Story::Base
+{
+public:
+    Story105()
+    {
+        ID = 105;
+
+        Text = "Even though the three of you are helpless, Gilgamesh can still act. Lunging forward through the swirling vapour, he seizes the gnarled phantom in his arms and carries it on stiff strides to the edge of the chasm. It shrieks and twists in his grasp, flowing and distorting like a painting in the rain. Sparks cascade from Gilgamesh's visor as it sinks its fingers under his armour. For a long instant they both stand there, wreathed in white mist, struggling for the upper hand. Then Gilgamesh steps forward over the edge and he and the creature drop out of sight. You hear its thin bleating cry echo up from the depths and then there is silence. When you run to the chasm and look down, you find no trace of either the phantom or your loyal automaton.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::REMOVE_CODEWORD(player, Codeword::Type::ENKIDU);
+    }
+
+    int Continue(Character::Base &player) { return 149; }
+};
+
+class Story106 : public Story::Base
+{
+public:
+    Story106()
+    {
+        ID = 106;
+
+        Text = "The thing comes stalking forward, feeling its way while keeping its front legs raised as a shield. You have already seen that gunfire cannot penetrate the tough metal alloy. The glass case in the centre is another matter, though. You roll your grenade along the floor of the passage and pull the others back to a safe distance. There is a loud bang. The grenade is designed only to stun a living target, but the explosion cracks the glass and the blue fluid gushes out. As it does, the thing rears up like a dying spider, falls with a twitching of its robotic legs, and lies still.\n\nBoche nervously goes over to look at it. The little embryo inside the glass case lies as inert as a lump of cold clay. \"It's dead,\" he says. In stunned silence, the three of you head on to the end of the passage.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::LOSE_ITEMS(player, {Item::Type::STUN_GRENADE});
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story107 : public Story::Base
+{
+public:
+    Story107()
+    {
+        ID = 107;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::MALLET))
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::MALLET);
+
+            return 195;
+        }
+        else
+        {
+            return 217;
+        }
+    }
+};
+
+class Story108 : public Story::Base
+{
+public:
+    Story108()
+    {
+        ID = 108;
+
+        Text = "Golgoth had the same idea. You come face to face with him on the edge of the smoke cloud. Instead of a gun, he has a crossbow in his hands. He shoots, but you are already dodging and the bolt only opens a gash across your shoulder.\n\nYou LOSE 2 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -2);
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::SHOOTING))
+        {
+            return 304;
+        }
+        else
+        {
+            return 326;
+        }
+    }
+};
+
+class Story109 : public Story::Base
+{
+public:
+    Story109()
+    {
+        ID = 109;
+
+        Text = "Vajra Singh had the same idea at the same time. Golgoth's gaze snaps form Singh to you, but he hesitates a moment too long. Your shot hits first, and Golgoth crumples to the floor. Singh wastes no time taking stock of the situation, swinging his MANTRAMUKTA CANNON around to point at you. Boche seizes his chance to take a shot, but it spatters off Singh's armour. It is the last thing you see, since a moment later you are blasted out of existence by the fiery roar of the MANTRAMUKTA.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+
+        Type = Story::Type::DOOM;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -2924,6 +3176,16 @@ auto story096 = Story096();
 auto story097 = Story097();
 auto story098 = Story098();
 auto story099 = Story099();
+auto story100 = Story100();
+auto story101 = Story101();
+auto story102 = Story102();
+auto story103 = Story103();
+auto story104 = Story104();
+auto story105 = Story105();
+auto story106 = Story106();
+auto story107 = Story107();
+auto story108 = Story108();
+auto story109 = Story109();
 
 void InitializeStories()
 {
@@ -2938,7 +3200,8 @@ void InitializeStories()
         &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069,
         &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079,
         &story080, &story081, &story082, &story083, &story084, &story085, &story086, &story087, &story088, &story089,
-        &story090, &story091, &story092, &story093, &story094, &story095, &story096, &story097, &story098, &story099,};
+        &story090, &story091, &story092, &story093, &story094, &story095, &story096, &story097, &story098, &story099,
+        &story100, &story101, &story102, &story103, &story104, &story105, &story106, &story107, &story108, &story109};
 }
 
 #endif

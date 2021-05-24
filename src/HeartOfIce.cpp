@@ -2757,54 +2757,14 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                             }
                             else
                             {
-                                message = "You do not have the required item!";
-
-                                start_ticks = SDL_GetTicks();
-
-                                error = true;
-                            }
-                        }
-                        else if (story->Choices[current].Type == Choice::Type::CHARGED_ITEMS)
-                        {
-                            auto items = std::vector<Item::Type>();
-
-                            for (auto i = 0; i < story->Choices[current].Items.size(); i++)
-                            {
-                                items.push_back(story->Choices[current].Items[i].Type);
-                            }
-
-                            if (Character::VERIFY_ITEMS(player, items))
-                            {
-                                auto charged = false;
-
-                                for (auto i = 0; i < story->Choices[current].Items.size(); i++)
+                                if (Item::VERIFY(player.Items, story->Choices[current].Items[0]))
                                 {
-                                    if (story->Choices[current].Items[i].Charge > 0)
-                                    {
-                                        charged = true;
-                                    }
-                                }
-
-                                if (charged)
-                                {
-                                    next = (Story::Base *)findStory(story->Choices[current].Destination);
-
-                                    done = true;
-
-                                    break;
+                                    message = "You do not have the required item!";
                                 }
                                 else
                                 {
                                     message = "The item you are carrying is not charged!";
-
-                                    start_ticks = SDL_GetTicks();
-
-                                    error = true;
                                 }
-                            }
-                            else
-                            {
-                                message = "You do not have the required item!";
 
                                 start_ticks = SDL_GetTicks();
 
@@ -2838,6 +2798,16 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                             {
                                 inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
                             }
+
+                            next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                            done = true;
+
+                            break;
+                        }
+                        else if (story->Choices[current].Type == Choice::Type::GET_CODEWORD)
+                        {
+                            Character::GET_CODEWORDS(player, {story->Choices[current].Codeword});
 
                             next = (Story::Base *)findStory(story->Choices[current].Destination);
 
@@ -2989,7 +2959,18 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                             {
                                 if (Character::HAS_SKILL(player, story->Choices[current].Skill))
                                 {
-                                    message = "You do not have the required item to use with this skill!";
+                                    auto result = Character::FIND_SKILL(player, story->Choices[current].Skill);
+
+                                    auto item = player.Skills[result].Requirement;
+
+                                    if (Item::FIND_TYPE(player.Items, item) >= 0)
+                                    {
+                                        message = "The item you are carrying is not charged!";
+                                    }
+                                    else
+                                    {
+                                        message = "You do not have the required item to use with this skill!";
+                                    }
                                 }
                                 else
                                 {
