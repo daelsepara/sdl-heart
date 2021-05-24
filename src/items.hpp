@@ -23,8 +23,10 @@ namespace Item
         VADE_MECUM,
         LITTLE_GAIA,
         GAS_MASK,
+        BINOCULARS,
+        POLARIZED_GOGGLES,
         First = BARYSAL_GUN,
-        LAST = GAS_MASK
+        LAST = POLARIZED_GOGGLES
     };
 
     class Base
@@ -73,6 +75,8 @@ namespace Item
     auto VADE_MECUM = Item::Base("VADE MECUM", "VADE MECUM", Item::Type::VADE_MECUM);
     auto LITTLE_GAIA = Item::Base("LITTLE GAIA", "LITTLE GAIA", Item::Type::LITTLE_GAIA);
     auto GAS_MASK = Item::Base("GAS MASK", "GAS MASK", Item::Type::GAS_MASK);
+    auto BINOCULARS = Item::Base("BINOCULARS", "BINOCULARS", Item::Type::BINOCULARS);
+    auto POLARIZED_GOGGLES = Item::Base("POLARIZED GOGGLES", "POLARIZED GOGGLES", Item::Type::POLARIZED_GOGGLES);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,

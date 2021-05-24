@@ -2342,6 +2342,30 @@ public:
     int Continue(Character::Base &player) { return 341; }
 };
 
+class Story080 : public Story::Base
+{
+public:
+    Story080()
+    {
+        ID = 80;
+
+        Text = "You find several items scattered across a bench at the back of the laboratory. These include a FLASHLIGHT, a pair of BINOCULARS, a set of POLARIZED GOGGLES, and a BARYSAL GUN. The gun has been opened for inspection, but it is a simple matter to secure the but and replace the screws. You check the power unit, finding two charges remaining.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Descend the shaft to the bottom level", 255));
+        Choices.push_back(Choice::Base("Ascend and leave the pyramid", 361));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FLASHLIGHT, Item::BINOCULARS, Item::POLARIZED_GOGGLES, Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, 2)};
+
+        Limit = 4;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -2460,6 +2484,7 @@ auto story076 = Story076();
 auto story077 = Story077();
 auto story078 = Story078();
 auto story079 = Story079();
+auto story080 = Story080();
 
 void InitializeStories()
 {
@@ -2472,7 +2497,8 @@ void InitializeStories()
         &story040, &story041, &story042, &story043, &story044, &story045, &story046, &story047, &story048, &story049,
         &story050, &story051, &story052, &story053, &story054, &story055, &story056, &story057, &story058, &story059,
         &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069,
-        &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079};
+        &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079,
+        &story080};
 }
 
 #endif
