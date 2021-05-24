@@ -487,6 +487,25 @@ namespace Character
         return (player.Vehicle == vehicle);
     }
 
+    bool FIRE_WEAPON(Character::Base &player, Item::Type weapon)
+    {
+        auto fired = false;
+
+        for (auto i = 0; i < player.Items.size(); i++)
+        {
+            if (player.Items[i].Type == weapon && player.Items[i].Charge > 0)
+            {
+                player.Items[i].Charge--;
+
+                fired = true;
+
+                break;
+            }
+        }
+
+        return fired;
+    }
+
 } // namespace Character
 
 #endif

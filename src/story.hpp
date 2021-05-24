@@ -1833,6 +1833,246 @@ public:
     }
 };
 
+class Story061 : public Story::Base
+{
+public:
+    Story061()
+    {
+        ID = 61;
+
+        Text = "You decide your next course of action.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Use [ESP]", 344, Skill::Type::ESP));
+        Choices.push_back(Choice::Base("Try [ROGUERY]", 365, Skill::Type::ROGUERY));
+        ;
+        Choices.push_back(Choice::Base("... or [LORE]", 387, Skill::Type::LORE));
+        Choices.push_back(Choice::Base("... or [CYBERNETICS] and LITTLE GAIA", 408, Skill::Type::CYBERNETICS, {Item::LITTLE_GAIA}));
+        Choices.push_back(Choice::Base("Otherwise", 429));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story062 : public Story::Base
+{
+public:
+    Story062()
+    {
+        ID = 62;
+
+        Text = "You are in no doubt that the stunted little form inside the central globe is the thing's guiding intellect. Racing forward, you avoid a sweep of the powerful metal legs and throw yourself into a forward roll that carries you onto the top of the glass globe. The half-formed face of the embryo is floating just inches from your own. Its muddy eyes give no sign of surprise or understanding -- it has the drooling vacant face of an imbecile -- but suddenly the metal legs buck and rear in a frantic effort to throw you off. You cling on for several seconds until you feel it give an upward thrust, trying to crush you against the ceiling. You leap clear at the crash. As the blue fluid drains away, the thing gives a dying spasm and then falls still.\n\nBoche comes over and helps you to your feet. \"I wonder what that was,\" he says with emphatic distaste.\n\n\"I don't care as long as there aren't any more of them,\" you reply. Together you head on to the end of the passage.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story063 : public Story::Base
+{
+public:
+    Story063()
+    {
+        ID = 63;
+
+        Text = "The beam crackles through the air, only to splatter off an invisible shield of psychic force.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[PARADOXING] (BARYSAL GUN) Try to strip away the defensive shield and fire again", 282, Skill::Type::PARADOXING, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Back out of the hall the way you came", 107));
+        Choices.push_back(Choice::Base("Press on deeper into the catacombs", 129));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+    }
+};
+
+class Story064 : public Story::Base
+{
+public:
+    Story064()
+    {
+        ID = 64;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ESP))
+        {
+            return 130;
+        }
+        else
+        {
+            return 240;
+        }
+    }
+};
+
+class Story065 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story065()
+    {
+        ID = 65;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The shot was a decoy. Sensing Golgoth's thoughts, you whirl to see him running silently through the smoke towards you. He has a knife in his hand, and the look in his eyes is as cold as death. You block his first thrust but take a gash on your forearm, countering with an elbow-strike which leaves him dazed.\n\nThe fight is short and brutal. Golgoth is a master of lethal killing techniques.\n\n";
+
+        auto DAMAGE = -5;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -3;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nYou finally manage to twist the knife around and impale him.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 72; }
+};
+
+class Story066 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story066()
+    {
+        ID = 66;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The shot was a decoy. Sensing Golgoth's thoughts, you whirl to see him running silently through the smoke towards you. He has a knife in his hand, and the look in his eyes is as cold as death. You block his first thrust but take a gash on your forearm, countering with an elbow-strike which leaves him dazed.\n\nThe fight is short and brutal. Golgoth is a master of lethal killing techniques.\n\n";
+
+        auto DAMAGE = -2;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -1;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 110; }
+};
+
+class Story067 : public Story::Base
+{
+public:
+    Story067()
+    {
+        ID = 67;
+
+        Text = "Taking up your pack, you trudge out into the snow. Moments later you hear the crunching of rapid footsteps and Boche catches up with you. His breath curls into the diamond-clear morning air. \"We may as well travel together for mutual convenience, at least for a while,\" he says chirpily.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Agree to this", 133));
+        Choices.push_back(Choice::Base("Refuse point-blank", 155));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story068 : public Story::Base
+{
+public:
+    Story068()
+    {
+        ID = 68;
+
+        Text = "There is the familiar pulse of blistering grey-white light, which instantaneously illuminates the overhanging crags like daylight. The sharp crack of vaporized snow and superheated air reverberates off the rocks. You are gratified to see the figure throw up its arms and fall to the ground.\n\n\"That was rash,\" snaps Boche. \"You might have just killed a potential ally.\"\n\nYou lower yourself from the ledge and start off towards the prone figure. \"Let's find out,\" you call back over your shoulder. The figure looks dead, but you are careful to keep your gun trained on it.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+    }
+
+    int Continue(Character::Base &player) { return 90; }
+};
+
+class Story069 : public Story::Base
+{
+public:
+    Story069()
+    {
+        ID = 69;
+
+        Text = "The drawback to using the card is the holographic picture on the front, which looks nothing like you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::ROGUERY))
+        {
+            if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+            {
+                Choices.push_back(Choice::Base("Get the ID card altered", 135));
+            }
+            else
+            {
+                Choices.push_back(Choice::Base("Get the ID card altered", 113));
+            }
+
+            Choices.push_back(Choice::Base("Forget about the card and investigate your other options instead", 414));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 452; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -1932,6 +2172,15 @@ auto story057 = Story057();
 auto story058 = Story058();
 auto story059 = Story059();
 auto story060 = Story060();
+auto story061 = Story061();
+auto story062 = Story062();
+auto story063 = Story063();
+auto story064 = Story064();
+auto story065 = Story065();
+auto story066 = Story066();
+auto story067 = Story067();
+auto story068 = Story068();
+auto story069 = Story069();
 
 void InitializeStories()
 {
@@ -1943,7 +2192,7 @@ void InitializeStories()
         &story030, &story031, &story032, &story033, &story034, &story035, &story036, &story037, &story038, &story039,
         &story040, &story041, &story042, &story043, &story044, &story045, &story046, &story047, &story048, &story049,
         &story050, &story051, &story052, &story053, &story054, &story055, &story056, &story057, &story058, &story059,
-        &story060};
+        &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069};
 }
 
 #endif
