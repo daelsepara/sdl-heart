@@ -25,8 +25,11 @@ namespace Item
         GAS_MASK,
         BINOCULARS,
         POLARIZED_GOGGLES,
+        FOOD_PACK,
+        MEDICAL_KIT,
+        KNIFE,
         First = BARYSAL_GUN,
-        LAST = POLARIZED_GOGGLES
+        LAST = KNIFE
     };
 
     class Base
@@ -59,13 +62,18 @@ namespace Item
         }
     };
 
+    Item::Base MAKE_BARYSAL_GUN(int charge)
+    {
+        return Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, charge);
+    }
+
     // Item defaults
     auto PSIONIC_FOCUS = Item::Base("PSIONIC FOCUS", "PSIONIC FOCUS", Item::Type::PSIONIC_FOCUS);
-    auto BARYSAL_GUN = Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, 6);
+    auto BARYSAL_GUN = MAKE_BARYSAL_GUN(6);
     auto STUN_GRENADE = Item::Base("STUN GRENADE", "STUN GRENADE", Item::Type::STUN_GRENADE);
     auto SHORT_SWORD = Item::Base("SHORT SWORD", "SHORT SWORD", Item::Type::SHORT_SWORD);
     auto FUR_COAT = Item::Base("FUR COAT", "FUR COAT", Item::Type::FUR_COAT);
-    auto COLD_WEATHER_SUIT = Item::Base("COLD WEATHER SUUIT", "COLD WEATHER SUIT", Item::Type::COLD_WEATHER_SUIT);
+    auto COLD_WEATHER_SUIT = Item::Base("COLD-WEATHER SUIT", "COLD-WEATHER SUIT", Item::Type::COLD_WEATHER_SUIT);
     auto FLASHLIGHT = Item::Base("FLASHLIGHT", "FLASHLIGHT", Item::Type::FLASHLIGHT);
     auto ROPE = Item::Base("ROPE", "ROPE", Item::Type::ROPE);
     auto SPECULUM_JACKET = Item::Base("SPECULUM JACKET", "SPECULUM JACKET", Item::Type::SPECULUM_JACKET);
@@ -77,6 +85,9 @@ namespace Item
     auto GAS_MASK = Item::Base("GAS MASK", "GAS MASK", Item::Type::GAS_MASK);
     auto BINOCULARS = Item::Base("BINOCULARS", "BINOCULARS", Item::Type::BINOCULARS);
     auto POLARIZED_GOGGLES = Item::Base("POLARIZED GOGGLES", "POLARIZED GOGGLES", Item::Type::POLARIZED_GOGGLES);
+    auto FOOD_PACK = Item::Base("FOOD PACK", "FOOD PACK", Item::Type::FOOD_PACK);
+    auto MEDICAL_KIT = Item::Base("MEDICAL KIT", "MEDICAL KIT", Item::Type::MEDICAL_KIT);
+    auto KNIFE = Item::Base("KNIFE", "KNIFE", Item::Type::KNIFE);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,
@@ -161,6 +172,23 @@ namespace Item
         }
 
         return has;
+    }
+
+    int FIND(std::vector<int> list, int item)
+    {
+        auto found = -1;
+
+        for (auto i = 0; i < list.size(); i++)
+        {
+            if (list[i] == item)
+            {
+                found = i;
+
+                break;
+            }
+        }
+
+        return found;
     }
 
 } // namespace Item

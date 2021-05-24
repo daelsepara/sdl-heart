@@ -2360,7 +2360,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Take = {Item::FLASHLIGHT, Item::BINOCULARS, Item::POLARIZED_GOGGLES, Item::Base("BARYSAL GUN", "BARYSAL GUN", Item::Type::BARYSAL_GUN, 2)};
+        Take = {Item::FLASHLIGHT, Item::BINOCULARS, Item::POLARIZED_GOGGLES, Item::MAKE_BARYSAL_GUN(2)};
 
         Limit = 4;
     }
@@ -2570,6 +2570,222 @@ public:
     int Continue(Character::Base &player) { return 300; }
 };
 
+class Story090 : public Story::Base
+{
+public:
+    Story090()
+    {
+        ID = 90;
+
+        Text = "\"Is it dead?\" says Boche.\n\nYou snap an icicle from under the ledge and drive it deep into the grotesque pulpy head. The creature gives a single spasm and lies still. \"It is now.\"\n\nYou roll the body over to inspect it and are almost overcome by a wave of nausea. It is the most loathsome thing you have ever seen: a thin malformed body with a bloated mauve-pink head. The only facial feature is a long thick stalk ending in the cyclopean eye, now thankfully dimmed by the glaze of death. The scalp is covered with tiny orifices like gaping eyelids. Are they breathing holes? Sensory organs? There is no way to tell.\n\nBoche joins you beside the body. \"It's a mutant.\"\n\nYou nod. \"That's for sure, but a mutant what?\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Follow the creature's tracks back to its lair before the snow covers them", 134));
+        Choices.push_back(Choice::Base("Stay where you are and wait until dawn", 310));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story091 : public Story::Base
+{
+public:
+    Story091()
+    {
+        ID = 91;
+
+        Text = "You piece together a jigsaw of legend, superstition and historical fact. The Heart fell from the sky: an unearthly gemstone that became the focus of a crazed cult. The cult used the Heart's miraculous power to wage the Paradox war. Now it lies buried under the ruined city of Du-En, and the one who retrieves it will become mightier than any man has ever been.\n\n\"Why, then, did the civilization of Du-En fall?\" you ask a scholar at the library.\n\n\"Its rulers went mad. No one could wield such power and stay sane.\"\n\n\"Do you know it for a fact, or is it just your own theory?\"\n\nBut his only answer to that is a whimsical smile.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        {
+            return 414;
+        }
+        else
+        {
+            return 157;
+        }
+    }
+};
+
+class Story092 : public Story::Base
+{
+public:
+    Story092()
+    {
+        ID = 92;
+
+        Text = "By the front desk of the inn there is a notice-board where posters are pinned up for the perusal of bounty hunters. You scan the pictures of wanted criminals to see if any resemble the two men who attacked you, but without success. When you ask the innkeeper, he shrugs and says that people are constantly coming and going. \"I cannot keep track of all the riff-raff of Venis.\"\n\n\"But I might very easily have been murdered.\"\n\nHis only answer to this is to point to a sign on the wall which reads: 'The management is not responsible for the safety of customers or their belongings.' You give him a glowering look, then turn and stride out of the inn. A walk in the night air will help you to cool off.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 329; }
+};
+
+class Story093 : public Story::Base
+{
+public:
+    Story093()
+    {
+        ID = 93;
+
+        Text = "You lay out the contents of the storage compartment on the floor beside the vehicle. There are ten FOOD PACKs, a MEDICAL KIT, a FLASHLIGHT, a COLD-WEATHER SUIT and a length of nylon ROPE.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FLASHLIGHT, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::ROPE, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 14;
+    }
+
+    int Continue(Character::Base &player) { return 395; }
+};
+
+class Story094 : public Story::Base
+{
+public:
+    Story094()
+    {
+        ID = 94;
+
+        Text = "The canteen is located at the top of the building, with wide windows giving a breathtaking view over the city. You stand and look out for a few minutes at the tall towers wreathed in swirling fog. Below, a dark patch of woodland studded with mistily sparkling lamps can only be the infamous Claustral Park.\n\nThe canteen has no human attendants, just a food dispenser which brings forth foil-wrapped packs (FOOD PACKS) at the touch of a button.\n\nAs you are leaving the canteen, you almost collied with a huge Fijian in a trim black suit and mirror glasses. He grunts an absent-minded apology and hurries past, staring urgently around the room. He is the only other person you have seen in the building who doesn't seem to be an employee here. You are about to head off towards the elevator when he calls after you, \"Hey, who are you?\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 227, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("[CLOSE COMBAT]", 248, Skill::Type::CLOSE_COMBAT));
+        Choices.push_back(Choice::Base("[CUNNING]", 269, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Run for it", 290));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 8;
+    }
+};
+
+class Story095 : public Story::Base
+{
+public:
+    Story095()
+    {
+        ID = 95;
+
+        Text = "Decide what to do next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Make use of the ID CARD", 353, {Item::ID_CARD}));
+        Choices.push_back(Choice::Base("Try to find out about Baron Siriasis", 401));
+        Choices.push_back(Choice::Base("... about Chaim Golgoth", 422));
+        Choices.push_back(Choice::Base("... about Gilgamesh", 380));
+        Choices.push_back(Choice::Base("... about the Sphinx", 11));
+        Choices.push_back(Choice::Base("Get some rest", 311));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story096 : public Story::Base
+{
+public:
+    Story096()
+    {
+        ID = 96;
+
+        Text = "The blast hisses in the dank steamy air. Blue plasma-fire burns through the creature's neck. It utters a bleak wail of distress and falls crashing to the ground, where you finish off the twitching carcass with a heavy stone.\n\nThe wound in your shoulder is beginning to throb. You clean it with some leaves, then tear strips from the lining of your jacket to make a bandage. Lying back against the log, you feel slightly giddy, but this is no place to rest. There might be more of those creatures about. Hauling yourself to your feet, you lumber off in search of a safer place to hole up.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+    }
+
+    int Continue(Character::Base &player) { return 228; }
+};
+
+class Story097 : public Story::Base
+{
+public:
+    Story097()
+    {
+        ID = 97;
+
+        Text = "The nearest man stabs his KNIFE at your heart. You deflect the blow with an open-handed block to his wrist, then sidestep in close to deliver two swift elbow strikes across his face. As he sags, you pluck the KNIFE out of his fingers. The angle is wrong to get the man with the gun, so you cast the KNIFE at each other. It catches him in the shoulder and he falls back with a grunt.\n\nThe man with the gun is about to fire. You throw yourself into a forward roll, hearing the blast crack overhead and explode against the wall. Scissoring your legs, you thrust him off-balance before he can take another shot. He topples into the fire, his frightened yelp cut brutally short as his head hits a rock.\n\nBefore you can get to your feet, the man with the KNIFE in his shoulder comes lumbering forward and tries to stomp you in the guts. You jerk aside, catch his ankle, and bring him down backwards across your hip, where a swift powerful twist ends the struggle.\n\nYou search the shelter. The BARYSAL GUN has one charge left. You also find two KNIVES, a set of POLARIZED GOGGLES, COLD-WEATHER clothes, BINOCULARS, and six FOOD PACKs.";
+
+        Bye = "Then you wait for the blizzard to blow itself out before you emerge into the crisp snow outside";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::MAKE_BARYSAL_GUN(1), Item::KNIFE, Item::KNIFE, Item::POLARIZED_GOGGLES, Item::COLD_WEATHER_SUIT, Item::BINOCULARS, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 12;
+    }
+
+    int Continue(Character::Base &player) { return 393; }
+};
+
+class Story098 : public Story::Base
+{
+public:
+    Story098()
+    {
+        ID = 98;
+
+        Text = "Your gun is barely out of its holster before one of the twins flicks her wrist and sends a splash of fiery vodka into your eyes. The gun discharges with a sizzling crack. You stumble back, wiping your face. A kick lashes out, striking the gun from your hands. Strong fingers seize your head. There is no time to act before your legs are swept out form under you. You topple, and a mighty twist from your assailant breaks your neck. Your die in an unseemly tavern brawl.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+
+        Type = Story::Type::DOOM;
+    }
+};
+
+class Story099 : public Story::Base
+{
+public:
+    Story099()
+    {
+        ID = 99;
+
+        Text = "He is emphatic that you should on no account sleep in Claustral Park. \"It is unsafe after nightfall,\" he says, wagging his finger. \"The claustrals are barely deterred from entering the streets as it is.\"\n\n\"What are claustrals?\"\n\nHe jerks back in exaggerated surprise. \"Do you truly not know? They are rank fiends -- creatures that are the reverse of men. They flourish in the darkness, cold and filth; they abjure sunlight and goodness. Their food is the decaying remains of the dead.\" His fat jowls shudder with fright.\n\n\"Decaying flesh? So why would they hunt a living person? Possibly the claustrals are simply figments of a fairy tale.\"\n\nHe looks at you sadly, as though at a person who had lost their wits. \"Do not allow your cynicism to tempt you into the park,\" he maintains.\n\n\"So where should I stay?\"\n\n\"The Ossiman Hotel is best. If you cannot afford a hotel, avoid the backstreets, where muggers lurk. If you must, sleep by the gratings on Fishermonger Plaza. It is well lit, warm, and there are plenty of folk around all through the night.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask his advice about the Sahara", 77));
+        Choices.push_back(Choice::Base("Ask him about Giza", 59));
+        Choices.push_back(Choice::Base("Ask about Kahira itself", 143));
+        Choices.push_back(Choice::Base("Dismiss him", 95));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -2698,6 +2914,16 @@ auto story086 = Story086();
 auto story087 = Story087();
 auto story088 = Story088();
 auto story089 = Story089();
+auto story090 = Story090();
+auto story091 = Story091();
+auto story092 = Story092();
+auto story093 = Story093();
+auto story094 = Story094();
+auto story095 = Story095();
+auto story096 = Story096();
+auto story097 = Story097();
+auto story098 = Story098();
+auto story099 = Story099();
 
 void InitializeStories()
 {
@@ -2711,7 +2937,8 @@ void InitializeStories()
         &story050, &story051, &story052, &story053, &story054, &story055, &story056, &story057, &story058, &story059,
         &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069,
         &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079,
-        &story080, &story081, &story082, &story083, &story084, &story085, &story086, &story087, &story088, &story089};
+        &story080, &story081, &story082, &story083, &story084, &story085, &story086, &story087, &story088, &story089,
+        &story090, &story091, &story092, &story093, &story094, &story095, &story096, &story097, &story098, &story099,};
 }
 
 #endif
