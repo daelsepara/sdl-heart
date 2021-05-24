@@ -543,9 +543,11 @@ std::vector<Button> createItemControls(std::vector<Item::Base> Items)
 
 std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, std::vector<Item::Base> list, int start, int last, int limit, bool confirm_button)
 {
-    auto controls = std::vector<Button>();
-
     auto text_space = 8;
+    
+    auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
+
+    auto controls = std::vector<Button>();
 
     if (list.size() > 0)
     {
@@ -567,13 +569,13 @@ std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, s
                 item_string += ")";
             }
 
-            auto text = createText(item_string.c_str(), "fonts/default.ttf", 20, clrBK, textwidth - 3 * button_space / 2 - 2 * text_space, TTF_STYLE_NORMAL);
+            auto text = createText(item_string.c_str(), "fonts/default.ttf", 20, clrBK, textwidth - 4 * text_space, TTF_STYLE_NORMAL);
 
             auto y = texty + (i > 0 ? controls[i - 1].Y + controls[i - 1].H : 2 * text_space);
 
             controls.push_back(Button(i, text, i, i, (i > 0 ? i - 1 : i), (i < (last - start) ? i + 1 : i), textx + 2 * text_space, y, Control::Type::ACTION));
 
-            controls[i].W = textwidth - 3 * button_space / 2 - 2 * text_space;
+            controls[i].W = textwidth - 4 * text_space;
             controls[i].H = text->h;
         }
     }
@@ -1082,7 +1084,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
         auto text_space = 8;
 
-        auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space) - 2 * text_space;
+        auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
         auto controls = createItemList(window, renderer, items, offset, last, limit, true);
 
@@ -1231,7 +1233,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                     if (offset <= 0)
                     {
                         current = -1;
-                        
+
                         selected = false;
                     }
                 }
