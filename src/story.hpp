@@ -990,7 +990,7 @@ public:
 
         if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
         {
-            PreText += "[CLOSE COMBAT]";
+            PreText += "[CLOSE COMBAT] ";
 
             DAMAGE = -1;
         }
@@ -2165,7 +2165,7 @@ public:
     {
         ID = 72;
 
-        Text = "\"We've done it!\" you cry. \"Now to destroy the Heart.\"\n\nBut Singh shakes his head. \"Nonsense. I have honoured our agreement thus far, but only to ensure success. Now we must decide which of us survives to claim the power.\"\n\n\"Hardly an even battle.\" You nod at the powerful mantramukta cannon in his hands.\n\nHe tosses the cannon aside. In his belt is tucked a nozzle that tells you it is in fact a modified laser.";
+        Text = "\"We've done it!\" you cry. \"Now to destroy the Heart.\"\n\nBut Singh shakes his head. \"Nonsense. I have honoured our agreement thus far, but only to ensure success. Now we must decide which of us survives to claim the power.\"\n\n\"Hardly an even battle.\" You nod at the powerful MANTRAMUKTA CANNON in his hands.\n\nHe tosses the cannon aside. In his belt is tucked a nozzle that tells you it is in fact a modified laser.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Use a BARYSAL GUN", 283, Choice::Type::CHARGED_ITEMS, {Item::BARYSAL_GUN}));
