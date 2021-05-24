@@ -544,7 +544,7 @@ std::vector<Button> createItemControls(std::vector<Item::Base> Items)
 std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, std::vector<Item::Base> list, int start, int last, int limit, bool confirm_button)
 {
     auto text_space = 8;
-    
+
     auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
     auto controls = std::vector<Button>();
@@ -2092,12 +2092,15 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
                         controls = createFilesList(window, renderer, entries, offset, last, limit, save_botton);
 
-                        SDL_Delay(200);
-
-                        current = -1;
+                        SDL_Delay(50);
                     }
 
-                    selected = false;
+                    if (offset <= 0)
+                    {
+                        current = -1;
+
+                        selected = false;
+                    }
                 }
                 else if (controls[current].Type == Control::Type::SCROLL_DOWN || ((controls[current].Type == Control::Type::SCROLL_DOWN && hold) || scrollDown))
                 {
@@ -2122,12 +2125,23 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
                         controls = createFilesList(window, renderer, entries, offset, last, limit, save_botton);
 
-                        SDL_Delay(200);
+                        SDL_Delay(50);
+
+                        if (offset > 0)
+                        {
+                            if (controls[current].Type != Control::Type::SCROLL_DOWN)
+                            {
+                                current++;
+                            }
+                        }
+                    }
+
+                    if (entries.size() - last <= 0)
+                    {
+                        selected = false;
 
                         current = -1;
                     }
-
-                    selected = false;
                 }
                 else if (controls[current].Type == Control::Type::ACTION && !hold)
                 {
