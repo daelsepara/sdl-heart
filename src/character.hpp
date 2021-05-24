@@ -112,7 +112,7 @@ namespace Character
         {
             for (auto i = 0; i < player.Items.size(); i++)
             {
-                if (player.Items[i].Type == item)
+                if (player.Items[i].Type == item && player.Items[i].Charge != 0)
                 {
                     found = i;
 
@@ -152,14 +152,16 @@ namespace Character
         {
             for (auto i = 0; i < items.size(); i++)
             {
-                if (FIND_ITEM(player, items[i]) >= 0)
+                auto result = FIND_ITEM(player, items[i]);
+
+                if (result >= 0)
                 {
                     found++;
                 }
             }
         }
 
-        return found == items.size();
+        return found >= items.size();
     }
 
     int COUNT_ITEMS(Character::Base &player, std::vector<Item::Base> items)
@@ -455,6 +457,22 @@ namespace Character
         {
             player.Life = player.MAX_LIFE_LIMIT;
         }
+    }
+
+    int COMBAT_DAMAGE(Character::Base &player, int life)
+    {
+        if (life < 0)
+        {
+            // reduce damage due to SHORT SWORD TRAINING
+            if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && Character::VERIFY_ITEMS(player, {Item::Type::SHORT_SWORD}) && Character::VERIFY_CODEWORD(player, Codeword::Type::SHORTSWORD))
+            {
+                life++;
+            }
+        }
+
+        Character::GAIN_LIFE(player, life);
+
+        return life;
     }
 
     void GAIN_MONEY(Character::Base &player, int money)

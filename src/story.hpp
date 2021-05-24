@@ -988,20 +988,20 @@ public:
 
         auto DAMAGE = -3;
 
-        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
         {
             PreText += "[CLOSE COMBAT]";
 
             DAMAGE = -1;
         }
 
-        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
 
-        Character::GAIN_LIFE(player, DAMAGE);
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         if (player.Life > 0)
         {
-            if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+            if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
             {
                 PreText += "\n\n[CLOSE COMBAT] You are expert enough to parry an attack even in the dark.";
             }
@@ -1460,9 +1460,9 @@ public:
             DAMAGE = -1;
         }
 
-        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
 
-        Character::GAIN_LIFE(player, DAMAGE);
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         if (player.Life > 0)
         {
@@ -1946,9 +1946,9 @@ public:
             DAMAGE = -3;
         }
 
-        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
 
-        Character::GAIN_LIFE(player, DAMAGE);
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         if (player.Life > 0)
         {
@@ -1988,9 +1988,9 @@ public:
             DAMAGE = -1;
         }
 
-        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
 
-        Character::GAIN_LIFE(player, DAMAGE);
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
 
         Text = PreText.c_str();
     }
@@ -2071,6 +2071,275 @@ public:
     }
 
     int Continue(Character::Base &player) { return 452; }
+};
+
+class Story070 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story070()
+    {
+        ID = 70;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        PreText = "One of the men sticks out a foot to trip you, while the other chops at your neck with his knife.";
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && !Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+        {
+            auto DAMAGE = Character::COMBAT_DAMAGE(player, -3);
+
+            PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        }
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\n";
+
+            if (!Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && !Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+            {
+                PreText += "The blade gashes you across the breast-bone -- a painful but not lethal injury.";
+
+                Choices.push_back(Choice::Base("Retreat into the steam room", 4));
+                Choices.push_back(Choice::Base("Stand your ground and fight", 26));
+            }
+            else
+            {
+                if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+                {
+                    PreText += "[CLOSE COMBAT] ";
+                }
+
+                if (Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+                {
+                    PreText += "[AGILITY] ";
+                }
+
+                PreText += "You are able to fend off the blow and escape past them, grabbing up your clothes as you run.";
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 92; }
+};
+
+class Story071 : public Story::Base
+{
+public:
+    Story071()
+    {
+        ID = 71;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::PILOTING))
+        {
+            return 115;
+        }
+        else
+        {
+            return 137;
+        }
+    }
+};
+
+class Story072 : public Story::Base
+{
+public:
+    Story072()
+    {
+        ID = 72;
+
+        Text = "\"We've done it!\" you cry. \"Now to destroy the Heart.\"\n\nBut Singh shakes his head. \"Nonsense. I have honoured our agreement thus far, but only to ensure success. Now we must decide which of us survives to claim the power.\"\n\n\"Hardly an even battle.\" You nod at the powerful mantramukta cannon in his hands.\n\nHe tosses the cannon aside. In his belt is tucked a nozzle that tells you it is in fact a modified laser.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 283, Choice::Type::CHARGED_ITEMS, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Otherwise", 305));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story073 : public Story::Base
+{
+public:
+    Story073()
+    {
+        ID = 73;
+
+        Text = "Where do you want to go next?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take the elevator to the library", 6));
+        Choices.push_back(Choice::Base("... the medical lounge", 204));
+        Choices.push_back(Choice::Base("... the gymnasium", 51));
+        Choices.push_back(Choice::Base("... the armoury", 447));
+        Choices.push_back(Choice::Base("... the canteen", 94));
+        Choices.push_back(Choice::Base("You have pushed your luck far enough and wish to leave before your deception is uncovered", 311));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story074 : public Story::Base
+{
+public:
+    Story074()
+    {
+        ID = 74;
+
+        Text = "The carriage gathers speed. You sit at the front and stare through the window at the darkness rushing by. Hours pass before you see the glimmer of lights along the tunnel. The carriage glides to a halt at a station lit by dull red lights. You stand up, but the doors do not open. Instead the motilator gives a placid announcement: \"We have arrived at a restricted area. We will now proceed to Maka, where you will be able to transfer to another vehicle for your onward journey. We apologize for any inconvenience.\"\n\nAgain the carriage picks up speed, this time for a journey of less than two hours. Arriving at another terminal, you wait to see what other destinations the motilator will offer. On the map, only Tarabul continues to flash.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take the subway there", 31));
+        Choices.push_back(Choice::Base("Disembark and see where you are", 375));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story075 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story075()
+    {
+        ID = 75;
+
+        Image = "images/jungle.png";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[SHOOTING]", 96, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("Otherwise", 118));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "\"What's that, what's that?\"\n\nYou silt bolt upright and stare around. The voice you heard was jarringly strange: humanlike, but not quite human. Nerves tingling, you scan the undergrowth.\n\nTeeth snare your shoulder and you cry out in pain and surprise.\n\nYou LOSE 1 Life Point.";
+
+        Character::GAIN_LIFE(player, -1);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nYou look up to see an uncanny beast peering down at you. Stretched between the branches, its body is a tent of leathery wing-flaps. Its head is a narrow snout filled with teeth, swaying on a long flexible neck. It watches you with small glittering eyes and croaks, \"What's that?\"\n\nNothing nice, that's for sure.";
+        }
+
+        Text = PreText.c_str();
+    }
+};
+
+class Story076 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story076()
+    {
+        ID = 76;
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Otherwise", 164));
+        Choices.push_back(Choice::Base("Insist on fighting on", 186));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "\"I have been travelling for weeks,\" you reply curtly, \"and I will not be deterred from taking a good hot meal just because two slab-shouldered termagants want to drink themselves into a stupor.\"\n\nA mutter of guarded approval goes around the other customers when they hear your tone of defiance. It is not exactly a cheer. Obviously the twins have kept everyone here tyrannized for hours.\n\nYou walk forward. One of the twins plants a hand in the middle of your chest. You seize it, apply a lock, and twist. She rolls out of the lock, bracing her arm against the bar and kicking up with strong yet fluid grace. You weave aside, block a punch from the other twin, and counter with a stiff-fingered strike to the solar plexus. She braces against the blow, taking it on muscles like steel cables. Her sister, springing upright, launches a kick at your kidneys which you barely avoid, the attack hitting you on the hip with bruising force.\n\nThe Jib-and-Halter Inn has never witnessed such a rough-house. Punches, kicks and brutal gouges lash back and forth while the other customers look on aghast.";
+
+        auto DAMAGE = Character::COMBAT_DAMAGE(player, -3);
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nThe twins finally step back and signal that they are prepared to end the fight.";
+        }
+
+        Text = PreText.c_str();
+    }
+};
+
+class Story077 : public Story::Base
+{
+public:
+    Story077()
+    {
+        ID = 77;
+
+        Text = "Bador expresses dismay when you tell him you intend to cross the Ice Wastes. \"By your father's beard! Do you wish to become a corpse with hoarfrost in your veins? Put aside all thought of such a scheme, I pray you!\" You cannot help smiling. \"What?\" says Bador, starting to weep. \"Do you mock my concern?\"\n\nYou place a hand on his sleeve. \"Calm yourself. You and I are strangers, and you already have your fee. Do not allow thought of my death to upset you, but give me advice on how to avoid such a fate.\"\n\n\"Only the barbarian Ebor venture into the Sahara, and even they go no further that its fringes. It is a place of ghosts and devils, and the wind is like flint.\"\n\n\"The Ebor? A nomad tribe? How do they survive?\"\n\n\"They have burreks, shaggy thick-necked beasts that grow folds of fat. When the blizzard comes, the Ebor rider shelters by his burrek and bleeds the animal, frying up a blood pudding to sustain him.\" Bador grimaces to show what he thinks of such a custom.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask what he knows about the city", 143));
+        Choices.push_back(Choice::Base("... about Giza", 59));
+        Choices.push_back(Choice::Base("... the best place to spend the night", 99));
+        Choices.push_back(Choice::Base("You have learned all you need and want to send him away", 95));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story078 : public Story::Base
+{
+public:
+    Story078()
+    {
+        ID = 78;
+
+        Text = "The flyer slowly drifts into the air on streamers of lambent gas. As the main thrusters engage, it picks up speed and goes roaring up into the heavens. A flash of sunlight glances off the hull as it veers towards the east. You watch until it is lost in the soft blue haze.\n\nYou set out on foot until you come to a shore of white sand, which you follow north to a ferry building. A group of men emerge and appraise you with suspicious glances before showing you to the ferry boat, a single-masted schooner that has seen better days. Two or three other passengers are already aboard, and on seeing you one of them says, \"Good! Now the ferry is full, we can set sail for Port Sudan.\"\n\nYou are CHARGED 1 scad.\n\nMoonlight is making such a creamy track in the water by the time you reach Sudan, a village of wooden huts huddled within the vast shell of an abandoned city wall. The boat sweeps in across the harbour, guided by a flaring beacon, and moors at a jetty reeking of fish. The streets are empty , and it is obviously too late to find a hostelry for the night, so you decide to sleep on the boat. The ferrymen are averse to this, insisting they should be paid more for providing you with accommodation as well as transport, but the other passengers are encouraged by your lead. \"You were happy enough to keep us waiting two days until you had enough passengers for the journey,\" snaps one.\n\nAt last the ferrymen sullenly agree. You sleep until dawn tinges the sky with the colour of a candle flame.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Do some shopping in Sudan", 101));
+        Choices.push_back(Choice::Base("Set out for Du-En", 234));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_MONEY(player, -1);
+    }
+};
+
+class Story079 : public Story::Base
+{
+public:
+    Story079()
+    {
+        ID = 79;
+
+        Text = "A thin searing beam spits through the air, burning a precise hole through the giant bometh's head. It utters a deep growl, takes two stumbling steps through the snow, and then falls. You hurry over to make sure of the kill. You would not want a wounded bometh stalking you through the night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+    }
+
+    int Continue(Character::Base &player) { return 341; }
 };
 
 class NotImplemented : public Story::Base
@@ -2181,6 +2450,16 @@ auto story066 = Story066();
 auto story067 = Story067();
 auto story068 = Story068();
 auto story069 = Story069();
+auto story070 = Story070();
+auto story071 = Story071();
+auto story072 = Story072();
+auto story073 = Story073();
+auto story074 = Story074();
+auto story075 = Story075();
+auto story076 = Story076();
+auto story077 = Story077();
+auto story078 = Story078();
+auto story079 = Story079();
 
 void InitializeStories()
 {
@@ -2192,7 +2471,8 @@ void InitializeStories()
         &story030, &story031, &story032, &story033, &story034, &story035, &story036, &story037, &story038, &story039,
         &story040, &story041, &story042, &story043, &story044, &story045, &story046, &story047, &story048, &story049,
         &story050, &story051, &story052, &story053, &story054, &story055, &story056, &story057, &story058, &story059,
-        &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069};
+        &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069,
+        &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079};
 }
 
 #endif
