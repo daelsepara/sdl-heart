@@ -1147,9 +1147,9 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Ask him about Giza", 59));
-        Choices.push_back(Choice::Base("... about the Saharan Ice Wastes", 77));
-        Choices.push_back(Choice::Base("... the city of Kahira", 143));
-        Choices.push_back(Choice::Base("... where you should take lodging", 99));
+        Choices.push_back(Choice::Base("Ask about the Saharan Ice Wastes", 77));
+        Choices.push_back(Choice::Base("Ask about the city of Kahira", 143));
+        Choices.push_back(Choice::Base("Ask where you should take lodging", 99));
 
         Controls = Story::Controls::STANDARD;
     }
@@ -1846,8 +1846,8 @@ public:
         Choices.push_back(Choice::Base("Use [ESP]", 344, Skill::Type::ESP));
         Choices.push_back(Choice::Base("Try [ROGUERY]", 365, Skill::Type::ROGUERY));
         ;
-        Choices.push_back(Choice::Base("... or [LORE]", 387, Skill::Type::LORE));
-        Choices.push_back(Choice::Base("... or [CYBERNETICS] and LITTLE GAIA", 408, Skill::Type::CYBERNETICS, {Item::LITTLE_GAIA}));
+        Choices.push_back(Choice::Base("[LORE]", 387, Skill::Type::LORE));
+        Choices.push_back(Choice::Base("[CYBERNETICS] and LITTLE GAIA", 408, Skill::Type::CYBERNETICS, {Item::LITTLE_GAIA}));
         Choices.push_back(Choice::Base("Otherwise", 429));
 
         Controls = Story::Controls::STANDARD;
@@ -2186,10 +2186,10 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Take the elevator to the library", 6));
-        Choices.push_back(Choice::Base("... the medical lounge", 204));
-        Choices.push_back(Choice::Base("... the gymnasium", 51));
-        Choices.push_back(Choice::Base("... the armoury", 447));
-        Choices.push_back(Choice::Base("... the canteen", 94));
+        Choices.push_back(Choice::Base("Go to the medical lounge", 204));
+        Choices.push_back(Choice::Base("Go to the gymnasium", 51));
+        Choices.push_back(Choice::Base("Go to the armoury", 447));
+        Choices.push_back(Choice::Base("Go to the canteen", 94));
         Choices.push_back(Choice::Base("You have pushed your luck far enough and wish to leave before your deception is uncovered", 311));
 
         Controls = Story::Controls::STANDARD;
@@ -2290,8 +2290,8 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Ask what he knows about the city", 143));
-        Choices.push_back(Choice::Base("... about Giza", 59));
-        Choices.push_back(Choice::Base("... the best place to spend the night", 99));
+        Choices.push_back(Choice::Base("Ask about Giza", 59));
+        Choices.push_back(Choice::Base("Ask the best place to spend the night", 99));
         Choices.push_back(Choice::Base("You have learned all you need and want to send him away", 95));
 
         Controls = Story::Controls::STANDARD;
@@ -2364,6 +2364,210 @@ public:
 
         Limit = 4;
     }
+};
+
+class Story081 : public Story::Base
+{
+public:
+    Story081()
+    {
+        ID = 81;
+
+        Text = "Gilgamesh stands rock-still beside you. You hear the soft whirr of a fan sucking air into his chest-plate. Then he announces that the air here is toxic.\n\n\"How toxic? The trees seem to survive well enough.\" You brush midges away from your face. \"And insects.\"\n\n\"They are adapted to the conditions here,\" replies Gilgamesh in his abrupt mechanical voice. \"Trace elements may cause cancer in higher life forms.\"\n\n\"After how long?\"\n\n\"Unknown. Even one day's exposure is potentially hazardous. Recommend you take precautions to filter your air supply or leave the vicinity.\"";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_ITEMS(player, {Item::Type::GAS_MASK}))
+        {
+            Choices.push_back(Choice::Base("Stay and rest for a few days", 103));
+            Choices.push_back(Choice::Base("Depart as Gilgamesh suggests", 426));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 169; }
+};
+
+class Story082 : public Story::Base
+{
+public:
+    Story082()
+    {
+        ID = 82;
+
+        Text = "The moon rises, wreathed in a haze of frost. In the crisp cold light, the ancient halls and towers look more than half unreal. You watch the others huddled by their campfires. No one else has much to say. Each of them is absorbed in private hopes, dreams and fears of what tomorrow will bring. When the Heart is found it will be every man for himself. Who would expect anything else, when the prize at stake is nothing less than the power of a god?\n\nVajra Singh and Thadra Bey have retreated to their respective tents and scarcely seem to invite conversation.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Talk to Chaim Golgoth", 126));
+        Choices.push_back(Choice::Base("Talk to Kyle Boche", 104));
+        Choices.push_back(Choice::Base("Talk to Janus Gaunt", 148));
+        Choices.push_back(Choice::Base("Talk to Baron Siriasis", 170));
+        Choices.push_back(Choice::Base("Turn in for the night", 192));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story083 : public Story::Base
+{
+public:
+    Story083()
+    {
+        ID = 83;
+
+        Text = "The sky is clear and blue, with high wisps of grey cloud. The snow crunches underfoot as you walk across the square to join Kyle Boche. Floating out of his tent comes the legless Baron Siriasis. You look around but the square is otherwise deserted apart from clumps of servants waiting beside the tents.\n\n\"The others have already descended,\" Boche tells you and the baron. \"Vajra Singh went with Golgoth, down through the main temple complex. Thadra Bey took herself alone into the adjoining subway tunnels. Janus Gaunt was gone before I woke.\"\n\n\"I suggest we three team up, then,\" says the baron briskly.\n\nBoche nods. \"Agreed. If we find the Heart, our alliance holds until the other teams are dealt with. Where shall we descend?\"\n\nLast night you noticed an icy crevice beside the building that Singh levelled with his MANTRAMUKTA CANNON. You point it out to the others. \"It looks to give onto the cellars, and there may be a way through to the temple catacombs below.\"\n\nThe baron gazes down into the crevice, then gives a curt nod. \"I sense it is a favourable route. It will lead us to the Heart.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::CHECK_VEHICLE(player, Character::Vehicle::MANTA_SKY_CAR))
+        {
+            return 17;
+        }
+        else
+        {
+            return 39;
+        }
+    }
+};
+
+class Story084 : public Story::Base
+{
+public:
+    Story084()
+    {
+        ID = 84;
+
+        Text = "You see the air twist inside out as the baron projects a bolt of psychic force against the oncoming creature. Like Boche's gun blast, the bolt is deflected by its shield of metal legs. \"It is a robot, immune to paradoxing,\" shouts the baron. \"We must retreat!\"\n\nYou have abetter idea. You may not be as powerful a psionic as Baron Siriasis, but that only means you've learned to be smarter. Instead of channelling your psi-force as a direct bolt, you use it to transmute the blue fluid that fills the glass bubble. Within moments the gnarled little homunculous inside is floating in acid. The thing rears up on its long legs like a dying spider, then topples to the floor. By the time you go over to look, the body inside has entirely dissolved away.\n\n\"Not a robot,\" you say to the startled baron, \"but a cyborg. You should have attacked the organic part.\"\n\nHe glares at you, then gives a curt nod of respect. \"It seems I can still learn new tricks of my craft, even from a youngster like you.\"\n\nTogether you head on to the end of the passage.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story085 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story085()
+    {
+        ID = 85;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Type = Story::Type::NORMAL;
+
+        PreText = "The brain reaches you. Its single remaining eye glares into yours, seeming to burn your soul like a lens focusing the rays of the sun. Your veins and arteries feel as though they are filled with ice water. Thoughts which are not your own intrude upon your mind. You are locked in a psychic contest for possession of your living body!";
+
+        if (!(Character::VERIFY_SKILL(player, Skill::Type::ESP) && Character::VERIFY_SKILL(player, Skill::Type::PARADOXING)))
+        {
+            PreText += "\n\nYou can do nothing to save yourself, and darkness closes over your soul as Baron Siriasis claims your body as his own.";
+
+            Type = Story::Type::DOOM;
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 151; }
+};
+
+class Story086 : public Story::Base
+{
+public:
+    Story086()
+    {
+        ID = 86;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ESP))
+        {
+            return 65;
+        }
+        else
+        {
+            return 240;
+        }
+    }
+};
+
+class Story087 : public Story::Base
+{
+public:
+    Story087()
+    {
+        ID = 87;
+
+        Text = "Boche falls to your first shot. His death acts as a signal for the start of hostilities. Golgoth and Singh, in no doubt that each is the most dangerous foe, whirl to face each other. Golgoth's first shot hisses into sparks on Singh's armour as the Sikh warlord raises his mighty MANTRAMUKTA CANNON.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+    }
+
+    int Continue(Character::Base &player) { return 410; }
+};
+
+class Story088 : public Story::Base
+{
+public:
+    Story088()
+    {
+        ID = 88;
+
+        Text = "Gargan XIV closes in on you. Gargan XIII draws a knife and looks down at Golgoth, in no hurry to finish him off. Suddenly he looks up with abroad smile. She was wrong in thinking him beaten. To the contrary, he has the look of a cat who has trapped two very large mice.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 154; }
+};
+
+class Story089 : public Story::Base
+{
+public:
+    Story089()
+    {
+        ID = 89;
+
+        Text = "There is no love lost between you and the Gargan twins. Seeing you square off warily against them, Janus Gaunt tries to defuse the situation, saying. \"Come now, we must set aside past differences. Until we can locate the Heart, a state of truce must apply.\"\n\n\"Truce? That word is a refuge for cowards,\" Gargan XIV hisses at him, while never letting her molten gaze stray from you.\n\n\"Du-En's getting overcrowded,\" says Gargan XIII as she takes a step towards you. \"Someone has to put the rubbish out.\"\n\nYou flick a glance at Gargan XIV. While her sister kept your attention, she has drawn a gun. You leap to one side just as a thin beam of energy spits past your shoulder and sears a gobbet of molten stone out of the wall behind. Gargan XIII drops into a crouch and comes stamping forward to grapple you, but you throw one of Gaunt's glassy-eyed xoms towards her and duck away behind the weathered stump of a pillar.\n\nIn the tense atmosphere of the camp, the squabble acts like a spark in a powder keg. Within seconds everyone is preparing for full-scale battle. Boche dives through an open doorway just in time to avoid Thadra Bey's throwing-dagger. An ectoplasmic aura crackles around Baron Siriasis as he marshals his psychic force. With a thoughtful frown, Chaim Golgoth draws his gun and steps back looking for a target. Janus Gaunt panics and shouts to his xom servants, \"Kill everyone! Protect me!\"\n\nThen a voice rips like thunder across the square: \"Stop this senseless fighting now!\" and turning, you have your first view of the mighty Vajra Singh.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 300; }
 };
 
 class NotImplemented : public Story::Base
@@ -2485,6 +2689,15 @@ auto story077 = Story077();
 auto story078 = Story078();
 auto story079 = Story079();
 auto story080 = Story080();
+auto story081 = Story081();
+auto story082 = Story082();
+auto story083 = Story083();
+auto story084 = Story084();
+auto story085 = Story085();
+auto story086 = Story086();
+auto story087 = Story087();
+auto story088 = Story088();
+auto story089 = Story089();
 
 void InitializeStories()
 {
@@ -2498,7 +2711,7 @@ void InitializeStories()
         &story050, &story051, &story052, &story053, &story054, &story055, &story056, &story057, &story058, &story059,
         &story060, &story061, &story062, &story063, &story064, &story065, &story066, &story067, &story068, &story069,
         &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079,
-        &story080};
+        &story080, &story081, &story082, &story083, &story084, &story085, &story086, &story087, &story088, &story089};
 }
 
 #endif

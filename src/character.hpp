@@ -26,7 +26,7 @@ namespace Character
     {
         NONE = -1,
         BURREK,
-        SKY_CAR
+        MANTA_SKY_CAR
     };
 
     class Base
