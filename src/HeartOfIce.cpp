@@ -541,7 +541,7 @@ std::vector<Button> createItemControls(std::vector<Item::Base> Items)
     return controls;
 }
 
-std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, std::vector<Item::Base> list, int start, int last, int limit)
+std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, std::vector<Item::Base> list, int start, int last, int limit, bool confirm_button)
 {
     auto controls = std::vector<Button>();
 
@@ -597,10 +597,16 @@ std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, s
         }
     }
 
+    if (confirm_button)
+    {
+        idx = controls.size();
+
+        controls.push_back(Button(idx, "icons/yes.png", idx - 1, idx + 1, idx - 1, idx, startx, buttony, Control::Type::CONFIRM));
+    }
+
     idx = controls.size();
 
-    controls.push_back(Button(idx, "icons/yes.png", idx - 1, idx + 1, idx - 1, idx, startx, buttony, Control::Type::CONFIRM));
-    controls.push_back(Button(idx + 1, "icons/back-button.png", idx, idx + 1, idx - 1, idx + 1, (1 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
+    controls.push_back(Button(idx, "icons/back-button.png", idx - 1, idx, list.size() > 0 ? (last - start) : idx, idx, (1.0 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
 
     return controls;
 }
@@ -1078,7 +1084,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
         auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space) - 2 * text_space;
 
-        auto controls = createItemList(window, renderer, items, offset, last, limit);
+        auto controls = createItemList(window, renderer, items, offset, last, limit, true);
 
         TTF_Init();
 
@@ -1217,14 +1223,17 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                             last = items.size();
                         }
 
-                        controls = createItemList(window, renderer, items, offset, last, limit);
+                        controls = createItemList(window, renderer, items, offset, last, limit, true);
 
                         SDL_Delay(50);
-
-                        current = -1;
                     }
 
-                    selected = false;
+                    if (offset <= 0)
+                    {
+                        current = -1;
+                        
+                        selected = false;
+                    }
                 }
                 else if (controls[current].Type == Control::Type::SCROLL_DOWN || ((controls[current].Type == Control::Type::SCROLL_DOWN && hold) || scrollDown))
                 {
@@ -1247,14 +1256,25 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                             last = items.size();
                         }
 
-                        controls = createItemList(window, renderer, items, offset, last, limit);
+                        controls = createItemList(window, renderer, items, offset, last, limit, true);
 
                         SDL_Delay(50);
 
-                        current = -1;
+                        if (offset > 0)
+                        {
+                            if (controls[current].Type != Control::Type::SCROLL_DOWN)
+                            {
+                                current++;
+                            }
+                        }
                     }
 
-                    selected = false;
+                    if (items.size() - last <= 0)
+                    {
+                        selected = false;
+
+                        current = -1;
+                    }
                 }
                 else if (controls[current].Type == Control::Type::ACTION && !hold)
                 {
