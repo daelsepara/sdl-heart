@@ -1137,7 +1137,14 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                 {
                     if (TakeLimit > 1)
                     {
-                        take_message = "You can TAKE up to " + std::to_string(TakeLimit) + " items.";
+                        if (TakeLimit == items.size())
+                        {
+                            take_message = "You can TAKE any number of items.";
+                        }
+                        else
+                        {
+                            take_message = "You can TAKE up to " + std::to_string(TakeLimit) + " items.";
+                        }
                     }
                     else
                     {
