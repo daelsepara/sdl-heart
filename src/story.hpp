@@ -1715,7 +1715,7 @@ public:
             DAMAGE++;
         }
 
-        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
 
         Character::GAIN_LIFE(player, DAMAGE);
 

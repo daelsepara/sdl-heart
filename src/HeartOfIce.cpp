@@ -421,41 +421,6 @@ void renderButtons(SDL_Renderer *renderer, std::vector<Button> controls, int cur
     }
 }
 
-void renderButtons(SDL_Renderer *renderer, std::vector<Button> controls, int current, int fg, int fg2, Control::Type type, int space, int pts)
-{
-    if (controls.size() > 0)
-    {
-        for (auto i = 0; i < controls.size(); i++)
-        {
-            SDL_Rect rect;
-
-            for (auto size = pts; size >= 0; size--)
-            {
-                rect.w = controls[i].W + 2 * (space - size);
-                rect.h = controls[i].H + 2 * (space - size);
-                rect.x = controls[i].X - space + size;
-                rect.y = controls[i].Y - space + size;
-
-                if (i == current)
-                {
-                    if (controls[i].Type == type)
-                    {
-                        SDL_SetRenderDrawColor(renderer, R(fg2), G(fg2), B(fg2), A(fg2));
-                    }
-                    else
-                    {
-                        SDL_SetRenderDrawColor(renderer, R(fg), G(fg), B(fg), A(fg));
-                    }
-
-                    SDL_RenderDrawRect(renderer, &rect);
-                }
-            }
-
-            renderImage(renderer, controls[i].Surface, controls[i].X, controls[i].Y);
-        }
-    }
-}
-
 std::vector<TextButton> createHTextButtons(const char **choices, int num, int text_buttonh, int text_x, int text_y)
 {
     auto controls = std::vector<TextButton>();
@@ -2566,13 +2531,11 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                 SDL_SetWindowTitle(window, story->Title);
             }
 
+            fillWindow(renderer, intWH);
+
             if (background)
             {
-                stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-            }
-            else
-            {
-                fillWindow(renderer, intWH);
+                stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, buttony - button_space);
             }
 
             if (splash)
@@ -2606,7 +2569,7 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
 
             fillRect(renderer, textwidth + arrow_size + button_space, text_bounds, textx, texty, intBE);
 
-            renderButtons(renderer, controls, current, background ? intWH : intGR, intGR, Control::Type::ACTION, text_space, text_space / 2);
+            renderButtons(renderer, controls, current, intGR, text_space, text_space / 2);
 
             for (auto i = 0; i < story->Choices.size(); i++)
             {
@@ -3388,8 +3351,10 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     SDL_SetWindowTitle(window, (std::string("Heart of Ice: ") + std::to_string(story->ID)).c_str());
                 }
 
+                fillWindow(renderer, intWH);
+
                 //Fill the surface with background
-                stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+                stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, buttony - button_space);
 
                 if (story->Image)
                 {
@@ -3427,7 +3392,13 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     }
                 }
 
-                renderButtons(renderer, controls, current, intWH, border_space, border_pts);
+                if(!compact)
+                {
+                    fillRect(renderer, controls[0].W + 2 * border_space, controls[0].H + 2 * border_space, controls[0].X - border_space, controls[0].Y - border_space, intWH);
+                    fillRect(renderer, controls[1].W + 2 * border_space, controls[1].H + 2 * border_space, controls[1].X - border_space, controls[1].Y - border_space, intWH);
+                }
+
+                renderButtons(renderer, controls, current, intGR, border_space, border_pts);
 
                 bool scrollUp = false;
                 bool scrollDown = false;
