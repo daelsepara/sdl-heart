@@ -21,8 +21,10 @@ namespace Item
         ANTIDOTE_PILLS,
         ID_CARD,
         VADE_MECUM,
+        LITTLE_GAIA,
+        GAS_MASK,
         First = BARYSAL_GUN,
-        LAST = VADE_MECUM
+        LAST = GAS_MASK
     };
 
     class Base
@@ -69,11 +71,15 @@ namespace Item
     auto ANTIDOTE_PILLS = Item::Base("ANTIDOTE PILLS", "ANTIDOTE PILLS", Item::Type::ANTIDOTE_PILLS);
     auto ID_CARD = Item::Base("ID CARD", "ID CARD", Item::Type::ID_CARD);
     auto VADE_MECUM = Item::Base("VADE MECUM", "VADE MECUM", Item::Type::VADE_MECUM);
+    auto LITTLE_GAIA = Item::Base("LITTLE GAIA", "LITTLE GAIA", Item::Type::LITTLE_GAIA);
+    auto GAS_MASK = Item::Base("GAS MASK", "GAS MASK", Item::Type::GAS_MASK);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,
         Item::Type::SPECULUM_JACKET,
-        Item::Type::MANTRAMUKTA_CANNON};
+        Item::Type::MANTRAMUKTA_CANNON,
+        Item::Type::VADE_MECUM,
+        Item::Type::LITTLE_GAIA};
 
     bool IsUnique(Item::Type item)
     {

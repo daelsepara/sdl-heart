@@ -1591,6 +1591,248 @@ public:
     int Continue(Character::Base &player) { return 229; }
 };
 
+class Story051 : public Story::Base
+{
+public:
+    Story051()
+    {
+        ID = 51;
+
+        Text = "The elevator carries almost to the top floor of the building, where a well-equipped gym overlooks the city. You spend half an hour on the treadmill, watching your own reflection in the glass window superimposed against the mist-shrouded towers and twinkling lights of Kahira. Another half hour on various weights machines leaves you feeling firmed up and fit. You finish with five minutes on a massage bed followed by a relaxing spa.\n\nAs you are leaving the changing room, you almost collied with a huge Fijian in a trim black suit and mirror glasses. He grunts an absent-minded apology and hurries past, staring urgently around the room. He is the only other person you have seen in the building who doesn't seem to be an employee here. You are about to head off towards the elevator when he calls after you, \"Hey! Who are you?\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 227, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("[CLOSE COMBAT]", 248, Skill::Type::CLOSE_COMBAT));
+        Choices.push_back(Choice::Base("[CUNNING]", 269, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("You had better run for it", 290));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story052 : public Story::Base
+{
+public:
+    Story052()
+    {
+        ID = 52;
+
+        Text = "The elevator reaches the ground floor and the doors slide open. You step out, only to be confronted by a group of uniformed security men with rifles. \"You're in illegal possession of a Compass Society ID,\" growls the security chief with a wolfish grin.\n\n\"Let me explain.\"\n\nHe shakes his head. \"Tell it to the marines. Better yet, tell it to the angels.\"\n\nWith a click of his fingers, he signals to his men and you are blasted apart in a juddering hail of gunfire.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+
+        Type = Story::Type::DOOM;
+    }
+};
+
+class Story053 : public Story::Base
+{
+public:
+    Story053()
+    {
+        ID = 53;
+
+        Text = "A rustling in the leaf canopy directly overhead warns you of danger. You open your eyes in time to see a narrow wedge-shaped head shaking down from the branches, its wide pink mouth lined with teeth like needles.\n\nYou react instantly, flipping backwards over the log an instant before the jaws strike. The creature roars back, spitting out soil and twigs, head bobbing on a long grey cable of neck, and lunges again. You slip aside, snatch up your belonging, and race off through the trees.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 228; }
+};
+
+class Story054 : public Story::Base
+{
+public:
+    Story054()
+    {
+        ID = 54;
+
+        Text = "You take yourself to a table and sit down. The twins watch you for a moment longer, then return to their drinking.\n\nYou glance around the inn. No one else dares stand up to the two Amazons. What about you?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Eavesdrop", 208));
+        Choices.push_back(Choice::Base("[ESP] Read their minds", 230, Skill::Type::ESP));
+        Choices.push_back(Choice::Base("[CUNNING] Try to outwit them", 120, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Draw a BARYSAL GUN", 98, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("You had better mind your own business", 252));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story055 : public Story::Base
+{
+public:
+    Story055()
+    {
+        ID = 55;
+
+        Text = "The computer locks you out. You try rebooting, to no avail. With a shrug, you turn to exploring the rest of the pyramid idly wondering what Gaia was up to when she entered the stream of inexplicable commands into the computer system here.\n\nThe answer comes so suddenly that you never know it. Gaia was in the throes of her periodic madness when you contacted her this time. She located the nuclear reactor supplying power to the pyramid and ordered it to go critical. Without warning a blossom of plasma erupts from the earth. For a brief incandescent second it is as though time has turned back to before the Ice Age, and the Pyramid of Cheops once more sits on hot sands in blazing light. Then the blast spreads -- sweeping away the pyramids that have stood here for fifty centuries, vaporizing the snow and ice covering the desert, turning the rock to lava and the river to steam, and making of Kahira a cinderous ruin. In the midst of such a holocaust, your own death goes unnoticed.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+
+        Type = Story::Type::DOOM;
+    }
+};
+
+class Story056 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story056()
+    {
+        ID = 56;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "You curse the recklessness that brought you into the Ice Wastes before you were adequately prepared. Your lack of food intensifies the cold, which seems to drill into your bones. Each dawn you arise lethargic and listless, like on who has been visited by a vampire in the night. Each step you take costs a greater effort. You feel torpid with fatigue and hunger.\n\n";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            PreText += "[SURVIVAL] ";
+
+            DAMAGE = -2;
+        }
+
+        if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+        {
+            PreText += "[Vehicle: BURREK] ";
+
+            DAMAGE++;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+            {
+                PreText += "\n\n[SURVIVAL] You manage to trap a bird which alights on one of the tors of glacial ice for food.";
+            }
+
+            if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+            {
+                PreText += "\n\n[Vehicle: BURREK] You tap some of the BURREK's oily blood for sustenance.";
+            };
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 100; }
+};
+
+class Story057 : public Story::Base
+{
+public:
+    Story057()
+    {
+        ID = 57;
+
+        Text = "You touch the red button. The box produces a prolonged hum which rises in tone and then ends with a bleep. \"Ready,\" says a synthetic feminine voice from the speaker.\n\nTaken aback for a moment, you lean closer and gingerly speak to the box. \"Er... ready for what?\"\n\n\"Explain,\" says the box crisply. \"Your query was unspecific.\"\n\n\"Is this a radio? Who am I talking to?\"\n\nLITTLE GAIA: \"I am a miniature facsimile of the Global Artificial Intelligence Array,\" replies the box.\n\n\"Gaia? But Gaia is crazy.\"\n\nLITTLE GAIA: \"I was loaded with Gaia's program prior to virus infection. I am able to model the thinking of the Gaia system at a reduced rate owing to my limited memory capacity, which now stands at 512 gigabytes.\"\n\n\"What can you tell me about the Heart of Volent?\"\n\nLITTLE GAIA: \"Nothing. No such information has been loaded into my memory.\" The device has an annoyingly smug little voice. All the same, if it has even a fraction of Gaia's intelligence then it may be useful.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Search the lab for other equipment", 80));
+        Choices.push_back(Choice::Base("Descend to the bottom level", 255));
+        Choices.push_back(Choice::Base("Leave", 361));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_ITEMS(player, {Item::LITTLE_GAIA});
+    }
+};
+
+class Story058 : public Story::Base
+{
+public:
+    Story058()
+    {
+        ID = 58;
+
+        Text = "The volcanic gases here make the air poisonous, stunting the trees around the oasis and causing the slow death of animal life. No doubt those insects swarming in the sudorific updraughts have had to mutate in order to tolerate the conditions here. You know that the prolonged exposure to the tainted air might eventually cause cancer unless you have some protection. Otherwise it is only worth staying if you are on the brink of death and are so desperate for recuperation now that you are willing to take a gamble with your life.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_CODEWORD(player, Codeword::Type::TALOS) && !Character::VERIFY_ITEMS(player, {Item::Type::GAS_MASK}))
+        {
+            Choices.push_back(Choice::Base("Stay for a day or so", 103));
+            Choices.push_back(Choice::Base("Continue onwards at once", 426));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 169; }
+};
+
+class Story059 : public Story::Base
+{
+public:
+    Story059()
+    {
+        ID = 59;
+
+        Text = "He holds up his finger. \"Ah, it is a very ancient place, not very far to the west. There, in ancient times, were buried the royalty of Egypt. Later, men came from the distant corners of the globe with a great warrior they called Gilgamesh, who had skin of iron and eyes of fire. They told him to watch across the snows for stirrings of life in the ruins of Du-En and, if any threat arose from there, he was to take up his sword and venture forth.\" Bador sees the look on your face. \"It is true, all true!\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask for advice about the Sahara", 77));
+        Choices.push_back(Choice::Base("About Kahira itself", 143));
+        Choices.push_back(Choice::Base("Where to stay in the city", 99));
+        Choices.push_back(Choice::Base("Dismiss him", 95));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story060 : public Story::Base
+{
+public:
+    Story060()
+    {
+        ID = 60;
+
+        Text = "If Gaia is to be believed, to unleash the power of the Heart would spell death for all of creation. But is she to be believed? Or trusted, for that matter? Gaia is not even a 'she', but an 'it' -- just an artificial intelligence resident in a network of computers. And schizophrenic into the bargain, thanks to the computer viruses entrenched in her software. You must make up your own mind. If you think the Heart should be destroyed, you will need to find a friend who is willing to help you do it. You look dubiously around the faces limned in the campfires. By their very nature, these are the most ruthless and determined adventurers of the age. Can you make them trust you? Or should you forget Gaia's dire warning, and just try to get the Heart for yourself?";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ESP))
+        {
+            return 152;
+        }
+        else
+        {
+            return 82;
+        }
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -1680,6 +1922,16 @@ auto story047 = Story047();
 auto story048 = Story048();
 auto story049 = Story049();
 auto story050 = Story050();
+auto story051 = Story051();
+auto story052 = Story052();
+auto story053 = Story053();
+auto story054 = Story054();
+auto story055 = Story055();
+auto story056 = Story056();
+auto story057 = Story057();
+auto story058 = Story058();
+auto story059 = Story059();
+auto story060 = Story060();
 
 void InitializeStories()
 {
@@ -1690,7 +1942,8 @@ void InitializeStories()
         &story020, &story021, &story022, &story023, &story024, &story025, &story026, &story027, &story028, &story029,
         &story030, &story031, &story032, &story033, &story034, &story035, &story036, &story037, &story038, &story039,
         &story040, &story041, &story042, &story043, &story044, &story045, &story046, &story047, &story048, &story049,
-        &story050};
+        &story050, &story051, &story052, &story053, &story054, &story055, &story056, &story057, &story058, &story059,
+        &story060};
 }
 
 #endif
