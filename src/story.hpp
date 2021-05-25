@@ -4061,7 +4061,7 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Release the Heart's power", 174));
-        Choices.push_back(Choice::Base("Prevent the Heart ever falling into anyone's hands", 197, {Item::STASIS_BOMB}));
+        Choices.push_back(Choice::Base("Prevent the Heart ever falling into anyone's hands (STASIS BOMB)", 197, {Item::STASIS_BOMB}));
         Choices.push_back(Choice::Base("Reject the chance for power", 454));
 
         Controls = Story::Controls::STANDARD;
@@ -4195,6 +4195,279 @@ public:
 
         Controls = Story::Controls::STANDARD;
     }
+};
+
+class Story160 : public Story::Base
+{
+public:
+    Story160()
+    {
+        ID = 160;
+
+        Text = "The Society's books add little to what you already knew. The Heart of Volent fell from space, a meteorite resembling a violet gemstone two metres across. It became revered by a religious cult calling themselves the Volentine Watchers, led by one Eleazar Picard. Learning how to tap the Heart's power, the cultists reversed the degradation of Earth's environment in a small region around their city of Du-En, in the Sahara, and for a time enjoyed prosperity.\n\nThen came the Paradox War. The Volentine Watchers used their strange power to send blasts of chaos-inducing radiation against the nations of the world, whom they deemed corrupt and decadent. The new Ice Age was already under way because of Gaia's instability, and the Paradox War accelerated the process. Some regions became so irradiated that the normal laws of nature no longer applied, and they were quickly overrun by eerie mutants.\n\nThe rest of the world allied to establish a military bunker at Giza, intending to strike from there against Du-En, but it was never needed. The people of Du-En succumbed to mass insanity and fled their city, only to perish in the Sahara as the snows returned. Eleazar Picard himself was found by a patrol from al-Lat, but only rambled incoherently for a few days before dying. Du-En was declared off limits, the Sahara an icy wasteland inhabited only by ghosts. And so it has remained for two hundred years.\n\nYou return the books to the shelves.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try making contact with Gaia", 138));
+        Choices.push_back(Choice::Base("You've finished in the library", 73));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            Choices[0].Destination = 116;
+        }
+        else
+        {
+            Choices[0].Destination = 138;
+        }
+    }
+};
+
+class Story161 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story161()
+    {
+        ID = 161;
+
+        Bye = "You give a hoarse grunt of relief through frost-numbed limbs when the towers and cupolas of Venis finally appear against the skyline.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "You trek wearily onwards, often plunging almost to your waist through fine powdery banks of snow. The sun pokes feeble rays of light across the bleak sky like an old man clutching for his pills. Quicksilver ribbons lie across the landscape, marking out the course of glaciers through the ridges of rock. Night descends like a sheath of hoarfrost. For days your ordeal continues as you cross the rugged mountain slops and finally begin your descent towards the foothills.";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            DAMAGE = -2;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && Character::VERIFY_ITEMS(player, {Item::Type::SHORT_SWORD}))
+        {
+            return 8;
+        }
+        else
+        {
+            return 334;
+        }
+    }
+};
+
+class Story162 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story162()
+    {
+        ID = 162;
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Rest here", 184));
+        Choices.push_back(Choice::Base("Press on further into the jungle", 250));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "With each step you take you are getting weaker.\n\nYou LOSE 1 Life Point.";
+
+        Character::GAIN_LIFE(player, -1);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nThe blood is still pouring freely from the jagged rip in your shoulder, and you realize that the creature must have injected an anti-clotting agent. Hurriedly tearing the lining of your jacket into strips, you bind the wound to prevent further blood loss.\n\nLooking back, you see no sign of your pursuer. Perhaps it lost interest after having a taste of your flesh.";
+        }
+
+        Text = PreText.c_str();
+    }
+};
+
+class Story163 : public Story::Base
+{
+public:
+    Story163()
+    {
+        ID = 163;
+
+        Text = "You are held at gunpoint while your arms are wrenched behind your back and securely tied. One of the men rummages through your belongings, then jerks his thumb contemptuously towards you. \"Are we keeping an extra mouth to feed, then, Snarvo?\"\n\nThe man with the knife sneers. \"Not unless you want a pet for yourself, mate.\"\n\n\"Hang on,\" says the third man as he tucks his gun away. He stands peering at you in the firelight, chewing his lip thoughtfully. \"I've seen your face before, haven't I?\"\n\n\"Yeah,\" you say sarcastically, \"at the President's last garden party in Dallas.\"\n\nThe others snigger at this, admiring your casual attitude in the face of death, but the man with the gun stands there glowering in silence. Suddenly he clicks his fingers. \"On a wanted poster in Daralbad, that's where it was. They've et a bounty of five hundred scads for you, my friend.\"\n\n\"I'm much in demand.\"\n\n\"Too right! Too right!\" He strides excited around the fire, then turns to his cronies. \"Well, what's it to be? Hang on here in the hope of another bear, or take this prize to Daralbad for the bounty?\"\n\nThey settle on cashing you in for the reward. You pretend to take the news sourly, then wait while they celebrate by drinking themselves into a stupor. Flexing your wrists, you soon work free of your bonds and creep quietly over to their supply packs. You remove three FOOD PACKs, a COLD-WEATHER SUIT, and some POLARIZED GOGGLES.";
+
+        Bye = "Then you slip out into the snow.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::COLD_WEATHER_SUIT, Item::POLARIZED_GOGGLES};
+
+        Limit = 5;
+    }
+
+    int Continue(Character::Base &player) { return 314; }
+};
+
+class Story164 : public Story::Base
+{
+public:
+    Story164()
+    {
+        ID = 164;
+
+        Text = "Gargan XIII heartily shakes your hand, Gargan XIV sets up the glasses and pours each of you a shot of vodka. You take the glass and sip, only to wince as the alcohol sears into your cut gums. A mist of blood tinges the vodka. The Gargan sisters down their own drinks without a murmur. \"You are a fine warrior!\" declares XIV with approval.\n\nDespite their declarations of friendship, you are careful not to drink much. It's possible that, having realized you are too tough to beat in a straight fight, they hope to ply you with vodka until you are helpless. Turning to the innkeeper, you ask, \"I'll take food and a room for the night. How much do I owe you?\"\n\nEyes rolling in fright at the two Amazons, he flaps a hand limply in the air and replies in a strained voice: \"No charge, since you are a friend of these fine ladies.\"\n\nYou recover a bit after a night's rest.\\n\nYou RECOVER 1 Life Point.\n\nIn the morning, the innkeeper provides you with a FOOD PACK for the journey.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Travel with the Gargan sisters", 294));
+        Choices.push_back(Choice::Base("Delay setting out until they have moved on", 273));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, 1);
+        Character::GET_ITEMS(player, {Item::FOOD_PACK});
+    }
+};
+
+class Story165 : public Story::Base
+{
+public:
+    Story165()
+    {
+        ID = 165;
+
+        Text = "Choose where to turn in for the night.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Bed down in a park", 209));
+        Choices.push_back(Choice::Base("A quiet back alley", 231));
+        Choices.push_back(Choice::Base("An open plaza", 253));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::STREETWISE))
+        {
+            return 187;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+};
+
+class Story166 : public Story::Base
+{
+public:
+    Story166()
+    {
+        ID = 166;
+
+        Text = "You steady yourself as if you were suffering a giddy spell. \"I... can't remember,\" you tell him. \"My mind's a blank. The accident...\"\n\nHe glances at the doctor, who nods and says: \"That isn't uncommon in a case like this. You'll find your memory patchy at first, but it will slowly come back to you.\"\n\nThe pilot seems satisfied. His brooding look is suddenly swept away by an open smile. \"I have forgotten my manners. I am Riza Baihaqi; this is Dr. Anwar Mujam.\"\n\nYou shake hands. \"Be careful to use your flesh-and-blood hand for delicate tasks,\" warns the doctor. \"The grip strength of your cyborg arm is enough to crush bone.\"\n\n\"I'll be careful,\" you reply with a strained laugh.\n\nRiza gestures towards the viewport where the crescent Earth hangs like a luminous pearl. \"You would of course be welcome to remain here as our guest, but I expect that you will be anxious to return to Earth?\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go straight back to earth", 275));
+        Choices.push_back(Choice::Base("Tell Riza about your quest", 188));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story167 : public Story::Base
+{
+public:
+    Story167()
+    {
+        ID = 167;
+
+        Text = "There is an alphanumeric keypad set in a recess beside the door. You tap in the sequence H-U-M-B-A-B-A and hold your breath, hardly daring to hope that the antique circuitry still works. Then, with a soft whir, the door slides up and you are able to step into the interior of the Great Pyramid.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 233; }
+};
+
+class Story168 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story168()
+    {
+        ID = 168;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Type = Story::Type::NORMAL;
+
+        PreText = "After some squirming, you manage to wedge yourself into the shaft and begin a slow ascent. You are in total darkness. Minutes crawl by, and the air grows stifling as you climb. At last with the sweat pouring off your body, you are on the verge of giving up when you detect a nimbus of grey light from just above. You struggle towards it, cramming your body around a twist in the shaft. A heady aroma hangs in the air here, sweet as greenwood.\n\nYou emerge into a larger space at the junction of several ducts. As your eyes adjust to the faint light trickling down from above, you make out a human shape in the gloom. He is hanging like a puppet, entangled in a thick mass of fleshy creepers dangling from the top of the shaft. You approach and touch his shoulder. His head lolls back slowly, falls off, and strikes the floor with a hollow clatter.\n\nYou cannot stifle a gasp of horror. You step back, only to find a taut vine cable wound around your ankle. Another brushes your face, gropes with abrupt vitality, and seizes your throat in a firm grip. The creepers are alive and predatory. You struggle, grappling with the vine at your neck to no avail. It is tightening, squeezing your windpipe. Your pulse pounds inside your ears with a dull roar.";
+
+        if (!Character::VERIFY_ITEMS(player, {Item::Type::VINE_KILLER}))
+        {
+            Type = Story::Type::DOOM;
+
+            PreText += "\n\nThere is nothing you can do to free yourself and you will slowly strangle to death in the grip of the mutant plant.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 190; }
+};
+
+class Story169 : public Story::Base
+{
+public:
+    Story169()
+    {
+        ID = 169;
+
+        Text = "The air here is tolerable once filtered of volcanic fumes. You build a lean-to beside the bubbling pool in the shelter of the dwarf conifers. Although the water of the pool is undrinkable, you can easily collect snow from beyond the edge of the oasis and bring it back to camp to melt. For food, you catch insects and grubs and bake them on the hot rocks.\n\nYou RECOVER 4 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, 4);
+    }
+
+    int Continue(Character::Base &player) { return 426; }
 };
 
 class NotImplemented : public Story::Base
@@ -4395,6 +4668,16 @@ auto story156 = Story156();
 auto story157 = Story157();
 auto story158 = Story158();
 auto story159 = Story159();
+auto story160 = Story160();
+auto story161 = Story161();
+auto story162 = Story162();
+auto story163 = Story163();
+auto story164 = Story164();
+auto story165 = Story165();
+auto story166 = Story166();
+auto story167 = Story167();
+auto story168 = Story168();
+auto story169 = Story169();
 
 void InitializeStories()
 {
@@ -4415,7 +4698,8 @@ void InitializeStories()
         &story120, &story121, &story122, &story123, &story124, &story125, &story126, &story127, &story128, &story129,
         &story130, &story131, &story132, &story133, &story134, &story135, &story136, &story137, &story138, &story139,
         &story140, &story141, &story142, &story143, &story144, &story145, &story146, &story147, &story148, &story149,
-        &story150, &story151, &story152, &story153, &story154, &story155, &story156, &story157, &story158, &story159};
+        &story150, &story151, &story152, &story153, &story154, &story155, &story156, &story157, &story158, &story159,
+        &story160, &story161, &story162, &story163, &story164, &story165, &story166, &story167, &story168, &story169};
 }
 
 #endif
