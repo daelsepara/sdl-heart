@@ -4654,7 +4654,7 @@ public:
         Text = "You find an answer to your enquiries in a drinking parlour under the Bridge of Sighs. Here a group of men, rendered affable and talkative by the vials of synthash liqueur they have imbibed, tell you all you need to know.\n\n\"Ky Boche?\" says one of them, scowling distractedly out into the drizzle beyond the eaves of the drinking parlour. \"I have heard of him. A wayfarer and sometimes trader.\"\n\n\"A trader?\" snorts another of the men, sluicing the hot liqueur around his mouth before adding, \"A parasite, rather. His sole instinct is treachery; his sole talent is self-preservation.\"\n\nYou turn to the man who has just spoken. \"I take it you've personally had dealings with Kyle Boche?\"\n\nHe nods slowly, narrowing his eyes as he peers inward at his memories through a haze of synthash fumes. \"We collaborated in a smuggling operation running furs into Daralbad. This was a few years back. The militia were alerted and Boche scarpered in the boat, leaving me to face the music alone. They're pigs in Daralbad, and that's how I lost these two fingers, see? Later I managed to escape, and I heard Boche had been strutting around telling everyone how I let him down. If I knew where to find him, I'd go this minute and put a knife through his weaselly heart!\"\n\nA third man joins the conversations. \"I do not wholly disagree with my friend here, except to add that Boche's character is more complex than he suggests. If he is treacherous or self-serving, he is not aware of being so, for he is a man of such prodigious vanity that he can admit no faults.\n\n\"The other man, refilling his glass, only hisses like an angry swan and says again, \"He is a mere parasite!\"\n\nIf you wish to reveal your knowledge of Boche's whereabouts to the man he betrayed, he will pay you 10 scads for the information.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Reveal Kyle Boche's whereabouts", 2179, Choice::Type::GAIN_MONEY, 10));
+        Choices.push_back(Choice::Base("Reveal Kyle Boche's whereabouts", -179, Choice::Type::GAIN_MONEY, 10));
         Choices.push_back(Choice::Base("Refuse the bribe", 414));
 
         Controls = Story::Controls::STANDARD;
@@ -4666,7 +4666,7 @@ class Event179 : public Story::Base
 public:
     Event179()
     {
-        ID = 2179;
+        ID = -179;
 
         Choices.clear();
 
