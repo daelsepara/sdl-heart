@@ -31,8 +31,9 @@ namespace Item
         LANTERN,
         STASIS_BOMB,
         VINE_KILLER,
+        BATTERY_UNIT,
         First = BARYSAL_GUN,
-        LAST = VINE_KILLER
+        LAST = BATTERY_UNIT
     };
 
     class Base
@@ -94,6 +95,7 @@ namespace Item
     auto LANTERN = Item::Base("LANTERN", "LANTERN", Item::Type::LANTERN);
     auto STASIS_BOMB = Item::Base("STASIS BOMB", "STASIS BOMB", Item::Type::STASIS_BOMB);
     auto VINE_KILLER = Item::Base("VINE KILLER", "VINE KILLER", Item::Type::VINE_KILLER);
+    auto BATTERY_UNIT = Item::Base("BATTERY UNIT", "BATTERY UNIT", Item::Type::BATTERY_UNIT, 6);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,

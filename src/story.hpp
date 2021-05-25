@@ -4470,6 +4470,220 @@ public:
     int Continue(Character::Base &player) { return 426; }
 };
 
+class Story170 : public Story::Base
+{
+public:
+    Story170()
+    {
+        ID = 170;
+
+        Text = "The baron is cloistered in his tent. A couple of servants are hunkered down in the snow outside next to a glimmering fire, but they pay you no heed. Glancing into the tent as you pass, you notice that the baron is intently studying a video screen which he has set up on a low table next to the cushions on which he is propped. He seems to be muttering something quietly to himself.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Eavesdrop", 364));
+        Choices.push_back(Choice::Base("Boldly enter the tent uninvited", 386));
+        Choices.push_back(Choice::Base("Go and talk to Golgoth", 126));
+        Choices.push_back(Choice::Base("Talk to Boche", 104));
+        Choices.push_back(Choice::Base("Talk to Gaunt", 148));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story171 : public Story::Base
+{
+public:
+    Story171()
+    {
+        ID = 171;
+
+        Text = "It is a beam phantom -- the victim of a teleporter accident which has left it eternally out of phase with the rest of the world. Such creatures suffer eternal torment because of the teleporter's mangling of their internal organs, but there is nothing that can be done for them, since they do not truly exist. Even in their ghostly state they are dangerous, however, as their desire to return to solid form means that they insatiably seek contact with the living. And their touch drains all life energy.\n\nWhile you still have strength to move, you shrug off your jacket and lunge forward holding it like a net, catching the beam phantom inside. The feel of it is sickening, like a broken body that has been put back together by a maniac surgeon. Even with the jacket insulating your grip, its negative force drains you like a well of coldness.\n\nYou LOSE 2 Life Points.";
+
+        Bye = "You succeed in manhandling the squirming creature over to the chasm and hurling it down. Its thin bleating cry echoes up from the depths as it falls, trailing its gleaming wisps of vapour like a comet's tail.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -2);
+    }
+
+    int Continue(Character::Base &player) { return 149; }
+};
+
+class Story172 : public Story::Base
+{
+public:
+    Story172()
+    {
+        ID = 172;
+
+        Text = "You hear a scuttling of many insectoid legs. In the sudden flare of light you catch a glimpse of a shape like a giant black centipede, mouthparts churning like oiled blades. Blinded by the unexpected light, it writhes and retreats in panic to the darkness of the cloisters. The three of you seize your chance to hurry on through the iron-bound door, slamming it behind you. A moment later a heavy form thuds against the door.\n\n\"That was a close call,\" breathes Boche, wiping a trickle of cold sweat out of his eyes.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story173 : public Story::Base
+{
+public:
+    Story173()
+    {
+        ID = 173;
+
+        Text = "Misjudging the leap, you fall short by an arm's length and go plunging down through the fog to meet your doom on the hard flagstones twenty storeys below.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story174 : public Story::Base
+{
+public:
+    Story174()
+    {
+        ID = 174;
+
+        Text = "You kneel beside the huge gem and embrace it, feeling its power surge through you. Coruscating bands of energy blaze from the depths of the unearthly gem, swathing you in an aura of blinding violet light. The fabric of reality is ripped apart and you feel weightless. A vortex spins up through the dome, sweeping away rock and air, rising up into space out past the moon and planets. In what seems like seconds, all of creation has been swept away, replaced by a new universe of your own making.";
+
+        Type = Story::Type::GODHOOD;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story175 : public Story::Base
+{
+public:
+    Story175()
+    {
+        ID = 175;
+
+        Image = "images/laser-bots.png";
+
+        Text = "There is a sound from somewhere ahead in the maze of tunnels. Boche cocks his hear. \"It's the old-fashioned laser fire,\" he says, adding significantly: \"But none of the others were carrying lasers.\"\n\nThe mystery is soon explained. Turning a corner, you find yourselves facing three hover-droids that resemble large silver eggs with a rotating gun-turret mounted underneath. They are gliding directly towards you, the aiming-lights of their lasers playing across your vision. Boche throws himself down a side tunnel. You are in motion an instant later, just as three laser beams lance out, burning a patch of molten stone on the floor where you had been standing.\n\nRacing headlong through the tunnels, you reach a circular room with a violet starburst set in mosaic on the floor. Several other tunnels lead into the chamber, and down one of them you see Vajra Singh, Thadra Bey and Chaim Golgoth running from another group of hover-droids. \"We stirred up a whole nest of them,\" shouts Golgoth. \"Too many to fight!\"\n\nAs he enters the room, Vajra Singh whirls and fires his mantramukta cannon over the heads of Bey and Golgoth. Four hover-droids explode in a blossom of plasma, but you can see others converging on the room from the other tunnels.\n\nAcross the sweep of the opposite wall are seven glass-fronted elevators, each large enough for one person. Thadra Bey lopes across to the nearest and the door slides shut behind her. In moments the room will be swarming with hover-droids. The rest of you have no choice but to follow her lead. As you step into an elevator, the door closes and an electronic voice says: \"Identify yourself, please.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Tell the truth", 280));
+        Choices.push_back(Choice::Base("Pretend to be a follower of the Volentine cult", 301));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story176 : public Story::Base
+{
+public:
+    Story176()
+    {
+        ID = 176;
+
+        Text = "You return to the surface. Janus Gaunt and Thadra Bey are already back at the camp. They tell you they explored a warren of tunnels under the plaza but to no avail. \"All we found were vaults full of mildewed grain,\" growls Bey.\n\nThe long list of sunset is bathing the ruins by the time Vajra Singh and the baron reappear. You soon learn that they set out along different routes which converged at a long underground hall. They are obviously excited by what they discovered. \"We have identified the temple precincts,\" announces Vajra Singh, gesturing to a cluster of buildings across the square. \"The Heart of Volent lies somewhere below. Tomorrow may be the last day of the search.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 38; }
+};
+
+class Story177 : public Story::Base
+{
+public:
+    Story177()
+    {
+        ID = 177;
+
+        Text = "Boche is not enthusiastic. \"The Lyonesse region is infested with malefactors and noctambules,\" he avers. \"We would be at great risk. Also, the Atlas Mountains are a daunting obstacle. As your partner in this venture, I strongly urge you to reconsider.\"\n\nHe is obviously not willing to accompany you if you insist on heading west.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Do so anyway", 221));
+        Choices.push_back(Choice::Base("Change your mind and take the road to Venis", 200));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story178 : public Story::Base
+{
+public:
+    Story178()
+    {
+        ID = 178;
+
+        Text = "Strewn amid the mortal remains of the gorgon's victims, you discover a number of items: an ID CARD, a BATTERY UNIT for a BARYSAL GUN (good for six charges), a working FLASHLIGHT, and a set of POLARIZED GOGGLES.\n\nBoche holds up the goggles and jokes, \"I don't suppose our one-eyed chum had much use for these, eh?\" He insists on an equal division of the spoils, but gives you first choice.";
+
+        Bye = "You spend a reasonably comfortable night in the cave and head on your way in the morning.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::ID_CARD, Item::BATTERY_UNIT, Item::FLASHLIGHT, Item::POLARIZED_GOGGLES};
+
+        Limit = 2;
+    }
+
+    int Continue(Character::Base &player) { return 199; }
+};
+
+class Story179 : public Story::Base
+{
+public:
+    Story179()
+    {
+        ID = 179;
+
+        Text = "You find an answer to your enquiries in a drinking parlour under the Bridge of Sighs. Here a group of men, rendered affable and talkative by the vials of synthash liqueur they have imbibed, tell you all you need to know.\n\n\"Ky Boche?\" says one of them, scowling distractedly out into the drizzle beyond the eaves of the drinking parlour. \"I have heard of him. A wayfarer and sometimes trader.\"\n\n\"A trader?\" snorts another of the men, sluicing the hot liqueur around his mouth before adding, \"A parasite, rather. His sole instinct is treachery; his sole talent is self-preservation.\"\n\nYou turn to the man who has just spoken. \"I take it you've personally had dealings with Kyle Boche?\"\n\nHe nods slowly, narrowing his eyes as he peers inward at his memories through a haze of synthash fumes. \"We collaborated in a smuggling operation running furs into Daralbad. This was a few years back. The militia were alerted and Boche scarpered in the boat, leaving me to face the music alone. They're pigs in Daralbad, and that's how I lost these two fingers, see? Later I managed to escape, and I heard Boche had been strutting around telling everyone how I let him down. If I knew where to find him, I'd go this minute and put a knife through his weaselly heart!\"\n\nA third man joins the conversations. \"I do not wholly disagree with my friend here, except to add that Boche's character is more complex than he suggests. If he is treacherous or self-serving, he is not aware of being so, for he is a man of such prodigious vanity that he can admit no faults.\n\n\"The other man, refilling his glass, only hisses like an angry swan and says again, \"He is a mere parasite!\"\n\nIf you wish to reveal your knowledge of Boche's whereabouts to the man he betrayed, he will pay you 10 scads for the information.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Reveal Kyle Boche's whereabouts?", 2179, Choice::Type::GAIN_MONEY, 10));
+        Choices.push_back(Choice::Base("Refuse the bribe", 414));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Event179 : public Story::Base
+{
+public:
+    Event179()
+    {
+        ID = 2179;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::DIAMOND);
+        }
+
+        return 414;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -4678,11 +4892,22 @@ auto story166 = Story166();
 auto story167 = Story167();
 auto story168 = Story168();
 auto story169 = Story169();
+auto story170 = Story170();
+auto story171 = Story171();
+auto story172 = Story172();
+auto story173 = Story173();
+auto story174 = Story174();
+auto story175 = Story175();
+auto story176 = Story176();
+auto story177 = Story177();
+auto story178 = Story178();
+auto story179 = Story179();
+auto event179 = Event179();
 
 void InitializeStories()
 {
     Stories = {
-        &earth23rdCentury,
+        &earth23rdCentury, &event179,
         &prologue, &story001, &story002, &story003, &story004, &story005, &story006, &story007, &story008, &story009,
         &story010, &story011, &story012, &story013, &story014, &story015, &story016, &story017, &story018, &story019,
         &story020, &story021, &story022, &story023, &story024, &story025, &story026, &story027, &story028, &story029,
@@ -4699,7 +4924,8 @@ void InitializeStories()
         &story130, &story131, &story132, &story133, &story134, &story135, &story136, &story137, &story138, &story139,
         &story140, &story141, &story142, &story143, &story144, &story145, &story146, &story147, &story148, &story149,
         &story150, &story151, &story152, &story153, &story154, &story155, &story156, &story157, &story158, &story159,
-        &story160, &story161, &story162, &story163, &story164, &story165, &story166, &story167, &story168, &story169};
+        &story160, &story161, &story162, &story163, &story164, &story165, &story166, &story167, &story168, &story169,
+        &story170, &story171, &story172, &story173, &story174, &story175, &story176, &story177, &story178, &story179};
 }
 
 #endif
