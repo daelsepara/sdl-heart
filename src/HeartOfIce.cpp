@@ -1484,7 +1484,7 @@ void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font
     }
 
     auto name_string = player.Name;
-    
+
     if (player.Vehicle != Vehicle::Type::NONE)
     {
         name_string += " (Vehicle: " + std::string(Vehicle::Descriptions[player.Vehicle]) + ")";
@@ -4028,7 +4028,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         vehicle_trigger = false;
 
                         vehicle_message = "You commandeered the " + std::string(Vehicle::Descriptions[story->Vehicle]);
-                        
+
                         message = vehicle_message.c_str();
 
                         start_ticks = SDL_GetTicks();

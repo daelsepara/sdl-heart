@@ -3770,6 +3770,256 @@ public:
     }
 };
 
+class Story140 : public Story::Base
+{
+public:
+    Story140()
+    {
+        ID = 140;
+
+        Text = "The creature that attacked you is a sanguivore, a mutant lizard with gliding and mimicking abilities. The sanguivore's saliva contains an anti-clotting agent, ensuring that its prey slow bleeds to death even after escaping from it. That explains why it's in no hurry to catch up with you. It is content to track you through the woods and wait until you collapse from exhaustion. Well, you have a few resources not shared by any wild animal. Tearing the lining of your jacket into strips, you bind the wound to prevent further loss.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Rest here", 184));
+        Choices.push_back(Choice::Base("Press on through the jungle for a while", 250));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story141 : public Story::Base
+{
+public:
+    Story141()
+    {
+        ID = 141;
+
+        Text = "There are men beyond the plastiwood partition. You read their thoughts: three hunters. No doubt the cruelty you see in their minds is only a symptom of their harsh existence on the fringes of the Sahara. All the same, you are wise to stay concealed. They are not above murdering lone travellers for the clothes on their back.\n\nWaiting until they go to sleep, you carefully ease the partition open and sneak past them. A rug hangs across the entrance of their shelter. You can hear a blizzard howling through the night outside -- an uninviting sound, but preferable to staying here to be butchered when these three wake. Drawing your hood down, you slip out into the icy wind.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 314; }
+};
+
+class Story142 : public Story::Base
+{
+public:
+    Story142()
+    {
+        ID = 142;
+
+        Text = "The reputation of the Gargan clones is so daunting that no one dares to suggest killing them. \"I have heard that the other members of the clone group were killed, but who can be sure?\" says one man with the flaring blue hat-flaps of a Tuareg hunter.\n\n\"That's true,\" admits the innkeeper with a nod. \"I wouldn't care to have twelve identical Amazons barge into my taproom a month from now and demand retributions for their sisters.\"\n\nAt last a compromise is reached. The unconscious sisters are taken down to the shore and placed in a small boat which you push out to sea. You watch the boat drift away into the frosty evening haze. Shivering, you stamp back through the snow to the inn, where you are given food and wine and treated like a hero.\n\nThe innkeeper also offers you provisions for your journey: two FOOD PACKS.\n\nYou RECOVER 1 Life Point.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, 1);
+
+        Character::GET_ITEMS(player, {Item::FOOD_PACK, Item::FOOD_PACK});
+    }
+
+    int Continue(Character::Base &player) { return 273; }
+};
+
+class Story143 : public Story::Base
+{
+public:
+    Story143()
+    {
+        ID = 143;
+
+        Text = "\"On this point,\" announces Bador, \"I would be untruthful if I pretended to know with adamantine certainty. According to some, the city took its name from Khare-Ohe, or 'Field of Conflict,' as it was found on the spot where the first pharaoh watched a falcon fight a rat. Another version relates it to the settlement of el-Qahira, consecrated to the red planet of victory.\"\n\nYou shake your head. \"These are ancient myths. I am interested in recent history.\"\n\nAh, Well, then Du-En rose to power, Kahira became an important as a base of operations for those armed forces opposing the Volentine Watchers -- in essence, the rest of the world. Owing to heat-conductive pipes buried along the bed of the Isis River, fishes are abundant even in these parlous times, and Kahira continues to flourish. The warm water, rising into contact with icy winds off the Saharan plain, forms the incessant mist which is characteristic of the city.\"\n\n\"And why is the city built on high columns of concrete, instead of sprawling along the river banks?\"\n\nBalor pulls an uncertain face. \"Defence? Scarcity of materials? An obscure edict? Who can say?\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask his advice about the Sahara", 77));
+        Choices.push_back(Choice::Base("Ask about Giza", 59));
+        Choices.push_back(Choice::Base("About the best place to stay", 99));
+        Choices.push_back(Choice::Base("Dismiss him", 95));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story144 : public Story::Base
+{
+public:
+    Story144()
+    {
+        ID = 144;
+
+        Text = "\"I found a terminal of the intercontinental subway system, beneath the ruins of Lost Marsay. I tried to reach Giza, but I was unable to alight there and was left with no alternative but to travel on to Maka.\"\n\nHe strokes his thumbnail across the cleft of his chin, deep in thought. \"Why were you trying to reach Giza?\" he asks at last.\n\nThe truth seems absurd, but you tell him anyway. \"I was following the advice of Gaia.\"\n\nHe gives you a sharp look. \"Do not attempt to contact Gaia while you are on al-Lat. Our computer systems are secure from viruses, and that's the way we'd like it to stay.\" His face softens into an easy smile. \"Still, I'm forgetting my manners. I am Riza Baihaqi.\"\n\nYou shake hands. There is a moment of uncomfortable silence, then Riza says, \"I can never atone for the guilt I feel. This dreadful injury you've suffered...\"\n\nYou raise your artificial arm and flex the fingers. There is a soft buzz of gears, but they seem dextrous enough. \"It could be worse,\" you admit. \"These prosthetics will do as temporary repairs, at any rate.\"\n\n\"You are putting a brave face on things, my friend,\" says Riza. \"But, in all truth, where on Earth could you hope to find a cure for your dreadful injuries?\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Tell him about Du-En", 188));
+        Choices.push_back(Choice::Base("Say you are keen to return to Earth", 275));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story145 : public Story::Base
+{
+public:
+    Story145()
+    {
+        ID = 145;
+
+        Text = "The stun grenade sails through the air and crunches into the deep snow at the foot of the rise. The bometh slowly stirs itself and lumbers down the slop to snuffle around. As it locates the grenade, you detonate by remote. A flurry of snow is thrown up into the bometh's face by the blast and you see it drop. An imperceptible fraction of a second later, the hard crump of the explosion reaches your ears. By that time you are already running towards the fallen predator.\n\nKneeling beside it in the crater of slush formed by the explosion, you life the huge limp head across your knee and give it a sharp twist. The bometh gives a spasm and then lies still.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::LOSE_ITEMS(player, {Item::Type::STUN_GRENADE});
+    }
+
+    int Continue(Character::Base &player) { return 341; }
+};
+
+class Story146 : public Story::Base
+{
+public:
+    Story146()
+    {
+        ID = 146;
+
+        Text = "You explore the corridors leading off the platform, but all are blocked by rubble. There is no way of reaching the surface from here. As you return to the carriage, though, you notice a small partition in the wall. It is labelled as an air vent. You remove the grating and peer up the darkened shaft. A waft of rich loamy air drifts down. The shaft is intended for careteks servicing the ventilation ducts, but at a pinch you might be able to squeeze up it -- if you're not bothered by claustrophobia.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Venture up the shaft", 168));
+        Choices.push_back(Choice::Base("Take the subway back to Marsay, from where you can proceed to Kahira", 50));
+        Choices.push_back(Choice::Base("... to Tarabul", 31));
+        Choices.push_back(Choice::Base("... or to Giza", 74));
+        Choices.push_back(Choice::Base("Resume your journey on foot", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story147 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story147()
+    {
+        ID = 147;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "How long have you been out on the Ice Wastes? You've lost all sense of time. The wind becomes a constant roaring in your ears. You stumble on through the sheets of snowflakes, each breath sounding like a sob of pain.";
+
+        auto DAMAGE = -4;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            DAMAGE = -3;
+        }
+
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
+        {
+            DAMAGE += 2;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        if (player.Life > 0)
+        {
+            if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
+            {
+                Character::LOSE_VEHICLE(player);
+
+                PreText += "\n\nYou slaughter the burrek in desperation for its meat.";
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 125; }
+};
+
+class Story148 : public Story::Base
+{
+public:
+    Story148()
+    {
+        ID = 148;
+
+        Text = "Gaunt walks with you to the outskirts of Du-En to show you the night sky. His undead xoms stalk silently alongside bearing glow-lamps. At the city gates, they dim the lamps and you are left with the light of ten thousand glittering stars. The snows of the Sahara are swallowed by darkness, but you get the impression of standing at the hub of infinity.\n\nFor a long period neither of you speaks. Then Gaunt recites softly, \"Some say the world will end in fire, some say in ice. From what I've tasted of desire, I hold with those who favour fire. But if it had to perish twice, I think I know enough of hate to say that ice is also great, and would suffice.\"\n\n\"What's that?\"\n\n\"The words of a poet long ago.\" He gazes to the north. \"My home city lies under a shield of ice a kilometre thick. Soon the world will slip into a coma, like a man frozen at the point of death. The polar caps will meet and everything will end.\"\n\n\"Unless we find the Heart and use its power to set things right.\"\n\nHe turns with a smile almost of delight. \"Is that why you've come here? I fear you'll be disappointed. The Heart must inevitably fall into the hands of one who is most ruthless. To seize true power, a man must have a heart of ice. When the powerful do good deeds -- I speak of Caesar, Alexander, Napoleon, Mao -- they do so inadvertently. The good and honest of the world are always the most impotent.\n\nIt suddenly occurs to you that Gaunt hasn't a chance of surviving here. He is too intellectual to vie with the others for the Heart.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Tell him that", 279));
+        Choices.push_back(Choice::Base("Ask what he thinks of the others", 258));
+        Choices.push_back(Choice::Base("Return to the main square and seek out Kyle Boche", 104));
+        Choices.push_back(Choice::Base("Turn in for the night", 192));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story149 : public Story::Base
+{
+public:
+    Story149()
+    {
+        ID = 149;
+
+        Text = "Slowly the chill leaves your bodies. \"Curious,\" mutters the baron, floating over to peer into the chasm. \"It seemed to be a genuine ghost, so far as I could tell. I could not read its mind, at any rate.\"\n\n\"Just as long as it's gone now,\" grunts Boche. He gestures at a narrow stone bridge spanning the chasm. On the far side, an archway opens onto a tiled hall. \"Who wants to go first?\"\n\nThe baron gives him a scornful look and hovers out across the drop. As you watch him drift to a halt on the far side, it occurs to you that he looks a rather ghostly figure himself.\n\nBoche glances at you, shrugs and strides rapidly across the bridge. \"It's not too bad as long as you don't look down,\" he calls over his shoulder.\n\nThey are waiting for you to cross. As you step onto the bridge, you find your gaze drawn downwards in spite of Boche's advice. The walls of the chasm plunge dizzyingly into feculent darkness. Then you notice something else. Set into the rock walls, about five metres below the level of the bridge, are a row of metal grilles.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Climb down to investigate", 193));
+        Choices.push_back(Choice::Base("Continue across the bridge", 215));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story150 : public Story::Base
+{
+public:
+    Story150()
+    {
+        ID = 150;
+
+        Image = "images/heart-of-volent.png";
+
+        Text = "You step out of the elevator to find Singh, Boche and Golgoth already here. Thadra Bey didn't make it.\n\nYou are in a dome so vast that it feels like a gulf in the black void of intergalactic space. Boche's flashlight does not reach the far wall. In the centre of the chamber, on a raised dais at the end of a ramp, lies a purple gemstone almost two metres in diameter. Scintillant sparks stream from deep in its core, giving off a violet radiation that causes a pain at the back of your eyes.\n\n\"The Heart of Volent...\" breathes Boche in a voice of awe. \"The key to ultimate power.\"";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::RED))
+        {
+            return 303;
+        }
+        else if (Character::VERIFY_CODEWORD(player, Codeword::Type::BLUE))
+        {
+            return 346;
+        }
+        else if (Character::VERIFY_CODEWORD(player, Codeword::Type::YELLOW))
+        {
+            return 324;
+        }
+        else
+        {
+
+            return 367;
+        }
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -3948,6 +4198,17 @@ auto story136 = Story136();
 auto story137 = Story137();
 auto story138 = Story138();
 auto story139 = Story139();
+auto story140 = Story140();
+auto story141 = Story141();
+auto story142 = Story142();
+auto story143 = Story143();
+auto story144 = Story144();
+auto story145 = Story145();
+auto story146 = Story146();
+auto story147 = Story147();
+auto story148 = Story148();
+auto story149 = Story149();
+auto story150 = Story150();
 
 void InitializeStories()
 {
@@ -3966,7 +4227,9 @@ void InitializeStories()
         &story100, &story101, &story102, &story103, &story104, &story105, &story106, &story107, &story108, &story109,
         &story110, &story111, &story112, &story113, &story114, &story115, &story116, &story117, &story118, &story119,
         &story120, &story121, &story122, &story123, &story124, &story125, &story126, &story127, &story128, &story129,
-        &story130, &story131, &story132, &story133, &story134, &story135, &story136, &story137, &story138, &story139};
+        &story130, &story131, &story132, &story133, &story134, &story135, &story136, &story137, &story138, &story139,
+        &story140, &story141, &story142, &story143, &story144, &story145, &story146, &story147, &story148, &story149,
+        &story150};
 }
 
 #endif
