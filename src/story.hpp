@@ -4962,7 +4962,7 @@ public:
         Text = "A haze begins to close over your vision. You haul out the canister, point it up into the mass of squirming roots above your head, and press the nozzle. An acrid fluid sprays out, soaking the plant. Some of it covers your fingers, causing the canister to slip out of your grasp. Ignoring the slight stinging sensation, you jab your hand against the root holding your throat. With a hushed and eerie rustling sound, the creepers pull away and shrivel up the shaft. You steady yourself against the wall and gratefully suck in lungfuls of the stale vine-scented air.\n\nThe canister fell by your feet. As you retrieve it, you notice something glinting in the half-light. A barysal gun. You glance at the long-dead cadaver. The gun didn't do him much good, but you might find a use for it. It has just one charge remaining.\n\nYou can see now that there is no way you can hope to reach the surface form here. The shaft is blocked by the dead plant. You wriggle back down the shaft and take the subway carriage back to Marsay. Fax has long gone, of course.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("go up to the ruins and continue your journey on foot", 420));
+        Choices.push_back(Choice::Base("Go up to the ruins and continue your journey on foot", 420));
         Choices.push_back(Choice::Base("Try one of the subway's other destinations: choose between Kahira", 50));
         Choices.push_back(Choice::Base("... Tarabul", 31));
         Choices.push_back(Choice::Base("... or Giza ", 74));
@@ -5060,10 +5060,7 @@ public:
 
         Character::GAIN_LIFE(player, LIFE);
 
-        if (player.Life > 0)
-        {
-            PreText += "\n\nSuddenly you cannon into Snarvo, winding him with a butt in the stomach. Wrestling for the knife, you twist it around and stab him. As he slumps gasping to the floor, you snatch up the knife and run over to the opening. Outside a blizzard is raging, but you cannot wait for the others to return. You push the rug aside and dash out into the storm.";
-        }
+        Text = PreText.c_str();
     }
 
     int Continue(Character::Base &player) { return 83; }
