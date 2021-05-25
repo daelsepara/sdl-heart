@@ -494,53 +494,6 @@ SDL_Surface *createHeaderButton(SDL_Window *window, const char *text, SDL_Color 
     return button;
 }
 
-std::vector<Button> createItemControls(std::vector<Item::Base> Items)
-{
-    auto text_space = 8;
-    auto font_size = 16;
-    auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space) - 2 * text_space;
-
-    auto controls = std::vector<Button>();
-
-    controls.clear();
-
-    for (auto idx = 0; idx < Items.size(); idx++)
-    {
-        std::string description = Items[idx].Description;
-
-        if (Items[idx].Charge >= 0)
-        {
-            description += " (";
-
-            if (Items[idx].Charge > 0)
-            {
-                description += std::to_string(Items[idx].Charge) + " charges";
-            }
-            else
-            {
-                description += "empty";
-            }
-
-            description += ")";
-        }
-
-        auto text = createText(description.c_str(), "fonts/default.ttf", font_size, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
-
-        auto y = texty + (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H : 2 * text_space);
-
-        controls.push_back(Button(idx, text, idx, idx, (idx > 0 ? idx - 1 : idx), (idx < Items.size() ? idx + 1 : idx), textx + 2 * text_space, y, Control::Type::ACTION));
-
-        controls[idx].W = textwidth + button_space;
-        controls[idx].H = text->h;
-    }
-
-    auto idx = controls.size();
-
-    controls.push_back(Button(idx, "icons/back-button.png", idx - 1, idx, idx - 1, idx, (1 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
-
-    return controls;
-}
-
 std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, std::vector<Item::Base> list, int start, int last, int limit, bool confirm_button)
 {
     auto text_space = 8;
@@ -853,6 +806,16 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 {
     if (Items.size() > 0)
     {
+        auto scrollSpeed = 1;
+        auto display_limit = 8;
+        auto offset = 0;
+        auto last = offset + display_limit;
+
+        if (last > Items.size())
+        {
+            last = Items.size();
+        }
+
         const char *message = NULL;
 
         std::string temp_message = "";
@@ -867,9 +830,9 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
         auto text_space = 8;
 
-        auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space) - 2 * text_space;
+        auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
-        auto controls = createItemControls(Items);
+        auto controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
         TTF_Init();
 
@@ -889,6 +852,13 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
         while (!done)
         {
+            last = offset + display_limit;
+
+            if (last > Items.size())
+            {
+                last = Items.size();
+            }
+
             SDL_SetWindowTitle(window, "Heart of Ice: Possessions");
 
             fillWindow(renderer, intWH);
@@ -933,13 +903,15 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
             putText(renderer, "Money", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * (boxh + infoh) + box_space));
             putText(renderer, (std::to_string(player.Money) + std::string(" cacao")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
 
-            fillRect(renderer, textwidth + arrow_size + button_space, text_bounds, textx, texty, intBE);
+            fillRect(renderer, textwidth, text_bounds, textx, texty, intBE);
 
             renderButtons(renderer, controls, current, intGR, text_space, text_space / 2);
 
-            for (auto i = 0; i < player.Items.size(); i++)
+            for (auto idx = offset; idx < last; idx++)
             {
-                if (i != current)
+                auto i = idx - offset;
+
+                if (current != i)
                 {
                     drawRect(renderer, controls[i].W + 2 * text_space, controls[i].H + 2 * text_space, controls[i].X - text_space, controls[i].Y - text_space, intDB);
                 }
@@ -947,23 +919,107 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
             done = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
 
-            if (selected)
+            if ((selected && current >= 0 && current < controls.size()) || scrollUp || scrollDown || hold)
             {
-                if (controls[current].Type == Control::Type::ACTION && !hold)
+                if (controls[current].Type == Control::Type::SCROLL_UP || (controls[current].Type == Control::Type::SCROLL_UP && hold) || scrollUp)
                 {
-                    if (current >= 0 && current < Items.size())
+                    if (offset > 0)
                     {
-                        auto item = Items[current];
+                        offset -= scrollSpeed;
+
+                        if (offset < 0)
+                        {
+                            offset = 0;
+                        }
+
+                        last = offset + display_limit;
+
+                        if (last > Items.size())
+                        {
+                            last = Items.size();
+                        }
+
+                        controls.clear();
+                        controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
+
+                        SDL_Delay(50);
+                    }
+
+                    if (offset <= 0)
+                    {
+                        current = -1;
+
+                        selected = false;
+                    }
+                }
+                else if (controls[current].Type == Control::Type::SCROLL_DOWN || ((controls[current].Type == Control::Type::SCROLL_DOWN && hold) || scrollDown))
+                {
+                    if (Items.size() - last > 0)
+                    {
+                        if (offset < Items.size() - display_limit)
+                        {
+                            offset += scrollSpeed;
+                        }
+
+                        if (offset > Items.size() - display_limit)
+                        {
+                            offset = Items.size() - display_limit;
+                        }
+
+                        last = offset + display_limit;
+
+                        if (last > Items.size())
+                        {
+                            last = Items.size();
+                        }
+
+                        controls.clear();
+                        controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
+
+                        SDL_Delay(50);
+
+                        if (offset > 0)
+                        {
+                            if (controls[current].Type != Control::Type::SCROLL_DOWN)
+                            {
+                                current++;
+                            }
+                        }
+                    }
+
+                    if (Items.size() - last <= 0)
+                    {
+                        selected = false;
+
+                        current = -1;
+                    }
+                }
+                else if (controls[current].Type == Control::Type::ACTION && !hold)
+                {
+                    if ((current + offset >= 0) && (current + offset) < Items.size())
+                    {
+                        auto item = Items[current + offset];
 
                         if (mode == Control::Type::DROP)
                         {
-                            Item::REMOVE(Items, item);
+                            Items.erase(Items.begin() + (current + offset));
+
+                            if (offset > 0)
+                            {
+                                offset--;
+                            }
+
+                            last = offset + display_limit;
+
+                            if (last > Items.size())
+                            {
+                                last = Items.size();
+                            }
 
                             controls.clear();
+                            controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
-                            controls = createItemControls(Items);
-
-                            std::string description = item.Description;
+                            std::string description = item.Name;
 
                             if (item.Charge >= 0)
                             {
@@ -995,15 +1051,31 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                         {
                             if (Items.size() > limit)
                             {
-                                Item::REMOVE(Items, item);
+                                Items.erase(Items.begin() + (current + offset));
 
                                 Character::LOSE_ITEMS(player, {item.Type});
 
+                                if (current == 0)
+                                {
+                                    offset--;
+
+                                    if (offset < 0)
+                                    {
+                                        offset = 0;
+                                    }
+                                }
+
+                                last = offset + display_limit;
+
+                                if (last > Items.size())
+                                {
+                                    last = Items.size();
+                                }
+
                                 controls.clear();
+                                controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
-                                controls = createItemControls(Items);
-
-                                std::string description = item.Description;
+                                std::string description = item.Name;
 
                                 if (item.Charge >= 0)
                                 {
@@ -1036,6 +1108,10 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                         {
                         }
                     }
+
+                    current = -1;
+
+                    selected = false;
                 }
                 else if (controls[current].Type == Control::Type::BACK && !hold)
                 {
@@ -1232,6 +1308,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                             last = items.size();
                         }
 
+                        controls.clear();
                         controls = createItemList(window, renderer, items, offset, last, limit, true);
 
                         SDL_Delay(50);
@@ -1265,6 +1342,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                             last = items.size();
                         }
 
+                        controls.clear();
                         controls = createItemList(window, renderer, items, offset, last, limit, true);
 
                         SDL_Delay(50);
