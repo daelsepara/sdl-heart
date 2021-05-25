@@ -28,8 +28,9 @@ namespace Item
         FOOD_PACK,
         MEDICAL_KIT,
         KNIFE,
+        LANTERN,
         First = BARYSAL_GUN,
-        LAST = KNIFE
+        LAST = LANTERN
     };
 
     class Base
@@ -88,6 +89,7 @@ namespace Item
     auto FOOD_PACK = Item::Base("FOOD PACK", "FOOD PACK", Item::Type::FOOD_PACK);
     auto MEDICAL_KIT = Item::Base("MEDICAL KIT", "MEDICAL KIT", Item::Type::MEDICAL_KIT);
     auto KNIFE = Item::Base("KNIFE", "KNIFE", Item::Type::KNIFE);
+    auto LANTERN = Item::Base("LANTERN", "LANTERN", Item::Type::LANTERN);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,

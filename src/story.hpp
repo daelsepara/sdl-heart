@@ -424,7 +424,7 @@ public:
     {
         ID = 3;
 
-        Text = "The passage is lit by gleaming blue-white tubes along the ceiling. They cast a garish glare in which the sight of a dead body ahead seems like a glimpse of a nightmare. Boche and the baron watch while you stoop and inspect the corpse. You roll it over, surprised at how well the shrivelled flesh has kept in the cold air. \"His own mother could still recognize him,\" you remark with grim humour.\n\n\"Except she'll have been dead two centuries as well,\" says Boche. He gazes off along the corridor, then gives a start. \"There's another one!\"\n\nThe baron sweeps on ahead and hovers low over the next body. \"He died of a broken back.\"\n\"So did that first one,\" you say as you come hurrying up with Boche.\n\nA metallic scuttling sound resounds from the far end of the passage. Instantly your whole body is tensely alert, nerves jangling in fear of the unknown. Then you see it approaching along the passage like a giant robot spider: the body a glass bubble filled with blue fluid, surrounded by legs formed from long articulated steel pipes. Inside the glass bubble floats a lumpish embryonic figure pierced by many tubes. Its eyes are open and it is watching you.\n\nBoche gives a gasp of disgust and fires his barysal gun at the glass bubble. But the thing has already raised a row of its legs to form a shield, and the blast splashes away leaving hardly a mark.\n\n\"I think we'd better run,\" he says backing away.";
+        Text = "The passage is lit by gleaming blue-white tubes along the ceiling. They cast a garish glare in which the sight of a dead body ahead seems like a glimpse of a nightmare. Boche and the baron watch while you stoop and inspect the corpse. You roll it over, surprised at how well the shrivelled flesh has kept in the cold air. \"His own mother could still recognize him,\" you remark with grim humour.\n\n\"Except she'll have been dead two centuries as well,\" says Boche. He gazes off along the corridor, then gives a start. \"There's another one!\"\n\nThe baron sweeps on ahead and hovers low over the next body. \"He died of a broken back.\"\n\"So did that first one,\" you say as you come hurrying up with Boche.\n\nA metallic scuttling sound resounds from the far end of the passage. Instantly your whole body is tensely alert, nerves jangling in fear of the unknown. Then you see it approaching along the passage like a giant robot spider: the body a glass bubble filled with blue fluid, surrounded by legs formed from long articulated steel pipes. Inside the glass bubble floats a lumpish embryonic figure pierced by many tubes. Its eyes are open and it is watching you.\n\nBoche gives a gasp of disgust and fires his BARYSAL GUN at the glass bubble. But the thing has already raised a row of its legs to form a shield, and the blast splashes away leaving hardly a mark.\n\n\"I think we'd better run,\" he says backing away.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("[CUNNING] Try and outwit the thing", 40, Skill::Type::CUNNING));
@@ -1901,7 +1901,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+        Character::FIRE_BARYSAL(player, 1);
     }
 };
 
@@ -2042,7 +2042,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+        Character::FIRE_BARYSAL(player, 1);
     }
 
     int Continue(Character::Base &player) { return 90; }
@@ -2347,7 +2347,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+        Character::FIRE_BARYSAL(player, 1);
     }
 
     int Continue(Character::Base &player) { return 341; }
@@ -2541,7 +2541,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+        Character::FIRE_BARYSAL(player, 1);
     }
 
     int Continue(Character::Base &player) { return 410; }
@@ -2729,7 +2729,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
+        Character::FIRE_BARYSAL(player, 1);
     }
 
     int Continue(Character::Base &player) { return 228; }
@@ -3068,7 +3068,7 @@ public:
 
         Image = "images/filler3.png";
 
-        Text = "After a cursory greeting, the others start to disperse back to their tents, Janus Gaunt tells you he has just brewed a pot of tea and invites you to join him. You are pleased enough to share the warmth of his fire, but when a xom hands you a teacup in its bloodless fingers you cannot suppress a shiver of dread.\n\nDon't bother about them,\" he says with a laugh. \"They're just robots, really, except that they're made out of once-living tissue instead of plastic and metal. They're powered by a small electrochemical implant in the chest cavity.\"\n\n\"They are an abomination against nature,\" says Boche flatly, draining his tea. \"Where do we get firewood?\"\n\nGaunt is taken aback by Boche's rudeness, but replies courteously: \"Take it from the buildings around the square. The mulberry window-shutters you are warming your hands over, for instance, date from tenth-century Persia. It is a pity to burn such artifacts as these, but the former owners have no more use for them.\"\n\nBoche rises with a grunt and trudges off, entering a narrow doorway. You follow to find him flashing his torch around. \"Ah, here is some firewood already broken up for our convenience,\" he says.\n\n\"It is mine,\" he purrs a voice of menace from the doorway. Thadra Bey stands there, muscles coiled taut in pantherish grace, a lethal dart-projector in her hand.\n\n\"Down!\" roars Boche, cannoning into you from behind and sending you flying into Thadra Bey. You and she go rolling out into the snow, her dart singing through the air and narrowly missing Chaim Golgoth, who responds once by drawing his barysal gun. In seconds all hell has broken loose, as the uneasy truce splinters apart. Thadra Bey rakes her fingers across your face and leaps away, levelling her dart-projector, and you hear Gaunt yelling to his xoms, \"Defend me! Slay any who attack!\"\n\nFor a moment it seems that the struggle for power will be decided here and now. Then a voice rips like thunder across the square: \"Stop this senseless fighting now!\" and, turning, you have your first view of the mighty Vajra Singh.";
+        Text = "After a cursory greeting, the others start to disperse back to their tents, Janus Gaunt tells you he has just brewed a pot of tea and invites you to join him. You are pleased enough to share the warmth of his fire, but when a xom hands you a teacup in its bloodless fingers you cannot suppress a shiver of dread.\n\nDon't bother about them,\" he says with a laugh. \"They're just robots, really, except that they're made out of once-living tissue instead of plastic and metal. They're powered by a small electrochemical implant in the chest cavity.\"\n\n\"They are an abomination against nature,\" says Boche flatly, draining his tea. \"Where do we get firewood?\"\n\nGaunt is taken aback by Boche's rudeness, but replies courteously: \"Take it from the buildings around the square. The mulberry window-shutters you are warming your hands over, for instance, date from tenth-century Persia. It is a pity to burn such artifacts as these, but the former owners have no more use for them.\"\n\nBoche rises with a grunt and trudges off, entering a narrow doorway. You follow to find him flashing his torch around. \"Ah, here is some firewood already broken up for our convenience,\" he says.\n\n\"It is mine,\" he purrs a voice of menace from the doorway. Thadra Bey stands there, muscles coiled taut in pantherish grace, a lethal dart-projector in her hand.\n\n\"Down!\" roars Boche, cannoning into you from behind and sending you flying into Thadra Bey. You and she go rolling out into the snow, her dart singing through the air and narrowly missing Chaim Golgoth, who responds once by drawing his BARYSAL GUN. In seconds all hell has broken loose, as the uneasy truce splinters apart. Thadra Bey rakes her fingers across your face and leaps away, levelling her dart-projector, and you hear Gaunt yelling to his xoms, \"Defend me! Slay any who attack!\"\n\nFor a moment it seems that the struggle for power will be decided here and now. Then a voice rips like thunder across the square: \"Stop this senseless fighting now!\" and, turning, you have your first view of the mighty Vajra Singh.";
 
         Choices.clear();
 
@@ -3175,7 +3175,7 @@ public:
     {
         ID = 116;
 
-        Text = "The computer terminals are only intended to access the library catalogue, but you have no trouble routing into the building's administrative computer and then opening an outside line via the rooftop satellite dish. Like most organizations with the ability to connect into global communications, the Society protects its system from accidental linkage into Gaia by the use of a filter program. This is necessary to prevent infection by the same viruses that are resident in Gaia, as well as to stop Gaia from taking over the Society's whole system for her own use.\n\nYou set a standard filter-override program running. It should take a few minutes, and to kill time you run a check on other users who have logged into the system recently. Only one name is displayed: Janus Gaunt. He requested all the Society's records regarding the Heart of Volent. Intrigued, you call up his biofile. The screen shows a round-faced man with extremely white skin and hair like silver floss. Flicking idly through the data, you find he has a reputation for outstanding work in the fields of bioengineering and nanotechnology. The address of his mansion causes you a double-take; it is located in the Paris catacombs. You were not even sure Paris still existed.\n\nThe terminal bleeps, informing you the link with Gaia is ready. You switch over. When you type in your query about the Heart, Gaia's response is swift: THE HEART MUST BE DESTROYED. ACTIVATION OF ITS POWER WILL CRASH THE UNIVERSE, WIPING OUT ALL THAT EXISTS.\n\nYou reply: INCLUDING EARTH?\n\nEVERYTHING, Gaia tells you. BARYSAL BOMBARDMENT CAN CAUSE A CRITICAL RESONANCE. DESTROYING THE HEART'S CRYSTALLINE STRUCTURE. TWO SIMULTANEOUS BOMBARDMENTS MUST BE MADE, THE BEAMS PHASED AND CROSSING AT RIGHT ANGLES.\n\nThis is awkward. From what you have heard, the Heart is a gem several metres across. To destroy it as Gaia suggests, you'd need an accomplice. And two barysal guns. You try to get further information, but the link is broken. Like a senile invalid, Gaia has lapsed back into her customary incoherence.";
+        Text = "The computer terminals are only intended to access the library catalogue, but you have no trouble routing into the building's administrative computer and then opening an outside line via the rooftop satellite dish. Like most organizations with the ability to connect into global communications, the Society protects its system from accidental linkage into Gaia by the use of a filter program. This is necessary to prevent infection by the same viruses that are resident in Gaia, as well as to stop Gaia from taking over the Society's whole system for her own use.\n\nYou set a standard filter-override program running. It should take a few minutes, and to kill time you run a check on other users who have logged into the system recently. Only one name is displayed: Janus Gaunt. He requested all the Society's records regarding the Heart of Volent. Intrigued, you call up his biofile. The screen shows a round-faced man with extremely white skin and hair like silver floss. Flicking idly through the data, you find he has a reputation for outstanding work in the fields of bioengineering and nanotechnology. The address of his mansion causes you a double-take; it is located in the Paris catacombs. You were not even sure Paris still existed.\n\nThe terminal bleeps, informing you the link with Gaia is ready. You switch over. When you type in your query about the Heart, Gaia's response is swift: THE HEART MUST BE DESTROYED. ACTIVATION OF ITS POWER WILL CRASH THE UNIVERSE, WIPING OUT ALL THAT EXISTS.\n\nYou reply: INCLUDING EARTH?\n\nEVERYTHING, Gaia tells you. BARYSAL BOMBARDMENT CAN CAUSE A CRITICAL RESONANCE. DESTROYING THE HEART'S CRYSTALLINE STRUCTURE. TWO SIMULTANEOUS BOMBARDMENTS MUST BE MADE, THE BEAMS PHASED AND CROSSING AT RIGHT ANGLES.\n\nThis is awkward. From what you have heard, the Heart is a gem several metres across. To destroy it as Gaia suggests, you'd need an accomplice. And two BARYSAL GUNs. You try to get further information, but the link is broken. Like a senile invalid, Gaia has lapsed back into her customary incoherence.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Study the records on Heart of Volent", 182));
@@ -3287,12 +3287,256 @@ public:
 
     void Event(Character::Base &player)
     {
+        Character::FIRE_BARYSAL(player, 2);
+
         Take = {Item::MAKE_BARYSAL_GUN(2), Item::MAKE_BARYSAL_GUN(2), Item::KNIFE, Item::KNIFE, Item::POLARIZED_GOGGLES, Item::BINOCULARS, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
 
         Limit = 13;
     }
 
     int Continue(Character::Base &player) { return 393; }
+};
+
+class Story120 : public Story::Base
+{
+public:
+    Story120()
+    {
+        ID = 120;
+
+        Text = "The innkeeper is cringing at the end of the bar with a sick look on his face. You bow to the twins, saying, \"Ladies, pardon me. I am a simple servant here.\" Turning to the innkeeper, you ask, \"master, shall I fetch the very best vodka for your guests?\"\n\nThe twins scowl at him. \"Isn't this the best?\"\n\nHe twitches nervously, but senses you have a plan in mind. \"Er... my my dear ladies, cherished guests --\"\n\nOne of the twins seizes his jerkin and hauls him across the bar, glaring into his face. \"Well?\"\n\n\"Ulp. In fact, there is one bottle of extremely fine Old Daralbad Immolate in the cellar.\"\n\n\"Fetch it.\" This is addressed to you. You race out to the cellar door to get a bottle, returning by way of the bathroom at the back of the building where you find the inn's medicine cabinet. As you come racking back, the bottle is snatched out of your hands.\n\n\"I must advise caution, my lady,\" you say, almost grovelling. \"This is strong liquor.\"\n\n\"Pah!\" She drains half the bottle at a gulp, then hands the rest to her sister.\n\nYou stand back and watch. Gradually the twins start to yawn, then fold across the bar. Only when they begin snoring do the rest of the customers feel safe in approaching these two fearsome Amazons. Even asleep, they inspire such fear that no one knows quite what to do with them, until you suggest putting them in a rowboat and pushing it out to sea.\n\n\"How long before they wake up?\" asks the innkeeper.\n\nYou shake your head. \"Who knows? I put a whole packet of sleeping pills in that vodka, but these two seem to have a vigorous metabolism. Best that we get rid of them at once.\"\n\nYou gained the codeword SCYTHE.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::SCYTHE});
+
+        Take = {Item::MEDICAL_KIT};
+
+        Limit = 1;
+    }
+
+    int Continue(Character::Base &player) { return 142; }
+};
+
+class Story121 : public Story::Base
+{
+public:
+    Story121()
+    {
+        ID = 121;
+
+        Text = "Golgoth must have a keen interest in lurid fiction, because his thoughts are filled with images of carnage, explosions, gunfire, and violent death. Then you realize that these are not scenes from films or books -- they are Golgoth's actual memories. He has successfully eliminated dozens of the United States' enemies around the world, mainly by dint of trickery, cunning and a quite unabashed level of viciousness. Viewing these memories from his mind, at the same time as you return that placid smiling gaze, sends a shiver along your spine.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask Golgoth what he knows about Giza", 337));
+        Choices.push_back(Choice::Base("Ask about his reason for carrying a crossbow", 315));
+        Choices.push_back(Choice::Base("Allow Boche to lead you away from this hardened killer", 358));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story122 : public Story::Base
+{
+public:
+    Story122()
+    {
+        ID = 122;
+
+        Text = "Awareness returns slowly, the details of your surroundings emerging out of a blur. There is a white ceiling above you and soft fabric at your back. The air carries a faint smell of antiseptic. You can make out the low whine of air conditioning.\n\n\"You're able to hear me?\" booms a voice.\n\nYou wince, focussing on a face that looms above yours. The colours seem harsh, garish. Sounds come to your ears with a rasping undertone, as though filtered by electronics.\n\nAnother face comes into view, slender and handsome with a high forehead capped by a green circlet. He has a lopsided but not unfriendly smile. \"How are you feeling?\" he asks.\n\n\"I've got pins and needles,\" you say in a voice still slurred by anaesthetic. Reaching across to rub your left arm, you feel the unyielding hardness of metal in place of flesh. You sit bolt upright with a thrill of horror, throwing off the sheets. You can only stare at what they have made of you: a being half of robotics, half of living tissue. A cyborg.\n\n\"It was all we could do to save your life,\" explains the man wearing the green circlet. \"You were caught in the jets as my flyer took off. I brought you up here. It was touch and go for a couple of weeks, but you should be all right now.\"\n\n\"What's left of me, that is,\" you say bitterly. Turning to the window, you see a surprising profusion of stars in a black void. \"Where are we, anyhow?\"\n\nThe other man, the doctor, takes you by your still-living right arm and leads you to the window. A vast crescent globe of swirling grey and white hangs in space below you.\n\n\"That's the Earth,\" he says. \"You're on al-Lat.\"\n\nThe pilot joins you. \"I know you are still shaken, but I must ask you some questions. You should not have been in Maka. How did you get there, and why?\"\n\nYou gained the codeword TALOS.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Tell him the truth", 144));
+        Choices.push_back(Choice::Base("Invent a convincing story", 166));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::TALOS});
+    }
+};
+
+class Story123 : public Story::Base
+{
+public:
+    Story123()
+    {
+        ID = 123;
+
+        Text = "\"Target identification: bometh,\" grates Gilgamesh. \"Mutant wolf-bear hybrid. Predator. It presents a danger. Immediate elimination is called for.\"\n\nHe raises his arm, ejecting a crackling blast of energy that turns the dusk to day. The swirling snowflakes hiss into steam. On the crest of the rise, the giant beast shudders and falls, rolling down into the deep snow. With Gilgamesh clanking along behind, you hurry over to make sure the bometh is dead, as you would not want a wounded predator stalking you through the night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 341; }
+};
+
+class Story124 : public Story::Base
+{
+public:
+    Story124()
+    {
+        ID = 124;
+
+        Text = "The carriage rushes on into the darkness of the tunnel. You wait for almost two hours, and then you start to feel the carriage slowing down. It enters a station and glides to a halt, but there is a delay before the doors open. \"Karthag station is damaged,\" explains the motilator's calm electronic voice. \"You are recommended to select an alternative destination.\"\n\nThrough the window, you can see that the station has caved in. Huge chunks of shattered concrete litter the platform, with twisted metal cables extending from them like torn arteries from a heart. It is sheer luck that the tunnel itself was not blocked, otherwise you would have ended your journey with a sever jolt, to say the least.\n\nWhat now?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Disembark here", 146));
+        Choices.push_back(Choice::Base("Take the subway back to Marsay, and from there head on to Kahira", 50));
+        Choices.push_back(Choice::Base("... to Tarabul", 31));
+        Choices.push_back(Choice::Base("... to Giza", 74));
+        Choices.push_back(Choice::Base("Resume your journey on foot", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story125 : public Story::Base
+{
+public:
+    Story125()
+    {
+        ID = 125;
+
+        Image = "images/du-en.png";
+
+        Text = "At last you see a streak of dark rubble against the dazzling skyline. You fear it might just be a line of hills or even a trick of the light, but as you approach on quickened footsteps it is possible to make out the details of brooding towers, empty palaces and gargantuan snow-bound walls. You have arrived at the lost city of Du-En.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::DIAMOND);
+
+            return 191;
+        }
+        else
+        {
+            return 213;
+        }
+    }
+};
+
+class Story126 : public Story::Base
+{
+public:
+    Story126()
+    {
+        ID = 126;
+
+        Text = "You find Golgoth squatting by torchlight at the end of the colonnade, where he has laid out all his weapons o the flagstones. As he checks each, he slips it into its concealed sheath: a garrotte wire under his belt, along with a flexible steel blade; poison darts in a bandolier inside his jacket; guns at hip, ankle and wrist; small flat grenades clipped along his sabretache. You watch him aghast for a few minutes.\n\n\"Quite the professional killer, aren't you, Golgoth?\"\n\n\"Don't get far if you only make it a hobby.\"\n\nYou heave a sigh. \"Does human life mean anything to you?\"\n\nHe buckles on his BARYSAL GUN, gets up, and gives you a long thoughtful look in the torchlight. \"Not the life of scum like this.\" He gestures along the colonnade. \"I've happily sent hundreds like them to an early grave. Who do you think my USI bosses should've sent -- a pack of boy-scout Marines?\"\n\n\"So you're here as a USI agent?\"\n\nHe nods. \"Of course. The power of the Heart cannot be allowed to fall into hostile hands. In order of priority, I will either take it to the States, get the power myself, or destroy it.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("NEMESIS: Propose an alliance", 204, Codeword::Type::NEMESIS));
+        Choices.push_back(Choice::Base("Go and talk to Kyle Boche", 104));
+        Choices.push_back(Choice::Base("Get some sleep", 192));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story127 : public Story::Base
+{
+public:
+    Story127()
+    {
+        ID = 127;
+
+        Text = "The glowing phantom is leeching the strength from your living tissue, but your artificial body parts are not affected. Lunging out with your metal arm, you seize it by the neck. Your cyborg leg carries you forward with a lurching gait until you stand on the brink of the chasm. The phantom squirms in your unbreakable grip, its form twisting and flowing like melting wax. As its fingers penetrate the circuitry of your arm there is a flash of sparks and the feedback causes some damage.\n\nYou LOSE 2 Life Points.";
+
+        Bye = "You manage to throw the phantom down. Its thin bleating cry echoes up from the depths as it falls, trailing its gleaming wisps of vapour like a comet's tail.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -2);
+    }
+
+    int Continue(Character::Base &player) { return 149; }
+};
+
+class Story128 : public Story::Base
+{
+public:
+    Story128()
+    {
+        ID = 128;
+
+        Text = "The passage brings you to a series of galleries, each consisting of a cloister running either side of a central concourse softly illuminated by chandeliers. Many of the heavy buttresses have been defaced, leaving chunks of broken masonry scattered across the marble floor. \"No doubt this devastation was wreaked in the city's collapse,\" says Boche in a hushed voice. \"It's said that the people of Du-En went mad and turned against their leaders.\"\n\nBaron Siriasis drifts to a halt and peers off into the gloom of the cloistered walkway at the side of the room. \"I sense a presence,\" he says after a moment's concentration. \"Something is stalking us.\"\n\nQuickening your pace you hurry on through the galleries until you see a heavy iron-bound door ahead. A rasping sound echoes out of the cloisters to one side. It sounds like chitin slithering across stone. You are about to break into a run when the lights go out and you are plunged into darkness.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_CODEWORD(player, Codeword::Type::SCOTOPIC))
+        {
+            Choices.push_back(Choice::Base("Use [ROGUERY]", 216, Skill::Type::ROGUERY));
+            Choices.push_back(Choice::Base("Use [ESP]", 194, Skill::Type::ESP));
+            Choices.push_back(Choice::Base("[SHOOTING] Use a charged BARYSAL GUN", 238, Skill::Type::SHOOTING));
+            Choices.push_back(Choice::Base("Light a LANTERN or FLASHLIGHT", 172, Choice::Type::ANY_ITEM, {Item::FLASHLIGHT, Item::LANTERN}));
+            Choices.push_back(Choice::Base("Otherwise", 260));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 302; }
+};
+
+class Story129 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story129()
+    {
+        ID = 129;
+
+        Bye = "You retreat rapidly. But just as you lose sight of the hover-droid, you turn to see the baron's brain drifting towards you. You are between a rock and a hard place.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "With the ghastly brain floating after you, you race out of the hall. The passage soon forks, but you have no time to pause and get your bearings. You blunder on, gasping for breath, looking back over your shoulder to see if your pursuer is still there. Losing sight of it around a bend in the tunnel, you begin to calm down and think. The baron is a powerful psychic .. ore powerful than you ever dreamed, to outlive his body like this -- but he cannot survive once the remaining oxygen in his brain tissue is used up. All you have to do is stay ahead of him that long.\n\nYour simple plan is ruined a moment later when, darting around a junction in the passage, you come face to face with a hover-droid. A quarter of a second is long enough for you to start tor turn, and for the hover-droid to identify you as an intruder in the catacombs. As you leap back, its laser flares up and you feel a sickening pain as the hot beam cuts through your gut.";
+
+        auto DAMAGE = -4;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            DAMAGE = -3;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 85; }
 };
 
 class NotImplemented : public Story::Base
@@ -3453,6 +3697,16 @@ auto story116 = Story116();
 auto story117 = Story117();
 auto story118 = Story118();
 auto story119 = Story119();
+auto story120 = Story120();
+auto story121 = Story121();
+auto story122 = Story122();
+auto story123 = Story123();
+auto story124 = Story124();
+auto story125 = Story125();
+auto story126 = Story126();
+auto story127 = Story127();
+auto story128 = Story128();
+auto story129 = Story129();
 
 void InitializeStories()
 {
@@ -3469,7 +3723,8 @@ void InitializeStories()
         &story080, &story081, &story082, &story083, &story084, &story085, &story086, &story087, &story088, &story089,
         &story090, &story091, &story092, &story093, &story094, &story095, &story096, &story097, &story098, &story099,
         &story100, &story101, &story102, &story103, &story104, &story105, &story106, &story107, &story108, &story109,
-        &story110, &story111, &story112, &story113, &story114, &story115, &story116, &story117, &story118, &story119};
+        &story110, &story111, &story112, &story113, &story114, &story115, &story116, &story117, &story118, &story119,
+        &story120, &story121, &story122, &story123, &story124, &story125, &story126, &story127, &story128, &story129};
 }
 
 #endif

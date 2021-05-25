@@ -146,7 +146,7 @@ namespace Character
         {
             for (auto i = 0; i < items.size(); i++)
             {
-                auto result = FIND_ITEM(player, items[i]);
+                auto result = Character::FIND_ITEM(player, items[i]);
 
                 if (result >= 0)
                 {
@@ -164,13 +164,18 @@ namespace Character
 
         for (auto i = 0; i < items.size(); i++)
         {
-            if (FIND_ITEM(player, items[i].Type) >= 0)
+            if (Character::FIND_ITEM(player, items[i].Type) >= 0)
             {
                 found++;
             }
         }
 
         return found;
+    }
+
+    bool VERIFY_ITEMS_ANY(Character::Base &player, std::vector<Item::Base> items)
+    {
+        return Character::COUNT_ITEMS(player, items) > 0;
     }
 
     // Checks if player has the skill and the required item
@@ -186,7 +191,7 @@ namespace Character
                 {
                     if (player.Skills[i].Requirement != Item::Type::NONE)
                     {
-                        found = VERIFY_ITEMS(player, {player.Skills[i].Requirement});
+                        found = Character::VERIFY_ITEMS(player, {player.Skills[i].Requirement});
                     }
                     else
                     {
@@ -271,7 +276,7 @@ namespace Character
                 {
                     for (auto j = 0; j < items.size(); j++)
                     {
-                        if (FIND_ITEM(player, items[j]) >= 0)
+                        if (Character::FIND_ITEM(player, items[j]) >= 0)
                         {
                             found++;
                         }
@@ -286,18 +291,18 @@ namespace Character
     // verify that player has the skill and ANY of the items
     bool VERIFY_SKILL_ANY(Character::Base &player, Skill::Type skill, std::vector<Item::Type> items)
     {
-        return FIND_SKILL_ITEMS(player, skill, items) > 0;
+        return Character::FIND_SKILL_ITEMS(player, skill, items) > 0;
     }
 
     // verify that player has the skill and ALL of the items
     bool VERIFY_SKILL_ALL(Character::Base &player, Skill::Type skill, std::vector<Item::Type> items)
     {
-        return FIND_SKILL_ITEMS(player, skill, items) == items.size();
+        return Character::FIND_SKILL_ITEMS(player, skill, items) == items.size();
     }
 
     bool VERIFY_SKILL_ITEM(Character::Base &player, Skill::Type skill, Item::Type item)
     {
-        return VERIFY_SKILL_ALL(player, skill, {item});
+        return Character::VERIFY_SKILL_ALL(player, skill, {item});
     }
 
     int FIND_CODEWORD(Character::Base &player, Codeword::Type codeword)
@@ -328,7 +333,7 @@ namespace Character
         {
             for (auto i = 0; i < codewords.size(); i++)
             {
-                auto result = FIND_CODEWORD(player, codewords[i]);
+                auto result = Character::FIND_CODEWORD(player, codewords[i]);
 
                 if (result >= 0)
                 {
@@ -342,17 +347,17 @@ namespace Character
 
     bool VERIFY_CODEWORDS_ANY(Character::Base &player, std::vector<Codeword::Type> codewords)
     {
-        return FIND_CODEWORDS(player, codewords) > 0;
+        return Character::FIND_CODEWORDS(player, codewords) > 0;
     }
 
     bool VERIFY_CODEWORDS_ALL(Character::Base &player, std::vector<Codeword::Type> codewords)
     {
-        return FIND_CODEWORDS(player, codewords) == codewords.size();
+        return Character::FIND_CODEWORDS(player, codewords) == codewords.size();
     }
 
     bool VERIFY_CODEWORD(Character::Base &player, Codeword::Type codeword)
     {
-        return VERIFY_CODEWORDS_ALL(player, {codeword});
+        return Character::VERIFY_CODEWORDS_ALL(player, {codeword});
     }
 
     bool VERIFY_LIFE(Character::Base &player, int threshold = 0)
@@ -374,7 +379,7 @@ namespace Character
     {
         for (auto i = 0; i < codewords.size(); i++)
         {
-            if (!VERIFY_CODEWORD(player, codewords[i]))
+            if (!Character::VERIFY_CODEWORD(player, codewords[i]))
             {
                 player.Codewords.push_back(codewords[i]);
             }
@@ -383,7 +388,7 @@ namespace Character
 
     void REMOVE_CODEWORD(Character::Base &player, Codeword::Type codeword)
     {
-        if (VERIFY_CODEWORD(player, codeword))
+        if (Character::VERIFY_CODEWORD(player, codeword))
         {
             auto result = FIND_CODEWORD(player, codeword);
 
@@ -398,7 +403,7 @@ namespace Character
     {
         for (auto i = 0; i < items.size(); i++)
         {
-            if (!VERIFY_ITEMS(player, {items[i].Type}))
+            if (!Character::VERIFY_ITEMS(player, {items[i].Type}))
             {
                 player.Items.push_back(items[i]);
             }
@@ -411,7 +416,7 @@ namespace Character
         {
             for (auto i = 0; i < items.size(); i++)
             {
-                auto result = FIND_ITEM(player, items[i]);
+                auto result = Character::FIND_ITEM(player, items[i]);
 
                 if (result >= 0)
                 {
@@ -427,7 +432,7 @@ namespace Character
         {
             for (auto i = 0; i < skills.size(); i++)
             {
-                auto result = FIND_SKILL(player, skills[i]);
+                auto result = Character::FIND_SKILL(player, skills[i]);
 
                 if (result >= 0)
                 {
@@ -491,7 +496,7 @@ namespace Character
         player.LostMoney = player.LostMoney;
         player.Money = 0;
 
-        LOSE_POSSESSIONS(player);
+        Character::LOSE_POSSESSIONS(player);
     }
 
     bool CHECK_VEHICLE(Character::Base &player, Vehicle::Type vehicle)
@@ -513,6 +518,18 @@ namespace Character
 
                 break;
             }
+        }
+
+        return fired;
+    }
+
+    bool FIRE_BARYSAL(Character::Base &player, int count)
+    {
+        auto fired = false;
+
+        for (auto i = 0; i < count; i++)
+        {
+            fired = Character::FIRE_WEAPON(player, Item::Type::BARYSAL_GUN);
         }
 
         return fired;

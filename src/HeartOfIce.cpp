@@ -2900,6 +2900,25 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 error = true;
                             }
                         }
+                        else if (story->Choices[current].Type == Choice::Type::ANY_ITEM)
+                        {
+                            if (Character::VERIFY_ITEMS_ANY(player, story->Choices[current].Items))
+                            {
+                                next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                                done = true;
+
+                                break;
+                            }
+                            else
+                            {
+                                message = "You do not have any of the required items that can be used.";
+
+                                start_ticks = SDL_GetTicks();
+
+                                error = true;
+                            }
+                        }
                         else if (story->Choices[current].Type == Choice::Type::CODEWORD)
                         {
                             if (Character::VERIFY_CODEWORD(player, story->Choices[current].Codeword))
