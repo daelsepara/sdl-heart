@@ -7,6 +7,7 @@
 #include "codewords.hpp"
 #include "items.hpp"
 #include "skills.hpp"
+#include "vehicle.hpp"
 
 namespace Character
 {
@@ -20,13 +21,6 @@ namespace Character
         VISIONARY,
         SCIENTIST,
         MUTANT
-    };
-
-    enum class Vehicle
-    {
-        NONE = -1,
-        BURREK,
-        MANTA_SKY_CAR
     };
 
     class Base
@@ -48,7 +42,7 @@ namespace Character
 
         int SKILLS_LIMIT = 4;
 
-        Character::Vehicle Vehicle = Character::Vehicle::NONE;
+        Vehicle::Type Vehicle = Vehicle::Type::NONE;
 
         std::vector<Skill::Base> Skills = std::vector<Skill::Base>();
         std::vector<Item::Base> Items = std::vector<Item::Base>();
@@ -500,7 +494,7 @@ namespace Character
         LOSE_POSSESSIONS(player);
     }
 
-    bool CHECK_VEHICLE(Character::Base &player, Character::Vehicle vehicle)
+    bool CHECK_VEHICLE(Character::Base &player, Vehicle::Type vehicle)
     {
         return (player.Vehicle == vehicle);
     }

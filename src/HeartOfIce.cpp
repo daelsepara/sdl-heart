@@ -26,6 +26,7 @@ namespace fs = std::filesystem;
 #include "input.hpp"
 #include "items.hpp"
 #include "skills.hpp"
+#include "vehicle.hpp"
 #include "character.hpp"
 #include "story.hpp"
 
@@ -1268,8 +1269,8 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                 }
             }
 
-            putText(renderer, "SELECTED", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * boxh + infoh));
-            putText(renderer, selection.size() > 0 ? take.c_str() : "(None)", font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, 2 * boxh, startx, starty + text_bounds - 2 * boxh);
+            putText(renderer, "SELECTED", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (3 * boxh + infoh));
+            putText(renderer, selection.size() > 0 ? take.c_str() : "(None)", font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, 3 * boxh, startx, starty + text_bounds - 3 * boxh);
 
             fillRect(renderer, textwidth, text_bounds, textx, texty, intBE);
 
@@ -1482,10 +1483,17 @@ void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font
         }
     }
 
+    auto name_string = player.Name;
+    
+    if (player.Vehicle != Vehicle::Type::NONE)
+    {
+        name_string += " (Vehicle: " + std::string(Vehicle::Descriptions[player.Vehicle]) + ")";
+    }
+
     // Fill the surface with background color
     fillWindow(renderer, intWH);
 
-    putText(renderer, player.Name.c_str(), font, space, clrWH, intDB, TTF_STYLE_NORMAL, headerw, headerh, startx, starty);
+    putText(renderer, name_string.c_str(), font, space, clrWH, intDB, TTF_STYLE_NORMAL, player.Vehicle != Vehicle::Type::NONE ? headerw * 3 : headerw, headerh, startx, starty);
     putText(renderer, player.Description.c_str(), font, space, clrBK, intBE, TTF_STYLE_NORMAL, profilew, profileh, startx, starty + headerh);
 
     putText(renderer, "Skills", font, space, clrWH, intDB, TTF_STYLE_NORMAL, headerw, headerh, startx, starty + profileh + headerh + marginh);
@@ -1883,7 +1891,7 @@ Character::Base loadGame(std::string file_name)
         character.LostItems = lostItems;
         character.LostMoney = (int)data["lostMoney"];
 
-        character.Vehicle = static_cast<Character::Vehicle>((int)data["vehicle"]);
+        character.Vehicle = static_cast<Vehicle::Type>((int)data["vehicle"]);
 
         character.ITEM_LIMIT = (int)data["itemLimit"];
         character.MAX_LIFE_LIMIT = (int)data["lifeLimit"];
@@ -2995,6 +3003,16 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 error = true;
                             }
                         }
+                        else if (story->Choices[current].Type == Choice::Type::GAIN_MONEY)
+                        {
+                            player.Money += story->Choices[current].Value;
+
+                            next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                            done = true;
+
+                            break;
+                        }
                         else if (story->Choices[current].Type == Choice::Type::MONEY)
                         {
                             if (player.Money >= story->Choices[current].Value)
@@ -3575,6 +3593,17 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
             controls = Story::ExitControls();
         }
 
+        std::string vehicle_message = "There is a " + std::string(Vehicle::Descriptions[story->Vehicle]) + " here. Do you want to take it?";
+        auto vehicle_text = createText(vehicle_message.c_str(), "fonts/default.ttf", 20, clrWH, textwidth - 2 * text_space, TTF_STYLE_NORMAL);
+        auto vehicle_trigger = false;
+        auto vehicle_done = false;
+        auto message_x = (SCREEN_WIDTH - textwidth) / 2;
+        auto message_y = (SCREEN_HEIGHT - messageh) / 2;
+
+        auto vehicle_controls = std::vector<Button>();
+        vehicle_controls.push_back(Button(0, "icons/yes.png", 0, 1, 0, 0, message_x + button_space, message_y + messageh - buttonh - button_space, Control::Type::YES));
+        vehicle_controls.push_back(Button(1, "icons/no.png", 0, 1, 1, 1, message_x + textwidth - button_space - buttonw, message_y + messageh - buttonh - button_space, Control::Type::NO));
+
         // Render the image
         if (window && renderer)
         {
@@ -3643,14 +3672,26 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     fillRect(renderer, controls[1].W + 2 * border_space, controls[1].H + 2 * border_space, controls[1].X - border_space, controls[1].Y - border_space, intWH);
                 }
 
-                renderButtons(renderer, controls, current, intGR, border_space, border_pts);
-
                 bool scrollUp = false;
                 bool scrollDown = false;
 
-                quit = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
+                renderButtons(renderer, controls, vehicle_trigger ? -1 : current, intGR, border_space, border_pts);
 
-                if ((selected && current >= 0 && current < controls.size()) || scrollUp || scrollDown || hold)
+                if (vehicle_trigger)
+                {
+                    fillRect(renderer, textwidth, messageh, message_x, message_y, intLB);
+                    renderImage(renderer, vehicle_text, (SCREEN_WIDTH - vehicle_text->w) / 2, message_y + text_space);
+
+                    renderButtons(renderer, vehicle_controls, current, intWH, border_space, border_pts);
+
+                    quit = Input::GetInput(renderer, vehicle_controls, current, selected, scrollUp, scrollDown, hold);
+                }
+                else
+                {
+                    quit = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
+                }
+
+                if (!vehicle_trigger && ((selected && current >= 0 && current < controls.size()) || scrollUp || scrollDown || hold))
                 {
                     if (controls[current].Type == Control::Type::SCROLL_UP || (controls[current].Type == Control::Type::SCROLL_UP && hold) || scrollUp)
                     {
@@ -3826,6 +3867,16 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     {
                         if (story->Type == Story::Type::NORMAL)
                         {
+                            if (story->Vehicle != Vehicle::Type::NONE && player.Vehicle != story->Vehicle)
+                            {
+                                if (!vehicle_done)
+                                {
+                                    vehicle_trigger = true;
+
+                                    continue;
+                                }
+                            }
+
                             if (player.Life > 0)
                             {
                                 if (story->LimitSkills > 0)
@@ -3947,6 +3998,33 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         quit = true;
 
                         break;
+                    }
+                }
+                else if (vehicle_trigger && (selected && current >= 0 && current < vehicle_controls.size()))
+                {
+                    if (vehicle_controls[current].Type == Control::Type::YES && !hold)
+                    {
+                        player.Vehicle = story->Vehicle;
+
+                        vehicle_trigger = false;
+
+                        vehicle_message = "You commandeered the " + std::string(Vehicle::Descriptions[story->Vehicle]);
+                        
+                        message = vehicle_message.c_str();
+
+                        start_ticks = SDL_GetTicks();
+
+                        flash_message = true;
+
+                        flash_color = intLB;
+
+                        vehicle_done = true;
+                    }
+                    else
+                    {
+                        vehicle_trigger = false;
+
+                        vehicle_done = true;
                     }
                 }
             }

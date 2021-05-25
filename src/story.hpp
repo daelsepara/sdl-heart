@@ -31,7 +31,8 @@ namespace Choice
         LOSE_MONEY,
         LOSE_ALL,
         LOSE_SKILLS,
-        GET_CODEWORD
+        GET_CODEWORD,
+        GAIN_MONEY
     };
 
     class Base
@@ -202,6 +203,8 @@ namespace Story
         int Limit = 0;
 
         int LimitSkills = 0;
+
+        Vehicle::Type Vehicle = Vehicle::Type::NONE;
 
         Story::Type Type = Story::Type::NORMAL;
 
@@ -689,7 +692,7 @@ public:
 
         auto DAMAGE = -3;
 
-        if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
         {
             DAMAGE = -2;
         }
@@ -705,7 +708,7 @@ public:
 
         if (player.Life > 0)
         {
-            if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+            if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
             {
                 PreText += "\n\n[Vehicle: BURREK] You curl up and share the burrek's body warmth.";
             }
@@ -1716,7 +1719,7 @@ public:
             DAMAGE = -2;
         }
 
-        if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
         {
             PreText += "[Vehicle: BURREK] ";
 
@@ -1734,7 +1737,7 @@ public:
                 PreText += "\n\n[SURVIVAL] You manage to trap a bird which alights on one of the tors of glacial ice for food.";
             }
 
-            if (Character::CHECK_VEHICLE(player, Character::Vehicle::BURREK))
+            if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
             {
                 PreText += "\n\n[Vehicle: BURREK] You tap some of the BURREK's oily blood for sustenance.";
             };
@@ -2436,7 +2439,7 @@ public:
 
     int Continue(Character::Base &player)
     {
-        if (Character::CHECK_VEHICLE(player, Character::Vehicle::MANTA_SKY_CAR))
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
         {
             return 17;
         }
@@ -3038,6 +3041,260 @@ public:
     }
 };
 
+class Story110 : public Story::Base
+{
+public:
+    Story110()
+    {
+        ID = 110;
+
+        Text = "After Gargan XIII's wound has been seen to, you spend another hour searching the bomb shelter. You find a canteen, but the food is unsealed and spoiled. At last you have to accept that you will not get access to the Shrine of the Heart from here. Weary and disappointed, you head back to the ventilation duct.\n\n\"You know the theory that the Heart was formed in the Big Bang?\" says Golgoth to you. \"The boffins say it's actually another universe, like a seed that didn't quite get started. I read somewhere that the same thing happens with people. Often you start off with a twin in the womb, but that twin gets reabsorbed into you. In some people, the process happens quite late in the foetus's development. Occasionally the vestigial remains of the unborn twin is found inside a cyst -- you know, tiny limbs, a nubbin of a heart, and so on. It might be true of any of us\"\n\nYou wonder why he is telling you this rather ghoulish bit of medical lore when one of the Gargan sisters interrupts. \"That is only true for those born in the inferior natural way, inside a womb. My sisters and I were all carefully nurtured and grown to maturity. The artificial wombs guaranteed perfect nutrient balance.\"\n\nGolgoth laughs at her proud remarks. It seems to you he is deliberately provoking her. \"Your own twin sisters were all fine specimens of womanhood,\" he replies. \"I should know; it was me that killed all twelve of them.\"\n\nYou have not taken in what Golgoth said before Gargan XII explodes into action. Roaring in fury, she grabs Golgoth's shoulder and spins him around. His gun is in his hand and it looks to you that he might have got off a shot, but Gargan XIII slaps it away and knees him in the stomach. He reels back into Gargan XIV, who grabs him by the throat and dangles him like a rag doll. \"So this is the great Commander Golgoth, sister,\" she says contemptuously. \"Like all so-called natural humans, he is compared to our pure racial stock.\"\n\nShe tosses Golgoth aside and he slumps to the floor. You have a nasty feeling you'll be next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("ENKIDU: order your automaton to attack", 220, Codeword::Type::ENKIDU));
+        Choices.push_back(Choice::Base("Step in to fight them yourself", 44));
+        Choices.push_back(Choice::Base("Hold back to see what happens", 88));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story111 : public Story::Base
+{
+public:
+    Story111()
+    {
+        ID = 111;
+
+        Image = "images/filler3.png";
+
+        Text = "After a cursory greeting, the others start to disperse back to their tents, Janus Gaunt tells you he has just brewed a pot of tea and invites you to join him. You are pleased enough to share the warmth of his fire, but when a xom hands you a teacup in its bloodless fingers you cannot suppress a shiver of dread.\n\nDon't bother about them,\" he says with a laugh. \"They're just robots, really, except that they're made out of once-living tissue instead of plastic and metal. They're powered by a small electrochemical implant in the chest cavity.\"\n\n\"They are an abomination against nature,\" says Boche flatly, draining his tea. \"Where do we get firewood?\"\n\nGaunt is taken aback by Boche's rudeness, but replies courteously: \"Take it from the buildings around the square. The mulberry window-shutters you are warming your hands over, for instance, date from tenth-century Persia. It is a pity to burn such artifacts as these, but the former owners have no more use for them.\"\n\nBoche rises with a grunt and trudges off, entering a narrow doorway. You follow to find him flashing his torch around. \"Ah, here is some firewood already broken up for our convenience,\" he says.\n\n\"It is mine,\" he purrs a voice of menace from the doorway. Thadra Bey stands there, muscles coiled taut in pantherish grace, a lethal dart-projector in her hand.\n\n\"Down!\" roars Boche, cannoning into you from behind and sending you flying into Thadra Bey. You and she go rolling out into the snow, her dart singing through the air and narrowly missing Chaim Golgoth, who responds once by drawing his barysal gun. In seconds all hell has broken loose, as the uneasy truce splinters apart. Thadra Bey rakes her fingers across your face and leaps away, levelling her dart-projector, and you hear Gaunt yelling to his xoms, \"Defend me! Slay any who attack!\"\n\nFor a moment it seems that the struggle for power will be decided here and now. Then a voice rips like thunder across the square: \"Stop this senseless fighting now!\" and, turning, you have your first view of the mighty Vajra Singh.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 300; }
+};
+
+class Story112 : public Story::Base
+{
+public:
+    Story112()
+    {
+        ID = 112;
+
+        Text = "With only a split-second left before the creature's gaze paralyses you, you act on raw instinct. Leaping high into the air, you somersault over its head, twisting so as to land directly behind it. The eyestalk sweeps frantically, trying to see where you went. But before the creature can bring its ghastly scrutiny to bear, you give it a hard blow across the back of the head. As it falls senseless in the snow, Boche recovers from the hypnotic trance. Even so, it is several seconds before he has recovered his wits enough to speak.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 90; }
+};
+
+class Story113 : public Story::Base
+{
+public:
+    Story113()
+    {
+        ID = 113;
+
+        Text = "You soon find a man who can do what you want: a fat sweaty fellow with a profusion of ancient tools and devices strewn around his shop. Guiding his laser by hand, he makes a few deft changes to the image on the card until it could pass for your own likeness. \"Five scads,\" he says, holding it out to you.\n\n\"Five?\" you scowl.\n\n\"Membership of the prestigious Compass Society is usually much more expensive than that,\" he says with a shrug.\n\nYou consider snatching the card back, but the fat man cannily anticipates you and holds it close to the laser beam until you pay.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Agree to his terms (5 scads)", 414, Choice::Type::LOSE_MONEY, 5));
+        Choices.push_back(Choice::Base("Refuse or if you cannot pay (ID CARD is destroyed)", 414, Choice::Type::LOSE_ITEMS, {Item::ID_CARD}));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story114 : public Story::Base
+{
+public:
+    Story114()
+    {
+        ID = 114;
+
+        Text = "\"There's flaw in your story,\" you point out to the man as you scoop up the knife he dropped. You stroke the point against his neck, pricking the skin until a single drop of blood appears. He swallows nervously. You go on, \"Body snatchers don't use knives. There's too much risk of puncturing a vital organ -- damage to merchandise, you might say. They prefer garrottes and sedative sprays.\"\n\n\"All right,\" he admits. \"We were hired to kill you.\"\n\n\"Who?\" You prod him again with the knife.\n\n\"Baron Siriasis.\"\n\nYou are puzzled. \"I've never heard of him. Why should he want me dead?\"\n\n\"He didn't explain it to us. Apparently he regards you as a rival.\"\n\nThis is a mystery you can clear up later. Telling the surviving assassin to make himself scarce, you dry yourself off and get dressed.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take the money from the dead man's body (10 scads)", 92, Choice::Type::GAIN_MONEY, 10));
+        Choices.push_back(Choice::Base("Leave it alone", 92));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::KNIFE, Item::KNIFE};
+
+        Limit = 2;
+    }
+};
+
+class Story115 : public Story::Base
+{
+public:
+    Story115()
+    {
+        ID = 115;
+
+        Text = "You settle at the controls of the sky-car and touch the button to power it up. There is a deep hum, and slowly it rises into the air. Hovering at the height of a metre above the floor, you cautiously engage the thrusters. A blaze of blue-white light illuminates the rear wall as the sky-car cannons forward. Quickly you reduce thrust, adroitly steering towards the corridor leading to the entrance. A couple of times you bump the wings against the side walls, scratching to your great annoyance, the perfect matt-black paintwork. You must take care until you have got the hang of this vehicle.\n\nAs you emerge into the open, the gondo looks on aghast and then, turning with a yell, starts running clumsily off through the deep snowdrifts. You increase the speed to catch up. He drops flat as you roar overhead and swing around to hover beside him. He lies trembling with his arms over his head until you say, \"It's just me.\"\n\nHe looks up, \"I thought you were a flying monster!\"\n\n\"You should have looked twice before you panicked,\" you say with a laugh.\n\nAfter some urging, the gondo warily clambers up and slides into the seat beside you. \"Is there any roof to shield the cockpit?\" he asks.\n\n\"Apparently not. Remember that when the Manta sky-car was in common use, people go about in thin clothing without the fear of freezing to death.\"\n\nYou steer back towards Venis. The outward journey took a couple of hours; returning is a matter of minutes.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Vehicle = Vehicle::Type::MANTA_SKY_CAR;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 181;
+        }
+        else
+        {
+            return 159;
+        }
+    }
+};
+
+class Story116 : public Story::Base
+{
+public:
+    Story116()
+    {
+        ID = 116;
+
+        Text = "The computer terminals are only intended to access the library catalogue, but you have no trouble routing into the building's administrative computer and then opening an outside line via the rooftop satellite dish. Like most organizations with the ability to connect into global communications, the Society protects its system from accidental linkage into Gaia by the use of a filter program. This is necessary to prevent infection by the same viruses that are resident in Gaia, as well as to stop Gaia from taking over the Society's whole system for her own use.\n\nYou set a standard filter-override program running. It should take a few minutes, and to kill time you run a check on other users who have logged into the system recently. Only one name is displayed: Janus Gaunt. He requested all the Society's records regarding the Heart of Volent. Intrigued, you call up his biofile. The screen shows a round-faced man with extremely white skin and hair like silver floss. Flicking idly through the data, you find he has a reputation for outstanding work in the fields of bioengineering and nanotechnology. The address of his mansion causes you a double-take; it is located in the Paris catacombs. You were not even sure Paris still existed.\n\nThe terminal bleeps, informing you the link with Gaia is ready. You switch over. When you type in your query about the Heart, Gaia's response is swift: THE HEART MUST BE DESTROYED. ACTIVATION OF ITS POWER WILL CRASH THE UNIVERSE, WIPING OUT ALL THAT EXISTS.\n\nYou reply: INCLUDING EARTH?\n\nEVERYTHING, Gaia tells you. BARYSAL BOMBARDMENT CAN CAUSE A CRITICAL RESONANCE. DESTROYING THE HEART'S CRYSTALLINE STRUCTURE. TWO SIMULTANEOUS BOMBARDMENTS MUST BE MADE, THE BEAMS PHASED AND CROSSING AT RIGHT ANGLES.\n\nThis is awkward. From what you have heard, the Heart is a gem several metres across. To destroy it as Gaia suggests, you'd need an accomplice. And two barysal guns. You try to get further information, but the link is broken. Like a senile invalid, Gaia has lapsed back into her customary incoherence.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Study the records on Heart of Volent", 182));
+        Choices.push_back(Choice::Base("You have finished in the library", 73));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            Choices[0].Destination = 160;
+        }
+        else
+        {
+            Choices[0].Destination = 182;
+        }
+    }
+};
+
+class Story117 : public Story::Base
+{
+public:
+    Story117()
+    {
+        ID = 117;
+
+        Text = "\"It's been useful having you along,\" says Shandor, beaming his confident smile as he firmly shakes your hand. \"I'm sure you won't need my advice on getting by in Venis, resourceful as you are, so let me give you something else.\"\n\nHe reaches into a pocket and produces a monkey token which he touches to yours, automatically transferring the sum of 20 scads to you. You are about to protest when you notice the sum remaining on his token. He can well afford what he's paid to you.\n\nYou GAINED 20 scads.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_MONEY(player, 20);
+
+        if (!(Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && Character::VERIFY_ITEMS(player, {Item::Type::SHORT_SWORD})))
+        {
+            Bye = "Bidding Shandor and his men farewell, you set off into Venis.";
+        }
+        else
+        {
+            Bye = NULL;
+        }
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && Character::VERIFY_ITEMS(player, {Item::Type::SHORT_SWORD}))
+        {
+            return 8;
+        }
+        else
+        {
+            return 334;
+        }
+    }
+};
+
+class Story118 : public Story::Base
+{
+public:
+    Story118()
+    {
+        ID = 118;
+
+        Text = "You jump to your feet and scramble through the undergrowth. The creature follows at a leisurely pace, squawking triumphantly from high in the branches. It claws its way effortlessly between the close spaced trunks, sometimes sailing out across clearings on the wide leathery kite of its body.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            return 206;
+        }
+        else if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            return 140;
+        }
+        else
+        {
+            return 162;
+        }
+    }
+};
+
+class Story119 : public Story::Base
+{
+public:
+    Story119()
+    {
+        ID = 119;
+
+        Text = "A lethal blue spike of light pierces the air, charring its way through the chest of the man with the gun. The knifeman blinks, starts to backpedal then realizes he has no choice but to attack you anyway. The instant's hesitation proves his undoing, as you have time to swing your gun around and unload a blast at point-blank range. The third man rushes in with a sob of desperate fury. You lash out with the but of the gun and he drops as though poleaxed.\n\nYou search the trapper's shelter. Their BARYSAL GUNs has two charges left. You also find two KNIVES, a set of POLARIZED GOGGLES, BINOCULARS, and a COLD-WEATHER SUIT, and six FOOD PACKs.";
+
+        Choices.clear();
+
+        Bye = "Then you wait for the blizzard to blow itself out before you emerge into the crisp snow outside.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::MAKE_BARYSAL_GUN(2), Item::MAKE_BARYSAL_GUN(2), Item::KNIFE, Item::KNIFE, Item::POLARIZED_GOGGLES, Item::BINOCULARS, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 13;
+    }
+
+    int Continue(Character::Base &player) { return 393; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -3186,6 +3443,16 @@ auto story106 = Story106();
 auto story107 = Story107();
 auto story108 = Story108();
 auto story109 = Story109();
+auto story110 = Story110();
+auto story111 = Story111();
+auto story112 = Story112();
+auto story113 = Story113();
+auto story114 = Story114();
+auto story115 = Story115();
+auto story116 = Story116();
+auto story117 = Story117();
+auto story118 = Story118();
+auto story119 = Story119();
 
 void InitializeStories()
 {
@@ -3201,7 +3468,8 @@ void InitializeStories()
         &story070, &story071, &story072, &story073, &story074, &story075, &story076, &story077, &story078, &story079,
         &story080, &story081, &story082, &story083, &story084, &story085, &story086, &story087, &story088, &story089,
         &story090, &story091, &story092, &story093, &story094, &story095, &story096, &story097, &story098, &story099,
-        &story100, &story101, &story102, &story103, &story104, &story105, &story106, &story107, &story108, &story109};
+        &story100, &story101, &story102, &story103, &story104, &story105, &story106, &story107, &story108, &story109,
+        &story110, &story111, &story112, &story113, &story114, &story115, &story116, &story117, &story118, &story119};
 }
 
 #endif
