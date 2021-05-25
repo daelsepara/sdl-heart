@@ -2953,16 +2953,6 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
 
                             break;
                         }
-                        else if (story->Choices[current].Type == Choice::Type::GET_CODEWORD)
-                        {
-                            Character::GET_CODEWORDS(player, {story->Choices[current].Codeword});
-
-                            next = (Story::Base *)findStory(story->Choices[current].Destination);
-
-                            done = true;
-
-                            break;
-                        }
                         else if (story->Choices[current].Type == Choice::Type::LOSE_ITEMS)
                         {
                             auto items = std::vector<Item::Type>();
@@ -2990,6 +2980,26 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
 
                                 error = true;
                             }
+                        }
+                        else if (story->Choices[current].Type == Choice::Type::GET_CODEWORD)
+                        {
+                            Character::GET_CODEWORDS(player, {story->Choices[current].Codeword});
+
+                            next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                            done = true;
+
+                            break;
+                        }
+                        else if (story->Choices[current].Type == Choice::Type::LOSE_CODEWORD)
+                        {
+                            Character::REMOVE_CODEWORD(player, story->Choices[current].Codeword);
+
+                            next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                            done = true;
+
+                            break;
                         }
                         else if (story->Choices[current].Type == Choice::Type::LOSE_ALL)
                         {
@@ -4001,9 +4011,49 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
 
                             flash_color = intRD;
                         }
+                        else if (story->Type == Story::Type::GODHOOD)
+                        {
+                            message = "You are immortal and all-powerful now. Your adventure has culminated in godhood.";
+
+                            start_ticks = SDL_GetTicks();
+
+                            flash_message = true;
+
+                            flash_color = intLB;
+                        }
+                        else if (story->Type == Story::Type::SACRIFICE)
+                        {
+                            message = "This adventure is over. You have given your lives for the sake of the whole world.";
+
+                            start_ticks = SDL_GetTicks();
+
+                            flash_message = true;
+
+                            flash_color = intLB;
+                        }
+                        else if (story->Type == Story::Type::SENTINEL)
+                        {
+                            message = "This adventure is over. You have become an undying sentinel for all time.";
+
+                            start_ticks = SDL_GetTicks();
+
+                            flash_message = true;
+
+                            flash_color = intLB;
+                        }
+                        else if (story->Type == Story::Type::UNKNOWN)
+                        {
+                            message = "This adventure is over. You don't know how long you'll live. But then, who does?";
+
+                            start_ticks = SDL_GetTicks();
+
+                            flash_message = true;
+
+                            flash_color = intRD;
+                        }
                         else if (story->Type == Story::Type::GOOD)
                         {
-                            message = "You have defeated Heart of Ice! This adventure is over. Further adventure awaits!";
+                            message = "You found the Heart of Volent! This adventure is over. Further adventure awaits!";
 
                             start_ticks = SDL_GetTicks();
 

@@ -32,6 +32,7 @@ namespace Choice
         LOSE_ALL,
         LOSE_SKILLS,
         GET_CODEWORD,
+        LOSE_CODEWORD,
         GAIN_MONEY
     };
 
@@ -2914,7 +2915,7 @@ public:
         Text = "Boche struts around the fire under the colonnade while outlining his plans for how you will share the power of the Heart. Lost in your own deep reverie, you hardly hear his words. Finally you look up and ask him, \"Why do you want ultimate power, Boche?\"\n\nHe stops short and looks at you sharply. For a moment you think he is about to give you a straight answer, but no. \"What are you saying? Are you having doubts? Surely not, when we are on the verge of triumph. You must not be so timid!\"";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("NEMESIS: Suggest an alliance", 236, Codeword::Type::NEMESIS));
+        Choices.push_back(Choice::Base("(Nemesis) Suggest an alliance", 236, Codeword::Type::NEMESIS));
         Choices.push_back(Choice::Base("You would rather get some sleep", 192));
 
         Controls = Story::Controls::STANDARD;
@@ -3051,7 +3052,7 @@ public:
         Text = "After Gargan XIII's wound has been seen to, you spend another hour searching the bomb shelter. You find a canteen, but the food is unsealed and spoiled. At last you have to accept that you will not get access to the Shrine of the Heart from here. Weary and disappointed, you head back to the ventilation duct.\n\n\"You know the theory that the Heart was formed in the Big Bang?\" says Golgoth to you. \"The boffins say it's actually another universe, like a seed that didn't quite get started. I read somewhere that the same thing happens with people. Often you start off with a twin in the womb, but that twin gets reabsorbed into you. In some people, the process happens quite late in the foetus's development. Occasionally the vestigial remains of the unborn twin is found inside a cyst -- you know, tiny limbs, a nubbin of a heart, and so on. It might be true of any of us\"\n\nYou wonder why he is telling you this rather ghoulish bit of medical lore when one of the Gargan sisters interrupts. \"That is only true for those born in the inferior natural way, inside a womb. My sisters and I were all carefully nurtured and grown to maturity. The artificial wombs guaranteed perfect nutrient balance.\"\n\nGolgoth laughs at her proud remarks. It seems to you he is deliberately provoking her. \"Your own twin sisters were all fine specimens of womanhood,\" he replies. \"I should know; it was me that killed all twelve of them.\"\n\nYou have not taken in what Golgoth said before Gargan XII explodes into action. Roaring in fury, she grabs Golgoth's shoulder and spins him around. His gun is in his hand and it looks to you that he might have got off a shot, but Gargan XIII slaps it away and knees him in the stomach. He reels back into Gargan XIV, who grabs him by the throat and dangles him like a rag doll. \"So this is the great Commander Golgoth, sister,\" she says contemptuously. \"Like all so-called natural humans, he is compared to our pure racial stock.\"\n\nShe tosses Golgoth aside and he slumps to the floor. You have a nasty feeling you'll be next.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("ENKIDU: order your automaton to attack", 220, Codeword::Type::ENKIDU));
+        Choices.push_back(Choice::Base("(Enkidu) Order your automaton to attack", 220, Codeword::Type::ENKIDU));
         Choices.push_back(Choice::Base("Step in to fight them yourself", 44));
         Choices.push_back(Choice::Base("Hold back to see what happens", 88));
 
@@ -3441,7 +3442,7 @@ public:
         Text = "You find Golgoth squatting by torchlight at the end of the colonnade, where he has laid out all his weapons o the flagstones. As he checks each, he slips it into its concealed sheath: a garrotte wire under his belt, along with a flexible steel blade; poison darts in a bandolier inside his jacket; guns at hip, ankle and wrist; small flat grenades clipped along his sabretache. You watch him aghast for a few minutes.\n\n\"Quite the professional killer, aren't you, Golgoth?\"\n\n\"Don't get far if you only make it a hobby.\"\n\nYou heave a sigh. \"Does human life mean anything to you?\"\n\nHe buckles on his BARYSAL GUN, gets up, and gives you a long thoughtful look in the torchlight. \"Not the life of scum like this.\" He gestures along the colonnade. \"I've happily sent hundreds like them to an early grave. Who do you think my USI bosses should've sent -- a pack of boy-scout Marines?\"\n\n\"So you're here as a USI agent?\"\n\nHe nods. \"Of course. The power of the Heart cannot be allowed to fall into hostile hands. In order of priority, I will either take it to the States, get the power myself, or destroy it.\"";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("NEMESIS: Propose an alliance", 204, Codeword::Type::NEMESIS));
+        Choices.push_back(Choice::Base("(Nemesis) Propose an alliance", 204, Codeword::Type::NEMESIS));
         Choices.push_back(Choice::Base("Go and talk to Kyle Boche", 104));
         Choices.push_back(Choice::Base("Get some sleep", 192));
 
@@ -4684,6 +4685,246 @@ public:
     }
 };
 
+class Story180 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story180()
+    {
+        ID = 180;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -2);
+
+        PreText += "You LOSE 2 Life Points.";
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nYou slump in the corner of the bench with barely strength to move. At last, thinking you helpless, the assassins open the steam room door. \"Let's get this carcass over to the baron -- prove we've done the job,\" one of them says.\n\n\"Rather a disappointment,\" says the other, grabbing a hunk of your hair and lifting your head up off the bench. \"I was hoping I'd get to use my knife.\"\n\nHearing this, you explode into action. You have no compunction about giving the nearest man a very hard kick in the groin. As he doubles up and his accomplice gapes in surprise, you lunge out of the door and race back towards the dormitory. Your nakedness draw a few choice looks from the inn's other residents, so you hastily pull on your clothes.\n\nA few minutes later, the assassins glance into the dormitory. With so many people around, they think better of pursuing you and instead duck out into the night. Just as well. After being shut up in the steam room, you feel too weak for a fight.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 92; }
+};
+
+class Story181 : public Story::Base
+{
+public:
+    Story181()
+    {
+        ID = 181;
+
+        Text = "Do you want to find Kyle Boche and tell him about acquiring the sky-car?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Yes", 203));
+        Choices.push_back(Choice::Base("No", 159, Choice::Type::LOSE_CODEWORD, Codeword::Type::DIAMOND));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story182 : public Story::Base
+{
+public:
+    Story182()
+    {
+        ID = 182;
+
+        Text = "By luck you find the following reference:\n\nExtract form the interrogation of Eleazar Picard, leader and sole survivor of the Volentine Cult, July 16, 2113 AD; debriefing conducted by Colonel Mehmet Alishah of al-Lat:\n\nPicard: It was the light at the end of Time, and my sanity is blinded.\nAlishah: How is it you escaped? You alone and no one else?\nPicard: I remember the Truth.\nAlishah: What is the Truth?\nPicard [recites]: \"The Truth is a flame. What ignites the flame? The spark ignites the flame. What is the spark? The heart of Volent!\"\n\nYou flip through a few other books. Eleazar Picard was the founder of the cult that worshipped the Heart of Volent two hundred years go. He ruled Du-En with six others -- until the night of July 15, 2113, when the entire populace of the city went mad and fled into the Saharan Ice Wastes. Du-En has stood abandoned since then. You check one other detail. Picard died, still raving, only hours after being questioned by Colonel Alishah.\n\nYou gained the codeword LUNAR.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try making contact with Gaia", 138));
+        Choices.push_back(Choice::Base("You've finished in the library", 73));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::LUNAR});
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            Choices[0].Destination = 116;
+        }
+        else
+        {
+            Choices[0].Destination = 138;
+        }
+    }
+};
+
+class Story183 : public Story::Base
+{
+public:
+    Story183()
+    {
+        ID = 183;
+
+        Text = "The signs you have noticed indicate a porphyr. These are parasitical creatures of ancient myth who roam the night in search of living victims, from whom they drain the body warmth (or, in some versions, the very lifeblood) in order to sustain their own existence. They can only be slain by decapitation, but are vulnerable to direct sunlight, running water, and certain extinct herbs.\n\nYou guess that this porphyr was overpowered and hurled into the glacier centuries ago as a way of getting rid of him. Even frozen running water has the power to hold him immobile. Of course, now that the ice has been chipped away, he might be able to escape. You glance up at the thin wedge of powder-blue sky beyond the crevasse, already streaked with dusky grey streamers of cloud. Less than two hours of daylight remain. You tell Shandor your suspicions.\n\n\"Porphyrs?\" he mocks. \"Fairy tales for kiddies, surely.\"\n\nYou aren't so sceptical. Fortunately you remember one other thing about these creatures. Their minds are quite simple, and they are particularly baffled by vertical or horizontal lines, which their eyes try to follow to infinity -- similar to the way a chicken can be hypnotized by drawing a chalk mark in front of its beak. You scratch two intersecting lines into the ice directly in front of the trapped porphyr's eyes, then step back with a satisfied nod. \"There it can't escape now.\"\n\nShandor chuckles and claps his hand on your shoulder. \"In case you hadn't noticed, it couldn't anyway: it's been dead two hundred years and it's trapped under thousands of tons of ice. Still, if it makes you feel safer.\" He turns to his bodyguards. \"Let's get going. We can do another six kilometres by nightfall.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 249; }
+};
+
+class Story184 : public Story::Base
+{
+public:
+    Story184()
+    {
+        ID = 184;
+
+        Text = "At last you nestle down in the cleft of a dead tree and drift off to sleep. Strange feverish dreams flicker across the back of your eyelids. Moaning, bathed in torrents of sweat, you fling out an arm to brush away what you imagine to be a gnat. You are not aware of the long prow of reptilian head that hangs down out of the foliage and starts to sup on your blood. Its venom thunders through your bloodstream and keeps you drowsy wile it feasts. You are destined never to wake.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story185 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story185()
+    {
+        ID = 185;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "They obviously mean to kill you, not out of viciousness but from the simple logic of survival. There probably is not enough game in the region to provide enough food for a fourth person. As they close in, you put on a crafty expression and glance over your shoulder, back the way you came.\n\n\"Got friends, have you?\" growls the man with the knife. He puts the tip to your throat. \"Answer.\"\n\n\"I'm alone.\"\n\n\"What, then? What were you looking at?\"\n\n\"Nothing.\" You compress your lips. The knife presses tighter, shedding a drop of your blood. \"All right! There's a storeroom down there -- food, medical supplies, that sort of thing. I was just regretting that I'll never get back to civilization and sell it.\"\n\nThey peer into the rubble-clogged tunnel, a sheen of greed in their eyes. \"You're lying,\" suggests the man with the gun.\n\nYou shrug. \"Yeah. I was just prowling the tunnels for the sake of sightseeing. Of course.\"\n\nThe third man scratches his chin thoughtfully. \"We ought to take a look. This joker didn't just spring out of thin air, after all.\" He looks at the man with the knife. \"Snarvo, you stay here and watch our... guest. Krench, you come with me.\"\n\nThey tie you up, then depart in search of non-existent booty. You wait until they must be out of earshot in the tunnels below. Snarvo is facing down the tunnel. He thinks you helpless, but in fact you have been burning the rope away from your wrists over the crackling fire. It is a painful business, but better than certain death.\n\nYou LOSE 1 Life Point.";
+
+        Character::GAIN_LIFE(player, -1);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nSuddenly you cannon into Snarvo, winding him with a butt in the stomach. Wrestling for the knife, you twist it around and stab him. As he slumps gasping to the floor, you snatch up the knife and run over to the opening. Outside a blizzard is raging, but you cannot wait for the others to return. You push the rug aside and dash out into the storm.";
+        }
+
+        Text = PreText.c_str();
+
+        Take = {Item::KNIFE};
+
+        Limit = 1;
+    }
+
+    int Continue(Character::Base &player) { return 314; }
+};
+
+class Story186 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story186()
+    {
+        ID = 186;
+
+        Bye = "You finally manage to swing one of the twins off her feet and hurl her at the other with such force that both are knocked senseless. You are not in much better shape yourself.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Again the battle is joined. This time you and your two opponents have the measure of each other. The twins circle warily, trying to divide your attention. You plant your back solidly to the bar and wait with arms spread wide, daring them to attack. The extravagant acrobatics have been set aside now. All three of you are too breathless to waste effort on high flying kicks or fast barrages of punching.\n\nOne lunges forward, clutching at your neck. You counter, pushing her arm up as you drive stiffened fingers into the corded muscles of her throat. As she splutters, briefly limp, you swing her around, using her as a shield that her sister's sudden attack catches her in the back. But she recovers faster than you expected, and her knee drives up agonizingly into your groin.";
+
+        auto DAMAGE = -3;
+
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 314; }
+};
+
+class Story187 : public Story::Base
+{
+public:
+    Story187()
+    {
+        ID = 187;
+
+        Text = "You recognize the signs that mark some areas of the city as unsafe: the hard sidelong scrutiny of the locals, the ragged evidence of poverty, the nervous hurrying footsteps in the fog. You head for a well-lit plaza where people are likely to be working all night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 253; }
+};
+
+class Story188 : public Story::Base
+{
+public:
+    Story188()
+    {
+        ID = 188;
+
+        Text = "You explain what you have learned regarding Du-En and the Heat of Volent. \"It seems far-fetched,\" says Riza when he has heard you out.\n\n\"You look down dourly at the fusion of metal and flesh that is now your body. \"Before my accident, it seemed a noble but distant goal. Now it has taken on a personal dimension. With the power of the Heart, I can restore myself.\"\n\n\"And much more, if Gaia is to be believed,\" says Riza. He takes you through to another room and sits you in front of a screen. \"Here you have access to the information banks. Perhaps you can find out something that will help in your venture.\"\n\nYou watch as he touches a few buttons. A list of files concerning the Heart of Volent appears on the screen. \"I think I can take it from here,\" you tell Riza.\n\nHe nods. \"Good. I'll come back in an hour or so and see how your work is going.\"";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            Choices.push_back(Choice::Base("Check through the files on the screen", 210));
+            Choices.push_back(Choice::Base("Go for a stroll and see what else you can find out here", 254));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 232; }
+};
+
+class Story189 : public Story::Base
+{
+public:
+    Story189()
+    {
+        ID = 189;
+
+        Text = "Glancing around for a means of opening the door, you notice an alphanumeric keypad set in a recess to one side. As you are cleaning away the crust of snow, it strikes you that a hundred years might have passed since this door last opened. There are billions of possible combinations, but whoever used it then would have known the correct sequence to punch into the keypad.\n\nYou close your eyes, focusing with that inward mental sense which transcends ordinary reality. The veil of time draws aside. For a moment you glimpse a figure in the military dress of an earlier era, stabbing impatiently at this very keypad.\n\nThe image flickers, breaks apart like a projection on smoke. With bated breath you enter the same sequence you thought you saw the soldier use: H-U-M-B-A-B-A. There is a crackling of ice as the door slides up to admit you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 233; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -4903,6 +5144,16 @@ auto story177 = Story177();
 auto story178 = Story178();
 auto story179 = Story179();
 auto event179 = Event179();
+auto story180 = Story180();
+auto story181 = Story181();
+auto story182 = Story182();
+auto story183 = Story183();
+auto story184 = Story184();
+auto story185 = Story185();
+auto story186 = Story186();
+auto story187 = Story187();
+auto story188 = Story188();
+auto story189 = Story189();
 
 void InitializeStories()
 {
@@ -4925,7 +5176,8 @@ void InitializeStories()
         &story140, &story141, &story142, &story143, &story144, &story145, &story146, &story147, &story148, &story149,
         &story150, &story151, &story152, &story153, &story154, &story155, &story156, &story157, &story158, &story159,
         &story160, &story161, &story162, &story163, &story164, &story165, &story166, &story167, &story168, &story169,
-        &story170, &story171, &story172, &story173, &story174, &story175, &story176, &story177, &story178, &story179};
+        &story170, &story171, &story172, &story173, &story174, &story175, &story176, &story177, &story178, &story179,
+        &story180, &story181, &story182, &story183, &story184, &story185, &story186, &story187, &story188, &story189};
 }
 
 #endif

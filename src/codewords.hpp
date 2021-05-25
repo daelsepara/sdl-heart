@@ -29,23 +29,23 @@ namespace Codeword
     };
 
     std::map<Codeword::Type, const char *> Descriptions = {
-        {Codeword::Type::BLUE, "BLUE"},
-        {Codeword::Type::CAMOUFLAGE, "CAMOUFLAGE"},
-        {Codeword::Type::DIAMOND, "DIAMOND"},
-        {Codeword::Type::ENKIDU, "ENKIDU"},
-        {Codeword::Type::FOCUS, "FOCUS"},
-        {Codeword::Type::HOURGLASS, "HOURGLASS"},
-        {Codeword::Type::HUMBABA, "HUMBABA"},
-        {Codeword::Type::LUNAR, "LUNAR"},
-        {Codeword::Type::MALLET, "MALLET"},
-        {Codeword::Type::NEMESIS, "NEMESIS"},
-        {Codeword::Type::PROTEUS, "PROTEUS"},
-        {Codeword::Type::RED, "RED"},
-        {Codeword::Type::SCOTOPIC, "SCOTOPIC"},
-        {Codeword::Type::SCYTHE, "SCYTHE"},
-        {Codeword::Type::TALOS, "TALOS"},
-        {Codeword::Type::URUK, "URUK"},
-        {Codeword::Type::YELLOW, "YELLOW"}};
+        {Codeword::Type::BLUE, "Blue"},
+        {Codeword::Type::CAMOUFLAGE, "Camouflage"},
+        {Codeword::Type::DIAMOND, "Diamond"},
+        {Codeword::Type::ENKIDU, "Enkidu"},
+        {Codeword::Type::FOCUS, "Focus"},
+        {Codeword::Type::HOURGLASS, "Hourglass"},
+        {Codeword::Type::HUMBABA, "Humbaba"},
+        {Codeword::Type::LUNAR, "Lunar"},
+        {Codeword::Type::MALLET, "Mallet"},
+        {Codeword::Type::NEMESIS, "Nemesis"},
+        {Codeword::Type::PROTEUS, "Proteus"},
+        {Codeword::Type::RED, "Red"},
+        {Codeword::Type::SCOTOPIC, "Scotopic"},
+        {Codeword::Type::SCYTHE, "Scythe"},
+        {Codeword::Type::TALOS, "Talos"},
+        {Codeword::Type::URUK, "Uruk"},
+        {Codeword::Type::YELLOW, "Yellow"}};
 
 } // namespace Codeword
 #endif
