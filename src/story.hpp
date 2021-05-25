@@ -3607,6 +3607,8 @@ public:
     {
         ID = 132;
 
+        Image = "images/filler1.png";
+
         Text = "A barrage of tightly focused plasma bolts flash through the air directly overhead. You feel the wave of heat as the copper wires are vaporized. The puppets drop lifeless to the stage.\n\nGilgamesh lowers his arm. Smoke is wafting from his built-in gun. \"Random motion of manikins could have caused you damage,\" he grates in his mechanical voice. \"They have been rendered inert. Danger now over.\"\n\n\"And you wanted to leave the tin man behind,\" Golgoth reminds the Gargan sisters as you get down off the stage.";
 
         Controls = Story::Controls::STANDARD;
@@ -3778,6 +3780,8 @@ public:
     {
         ID = 140;
 
+        Image = "images/filler1.png";
+
         Text = "The creature that attacked you is a sanguivore, a mutant lizard with gliding and mimicking abilities. The sanguivore's saliva contains an anti-clotting agent, ensuring that its prey slow bleeds to death even after escaping from it. That explains why it's in no hurry to catch up with you. It is content to track you through the woods and wait until you collapse from exhaustion. Well, you have a few resources not shared by any wild animal. Tearing the lining of your jacket into strips, you bind the wound to prevent further loss.";
 
         Choices.clear();
@@ -3809,6 +3813,8 @@ public:
     Story142()
     {
         ID = 142;
+
+        Image = "images/filler2.png";
 
         Text = "The reputation of the Gargan clones is so daunting that no one dares to suggest killing them. \"I have heard that the other members of the clone group were killed, but who can be sure?\" says one man with the flaring blue hat-flaps of a Tuareg hunter.\n\n\"That's true,\" admits the innkeeper with a nod. \"I wouldn't care to have twelve identical Amazons barge into my taproom a month from now and demand retributions for their sisters.\"\n\nAt last a compromise is reached. The unconscious sisters are taken down to the shore and placed in a small boat which you push out to sea. You watch the boat drift away into the frosty evening haze. Shivering, you stamp back through the snow to the inn, where you are given food and wine and treated like a hero.\n\nThe innkeeper also offers you provisions for your journey: two FOOD PACKS.\n\nYou RECOVER 1 Life Point.";
 
@@ -3955,6 +3961,8 @@ public:
     Story148()
     {
         ID = 148;
+
+        Image = "images/filler3.png";
 
         Text = "Gaunt walks with you to the outskirts of Du-En to show you the night sky. His undead xoms stalk silently alongside bearing glow-lamps. At the city gates, they dim the lamps and you are left with the light of ten thousand glittering stars. The snows of the Sahara are swallowed by darkness, but you get the impression of standing at the hub of infinity.\n\nFor a long period neither of you speaks. Then Gaunt recites softly, \"Some say the world will end in fire, some say in ice. From what I've tasted of desire, I hold with those who favour fire. But if it had to perish twice, I think I know enough of hate to say that ice is also great, and would suffice.\"\n\n\"What's that?\"\n\n\"The words of a poet long ago.\" He gazes to the north. \"My home city lies under a shield of ice a kilometre thick. Soon the world will slip into a coma, like a man frozen at the point of death. The polar caps will meet and everything will end.\"\n\n\"Unless we find the Heart and use its power to set things right.\"\n\nHe turns with a smile almost of delight. \"Is that why you've come here? I fear you'll be disappointed. The Heart must inevitably fall into the hands of one who is most ruthless. To seize true power, a man must have a heart of ice. When the powerful do good deeds -- I speak of Caesar, Alexander, Napoleon, Mao -- they do so inadvertently. The good and honest of the world are always the most impotent.\n\nIt suddenly occurs to you that Gaunt hasn't a chance of surviving here. He is too intellectual to vie with the others for the Heart.";
 
@@ -4538,6 +4546,8 @@ public:
     Story173()
     {
         ID = 173;
+
+        Image = "images/filler3.png";
 
         Text = "Misjudging the leap, you fall short by an arm's length and go plunging down through the fog to meet your doom on the hard flagstones twenty storeys below.";
 
