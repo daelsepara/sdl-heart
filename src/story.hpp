@@ -3539,6 +3539,237 @@ public:
     int Continue(Character::Base &player) { return 85; }
 };
 
+class Story130 : public Story::Base
+{
+public:
+    Story130()
+    {
+        ID = 130;
+
+        Text = "The shot was a decoy. Sensing Golgoth's thoughts, you whirl to see him running silently through the smoke towards you. The look in his eyes is the chilling glint of an inhuman killer. Your arm comes up by instinct and you send a lethal blast of energy through his heart. He topples at your feet.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 72; }
+};
+
+class Story131 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story131()
+    {
+        ID = 131;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Your shot burns through Singh's armour and he staggers back, but although wounded he is far from beaten. He presses the fire button on his MANTRAMUKTA CANNON just as Boche goes for an opportunist shot at you. The beam carves through your shoulder.";
+
+        auto DAMAGE = -2;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            DAMAGE = -1;
+        }
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nA moment later Boche falls as Singh swings the cannon around, blasting him apart with a torrent of searing energy.\n\nThere is a moment of silence as the cannon's blast cuts out. It will take a few seconds to build up charge before it can fire again. Golgoth seizes the chance to take aim with his barysal gun. This is the showdown that will decide which of you lives to claim the power of the Heart.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 410; }
+};
+
+class Story132 : public Story::Base
+{
+public:
+    Story132()
+    {
+        ID = 132;
+
+        Text = "A barrage of tightly focused plasma bolts flash through the air directly overhead. You feel the wave of heat as the copper wires are vaporized. The puppets drop lifeless to the stage.\n\nGilgamesh lowers his arm. Smoke is wafting from his built-in gun. \"Random motion of manikins could have caused you damage,\" he grates in his mechanical voice. \"They have been rendered inert. Danger now over.\"\n\n\"And you wanted to leave the tin man behind,\" Golgoth reminds the Gargan sisters as you get down off the stage.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 110; }
+};
+
+class Story133 : public Story::Base
+{
+public:
+    Story133()
+    {
+        ID = 133;
+
+        Text = "\"You won't regret it,\" he says emphatically.\n\nYou look to the east, where the morning sun is hidden under a shelf of heavy grey cloud. A link of black posts protrude from the snow, marking the road to Venis. The other direction would take you through the swamplands of Lyonesse -- the one region of Europe not afflicted by ice sheets and arctic blizzards. But Lyonesse has dangers of its own.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Head east towards Venis", 200));
+        Choices.push_back(Choice::Base("Go west through Lyonesse", 177));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story134 : public Story::Base
+{
+public:
+    Story134()
+    {
+        ID = 134;
+
+        Text = "The creature's lair proves to be a cave at the end of the pass. Inside you find a fire of smouldering peat. Around it are strewn bones from humans and large animals. It seems that the creature trapped its prey by hypnosis, leaving the victim to die of exposure. Whenever it needed fresh meat, it had only to fetch in one of the frozen bodies along the pass -- a gruesomely effective procedure. The aftermath of the Paradox War has left the world with many such weird mutations.\n\nBoche gives an involuntary cry of disgust, which he immediately disguises with a nervous laugh. He has discovered a clutch of the creature's young: blobby heads like diseased potatoes, bodies as shrivelled as a bag of giblets, the mesmeric eye no more than a yellow pebble on the end of an embryonic tuber-like stalk.\n\n\"Cute little devils.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Kill them", 156));
+        Choices.push_back(Choice::Base("Leave them alone", 178));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story135 : public Story::Base
+{
+public:
+    Story135()
+    {
+        ID = 135;
+
+        Text = "You show the card to various forgers around town. One tells you that the process involved in altering a hologram is very expensive, since lasers and other rare devices are needed. You are about to leave his shop when he sidles over and glances furtively along the street. Dusk squats over the city, pouring dank slush snow from a colourless sky. He lowers the blinds. \"I can't alter the picture,\" he says. \"But what about your own face?\"\n\n\"Cosmetic surgery?\"\n\nHe shows you to a room at the back. \"I do it all the time for clients who want to escape their past misdeeds. A whiff of gas and you sleep. When you wake, you'll have a new face.\"\n\n\"How much?\"\n\nAfter some haggling, he settles on the sum of 5 scads. He reaches out his hand, but you smilingly shake your head, telling him you will pay once the operation is over. He prepares his instruments, then invites you to breathe the anaesthetic gas.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Reconsider and leave now", 223));
+        Choices.push_back(Choice::Base("Go ahead with the operation", 201));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story136 : public Story::Base
+{
+public:
+    Story136()
+    {
+        ID = 136;
+
+        Text = "You sense that he is lying. Narrowing your gaze, you search deeper into his thoughts while he lies there helpless on the titles. The shower splashes water onto both of you, icy cold now.\n\nYou glimpse the image of a crippled man. white hair like a puff of steam surrounds an old, sick, deeply seamed face. He ordered your death. The assassin does not know why.\n\nDeciding it is easier just to question the man, you say, \"Who was the man who hired you?\"\n\n\"Baron Siriasis, a paradoxer from Bezant. He said you were not to reach Kahira.\"\n\n\"Why did he want me dead?\" you ask. But the question is futile; you have already read the assassin's mind, and he cannot give you any answer. It is a mystery you must clear up later. Telling the man to make himself scarce, you dry yourself off and get dressed.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take the money from the dead man's body (10 scads)", 92, Choice::Type::GAIN_MONEY, 10));
+        Choices.push_back(Choice::Base("Leave it alone", 92));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::KNIFE, Item::KNIFE};
+
+        Limit = 2;
+    }
+};
+
+class Story137 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story137()
+    {
+        ID = 137;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The sky-car emits a soft hum as you engage the power. White light flares from the thrusters, casting a garish glow across the walls. It rises to hover a metre or so above the floor. Despite the smoothness of its movement, you are aware of the enormous power in the machine and open the throttle only gently. Unfortunately you misjudge it even so. The thrusters boom, sending the sky-car caroming across the chamber. Frantically you twist the joystick, trying to turn towards the corridor, but you are going too fast. The sky-car smashes into the wall and you are flung out, hitting the floor with numbing impact.\n\nWhen you come round, your whole body is a single throbbing ache. You feel sure you must have cracked a couple of ribs, and your wrist is badly wrenched. Blood pours from a deep graze above your eyes, and as you get to your feet a wave of dizziness hits you.\n\nYou LOSE 4 Life Points.";
+
+        Character::GAIN_LIFE(player, -4);
+
+        if (player.Life > 0)
+        {
+            Character::LOSE_VEHICLE(player);
+
+            PreText += "\n\nYou stagger over to look at the sky-car. It is a wreck. The chassis has split and white-hot sparks are cascading from the broken power unit. The caretek that had maintained it for all these years comes crawling drearily forward and begins probing the wreckage. You almost feel sorry for it. It has its work cut out for the next year or so. The sky-car will not fly again before then. Now all you can do is rummage through the storage locker and salvage a few items.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 93; }
+};
+
+class Story138 : public Story::Base
+{
+public:
+    Story138()
+    {
+        ID = 138;
+
+        Text = "You seek out the librarian, a plump sour-faced man who sits at his desk amid the stacks like a spider in its web. He is barely able to disguise his irritation when you explain what you want. \"A link to Gaia? That is most irregular. Very few of our members make such requests.\"\n\nHe will deter you if you let him, if only to spare himself inconvenience. Recalling the status of the typical Society member, you adopt an uncompromising attitude and say, \"It was not a request, but a command. You will now establish a link so that I can talk to Gaia.\"\n\n\"Talk?\" He spreads his hands imploringly. \"What will you talk about? Gaia is mad!\" Seeing you will not be put off, he grumbles under his breath and pushes a slip of paper across the desk. \"Write your query there and it will be broadcast to Gaia. The reply will be brought back to you.\"\n\n\"I prefer a direct two-way communication.\"\n\n\"Impossible!\" he cries. \"That is against Society policy, as nay link to Gaia must be stringently monitored to prevent arrogation of our computer network.\"\n\nYou see he will not be swayed on this point. You write out your message and wait for half an hour until the librarian comes back. \"Here is your reply from Gaia,\" he says, his tone of surprise showing that he did not expect anything but gibberish. He reads from the paper in his hand; \"go and meet with Gilgamesh under the pyramid. Humbaba will give you access.\"\n\n\"Is that all?\"\n\nHe nods. \"Gaia then began to transmit random references to Babylonian history followed by a digression into architectural feats of history, and the link was terminated.\"\n\nYou gained the codeword HUMBABA.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Consult the archives for information about the Heart of Volent", 182));
+        Choices.push_back(Choice::Base("You are finished in the library", 73));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::HUMBABA});
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            Choices[0].Destination = 160;
+        }
+        else
+        {
+            Choices[0].Destination = 182;
+        }
+    }
+};
+
+class Story139 : public Story::Base
+{
+public:
+    Story139()
+    {
+        ID = 139;
+
+        Text = "You ascend into the mountains across stark rocky ridges like the broken backs of colossal dinosaurs. The sun shines as feebly as a flashlight seen through a thick pane of ice. When the wind gusts into your face, it is so cold that you can hardly draw breath.\n\nOn the second day you come upon four figures also trudging eastwards. They are several hundred metres ahead on the surface of a glacier. As you hurry to catch up, you see patches where the snow has swirled away to reveal the sky surface of the glacier reflecting glints of feeble daylight.\n\nThe leader of the group is a short broad-shouldered man whose dark sparkling eyes display an easy authority. The other three, apparently his bodyguards, are hulking men whom you take to be of South Pacific origin. It is hard to be sure with the fur hoods drawn so tightly around their faces.\n\nThe short hand man shakes hands and introduces himself as Hal Shandor. \"Our sky-car crashed in the hills back there,\" he explains. \"We're going on to Venis. Travel with us if you want.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Join their group", 225));
+        Choices.push_back(Choice::Base("Journey alone", 161));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -3707,6 +3938,16 @@ auto story126 = Story126();
 auto story127 = Story127();
 auto story128 = Story128();
 auto story129 = Story129();
+auto story130 = Story130();
+auto story131 = Story131();
+auto story132 = Story132();
+auto story133 = Story133();
+auto story134 = Story134();
+auto story135 = Story135();
+auto story136 = Story136();
+auto story137 = Story137();
+auto story138 = Story138();
+auto story139 = Story139();
 
 void InitializeStories()
 {
@@ -3724,7 +3965,8 @@ void InitializeStories()
         &story090, &story091, &story092, &story093, &story094, &story095, &story096, &story097, &story098, &story099,
         &story100, &story101, &story102, &story103, &story104, &story105, &story106, &story107, &story108, &story109,
         &story110, &story111, &story112, &story113, &story114, &story115, &story116, &story117, &story118, &story119,
-        &story120, &story121, &story122, &story123, &story124, &story125, &story126, &story127, &story128, &story129};
+        &story120, &story121, &story122, &story123, &story124, &story125, &story126, &story127, &story128, &story129,
+        &story130, &story131, &story132, &story133, &story134, &story135, &story136, &story137, &story138, &story139};
 }
 
 #endif

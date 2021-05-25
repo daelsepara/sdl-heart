@@ -504,6 +504,11 @@ namespace Character
         return (player.Vehicle == vehicle);
     }
 
+    void LOSE_VEHICLE(Character::Base &player)
+    {
+        player.Vehicle = Vehicle::Type::NONE;
+    }
+
     bool FIRE_WEAPON(Character::Base &player, Item::Type weapon)
     {
         auto fired = false;
