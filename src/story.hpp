@@ -4576,7 +4576,7 @@ public:
     {
         ID = 174;
 
-        Text = "You kneel beside the huge gem and embrace it, feeling its power surge through you. Coruscating bands of energy blaze from the depths of the unearthly gem, swathing you in an aura of blinding violet light. The fabric of reality is ripped apart and you feel weightless. A vortex spins up through the dome, sweeping away rock and air, rising up into space out past the moon and planets. In what seems like seconds, all of creation has been swept away, replaced by a new universe of your own making.";
+        Text = "You kneel beside the huge gem and embrace it, feeling its power surge through you. Coruscating bands of energy blaze from the depths of the unearthly gem, swathing you in an aura of blinding violet light. The fabric of reality is ripped apart and you feel weightless. A vortex spins up through the dome, sweeping away rock and air, rising up into space out past the moon and planets. In what seems like seconds, all of creation has been swept away, replaced by a new universe of your own making.\n\nYou are immortal and all-powerful now. Your adventure has culminated in godhood.";
 
         Type = Story::Type::GODHOOD;
 
@@ -5170,7 +5170,7 @@ public:
     {
         ID = 197;
 
-        Text = "You fetch Vajra Singh's cannon and begin to power it up. A hum of colossal energy fills the air. Taking the STASIS BOMB from your pack, you station yourself beside the Heart. You will freeze yourself in time, so that if any others reach here in the years to come they will find you waiting, sealed along with the Heart inside a zone of stasis. Even if they have the means to break the stasis, they will have to get past you to claim the Heart.\n\nThe STASIS BOMB activates...";
+        Text = "You fetch Vajra Singh's cannon and begin to power it up. A hum of colossal energy fills the air. Taking the STASIS BOMB from your pack, you station yourself beside the Heart. You will freeze yourself in time, so that if any others reach here in the years to come they will find you waiting, sealed along with the Heart inside a zone of stasis. Even if they have the means to break the stasis, they will have to get past you to claim the Heart.\n\nThe STASIS BOMB activates turning you into an undying sentinel for all time.";
 
         Type = Story::Type::SENTINEL;
 
