@@ -2888,11 +2888,12 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                             {
                                 if (Item::VERIFY(player.Items, story->Choices[current].Items[0]))
                                 {
-                                    message = "You do not have the required item!";
+                                    
+                                    message = "The item you are carrying is not charged!";
                                 }
                                 else
                                 {
-                                    message = "The item you are carrying is not charged!";
+                                    message = "You do not have the required item!";
                                 }
 
                                 start_ticks = SDL_GetTicks();
