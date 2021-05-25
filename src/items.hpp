@@ -29,8 +29,9 @@ namespace Item
         MEDICAL_KIT,
         KNIFE,
         LANTERN,
+        STASIS_BOMB,
         First = BARYSAL_GUN,
-        LAST = LANTERN
+        LAST = STASIS_BOMB
     };
 
     class Base
@@ -90,6 +91,7 @@ namespace Item
     auto MEDICAL_KIT = Item::Base("MEDICAL KIT", "MEDICAL KIT", Item::Type::MEDICAL_KIT);
     auto KNIFE = Item::Base("KNIFE", "KNIFE", Item::Type::KNIFE);
     auto LANTERN = Item::Base("LANTERN", "LANTERN", Item::Type::LANTERN);
+    auto STASIS_BOMB = Item::Base("STASIS BOMB", "STASIS BOMB", Item::Type::STASIS_BOMB);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,

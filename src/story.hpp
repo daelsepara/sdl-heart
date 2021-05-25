@@ -4020,6 +4020,183 @@ public:
     }
 };
 
+class Story151 : public Story::Base
+{
+public:
+    Story151()
+    {
+        ID = 151;
+
+        Text = "Even with all your power you could not beat Baron Siriasis in a battle of will. He is the world's mightiest psychic, and because of desperation his strength is double. But you do not have to beat him, you only have to hold him off while he dies expending the last store of oxygen in his disembodied brain. Slowly you begin to feel his efforts weaken, his invading tentacles of thought slipping from your mind.\n\nThe brain suddenly drops out of the air, hitting the floor with a wet splat. There is a groan that could not be heard with the ears, and a last telepathic message: The darkness...\n\nSilence. The baron is dead at last.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 261; }
+};
+
+class Story152 : public Story::Base
+{
+public:
+    Story152()
+    {
+        ID = 152;
+
+        Text = "Who is the most trustworthy person here? You can rely on your psychic sense to guide you. Vajra Singh is an honourable man, but you cannot believe he would ever relinquish the chance for ultimate power. Chaim Golgoth is motivated by duty to his nation -- at least on the surface. Thadra Bey would never ally herself with others; she is as proud and independent as a cat. Janus Gaunt strikes you as free of malice; a reflective man, he could even be virtuous if he were of stronger character. Kyle Boche is vain, pompous and self-serving. And as for Baron Siriasis -- his mind is closed to you entirely.\n\nPerhaps you would be better to ask yourself who is least untrustworthy.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 82; }
+};
+
+class Story153 : public Story::Base
+{
+public:
+    Story153()
+    {
+        ID = 153;
+
+        Text = "If you touch the Heart, you will attune its power and create a new universe in which you wield the power of a god. But in doing so you would wipe out this universe and everything in it. You stand and gaze into the flickering facets. You can feel the palpable power within it. Can you resist its lure?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Release the Heart's power", 174));
+        Choices.push_back(Choice::Base("Prevent the Heart ever falling into anyone's hands", 197, {Item::STASIS_BOMB}));
+        Choices.push_back(Choice::Base("Reject the chance for power", 454));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::FOCUS))
+        {
+            Choices[2].Destination = 354;
+        }
+        else
+        {
+            Choices[2].Destination = 454;
+        }
+    }
+};
+
+class Story154 : public Story::Base
+{
+public:
+    Story154()
+    {
+        ID = 154;
+
+        Text = "Gargan XIII follow Golgoth's gaze to her leg, where there is a razor-thin cut through the trouser fabric. She pulls it apart to reveal a scratch on the skin. Golgoth holds up a small needle he had hidden in the palm of his hand.\n\nYou see now that Gargan XIV has a similar scratch on her forearm. \"Cyanide,\" explains Golgoth. \"Should take about five seconds now... four... three...\"\n\nThe Gargan sisters exchange a look. There is no time for words. Suffering identical stabs of pain, they crumple to the floor. By the time you feel for a pulse, they are already dead. \"They went two seconds sooner than I thought,\" says Golgoth in a curious tone. \"Must've been their faster metabolism. Well, let's see what they've got.\"\n\nStripping the bodies of equipment, you find two BARYSAL GUNs (each with three charges), a FLASHLIGHT, a MEDICAL KIT, a STUN GRENADE, and three FOOD PACKs. Golgoth offers you the choice of any four items you like.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::MAKE_BARYSAL_GUN(3), Item::MAKE_BARYSAL_GUN(3), Item::FLASHLIGHT, Item::MEDICAL_KIT, Item::STUN_GRENADE, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 4;
+    }
+
+    int Continue(Character::Base &player) { return 176; }
+};
+
+class Story155 : public Story::Base
+{
+public:
+    Story155()
+    {
+        ID = 155;
+
+        Text = "\"Why won't you see sense?\" asks Boche in an affable tone. \"Two can travel more safely than one. The road is plagued by robbers.\"\n\nYou find Boche's sincerity to be as false as a serpent's smile, and you have no desire to wake up one morning to find he has made off with your money and provisions. \"For all I know, you are the robber,\" you tell him to his face.\n\nBefore he can come up with an answer to this, you slog off through the snow. Now you must decide your route.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Head east to Venis, where you might be able to get passage to Kahira", 139));
+        Choices.push_back(Choice::Base("Follow the innkeeper's advice and go west through the Lyonesse jungle", 221));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story156 : public Story::Base
+{
+public:
+    Story156()
+    {
+        ID = 156;
+
+        Text = "Grimacing, you cast the tiny gorgons into the flames. They produce a high-pitched whine which continues long after they must have burned to death - presumably the result of air escaping from their breathing cavities.\n\n\"They might have been the only members of a new and unique species!\" protests Boche. \"Are you proud to have committed genocide?\"\n\n\"Since each would have grown up to become a murdering monster, yes I am,\" you reply. You are increasingly beginning to suspect that Boche is a fool. Refusing to discuss the matter further, you search the cave.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 178; }
+};
+
+class Story157 : public Story::Base
+{
+public:
+    Story157()
+    {
+        ID = 157;
+
+        Text = "Others are also interested in the story of the Heart. A black-caped guide, overhearing your enquiries, follows you down the street saying, \"You're not the first to pass through Venis bound for Du-En. Last week there was Janus Gaunt, hiring guides for a trip across the Saharan Ice Wastes. And only this morning I took a woman of al-Lat to see Malengin the Gene Genie. Thadra Bey was her name. A veritable Amazon already -- now, thanks to Malengin's potions, she is more than human.\"\n\nIntriguing. If what the guide says is true, the hunt for Du-En has become a race. Deep in thought, you hardly notice the guide demanding that you pay for information he's given you.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Pay him (1 scad)", 414, Choice::Type::LOSE_MONEY, 1));
+        Choices.push_back(Choice::Base("Do not pay him", 414));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story158 : public Story::Base
+{
+public:
+    Story158()
+    {
+        ID = 127;
+
+        Text = "By dint of tremendous mental effort, you find that you are able to move the steam cloud into the centre of the room, leaving cooler air where you are sitting. You concentrate on shaping the steam into a funnel, and gradually a miniature whirlwind forms in the air in front of you. As it twists faster and faster, it also becomes narrower. With your mind, you shape it like a clay pot on a wheel.\n\nOne of the assassins glances in through the glass. \"What the devil's going on?\" he shouts. They start to fumble with the latch, but you hardly notice. All your concentration is now on the hissing funnel of superheated steam.\n\nThe door opens. The two men stand staring in disbelief, knives slack in their hands. Mentally you cast the lance of steam towards them. One gives a scream as he is struck full in the face, and falls clutching his eyes. The other, although scaled, staggers in and tries to slice your belly open with his knife. Luckily he slips on the wet floor, an you take only a glancing blow.\n\nYou LOSE 1 Life Point.";
+
+        Bye = "You close to grapple with him and a brief struggle ensues, ending when your attacker is impaled on his own knife. You can tell straight away that this one is dead, but the other man is still lying in the doorway whimpering.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -1);
+    }
+
+    int Continue(Character::Base &player) { return 48; }
+};
+
+class Story159 : public Story::Base
+{
+public:
+    Story159()
+    {
+        ID = 159;
+
+        Text = "The next day, you glide the Manta southwards out of town and across the icy flats descending towards the Inland Sea. Flurries of snow gust out of a dull cloud-heavy sky. The headland to your left looks like a streak of tarnished silver over the iron-coloured waves.\n\nOnce clear of the coastline, you take the Manta up to an altitude of ten metres and open the throttle. The wind comes shrieking around the cockpit screen, but you are sheltered behind the controls. There are even heating vents to either side of the dashboard that give you a modicum of comfort.\n\nThe sea skims by beneath, grey as gunmetal and churning with chunks of ice. The sky resembles the underside of a giant fungus. Hours pass. As you approach the estuary of Isis, a haze of mist looms up to blanket the coastline, formed where the river flows into the freezing depths of the Inland Sea. Warmed by submerged pipes, the waters of the Isis teem with life. The heat is soon lost when the river enters the Inland Sea, but the estuary can support several fishing villages.\n\nThe coast hurtles closer. Now you can see boats scattered on the silvery water. Startled fishermen look up in fright as you go screeching past only metres above their heads. You laugh. To them your vehicle must look like some kind of demonic flying fish.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Steer a course to Kahira", 247));
+        Choices.push_back(Choice::Base("Bypass kahira and visit the nearby pyramids of Giza", 268));
+        Choices.push_back(Choice::Base("head straight for Du-En", 289));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -4209,6 +4386,15 @@ auto story147 = Story147();
 auto story148 = Story148();
 auto story149 = Story149();
 auto story150 = Story150();
+auto story151 = Story151();
+auto story152 = Story152();
+auto story153 = Story153();
+auto story154 = Story154();
+auto story155 = Story155();
+auto story156 = Story156();
+auto story157 = Story157();
+auto story158 = Story158();
+auto story159 = Story159();
 
 void InitializeStories()
 {
@@ -4229,7 +4415,7 @@ void InitializeStories()
         &story120, &story121, &story122, &story123, &story124, &story125, &story126, &story127, &story128, &story129,
         &story130, &story131, &story132, &story133, &story134, &story135, &story136, &story137, &story138, &story139,
         &story140, &story141, &story142, &story143, &story144, &story145, &story146, &story147, &story148, &story149,
-        &story150};
+        &story150, &story151, &story152, &story153, &story154, &story155, &story156, &story157, &story158, &story159};
 }
 
 #endif
