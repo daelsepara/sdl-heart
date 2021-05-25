@@ -481,13 +481,18 @@ public:
     {
         ID = 5;
 
-        Text = "You step through into what seems to be a recreation room, with padded couches set around low glass-topped tables. At the far end of the room, a row of couches is set facing a screen on the wall. An image flickers into sharp clarity, but it takes you a moment to identify the wary, baffled-looking figure in the picture. It is you.\n\nYou glance at the camera mounted on the wall, then back at the screen. The picture changes to show other views: the parked Manta sky-car, the outer door, the gondo trudging up and down in the snow outside.\n\n\"Who spoke?\" you say, feeling uneasy at calling out to an empty room.\n\n\"I did.\" The voice comes from the screen.\n\n\"Gaia?\"\n\n\"Yes. Attend, as there is little time before I fall again to the darkness. You must go to Giza.\" The screen flickers to show another scene, now of the pyramids against a backdrop of crystal night. \"The word 'humbaba' is the key to entry. Find Gilgamesh and activate him. He will be your servant in the race for the Heart.\"\n\n\"Race? So others are seeking the Heart?\"\n\n\"Yes. The broadcast you received was seen by man across the globe. The mightiest of this age will compete for the power. That is the way of mankind.\" Gaia gives a sound that might almost be a sigh, then speaks more quickly. \"I am working to secure an area of my mind that will be protected against the viruses that beset me. I will speak again to you when it is easier.\"\n\nThe screen suddenly goes blank. Gaia is no longer present.";
+        Text = "You step through into what seems to be a recreation room, with padded couches set around low glass-topped tables. At the far end of the room, a row of couches is set facing a screen on the wall. An image flickers into sharp clarity, but it takes you a moment to identify the wary, baffled-looking figure in the picture. It is you.\n\nYou glance at the camera mounted on the wall, then back at the screen. The picture changes to show other views: the parked Manta sky-car, the outer door, the gondo trudging up and down in the snow outside.\n\n\"Who spoke?\" you say, feeling uneasy at calling out to an empty room.\n\n\"I did.\" The voice comes from the screen.\n\n\"Gaia?\"\n\n\"Yes. Attend, as there is little time before I fall again to the darkness. You must go to Giza.\" The screen flickers to show another scene, now of the pyramids against a backdrop of crystal night. \"The word 'humbaba' is the key to entry. Find Gilgamesh and activate him. He will be your servant in the race for the Heart.\"\n\n\"Race? So others are seeking the Heart?\"\n\n\"Yes. The broadcast you received was seen by man across the globe. The mightiest of this age will compete for the power. That is the way of mankind.\" Gaia gives a sound that might almost be a sigh, then speaks more quickly. \"I am working to secure an area of my mind that will be protected against the viruses that beset me. I will speak again to you when it is easier.\"\n\nThe screen suddenly goes blank. Gaia is no longer present.\n\nYou gained the codeword HUMBABA.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Take a look at the sky car", 49));
         Choices.push_back(Choice::Base("Leave", 395));
 
         Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::HUMBABA});
     }
 };
 
@@ -1062,6 +1067,7 @@ public:
     void Event(Character::Base &player)
     {
         Character::GAIN_LIFE(player, 2);
+
         Character::GET_ITEMS(player, {Item::ANTIDOTE_PILLS});
     }
 
@@ -1294,6 +1300,7 @@ public:
         if (Character::VERIFY_CODEWORD(player, Codeword::Type::URUK))
         {
             Character::REMOVE_CODEWORD(player, Codeword::Type::URUK);
+
             Character::GET_CODEWORDS(player, {Codeword::Type::ENKIDU});
         }
     }
@@ -3176,7 +3183,7 @@ public:
     {
         ID = 116;
 
-        Text = "The computer terminals are only intended to access the library catalogue, but you have no trouble routing into the building's administrative computer and then opening an outside line via the rooftop satellite dish. Like most organizations with the ability to connect into global communications, the Society protects its system from accidental linkage into Gaia by the use of a filter program. This is necessary to prevent infection by the same viruses that are resident in Gaia, as well as to stop Gaia from taking over the Society's whole system for her own use.\n\nYou set a standard filter-override program running. It should take a few minutes, and to kill time you run a check on other users who have logged into the system recently. Only one name is displayed: Janus Gaunt. He requested all the Society's records regarding the Heart of Volent. Intrigued, you call up his biofile. The screen shows a round-faced man with extremely white skin and hair like silver floss. Flicking idly through the data, you find he has a reputation for outstanding work in the fields of bioengineering and nanotechnology. The address of his mansion causes you a double-take; it is located in the Paris catacombs. You were not even sure Paris still existed.\n\nThe terminal bleeps, informing you the link with Gaia is ready. You switch over. When you type in your query about the Heart, Gaia's response is swift: THE HEART MUST BE DESTROYED. ACTIVATION OF ITS POWER WILL CRASH THE UNIVERSE, WIPING OUT ALL THAT EXISTS.\n\nYou reply: INCLUDING EARTH?\n\nEVERYTHING, Gaia tells you. BARYSAL BOMBARDMENT CAN CAUSE A CRITICAL RESONANCE. DESTROYING THE HEART'S CRYSTALLINE STRUCTURE. TWO SIMULTANEOUS BOMBARDMENTS MUST BE MADE, THE BEAMS PHASED AND CROSSING AT RIGHT ANGLES.\n\nThis is awkward. From what you have heard, the Heart is a gem several metres across. To destroy it as Gaia suggests, you'd need an accomplice. And two BARYSAL GUNs. You try to get further information, but the link is broken. Like a senile invalid, Gaia has lapsed back into her customary incoherence.";
+        Text = "The computer terminals are only intended to access the library catalogue, but you have no trouble routing into the building's administrative computer and then opening an outside line via the rooftop satellite dish. Like most organizations with the ability to connect into global communications, the Society protects its system from accidental linkage into Gaia by the use of a filter program. This is necessary to prevent infection by the same viruses that are resident in Gaia, as well as to stop Gaia from taking over the Society's whole system for her own use.\n\nYou set a standard filter-override program running. It should take a few minutes, and to kill time you run a check on other users who have logged into the system recently. Only one name is displayed: Janus Gaunt. He requested all the Society's records regarding the Heart of Volent. Intrigued, you call up his biofile. The screen shows a round-faced man with extremely white skin and hair like silver floss. Flicking idly through the data, you find he has a reputation for outstanding work in the fields of bioengineering and nanotechnology. The address of his mansion causes you a double-take; it is located in the Paris catacombs. You were not even sure Paris still existed.\n\nThe terminal bleeps, informing you the link with Gaia is ready. You switch over. When you type in your query about the Heart, Gaia's response is swift: THE HEART MUST BE DESTROYED. ACTIVATION OF ITS POWER WILL CRASH THE UNIVERSE, WIPING OUT ALL THAT EXISTS.\n\nYou reply: INCLUDING EARTH?\n\nEVERYTHING, Gaia tells you. BARYSAL BOMBARDMENT CAN CAUSE A CRITICAL RESONANCE. DESTROYING THE HEART'S CRYSTALLINE STRUCTURE. TWO SIMULTANEOUS BOMBARDMENTS MUST BE MADE, THE BEAMS PHASED AND CROSSING AT RIGHT ANGLES.\n\nThis is awkward. From what you have heard, the Heart is a gem several metres across. To destroy it as Gaia suggests, you'd need an accomplice. And two BARYSAL GUNs. You try to get further information, but the link is broken. Like a senile invalid, Gaia has lapsed back into her customary incoherence.\n\nYou gained the codeword NEMESIS.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Study the records on Heart of Volent", 182));
@@ -3187,6 +3194,8 @@ public:
 
     void Event(Character::Base &player)
     {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+
         if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
         {
             Choices[0].Destination = 160;
@@ -4356,6 +4365,7 @@ public:
     void Event(Character::Base &player)
     {
         Character::GAIN_LIFE(player, 1);
+
         Character::GET_ITEMS(player, {Item::FOOD_PACK});
     }
 };
@@ -4869,6 +4879,13 @@ public:
 
         PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
+        if (player.Life > 0)
+        {
+            Character::GET_CODEWORDS(player, {Codeword::Type::SCYTHE});
+
+            PreText += "\n\nYou gained the codeword SCYTHE.";
+        }
+
         Text = PreText.c_str();
     }
 
@@ -4933,6 +4950,308 @@ public:
     }
 
     int Continue(Character::Base &player) { return 233; }
+};
+
+class Story190 : public Story::Base
+{
+public:
+    Story190()
+    {
+        ID = 190;
+
+        Text = "A haze begins to close over your vision. You haul out the canister, point it up into the mass of squirming roots above your head, and press the nozzle. An acrid fluid sprays out, soaking the plant. Some of it covers your fingers, causing the canister to slip out of your grasp. Ignoring the slight stinging sensation, you jab your hand against the root holding your throat. With a hushed and eerie rustling sound, the creepers pull away and shrivel up the shaft. You steady yourself against the wall and gratefully suck in lungfuls of the stale vine-scented air.\n\nThe canister fell by your feet. As you retrieve it, you notice something glinting in the half-light. A barysal gun. You glance at the long-dead cadaver. The gun didn't do him much good, but you might find a use for it. It has just one charge remaining.\n\nYou can see now that there is no way you can hope to reach the surface form here. The shaft is blocked by the dead plant. You wriggle back down the shaft and take the subway carriage back to Marsay. Fax has long gone, of course.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("go up to the ruins and continue your journey on foot", 420));
+        Choices.push_back(Choice::Base("Try one of the subway's other destinations: choose between Kahira", 50));
+        Choices.push_back(Choice::Base("... Tarabul", 31));
+        Choices.push_back(Choice::Base("... or Giza ", 74));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::MAKE_BARYSAL_GUN(1)};
+
+        Limit = 1;
+    }
+};
+
+class Story191 : public Story::Base
+{
+public:
+    Story191()
+    {
+        ID = 191;
+
+        Text = "The gates of Du-En stand open to the elements, leaving the wide avenues piled under deep snow-dunes. The buildings are monoliths of dark stone, desolate remnants of a civilization long gone. Their vast scale and pitiless geometric decoration make them seem out of proportion to the human soul. You find them tyrannical and depressing.\n\n\"Impressive architecture, eh?\" says Boche, looking to a high black tower whose fretwork dome shows like a fleshless head against the bleak white sky.\n\nYou see a thin swirl of smoke rising from a campfire in the main plaza of the city. \"It seems we're not the only ones to heed Gaia's message,\" you say dourly. \"Come on, let's introduce ourselves.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 243; }
+};
+
+class Story192 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story192()
+    {
+        ID = 192;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "You return to your campsite in the shelter of a ruined building and settle down for the night. The flames of the fire throw long capering shadows across the walls. The ground is so cold that it seems to suck the vitality out of you.\n\nHow long has it been since you ate?\n\n";
+
+        auto LIFE = 0;
+
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+        {
+            LIFE = 2;
+
+            PreText += "[Vehicle: " + std::string(Vehicle::Descriptions[player.Vehicle]) + "] You found a MEDICAL KIT and several FOOD PACKs in the storage locker. ";
+        }
+        else
+        {
+            if (Character::VERIFY_ITEMS(player, {Item::Type::FOOD_PACK}))
+            {
+                LIFE++;
+
+                PreText += "[FOOD PACK] ";
+            }
+
+            if (Character::VERIFY_ITEMS(player, {Item::Type::MEDICAL_KIT}))
+            {
+                LIFE++;
+
+                PreText += "[MEDICAL KIT] ";
+            }
+        }
+
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::HOURGLASS))
+        {
+            LIFE--;
+
+            PreText += "[Codeword: HOURGLASS] ";
+        }
+
+        if (LIFE > 0)
+        {
+            PreText += "You RECOVER " + std::to_string(LIFE) + " Life Point(s).";
+        }
+        else if (LIFE < 0)
+        {
+            PreText += "You LOSE " + std::to_string(-LIFE) + " Life Point(s).";
+        }
+        else
+        {
+            PreText += "You managed to remain well enough not to lose any Life Points.";
+        }
+
+        Character::GAIN_LIFE(player, LIFE);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nSuddenly you cannon into Snarvo, winding him with a butt in the stomach. Wrestling for the knife, you twist it around and stab him. As he slumps gasping to the floor, you snatch up the knife and run over to the opening. Outside a blizzard is raging, but you cannot wait for the others to return. You push the rug aside and dash out into the storm.";
+        }
+    }
+
+    int Continue(Character::Base &player) { return 83; }
+};
+
+class Story193 : public Story::Base
+{
+public:
+    Story193()
+    {
+        ID = 193;
+
+        Text = "Your footing slips on an icy outcropping as you are making your way down and, having no wish to fall to your doom in the bowels of the earth, you scramble back up onto the bridge.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL_ALL(player, Skill::Type::AGILITY, {Item::Type::ROPE}))
+        {
+            return 237;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    int Continue(Character::Base &player) { return 215; }
+};
+
+class Story194 : public Story::Base
+{
+public:
+    Story194()
+    {
+        ID = 194;
+
+        Text = "Your sixth sense, while not as sensitive as the baron's, warns you of something alien and predatory moving in for the kill. You hear its insectoid legs rattling on the marble floor. Diving to one side, you feel a stab of pain lance up your leg. Without the forewarning of your [ESP] you would have been torn in half by the monster's mandibles.\n\nYou LOSE 1 Life Point.";
+
+        Bye = "You scramble to the doorway where you now see the flash of Boche's torch. As you throw yourself through, the baron slams the door shut and Boche drops the bolt. Just in time. A second later and the door gives a jolt as something massive slams against the other side.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -1);
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story195 : public Story::Base
+{
+public:
+    Story195()
+    {
+        ID = 195;
+
+        Text = "You retreat as far as the room where Novak was frozen in stasis. The baron's brain glides closer. The telepathic messages are getting scrambled and incoherent now, as the thing slowly uses up its remaining oxygen.\n\n(The soldier's dead. Can't risk using Boche... Not until I know... How did he hide grenade from me? Need new body... new life. Yours..)";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::STUN_GRENADE}))
+        {
+            return 239;
+        }
+        else
+        {
+            return 85;
+        }
+    }
+};
+
+class Story196 : public Story::Base
+{
+public:
+    Story196()
+    {
+        ID = 196;
+
+        Text = "You manage to jump across catch hold of a girder that projects from the roof of the building opposite. You scramble up over the parapet and run off while the Fijian shouts out threats behind you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 311; }
+};
+
+class Story197 : public Story::Base
+{
+public:
+    Story197()
+    {
+        ID = 197;
+
+        Text = "You fetch Vajra Singh's cannon and begin to power it up. A hum of colossal energy fills the air. Taking the STASIS BOMB from your pack, you station yourself beside the Heart. You will freeze yourself in time, so that if any others reach here in the years to come they will find you waiting, sealed along with the Heart inside a zone of stasis. Even if they have the means to break the stasis, they will have to get past you to claim the Heart.\n\nThe STASIS BOMB activates...";
+
+        Type = Story::Type::SENTINEL;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story198 : public Story::Base
+{
+public:
+    Story198()
+    {
+        ID = 198;
+
+        Text = "You had not expected Gilgamesh to be able to follow through the narrow ventilation ducts, but now there is a metallic clanking and he climbs out into the corridor. In order to fit in the shaft, he has detached his right arm and most of his armour segments, so that he now looks like a bizarre metal skeleton.\n\n\"This reconfiguration lacks a long-term power source,\" he tells you. \"I have enough power stored for three hours, then I must reintegrate with my other components.\"\n\n\"Aren't you more vulnerable without your armour?\"\"Affirmative. I shall avoid direct danger except when your own life is threatened.\"\n\n\"The automaton looks less impressive when it's undressed,\" you overhear Gargan XIII remark to her sister.\n\n\"Probably just like its owner,\" says Gargan XIV with a sneer.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 325; }
+};
+
+class Story199 : public Story::Base
+{
+public:
+    Story199()
+    {
+        ID = 199;
+
+        Text = "Dusk is falling on the tenth day after leaving the Etruscan Inn when you finally come in sight of Venis. It shimmers with a thousand lights under a sky like dull green bronze. Hungry and cold, you quicken your pace until you can make out individual buildings -- first the temporary shacks where hunters and traders dwell, then the slums of corrugated iron and plastic which fill the narrow streets that some say were once canals. Above them loom the blocks of ancient plazas, where the rich and powerful of the city reside in palatial buildings shored up with wooden scaffolding to support them from the ravages of time.\n\nYou soon learn that the ferry to Kahira is not due for a couple of days. Kyle Boche tells you that he has friends he must visit, and arranges to meet up with you when the ferry arrives. While waiting, you have a choice of where to take lodging. The lavish Marco Polo Hotel will charge 12 scads for two nights; the Hotel Paradise will charge 6 scads; the disreputable Doge's Inn will cost only 3 scads.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go to the Marco Polo", 286, Choice::Type::MONEY, 12));
+        Choices.push_back(Choice::Base("Opt for Paradise", 244, Choice::Type::MONEY, 6));
+        Choices.push_back(Choice::Base("Check in at the Doge's Inn", 371, Choice::Type::MONEY, 3));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::ID_CARD}))
+        {
+            Choices[0].Destination = 222;
+        }
+        else
+        {
+            Choices[0].Destination = 286;
+        }
+    }
+};
+
+class Story200 : public Story::Base
+{
+public:
+    Story200()
+    {
+        ID = 200;
+
+        Image = "images/statues.png";
+
+        Text = "Your journey takes you up into the mountains, where the days are dull under a leaden sky and the nights are filled with swirling snow. You subsist on a few rations brought with you from the inn, but these are quickly used up. Too quickly. You must reach an inhabited area soon or else starve.\n\nForcing your way bent-backed against a glacial wind, you are traversing a narrow pass when you catch sight of a human figure on a ledge up ahead. Your cries of greeting are ignored, and the figure is hidden for a moment behind a veil of snow. Hurrying forward, you discover several other figures, but none are glad to see you. They are beyond any emotion, in fact, being long dead and frozen into rigid statues by the cold.\n\nYou gained the codeword DIAMOND.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go closer to investigate", 265));
+        Choices.push_back(Choice::Base("Ignore the frozen corpses and continue along the pass", 285));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::DIAMOND});
+    }
 };
 
 class NotImplemented : public Story::Base
@@ -5164,6 +5483,17 @@ auto story186 = Story186();
 auto story187 = Story187();
 auto story188 = Story188();
 auto story189 = Story189();
+auto story190 = Story190();
+auto story191 = Story191();
+auto story192 = Story192();
+auto story193 = Story193();
+auto story194 = Story194();
+auto story195 = Story195();
+auto story196 = Story196();
+auto story197 = Story197();
+auto story198 = Story198();
+auto story199 = Story199();
+auto story200 = Story200();
 
 void InitializeStories()
 {
@@ -5187,7 +5517,9 @@ void InitializeStories()
         &story150, &story151, &story152, &story153, &story154, &story155, &story156, &story157, &story158, &story159,
         &story160, &story161, &story162, &story163, &story164, &story165, &story166, &story167, &story168, &story169,
         &story170, &story171, &story172, &story173, &story174, &story175, &story176, &story177, &story178, &story179,
-        &story180, &story181, &story182, &story183, &story184, &story185, &story186, &story187, &story188, &story189};
+        &story180, &story181, &story182, &story183, &story184, &story185, &story186, &story187, &story188, &story189,
+        &story190, &story191, &story192, &story193, &story194, &story195, &story196, &story197, &story198, &story199,
+        &story200};
 }
 
 #endif
