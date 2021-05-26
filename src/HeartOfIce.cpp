@@ -1456,7 +1456,7 @@ void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font
             possessions += ", ";
         }
 
-        possessions += player.Items[i].Description;
+        possessions += player.Items[i].Name;
 
         if (player.Items[i].Charge >= 0)
         {
@@ -2373,7 +2373,7 @@ bool tradeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pl
 
             fillRect(renderer, textwidth + arrow_size + button_space, text_bounds, textx, texty, intBE);
 
-            std::string trade_text = "Trade " + std::string(mine.Description) + " for " + std::string(theirs.Description) + "?";
+            std::string trade_text = "Trade " + std::string(mine.Name) + " for " + std::string(theirs.Name) + "?";
             putText(renderer, trade_text.c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, textwidth, boxh, textx + text_space, texty + text_space);
 
             renderButtons(renderer, controls, current, intGR, text_space, text_space / 2);
@@ -2444,7 +2444,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
             auto item = i->first;
             auto price = i->second;
 
-            std::string choice = item.Description;
+            std::string choice = item.Name;
 
             if (item.Charge >= 0)
             {
@@ -2588,7 +2588,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                                     inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
                                 }
 
-                                std::string description = item.Description;
+                                std::string description = item.Name;
 
                                 if (item.Charge >= 0)
                                 {
