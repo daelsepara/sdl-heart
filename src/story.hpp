@@ -5827,6 +5827,239 @@ public:
     }
 };
 
+class Story230 : public Story::Base
+{
+public:
+    Story230()
+    {
+        ID = 230;
+
+        Text = "You look into the surface thoughts of the twins as they converse. The memories are of a hostelry in Florida, a cracking video screen, a tantalizing message concerning the power of the Heart of Volent. They, like you, heard a transmission from Gaia. They travelled across the Atlantic to get here. No question about it -- they must be heading for Du-En.\n\nYou are about to end the mind probe when you glimpse another memory that amazes you. At an old computer complex in Madeira, the twins managed to make contact with Gaia again. This time she seems to have been more coherent, and told them that the Heart was dangerous. If a person were to claim its power, the universe as it currently exists would be swept away, remade in a new image.\n\nThe twins apparently concluded that the Heart should be destroyed. Gaia told them that this could be done by dual barysal beams striking the gemstones at right angles, which would set up an internal dissonance. The Heart would then crack apart like a glass shattered by a soprano's highest note.\n\nOne of the twin glances up. Guiltily you withdraw your mental scan, looking away before she notices you watching.\n\nYou gained the codeword NEMESIS.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+    }
+
+    int Continue(Character::Base &player) { return 252; }
+};
+
+class Story231 : public Story::Base
+{
+public:
+    Story231()
+    {
+        ID = 231;
+
+        Text = "You find a deserted alley where you slump down behind a stack of cardboard boxes.\n\nYou have no sense of how long has passed when you feel a boot nudge you in the ribs. You open your eyes. Half a dozen figures stand over you in the dim mist-filtered moonlight. \"Get up,\" says a voice.\n\nYou start to rise, but the nearest figure sweeps out his leg and sends you sprawling back against the wall. You steady yourself against the damp brickwork and glare back at them.\n\nA woman steps forward and speaks in a brittle zealous voice. \"We are of the Church of Gaia. Give of your belongings that Gaia may bring salvation to the world.\"\n\nYou have heard of this cult -- just one of hundreds that have sprung up in the latter days of the world, as people turn in their desperation to strange beliefs. The Church is founded on a particularly deranged creed. Instead of thinking Gaia to be a sophisticated computer, they believe she is the creator goddess.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Give them your money", 274));
+        Choices.push_back(Choice::Base("Use [CUNNING]", 295, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Fight", 316));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story232 : public Story::Base
+{
+public:
+    Story232()
+    {
+        ID = 232;
+
+        Text = "You try a peripheral avenue of investigation, consulting all files relating to the Heart of Volent before it acquired that name. You discover that it was a large gemstone, apparently of interstellar origin, which fell to Earth in the late twenty-first century. Coming into the hands of the Volentine cult, it became the focus of cult worship and was conveyed to their citadel in the fastness of the Sahara.\n\nThe technical records are intriguing. Before the Heart was stolen by the Volentines, a preliminary scientific study was made to analyse its crystalline, structure and intrinsic radiation. The results, when fed into Gaia, yielded the startling conclusion that it was a by-product of the Big Bang which created the universe -- in essence a kind of 'twin' universe which had frozen in stasis before it could expand. It is eerily akin to the way that abortive twins are sometimes formed in human gestation, only to be reabsorbed by the developing foetus.\n\nGaia's remarks from the time ring ominously across the gulf of centuries: \"This object is unstable. Psionic disruption, as from direct contact with a human man, could reactivate its expansion inside our own universe, leading to the destruction of all that exists. A new universe would result. Destruction of the object is advised, and this can be simply accomplished by bombardment with coupled barysal beams of complementary phasing.\"\n\nGaia's advice was not acted upon. She was already considered unreliable. That was before the world experienced the Paradox War -- evidence of what a fraction of the Heart's untapped power could do.\n\nYou gained the codeword NEMESIS.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Look through the data on the Volentine cult", 210));
+        Choices.push_back(Choice::Base("Take a look around the rest of al-Lat", 254));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+    }
+};
+
+class Story233 : public Story::Base
+{
+public:
+    Story233()
+    {
+        ID = 233;
+
+        Text = "A tunnel beyond the doorway is lit by luminant strips close to the floor, which bathe you in a sinister blue glow as you advance towards the centre of the pyramid. You reach a room whose walls are covered with video screens. A partial projection of the world's surface stretches across the ceiling, reduced to a chequerboard of black patches where the scanning satellites have gone offline over the years.\n\nIn the centre of the room is a shaft that descends into the depths of the pyramid. A circular steel plate hovers at the top, beside a row of buttons. You guest it is a sort of elevator, although a much more sophisticated design than any in existence nowadays. Studying the buttons, you discount the levels given over to dormitories and recreation. That leaves the research and military levels, located furthest down in the building.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Risk taking the strange elevator going to the research level", 276));
+        Choices.push_back(Choice::Base("The military level at the very bottom of the shaft", 255));
+        Choices.push_back(Choice::Base("Leave the way you came", 361));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::REMOVE_CODEWORD(player, Codeword::Type::HUMBABA);
+    }
+};
+
+class Story234 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story234()
+    {
+        ID = 234;
+
+        Bye = "You eventually reach the River Isis and cross over an old iron bridge to the west bank. From here, a broad sweep of gleaming ivory dunes extends to the horizon under a sky darker than wet stone. These are the Saharan Ice Wastes, thousands of kilometres of uncharted wilderness, desolate snow fields pounded by incessant arctic gales. This is the terrible barrier that separates you from your goal.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The ground underfoot is hard-packed gravel under a sprinkling of snow. As you travel on, a biting wind sweeps down from the north bringing heavy snow. The pale blue sky is blotted out by glowering clouds through which enough daylight seeps to give the snow a canescent hue. You hunch into the wind and trudge on, fearing to step and rest in case you never get up again.";
+
+        if (!Character::VERIFY_ITEMS_ANY(player, {Item::COLD_WEATHER_SUIT, Item::FUR_COAT}))
+        {
+            Character::GAIN_LIFE(player, -1);
+
+            PreText += "\n\nYou LOSE 1 Life Point.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 393; }
+};
+
+class Story235 : public Story::Base
+{
+public:
+    Story235()
+    {
+        ID = 235;
+
+        Text = "You pass a restless night troubled by bouts of nausea. As the sky begins to show the dim silver burnish of predawn light, you rise and run trembling fingers through your sweat-matted hair.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::ANTIDOTE_PILLS}))
+        {
+            return 320;
+        }
+        else
+        {
+            return 342;
+        }
+    }
+};
+
+class Story236 : public Story::Base
+{
+public:
+    Story236()
+    {
+        ID = 236;
+
+        Text = "He listens with interest as you explain how the Heart can be destroyed by two people working together. \"A fitting use for that fine barysal pistol of yours.\" you conclude with a grim smile.\n\nHe nods and then leans close, putting an arm across your shoulders. \"You're right of course. I'm glad you confided all this to me. We must keep it secret from the others. They are mad dogs, who care nothing for whether the world lives or dies.\"\n\nYou gained the codeword YELLOW.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::YELLOW});
+    }
+
+    int Continue(Character::Base &player) { return 192; }
+};
+
+class Story237 : public Story::Base
+{
+public:
+    Story237()
+    {
+        ID = 237;
+
+        Text = "Reaching the nearest grille, you find it rusted and easy to wrench out of the wall. Narrowing your shoulders, you squeeze through into a small tomb chamber. A body lies on a low carved slab, withered but preserved by the cold dry breeze gusting up from below. The robes suggest this was one of the priests of the Volentine cult. Hearing the others calling you, you make a hurried search of the tomb, finding nothing of interest except for a SPECULUM JACKET. This gives some protection from BARYSAL gunshots.\n\nSince the others are anxious to be off, you climb back up to rejoin them without inspecting the other grilles.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_ITEMS(player, {Item::SPECULUM_JACKET});
+    }
+
+    int Continue(Character::Base &player) { return 215; }
+};
+
+class Story238 : public Story::Base
+{
+public:
+    Story238()
+    {
+        ID = 238;
+
+        Text = "With unerring precision, you blast a shot at the lintel above the doorway. The beam fractures the darkness and raises the lintel to white heat in an instant. \"Run towards the door!\" you shout to the others.\n\nYou race in the direction of the glowing stone lintel. The baron reaches it first, gliding through the doorway and turning to slam it after you and Boche have run through. A moment later, something slams into the other side with juddering impact, but the door holds.\n\n\"What was that?\" you ask.\n\n\"I caught a brief glimpse of it in the glare from your gunshot,\" says Boche. \"Believe me, you don't want to know.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story239 : public Story::Base
+{
+public:
+    Story239()
+    {
+        ID = 239;
+
+        Text = "You are almost hypnotized by terror, and it is only by the merest chance that your fingers brush the grenade hanging at your belt. Unclipping it, you send it rolling and bounding across the floor. The baron's brain comes rushing through the air just as the grenade detonates. There is a flash, and the brain is flung to the floor by the concussion. While it lies dazed, you crush it under your heel. If only you could shut out the dying shriek that echoes telepathically through your mind and will stay with you until your dying day.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::LOSE_ITEMS(player, {Item::Type::STUN_GRENADE});
+    }
+
+    int Continue(Character::Base &player) { return 261; }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -6096,6 +6329,16 @@ auto story226 = Story226();
 auto story227 = Story227();
 auto story228 = Story228();
 auto story229 = Story229();
+auto story230 = Story230();
+auto story231 = Story231();
+auto story232 = Story232();
+auto story233 = Story233();
+auto story234 = Story234();
+auto story235 = Story235();
+auto story236 = Story236();
+auto story237 = Story237();
+auto story238 = Story238();
+auto story239 = Story239();
 
 void InitializeStories()
 {
@@ -6123,7 +6366,8 @@ void InitializeStories()
         &story190, &story191, &story192, &story193, &story194, &story195, &story196, &story197, &story198, &story199,
         &story200, &story201, &story202, &story203, &story204, &story205, &story206, &story207, &story208, &story209,
         &story210, &story211, &story212, &story213, &story214, &story215, &story216, &story217, &story218, &story219,
-        &story220, &story221, &story222, &story223, &story224, &story225, &story226, &story227, &story228, &story229};
+        &story220, &story221, &story222, &story223, &story224, &story225, &story226, &story227, &story228, &story229,
+        &story230, &story231, &story232, &story233, &story234, &story235, &story236, &story237, &story238, &story239};
 }
 
 #endif
