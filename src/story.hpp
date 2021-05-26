@@ -4209,7 +4209,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("Steer a course to Kahira", 247));
         Choices.push_back(Choice::Base("Bypass kahira and visit the nearby pyramids of Giza", 268));
-        Choices.push_back(Choice::Base("head straight for Du-En", 289));
+        Choices.push_back(Choice::Base("Head straight for Du-En", 289));
 
         Controls = Story::Controls::STANDARD;
     }
