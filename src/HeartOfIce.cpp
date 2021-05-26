@@ -902,7 +902,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
             putText(renderer, (std::to_string(player.Life)).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - boxh);
 
             putText(renderer, "Money", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * (boxh + infoh) + box_space));
-            putText(renderer, (std::to_string(player.Money) + std::string(" cacao")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
+            putText(renderer, (std::to_string(player.Money) + std::string(" scads")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
 
             fillRect(renderer, textwidth, text_bounds, textx, texty, intBE);
 
@@ -2462,7 +2462,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                 choice += ")";
             }
 
-            choice += " (" + std::to_string(price) + " cacao)";
+            choice += " (" + std::to_string(price) + " scads)";
 
             auto text = createText(choice.c_str(), "fonts/default.ttf", 16, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
 
@@ -2539,7 +2539,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
             putText(renderer, (std::to_string(player.Items.size()) + std::string(" item(s)")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - boxh);
 
             putText(renderer, "Money", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * (boxh + infoh) + box_space));
-            putText(renderer, (std::to_string(player.Money) + std::string(" cacao")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
+            putText(renderer, (std::to_string(player.Money) + std::string(" scads")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
 
             fillRect(renderer, textwidth + arrow_size + button_space, text_bounds, textx, texty, intBE);
 
@@ -2617,7 +2617,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                         }
                         else
                         {
-                            message = std::string("You do not have enough cacao to buy that!");
+                            message = std::string("You do not have enough scads to buy that!");
 
                             start_ticks = SDL_GetTicks();
 
@@ -2816,7 +2816,7 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
             if (!story->Image || (splash && splash_h < text_bounds - (2 * (boxh + infoh) + box_space)))
             {
                 putText(renderer, "Money", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * (boxh + infoh) + box_space));
-                putText(renderer, (std::to_string(player.Money) + std::string(" cacao")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
+                putText(renderer, (std::to_string(player.Money) + std::string(" scads")).c_str(), font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, boxh, startx, starty + text_bounds - (2 * boxh + infoh + box_space));
             }
 
             if (error)
