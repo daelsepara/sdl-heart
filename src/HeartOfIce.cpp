@@ -906,17 +906,14 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
             fillRect(renderer, textwidth, text_bounds, textx, texty, intBE);
 
-            renderButtons(renderer, controls, current, intGR, text_space, text_space / 2);
-
             for (auto idx = offset; idx < last; idx++)
             {
                 auto i = idx - offset;
 
-                if (current != i)
-                {
-                    drawRect(renderer, controls[i].W + 2 * text_space, controls[i].H + 2 * text_space, controls[i].X - text_space, controls[i].Y - text_space, intDB);
-                }
+                drawRect(renderer, controls[i].W + 2 * text_space, controls[i].H + 2 * text_space, controls[i].X - text_space, controls[i].Y - text_space, intDB);
             }
+
+            renderButtons(renderer, controls, current, intGR, text_space, text_space / 2);
 
             done = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
 
@@ -1056,14 +1053,9 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
                                 Character::LOSE_ITEMS(player, {item.Type});
 
-                                if (current == 0)
+                                if (offset > 0)
                                 {
                                     offset--;
-
-                                    if (offset < 0)
-                                    {
-                                        offset = 0;
-                                    }
                                 }
 
                                 last = offset + display_limit;

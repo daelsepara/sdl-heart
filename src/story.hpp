@@ -5251,6 +5251,392 @@ public:
     }
 };
 
+class Story201 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story201()
+    {
+        ID = 201;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Type = Story::Type::NORMAL;
+
+        PreText = "A sudden sense of danger warns you not to proceed and you slip out of the shop.";
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::ESP))
+        {
+            Type = Story::Type::DOOM;
+
+            PreText = "You blithely submit to the anaesthetic and your consciousness slides away, never to return. You should have been more wary than to put yourself at the mercy of such street scum.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 223; }
+};
+
+class Story202 : public Story::Base
+{
+public:
+    Story202()
+    {
+        ID = 202;
+
+        Text = "The queue shuffles along slowly and at last you reach the ticket office. A bored official in the livery of a Venisian merchant guild peers at you through a screen of wire-meshed glass. \"The cost of passage as far as Kahira is ten scads,\" he tells you.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Pay this sum (10 scads)", 246, Choice::Type::LOSE_MONEY, 10));
+        Choices.push_back(Choice::Base("You refuse or cannot afford to pay", 288));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story203 : public Story::Base
+{
+public:
+    Story203()
+    {
+        ID = 203;
+
+        Text = "Boche has a broad grin on his face as he looks over the sky-car and then turns to you, saying, \"This is a startling and welcome piece of luck! Now that we have a Manta, success in our venture is virtually assured.\"\n\n\"Our venture?\" You raise your eyebrows. \"So you did overhear Gaia's message back at the Etruscan Inn.\"\n\nHe claps you heartily on the back. \"You know I did, but what of it? We are partners, and shall share the power of the Heart equally. Now that we have this vehicle, there is no need to wait for the ferry to Kahira. We can set out directly for Du-En.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 159; }
+};
+
+class Story204 : public Story::Base
+{
+public:
+    Story204()
+    {
+        ID = 204;
+
+        Text = "You take the elevator to the floor indicated but find only the dim after-hours lights illuminating the corridor. As you are looking around, a janitor steps out of an office with pail and broom in hand and nods to you respectfully. \"If you are looking for Doctor Jaffe, she has gone home for the night. The surgery opens again at nine AM.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 73; }
+};
+
+class Story205 : public Story::Base
+{
+public:
+    Story205()
+    {
+        ID = 205;
+
+        Text = "Shandor's two remaining bodyguards produce small picks with which they hack at the ice. They are strong men and throw themselves into the job tirelessly, but it is soon obvious that the ice is too hard-packed. They remove their fur jackets despite the cold and one of them, turning to Shandor and wiping beads of sweat out of his eyes, says, \"It's going to take us hours to get the body out, boss.\"\n\nShandor glances at you, then shrugs. \"Just chip the ice away around the hand, then. Get the sword.\"\n\nIt is almost an hour before they have achieved this. By now the wind has dropped, making just a low ghastly moan as it gusts along the gully leading down to the cave. Nightfall cannot be more than a couple of hours off. You go over with Shandor and peer at the ice wall. Where the picks have gouged down to the corpse's hand, the clear blue ice has become cloudy with white cracks. The hand hangs limply, the shortsword still clutched in its fingers. Shandor goes to take it, hesitates, turns to you with a grimace of distance. \"I'm not easily spooked, but... \" He gives an embarrassed chuckle.\n\nThe shortsword is of Japanese style, its blade still razor sharp in spite of a faint speckling of rust. You can take it if you wish; if not one of the bodyguards will claim it.\n\nYou notice something odd about the corpse's hand. The slight violet bloom to the skin could be attributed to its preservation in ice, but the long index finger and the hair on the palm are not so easy to explain.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::SHORT_SWORD};
+
+        Limit = 1;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            return 183;
+        }
+        else
+        {
+            return 270;
+        }
+    }
+};
+
+class Story206 : public Story::Base
+{
+public:
+    Story206()
+    {
+        ID = 206;
+
+        Text = "The creature that attacked you is a sanguivore. A species of tree-dwelling lizard which is halfway to evolving flight, this is just one of the hallucinatory by-products of the Paradox War. From the way your wound is pouring blood, you suspect the sanguivore's saliva contained an anti-clotting agent. That alone would not explain your increasing dizziness, though, which suggests its bite also injected a drug. No wonder it's in no hurry to catch up with you -- easier by far to track you through the woods and wait until you collapse. Well, you are not as helpless as the wild animals on which the sanguivore normally preys. Tearing the lining of your jacket into strips, you bind the wound to prevent further blood loss.\n\nThe only thing you can do about the drug is stay on the move until you find shelter. If you were to lie down now you would never get up again.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 250; }
+};
+
+class Story207 : public Story::Base
+{
+public:
+    Story207()
+    {
+        ID = 207;
+
+        Text = "You start to move forwards, begin a lunge towards the man with the gun, the jump adroitly aside as he discharges a blast. The blue-white flash snaps through the air and explodes against the knife-wielder's arm. He drops with a whimper. The third hunter runs in, arms spread wide to grab you, but you duck under his clumsy tackle and dart towards the rug covering the door. Another shot crackles from the gun, and again you veer away, but this time it glances across your hip, burning the clothing away and inflicting a painful burn.\n\nYou LOSE 1 Life Point.";
+
+        Bye = "You are lucky to be alive. Wasting no more time, you throw yourself through the opening and limp off into the blizzard. The hunters do not give chase.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -1);
+    }
+    
+    int Continue(Character::Base &player) { return 314; }
+};
+
+class Story208 : public Story::Base
+{
+public:
+    Story208()
+    {
+        ID = 208;
+
+        Text = "Placing your chair behind a heavy oaken post, you drape your coat across the back and prop your travelling-pack under it. If the sisters were to glance in your direction, they would assume you were still brooding at your table. In fact they seem entirely preoccupied, leaning on the bar and muttering to one another in terse whispers. You slide through the shadows to the far end of the room, slip unnoticed over the bar, then creep back on hands and knees until you are hidden just below where the sisters are talking. The innkeeper notices you, but luckily he is too terrified to make any comment.\n\n\"We'll need a barysal gun,\" one of the sisters is saying.\n\n\"We'll need two. Gaia said the Heart must be bombarded with two barysal beams at right angles. That will cause a critical resonance and destroy it.\"\n\n\"There's going to be others heading for the Heart. Vajra Singh's interest cannot be a coincidence; Janus Gaunt too. It'll be difficult to achieve the Heart's destruction with such as they are intent on preserving it.\"\n\nYou listen with keen interest. So others are bound for Du-En and it seems not all of them share the goal of ultimate power. This is worth thinking about. Meanwhile, you return stealthily to your seat.\n\nYou gained the codeword NEMESIS.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+    }
+    
+    int Continue(Character::Base &player) { return 252; }
+};
+
+class Story209 : public Story::Base
+{
+public:
+    Story209()
+    {
+        ID = 209;
+
+        Text = "Claustral Park is a large expanse in the upper level of the city which is entirely given over to wilderness. The fence is lined up with bright arc-lamps, and these are directed inwards across a grassy perimeter towards a thick unkempt woodland.\n\nScaling the fence, you scurry across the open area of grass and push into the bushes. Twigs and moss suffice to make a reasonably comfortable bed. As you drift off to sleep, you gaze back through the tree at the arc-lamps glaring hard in the mist. Why illuminate the park if no one comes here after dark? Perhaps the lamps were installed in bygone days and it is not known how to turn them off...\n\nYou wake with a stifled scream. You heave been seized by many hands and they are dragging you deep into the woods. You struggle, making contact with rough bodies that rasp your flesh like sandpaper. In the darkness you can see nothing of your assailants, but you can hear their snuffling grunts. They drag you to a clearing and break your limbs so that you cannot escape.\n\nThe claustrals cannot believe their good luck. Now they will feed on fresh meat for weeks to come.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story210 : public Story::Base
+{
+public:
+    Story210()
+    {
+        ID = 210;
+
+        Text = "Initiating a search of the files, you turn up a video almost two hundred years old. It shows an interview with Eleazar Picard, leader of the Volentine Cult, after he had fled form the unexplained destruction of Du-En. As you listen to Picard rambling about 'the madness' and 'the end of everything', you begin to piece together the facts. Apparently there was some kind of cataclysm or riot in the city, from which Picard barely escaped with his life.\n\nA hawk-faced man in a colonel's uniform appears on the screen. He listens as Picard becomes slightly more lucid under the effect of truth serum: \"It was the light at the end of Time, and my sanity is blinded!\"\n\n\"How is it you escaped?\" asks the colonel. \"You alone and no one else?\"\n\nPicard replies, \"I remembered the Truth.\"\n\nAt this point, Picard's eyes glaze and he starts to recite a catechism of his faith: \"The Truth is a flame. What ignites the flame? The spark ignites the flame. What is the spark? The Heart of Volent!\"\n\nYou scan forward through the rest of the interview, but Picard soon lapses into incoherence. A message at the end informs you that he died soon afterwards.\n\nYou gained the codeword LUNAR.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::LUNAR});
+    }
+    
+    int Continue(Character::Base &player) { return 254; }
+};
+
+class Story211 : public Story::Base
+{
+public:
+    Story211()
+    {
+        ID = 211;
+
+        Text = "In a recess beside the door is a keypad comprising both letters and numerals. Putting your ear to the door, you begin to experiment with various combinations. Only an expert cracksman like yourself could recognize the distinctive clicks and whirs from the mechanism that show when you are on the right track.\n\nAfter an hour or so you have identified the first four letters of the code sequence. From that point it is a simple matter of trial and error to find the correct keys to press. Your efforts are rewarded with a hum of machinery as the door slides upwards, revealing the interior of the pyramid.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+    
+    int Continue(Character::Base &player) { return 233; }
+};
+
+class Story212 : public Story::Base
+{
+public:
+    Story212()
+    {
+        ID = 212;
+
+        Text = "The motilator registers your destination by flashing a light on the map. A chime sounds, warning that the doors are about to close. Fax steps back and raises his hand to wave. You watch his lean figure recede along the platform as the carriage gathers speed. The lights of the station dwindle into the distance of the tunnel.\n\nYou are on your way... where?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go to Kahira", 50));
+        Choices.push_back(Choice::Base("Go to Karthag", 124));
+        Choices.push_back(Choice::Base("Go to Tarabul", 31));
+        Choices.push_back(Choice::Base("Go to Giza", 74));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story213 : public Story::Base
+{
+public:
+    Story213()
+    {
+        ID = 213;
+
+        Text = "Up ahead you can now see a small figure trudging through the snow, dwarfed by the high walls of the city. Approaching, you attract his attention and he turns. As he unzips his hood you are struck by sudden recognition. \"Kyle Boche,\" you mutter wryly. \"What a small world.\"\n\n\"So,\" he says with a wide grin, \"you have also come to seek the ultimate power!\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+    
+    int Continue(Character::Base &player) { return 191; }
+};
+
+class Story214 : public Story::Base
+{
+public:
+    Story214()
+    {
+        ID = 214;
+
+        Text = "\"You might alter that list of priorities once you've heard what the Heart's 'ultimate power' actually consists of,\" you tell him.\n\nHe listens as you explain about Gaia's warnings. \"That does change things,\" he admits. \"It seems the Heart is a danger to the existence of the United States.\"\n\n\"The existence of the whole universe!\"\n\nGolgoth smiles. \"The universe doesn't sign my pay cheques. But I agree, we must see that the Heart is destroyed.\"\n\nYou gained the codeword BLUE.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::BLUE});
+    }
+    
+    int Continue(Character::Base &player) { return 192; }
+};
+
+class Story215 : public Story::Base
+{
+public:
+    Story215()
+    {
+        ID = 215;
+
+        Text = "You reach the far end of the bridge and pass through into the tiled hall beyond. The architecture here is the same oppressive design as on the surface: the heavy harshly-chiselled lintels and monumental bulbous columns, the gigantic vaults and grotesque carvings. You have a choice of routes on from here: either of the two wide passages directly ahead, or a doorway to your left.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go through the door", 259));
+        Choices.push_back(Choice::Base("Take the left-hand passage", 3));
+        Choices.push_back(Choice::Base("Take the right-hand passage", 128));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story216 : public Story::Base
+{
+public:
+    Story216()
+    {
+        ID = 216;
+
+        Text = "You are used to sneaking about in the dark, and you have learned to rely on your other sense almost as well as on your sight. Even as the huge predator comes darting out from the cloisters to attack, you are racing nimbly ahead to the feeble glimmer of light from the doorway.\n\nReaching it, you turn to see Boche and the baron fleeing in terror. In the light of Boche's flashlight you have a brief glimpse of a gigantic centipede with flanks like polished steel. As the others dive through, you slam the door shut and drop the bolt. A second later the door judders as the monster throws itself against it.\n\n\"Let's hope it holds,\" says Boche grimly. \"I wouldn't want to fight that beastie!\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+    
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story217 : public Story::Base
+{
+public:
+    Story217()
+    {
+        ID = 217;
+
+        Text = "You retreat as far as the room where the soldier is frozen in stasis. The baron's brain glides in pursuit. The telepathic messages are getting scrambled and incoherent now, as the brain slowly uses up its remaining oxygen.\n\n(Stay... need your body. Getting dark.. Need new body...)\n\nSo that's its game! You duck around behind the stasis zone, watching the hovering brain as though through a lens. As soon as you are around the edge of the zone, you sidle to a point directly opposite your foe, then backtrack and run around to come up behind it. In his confusion, the baron had forgotten that light takes several seconds to cross the stasis zone. He is still watching your image when you club out of the air and crush him underfoot. The brain emits a dying wail -- a silent sound that you hear only inside your mind. It will haunt your nightmares for many years. If you live that long.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+    
+    int Continue(Character::Base &player) { return 261; }
+};
+
+class Story218 : public Story::Base
+{
+public:
+    Story218()
+    {
+        ID = 218;
+
+        Text = "Veering the sky-car in the air over Kahira, you glance down to see the Fijian shaking his fist up at you. He looks a tiny figure from here. You buzz him, swooping so low that he has to throw himself flat on the roof for fear of being hit. You fly off laughing into the night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        player.Vehicle = Vehicle::Type::MANTA_SKY_CAR;
+    }
+    
+    int Continue(Character::Base &player) { return 311; }
+};
+
+class Story219 : public Story::Base
+{
+public:
+    Story219()
+    {
+        ID = 219;
+
+        Text = "You station yourselves beside the Heart. Within its glittering facets, a universe is waiting to be born. Infinite possibilities flicker in the violet glare.\nGolgoth seems to share your mood. \"There's no other way,\" he says. \"Ready?\"\n\n\"What will happen?\" you ask him. \"I mean, will it just disappear, or will there be an explosion?\"\n\nHe shrugs. \"I don't know. Personally I doubt if I'll be around afterwards to collect this month's pay, but no one lives for ever.\"\n\nYou nod. \"I just never expected to be a martyr, that's all.\"\n\nThe beams from your guns converge at the centre of the Heart, splintering its crystal lattice. The light within grows until it blinds you. With a rush of energy, the Heart suddenly bursts apart, engulfing you and Golgoth in a cold flare of energy.\n\nIn this chamber deep below the ruins of Du-En, the two of you give your lives for the sake of the whole world.";
+
+        Type = Story::Type::SACRIFICE;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -5491,6 +5877,25 @@ auto story197 = Story197();
 auto story198 = Story198();
 auto story199 = Story199();
 auto story200 = Story200();
+auto story201 = Story201();
+auto story202 = Story202();
+auto story203 = Story203();
+auto story204 = Story204();
+auto story205 = Story205();
+auto story206 = Story206();
+auto story207 = Story207();
+auto story208 = Story208();
+auto story209 = Story209();
+auto story210 = Story210();
+auto story211 = Story211();
+auto story212 = Story212();
+auto story213 = Story213();
+auto story214 = Story214();
+auto story215 = Story215();
+auto story216 = Story216();
+auto story217 = Story217();
+auto story218 = Story218();
+auto story219 = Story219();
 
 void InitializeStories()
 {
@@ -5516,7 +5921,8 @@ void InitializeStories()
         &story170, &story171, &story172, &story173, &story174, &story175, &story176, &story177, &story178, &story179,
         &story180, &story181, &story182, &story183, &story184, &story185, &story186, &story187, &story188, &story189,
         &story190, &story191, &story192, &story193, &story194, &story195, &story196, &story197, &story198, &story199,
-        &story200};
+        &story200, &story201, &story202, &story203, &story204, &story205, &story206, &story207, &story208, &story209,
+        &story210, &story211, &story212, &story213, &story214, &story215, &story216, &story217, &story218, &story219};
 }
 
 #endif
