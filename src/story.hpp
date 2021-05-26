@@ -5406,7 +5406,7 @@ public:
     {
         Character::GAIN_LIFE(player, -1);
     }
-    
+
     int Continue(Character::Base &player) { return 314; }
 };
 
@@ -5428,7 +5428,7 @@ public:
     {
         Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
     }
-    
+
     int Continue(Character::Base &player) { return 252; }
 };
 
@@ -5467,7 +5467,7 @@ public:
     {
         Character::GET_CODEWORDS(player, {Codeword::Type::LUNAR});
     }
-    
+
     int Continue(Character::Base &player) { return 254; }
 };
 
@@ -5484,7 +5484,7 @@ public:
 
         Controls = Story::Controls::STANDARD;
     }
-    
+
     int Continue(Character::Base &player) { return 233; }
 };
 
@@ -5520,7 +5520,7 @@ public:
 
         Controls = Story::Controls::STANDARD;
     }
-    
+
     int Continue(Character::Base &player) { return 191; }
 };
 
@@ -5542,7 +5542,7 @@ public:
     {
         Character::GET_CODEWORDS(player, {Codeword::Type::BLUE});
     }
-    
+
     int Continue(Character::Base &player) { return 192; }
 };
 
@@ -5577,7 +5577,7 @@ public:
 
         Controls = Story::Controls::STANDARD;
     }
-    
+
     int Continue(Character::Base &player) { return 281; }
 };
 
@@ -5594,7 +5594,7 @@ public:
 
         Controls = Story::Controls::STANDARD;
     }
-    
+
     int Continue(Character::Base &player) { return 261; }
 };
 
@@ -5616,7 +5616,7 @@ public:
     {
         player.Vehicle = Vehicle::Type::MANTA_SKY_CAR;
     }
-    
+
     int Continue(Character::Base &player) { return 311; }
 };
 
@@ -5632,6 +5632,196 @@ public:
         Type = Story::Type::SACRIFICE;
 
         Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story220 : public Story::Base
+{
+public:
+    Story220()
+    {
+        ID = 220;
+
+        Text = "Gargan XIV was expecting that. She tosses a glass vial into Gilgamesh's unprotected ribcage. It breaks, releasing a green fluid which hisses as it gives off a cloud of acrid vapour. Gilgamesh staggers as the acid burns through his central power casing. He tries to aim his gun, but suddenly there is a crackle of sparks and his body locks rigid. You see the gleam of light fade from his eye-slit.\n\n\"That's your robot dealt with,\" says Gargan XIV, beckoning you to come closer. \"See if you can do any better.\"\n\nMeanwhile, Gargan XII has drawn a knife and is standing over Golgoth. She thinks he is beaten, when suddenly he looks up with a broad smile.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::REMOVE_CODEWORD(player, Codeword::Type::ENKIDU);
+    }
+
+    int Continue(Character::Base &player) { return 154; }
+};
+
+class Story221 : public Story::Base
+{
+public:
+    Story221()
+    {
+        ID = 221;
+
+        Text = "As you travel west, the bitter cold begins to ease. Instead of wild blizzards, you find yourself trudging through flurries of soft sleet. After several days you see a harsh light on the horizon. Ahead looms an arc of sunlight slanting through a wide gulf in the clouds. Even when night falls, the light keeps blazing down. An old weather satellite far out in space, misdirected by Gaia's freakish whims, battles the landscape in endless sun. These are the steaming swamps and jungles of Lyonesse.\n\nOn the northern fringes of the region, you have heard that men exploit the fertile farmland to support the old city of Lyon. To the south, the warm waters mean plentiful fish. But no one inhabits the interior of Lyonesse, which is the stalking ground of mutated beasts and carnivorous fungi.\n\nYou press on undaunted, pleased to be able to shrug off your thick furs as you leave the icy wasteland behind and enter the lush dank morass. Foliage like ships' sails blots out much of the sky, leaving you plunged in green gloom despite the ceaseless daylight. Extravagant blooms with jewel-like colours exude a mingle of musky scents. Creepers stretch in nets between the black trees. Ferns form high banks across your path. Off in the distance, the chittering and screeching of jungle animals seem unreal after so many days with only the wind's howl in your ears. Here there is no night or day. When tiredness becomes too much, you slump sweat-soaked beside a fallen log and roll our clothing up to make a pillow. The succulent jungle whispers lull you off to sleep.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ESP))
+        {
+            return 30;
+        }
+        else if (Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+        {
+            return 53;
+        }
+        else
+        {
+            return 75;
+        }
+    }
+};
+
+class Story222 : public Story::Base
+{
+public:
+    Story222()
+    {
+        ID = 222;
+
+        Text = "You hurry along to the end of the street, where an old man stops you and asks, \"Is Sarco the Poisoner still open for business?\"\n\n\"How should I know?\" you reply. \"I am not acquainted with the man you mention.\"\n\nHe returns a look that suggests you are either deranged or a liar. \"I just now saw you leave his shop!\" he declares.\n\nYou rub your jaw ruefully. \"Sarco the Poisoner, indeed.\"\n\nIt seems you've had a narrow escape.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 286; }
+};
+
+class Story223 : public Story::Base
+{
+public:
+    Story223()
+    {
+        ID = 223;
+
+        Text = "You hurry along to the end of the street, where an old man stops you and asks, \"Is Sarco the Poisoner still open for business?\"\n\n\"How should I know?\" you reply. \"I am not acquainted with the man you mention.\"\n\nHe returns a look that suggests you are either deranged or a liar. \"I just now saw you leave his shop!\" he declares.\n\nYou rub your jaw ruefully. \"Sarco the Poisoner, indeed.\"\n\nIt seems you've had a narrow escape.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Keep trying to get the ID card altered", 245, {Item::ID_CARD}));
+        Choices.push_back(Choice::Base("See to other matters before the ferry to Kahira arrives", 414));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story224 : public Story::Base
+{
+public:
+    Story224()
+    {
+        ID = 224;
+
+        Text = "As the queue moves along, Kyle Boche hurries to join you. Stamping his feet to fend off the morning chill, he tells you that he was delayed by some last-minute purchases in town. You notice a new barysal gun at his belt. \"We're on our way now,\" he says excitedly, grinning as he stares out into the mist over the sea. \"The adventure's begin!\"\n\nA problem arises when you reach the ticket office. The cost of passage to Kahira is 10 scads each. Boche peers woefully at his remaining funds and then turns to you with a shrug. \"You'll have to pay for me, I'm afraid. Still we're partners. I'm sure you'll agree I've never stinted from doing my bit up till now.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Pay for both (20 scads)", 246, Choice::Type::LOSE_MONEY, 20));
+        Choices.push_back(Choice::Base("Pay for yourself but not for him (20 scads)", 267, Choice::Type::LOSE_MONEY, 10));
+        Choices.push_back(Choice::Base("You do not have enough money even to buy your own ticket", 288));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story225 : public Story::Base
+{
+public:
+    Story225()
+    {
+        ID = 225;
+
+        Text = "The next morning you are overtaken by a blizzard that turns the sky dark as Doomsday. Stumbling on, you are barely able to see the others through the thick snowfall. Then a blue flare erupts in the gloom, drawing you to where Shandor stands with two of his bodyguards. He has a sputtering magnesium torch in his hand which drips hissing fragments of hot metal into the snow. \"Where's Goro?\" says one of the bodyguards.\n\nYou all gaze off into the blizzard. No one says a thing until Shandor grabs your sleeve. \"We can't do anything for him now,\" he calls over the shrieking wind. \"Come on, there's an ice cave we can shelter in.\"\n\nYou follow the others down a crevice in the ground. In the light of Shandor's flare, the walls around you gleam like old blue glass. \"This is frozen meltwater,\" you say, running your hand across the smooth ice. \"We must be on another glacier.\"\n\n\"Inside a glacier, you mean,\" mutters Shandor. \"Eerie, isn't it? We're safer here than out in that storm, though.\"\n\nYou walk along the gallery of ice, overwhelmed by a sense of awe. Perhaps this was a mighty river once, a raging torrent, before the summers died and the Ice Age took root in the world. Now it slides imperceptibly along the rate of a few centimetres a year.\n\nYou see a face in the ice and jump back with a startled cry. Shandor comes over and raises the torch. Frozen just inside the surface of the wall is a man in black military-style overalls, a shortsword held in one hand. Perhaps he has been there for centuries, but what makes you shudder is that fact that his eyes are wide open. \"I could almost fancy he's watching us,\" you say.\n\n\"Tell you what I fancy,\" says Shandor. \"That sword he's got.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Chip the body out of the ice", 205));
+        Choices.push_back(Choice::Base("Wait until the blizzard is past and then press on", 249));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story226 : public Story::Base
+{
+public:
+    Story226()
+    {
+        ID = 226;
+
+        Text = "The relief crew arrive and take shelter from the cold inside the terminal building. Strolling along the wharf, you spy a cluster of wickerwork pots containing live cancretes. These are pale crustaceans with long spines: a noted local delicacy when baked in clay. With cautious dexterity, you open one of the pots and remove the cancrete inside. The cold has made it torpid and it makes only a half-hearted effort to sever your thumb with its claws. You wrap it up in your jacket. Returning with it to the terminal building, you sidle over to the fireside where some of the sailors are enjoying and early-morning nip of whiskey. None of them notices you slip the cancrete into the pile of jackets and pullovers they have strewn across a chair.\n\nYou stand by the window and look out to sea, pretending to watch for the ferry. At last a gong is sounded, announcing the ferry's imminent arrival, and the relief crew begin to gather their belongings. Suddenly there is a yelp of pain from one of the sailors and he throws off his jacket as though it were on fire. The cancrete emerges and crawls sullenly away across the floorboards. \"That cancrete has bitten me severely,\" says the sailor, displaying a read weal on his hand.\n\nA youngster whom you take to be the cabin boy watches in horror as the cancrete squeezes into hiding behind the stones of the hearth. You guess that this is his first voyage when he blurts out, \"Did you see that horrific creature? Are they common in the Inland Sea?\"\n\n\"Not of such a size,\" you tell him quietly. He looks relieved until you add, \"Most grow much bigger. Didn't your shipmates tell you about them?\"\n\nEyes widening in fright, the cabin boy rushes out without making any explanation. You step smartly into the breach. Introducing yourself to the captain, you portray yourself as a person with some prior nautical experience. \"Your cabin boy has withdraw from the voyage, but I am a willing and able worker,\" you tell him.\n\nA faint furrow of suspicion clouds his brow, but he admits that he is one hand short. \"Very well, I'll take you on. But since you are untried, I won't be offering full pay.\"\n\nYou shrug casually as you shoulder your pack. \"Pay? Passage to Kahira is enough.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 246; }
+};
+
+class Story227 : public Story::Base
+{
+public:
+    Story227()
+    {
+        ID = 227;
+
+        Text = "\"They told me my boss was up there,\" says the Fijian, \"but all I see is you. Imposter!\" He starts to lunge towards you.\n\nYou turn in the doorway to face him, displaying your gun. \"Here are my credentials,\" you say coolly. \"Now, let's go and see what's in that closet over there.\"\n\nStaring down the barrel of your gun, he has no arguments. You guess that he is a professional bodyguard because he obviously expects what's coming next. With hands on the top of his head, he turns his back and steps into the closet. You club him across the neck with the butt of the gun and he drops. Closing the door of the closet, you leave quickly before he can recover and raise the alarm.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 311; }
+};
+
+class Story228 : public Story::Base
+{
+public:
+    Story228()
+    {
+        ID = 228;
+
+        Text = "Crashing through a thicket of glossy green fronds, you are brought up short by an astounding sight. A majestic ruined city spreads off into the jungle in front of you, seeming to shimmer in the haze of eternal tree-filtered sunlight. Some of the buildings have been choked by vegetation, grappled to destruction by cables of vine, walls uprooted by inexorable growth and carpeted with moss. But other towers still stand gleaming, bright glass and polished steel glorious in the dappled green-gold light. Those must be the buildings still cleaned and maintained by careteks, the diligent robot janitors left by the ancients.\n\nYou skirt the perimeter of the city, stumbling and staggering from sheer awe, like a blind man suddenly given the gift of vision. It can only be the remnants of old Marsay, the mythic place lost for two centuries. A bee as big as a child's fist goes careering cumbersomely past your ear, legs sprawling like a helicopter's skids, and disappears into a vast buzzing hive in the eaves of a crumbled house. Birds sit pecking at lichen-stained girders, sparing you only disdainful glance. You feel like an intruder here.\n\nA barren patch of ground lies ahead, about fifty paces across, forming an avenue towards the intact area of the city.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Follow it", 271));
+        Choices.push_back(Choice::Base("Press on into the jungle", 292));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story229 : public Story::Base
+{
+public:
+    Story229()
+    {
+        ID = 229;
+
+        Text = "Kahira is shrouded in a perpetual mist that rises from the warm river waters that flow beneath the city. The city gate is a metal shutter opening into a wide cargo lift at the bottom of a concrete buttress. You hurry through just before the gate closes for the final time this evening. Standing in a crowd of people, donkeys and camels, you wait while the lift rattles up to the street level and opens to disgorge its passengers onto a fog-draped plaza. You step out under the dank glare of a neon lamp and gaze around the plaza, ignoring the stragglers barging past you with their packs. The babble of voices is muffled by the fog. The air is dankly cold, with a flat reek of mist and wet concrete.\n\nA man wearing an illuminated fez scurries up to you, brushing his fingertips together as though washing. A clutch of snaggled teeth gleam in the street-light as he bows. \"Greetings! I am Bador, a dracoman. For a single scad I will be pleased to assist you with the many queries you must have regarding this estimable city.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Pay Bador's fee (1 scad)", 33, Choice::Type::LOSE_MONEY, 1));
+        Choices.push_back(Choice::Base("Tell him to be gone", 95));
 
         Controls = Story::Controls::STANDARD;
     }
@@ -5896,6 +6086,16 @@ auto story216 = Story216();
 auto story217 = Story217();
 auto story218 = Story218();
 auto story219 = Story219();
+auto story220 = Story220();
+auto story221 = Story221();
+auto story222 = Story222();
+auto story223 = Story223();
+auto story224 = Story224();
+auto story225 = Story225();
+auto story226 = Story226();
+auto story227 = Story227();
+auto story228 = Story228();
+auto story229 = Story229();
 
 void InitializeStories()
 {
@@ -5922,7 +6122,8 @@ void InitializeStories()
         &story180, &story181, &story182, &story183, &story184, &story185, &story186, &story187, &story188, &story189,
         &story190, &story191, &story192, &story193, &story194, &story195, &story196, &story197, &story198, &story199,
         &story200, &story201, &story202, &story203, &story204, &story205, &story206, &story207, &story208, &story209,
-        &story210, &story211, &story212, &story213, &story214, &story215, &story216, &story217, &story218, &story219};
+        &story210, &story211, &story212, &story213, &story214, &story215, &story216, &story217, &story218, &story219,
+        &story220, &story221, &story222, &story223, &story224, &story225, &story226, &story227, &story228, &story229};
 }
 
 #endif
