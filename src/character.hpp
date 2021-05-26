@@ -45,11 +45,16 @@ namespace Character
         Vehicle::Type Vehicle = Vehicle::Type::NONE;
 
         std::vector<Skill::Base> Skills = std::vector<Skill::Base>();
+
         std::vector<Item::Base> Items = std::vector<Item::Base>();
+
         std::vector<Codeword::Type> Codewords = std::vector<Codeword::Type>();
 
         std::vector<Item::Base> LostItems = std::vector<Item::Base>();
+
         std::vector<Skill::Base> LostSkills = std::vector<Skill::Base>();
+
+        std::vector<Item::Type> PotionsApplied = std::vector<Item::Type>();
 
         int LostMoney = 0;
 
@@ -538,6 +543,101 @@ namespace Character
         }
 
         return fired;
+    }
+
+    void APPLY_VIRUS(Character::Base &player, Item::Type virus)
+    {
+        player.PotionsApplied.push_back(virus);
+    }
+
+    void REMOVE_VIRUS(Character::Base &player, Item::Type virus)
+    {
+        for (auto i = 0; i < player.PotionsApplied.size(); i++)
+        {
+            if (player.PotionsApplied[i] == virus)
+            {
+                player.PotionsApplied.erase(player.PotionsApplied.begin() + i);
+
+                break;
+            }
+        }
+    }
+
+    bool IS_APPLIED(Character::Base &player, Item::Type virus)
+    {
+        bool applied = false;
+
+        for (auto i = 0; i < player.PotionsApplied.size(); i++)
+        {
+            if (player.PotionsApplied[i] == virus)
+            {
+                applied = true;
+
+                break;
+            }
+        }
+
+        return applied;
+    }
+
+    void EXALTED_ENHANCER(Character::Base &player, bool reverse)
+    {
+        if (reverse)
+        {
+            player.MAX_LIFE_LIMIT -= 5;
+
+            Character::GAIN_LIFE(player, 0);
+
+            for (auto i = 0; i < player.LostSkills.size(); i++)
+            {
+                if (player.LostSkills[i].Type == Skill::Type::AGILITY)
+                {
+                    player.Skills.push_back(player.LostSkills[i]);
+
+                    player.LostSkills.erase(player.LostSkills.begin() + i);
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            player.MAX_LIFE_LIMIT += 5;
+
+            Character::GAIN_LIFE(player, 5);
+
+            Character::LOSE_SKILLS(player, {Skill::Type::AGILITY});
+
+            Character::APPLY_VIRUS(player, Item::Type::EXALTED_ENHANCER);
+        }
+    }
+
+    void MASK_OF_OCCULTATION(Character::Base &player, bool reverse)
+    {
+        if (reverse)
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::CAMOUFLAGE);
+        }
+        else
+        {
+            Character::GET_CODEWORDS(player, {Codeword::Type::CAMOUFLAGE});
+
+            Character::APPLY_VIRUS(player, Item::Type::MASK_OF_OCCULTATION);
+        }
+    }
+
+    void PEERLESS_PERCEPTIVATE(Character::Base &player, bool reverse)
+    {
+        if (reverse)
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::SCOTOPIC);
+        }
+        else
+        {
+            Character::GET_CODEWORDS(player, {Codeword::Type::SCOTOPIC});
+
+            Character::APPLY_VIRUS(player, Item::Type::PEERLESS_PERCEPTIVATE);
+        }
     }
 
 } // namespace Character

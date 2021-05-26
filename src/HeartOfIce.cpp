@@ -1789,6 +1789,15 @@ bool saveGame(Character::Base &player, const char *overwrite)
     data["lostItems"] = lostItems;
     data["items"] = items;
 
+    auto potionsApplied = std::vector<int>();
+
+    for (auto i = 0; i < player.PotionsApplied.size(); i++)
+    {
+        potionsApplied.push_back(static_cast<int>(player.PotionsApplied[i]));
+    }
+
+    data["potionsApplied"] = potionsApplied;
+
     std::string filename = buffer.str();
 
     std::ofstream file(filename);
@@ -1903,6 +1912,24 @@ Character::Base loadGame(std::string file_name)
         {
             character.Epoch = 0;
         }
+
+        auto potionsApplied = std::vector<Item::Type>();
+
+        try
+        {
+            if (data["potionsApplied"].size() > 0)
+            {
+                for (auto i = 0; i < (int)data["potionsApplied"].size(); i++)
+                {
+                    potionsApplied.push_back(static_cast<Item::Type>((int)data["potionsApplied"][i]));
+                }
+            }
+        }
+        catch (const std::exception &e)
+        {
+        }
+
+        character.PotionsApplied = potionsApplied;
     }
     else
     {
@@ -2427,6 +2454,10 @@ bool tradeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pl
     return done;
 }
 
+void applyRetrovirus(Character::Base &player, Item::Type virus, bool reverse)
+{
+}
+
 bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story)
 {
     if (story->Shop.size() > 0)
@@ -2577,52 +2608,178 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
                         if (player.Money >= price)
                         {
-                            if (Item::IsUnique(item.Type) && Character::VERIFY_ITEMS(player, {item.Type}))
+                            if (item.Type == Item::Type::EXALTED_ENHANCER || item.Type == Item::Type::VIRID_MYSTERY || item.Type == Item::Type::PEERLESS_PERCEPTIVATE || item.Type == Item::Type::MASK_OF_OCCULTATION)
                             {
-                                message = std::string("You already have this item!");
+                                if (Character::IS_APPLIED(player, item.Type))
+                                {
+                                    message = "Malengin no longer has this retrovirus in stock!";
 
-                                start_ticks = SDL_GetTicks();
+                                    start_ticks = SDL_GetTicks();
 
-                                purchased = false;
+                                    purchased = false;
 
-                                error = true;
+                                    error = true;
+                                }
+                                else
+                                {
+                                    player.Money -= price;
+
+                                    if (item.Type == Item::Type::EXALTED_ENHANCER)
+                                    {
+                                        auto agility_lost = Character::VERIFY_SKILL(player, Skill::Type::AGILITY);
+
+                                        Character::EXALTED_ENHANCER(player, false);
+
+                                        message = "You gain 5 Maximum Life Points.";
+
+                                        if (agility_lost)
+                                        {
+                                            message += " However, your [AGILITY] skill is LOST.";
+                                        }
+
+                                        start_ticks = SDL_GetTicks();
+
+                                        purchased = true;
+
+                                        error = false;
+                                    }
+                                    else if (item.Type == Item::Type::MASK_OF_OCCULTATION)
+                                    {
+                                        Character::MASK_OF_OCCULTATION(player, false);
+
+                                        message = "You now have the ability to alter your appearance and colouring. You gain the codeword CAMOUFLAGE.";
+
+                                        start_ticks = SDL_GetTicks();
+
+                                        purchased = true;
+
+                                        error = false;
+                                    }
+                                    else if (item.Type == Item::Type::PEERLESS_PERCEPTIVATE)
+                                    {
+                                        Character::PEERLESS_PERCEPTIVATE(player, false);
+
+                                        message = "You now have the ability to see in almost total darkness. You gain the codeword SCOTOPIC.";
+
+                                        start_ticks = SDL_GetTicks();
+
+                                        error = false;
+
+                                        purchased = true;
+                                    }
+                                    else if (item.Type == Item::Type::VIRID_MYSTERY)
+                                    {
+                                        auto reversed = 0;
+
+                                        message = "";
+
+                                        if (Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
+                                        {
+                                            reversed++;
+
+                                            message += "EXALTED ENHANCER effects reversed.";
+
+                                            Character::EXALTED_ENHANCER(player, true);
+                                        }
+
+                                        if (Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
+                                        {
+                                            if (reversed > 0)
+                                            {
+                                                message += " ";
+                                            }
+
+                                            reversed++;
+
+                                            message += "MASK OF OCCULTATION effects reversed.";
+
+                                            Character::MASK_OF_OCCULTATION(player, true);
+                                        }
+
+                                        if (Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
+                                        {
+                                            if (reversed > 0)
+                                            {
+                                                message += " ";
+                                            }
+
+                                            reversed++;
+
+                                            message += "PEERLESS PERCEPTIVATE effects reversed.";
+
+                                            Character::PEERLESS_PERCEPTIVATE(player, true);
+                                        }
+
+                                        Character::APPLY_VIRUS(player, Item::Type::VIRID_MYSTERY);
+
+                                        if (reversed == 0)
+                                        {
+                                            message = "No retrovirus effects reversed!";
+
+                                            error = true;
+
+                                            purchased = false;
+                                        }
+                                        else
+                                        {
+                                            error = false;
+
+                                            purchased = true;
+                                        }
+
+                                        start_ticks = SDL_GetTicks();
+                                    }
+                                }
                             }
                             else
                             {
-                                Character::GET_ITEMS(player, {item});
-
-                                player.Money -= price;
-
-                                while (!Character::VERIFY_POSSESSIONS(player))
+                                if (Item::IsUnique(item.Type) && Character::VERIFY_ITEMS(player, {item.Type}))
                                 {
-                                    inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
+                                    message = "You already have this item!";
+
+                                    start_ticks = SDL_GetTicks();
+
+                                    purchased = false;
+
+                                    error = true;
                                 }
-
-                                std::string description = item.Name;
-
-                                if (item.Charge >= 0)
+                                else
                                 {
-                                    description += " (";
+                                    Character::GET_ITEMS(player, {item});
 
-                                    if (item.Charge > 0)
+                                    player.Money -= price;
+
+                                    while (!Character::VERIFY_POSSESSIONS(player))
                                     {
-                                        description += std::to_string(item.Charge) + " charges";
-                                    }
-                                    else
-                                    {
-                                        description += "empty";
+                                        inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
                                     }
 
-                                    description += ")";
+                                    std::string description = item.Name;
+
+                                    if (item.Charge >= 0)
+                                    {
+                                        description += " (";
+
+                                        if (item.Charge > 0)
+                                        {
+                                            description += std::to_string(item.Charge) + " charges";
+                                        }
+                                        else
+                                        {
+                                            description += "empty";
+                                        }
+
+                                        description += ")";
+                                    }
+
+                                    message = description + " purchased.";
+
+                                    start_ticks = SDL_GetTicks();
+
+                                    purchased = true;
+
+                                    error = false;
                                 }
-
-                                message = description + " purchased.";
-
-                                start_ticks = SDL_GetTicks();
-
-                                purchased = true;
-
-                                error = false;
                             }
                         }
                         else

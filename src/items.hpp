@@ -1,7 +1,7 @@
 #ifndef __ITEMS__HPP__
 #define __ITEMS__HPP__
 
-#include <map>
+#include <vector>
 
 namespace Item
 {
@@ -32,8 +32,12 @@ namespace Item
         STASIS_BOMB,
         VINE_KILLER,
         BATTERY_UNIT,
+        EXALTED_ENHANCER,
+        VIRID_MYSTERY,
+        MASK_OF_OCCULTATION,
+        PEERLESS_PERCEPTIVATE,
         First = BARYSAL_GUN,
-        LAST = BATTERY_UNIT
+        LAST = PEERLESS_PERCEPTIVATE
     };
 
     class Base
@@ -96,13 +100,21 @@ namespace Item
     auto STASIS_BOMB = Item::Base("STASIS BOMB", "STASIS BOMB", Item::Type::STASIS_BOMB);
     auto VINE_KILLER = Item::Base("VINE KILLER", "VINE KILLER", Item::Type::VINE_KILLER);
     auto BATTERY_UNIT = Item::Base("BATTERY UNIT", "BATTERY UNIT", Item::Type::BATTERY_UNIT, 6);
+    auto EXALTED_ENHANCER = Item::Base("EXALTED ENHANCER", "Toughens your skin so that you gain 5 Life Points, even above your initial score. However it also slows your reflexes so that you must lose the [AGILITY] skill if you have it.", Item::Type::EXALTED_ENHANCER);
+    auto VIRID_MYSTERY = Item::Base("VIRID MYSTERY", "An antidote designed to reverse unwanted genetic changes.", Item::Type::VIRID_MYSTERY);
+    auto MASK_OF_OCCULTATION = Item::Base("MASK OF OCCULTATION", "Gives the ability to alter your appearance and colouring.", Item::Type::MASK_OF_OCCULTATION);
+    auto PEERLESS_PERCEPTIVATE = Item::Base("PEERLESS PERCEPTIVATE", "Confers the ability to see in almost total darkness.", Item::Type::PEERLESS_PERCEPTIVATE);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,
         Item::Type::SPECULUM_JACKET,
         Item::Type::MANTRAMUKTA_CANNON,
         Item::Type::VADE_MECUM,
-        Item::Type::LITTLE_GAIA};
+        Item::Type::LITTLE_GAIA,
+        Item::Type::VIRID_MYSTERY,
+        Item::Type::EXALTED_ENHANCER,
+        Item::Type::MASK_OF_OCCULTATION,
+        Item::Type::PEERLESS_PERCEPTIVATE};
 
     bool IsUnique(Item::Type item)
     {
@@ -210,6 +222,21 @@ namespace Item
                 found = i;
 
                 break;
+            }
+        }
+
+        return found;
+    }
+
+    int COUNT_TYPES(std::vector<Item::Type> list, Item::Type item)
+    {
+        auto found = 0;
+
+        for (auto i = 0; i < list.size(); i++)
+        {
+            if (list[i] == item)
+            {
+                found++;
             }
         }
 

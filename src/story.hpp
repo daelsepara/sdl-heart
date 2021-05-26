@@ -327,6 +327,43 @@ namespace Story
 
 } // namespace Story
 
+class NotImplemented : public Story::Base
+{
+public:
+    NotImplemented()
+    {
+        ID = -1;
+
+        Title = "Not implemented yet";
+
+        Controls = Story::Controls::NONE;
+    }
+};
+
+auto notImplemented = NotImplemented();
+
+auto Stories = std::vector<Story::Base *>();
+
+void *findStory(int id)
+{
+    Story::Base *story = &notImplemented;
+
+    if (Stories.size() > 0)
+    {
+        for (auto i = 0; i < Stories.size(); i++)
+        {
+            if (((Story::Base *)Stories[i])->ID == id)
+            {
+                story = (Story::Base *)Stories[i];
+
+                break;
+            }
+        }
+    }
+
+    return story;
+}
+
 class Earth23rdCentury : public Story::Base
 {
 public:
@@ -6534,42 +6571,269 @@ public:
     }
 };
 
-class NotImplemented : public Story::Base
+class Story260 : public Story::Base
 {
 public:
-    NotImplemented()
+    std::string PreText = "";
+
+    Story260()
     {
-        ID = -1;
+        ID = 260;
 
-        Title = "Not implemented yet";
+        Bye = "You manage to break free with a sob of terror and stumble on to the doorway. Boche and the baron slam and bolt the door behind you, and you see it almost buckle off its hinges as the monster throws itself furiously against the other side. \"I hope that holds,\" you say to the others, \"or else we're insect food.\"";
 
-        Controls = Story::Controls::NONE;
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "There is the rattle of hard insectoid legs on the smooth floor, then something huge slams into you. It feels like a coiled monster with a body as hard as ebony. Striking out blindly, you feel a segmented eye squash under your fist, spurting out ichor. Then it seizes you in its mandibles and two scything blades are driven into your sides. You give a scream of agony. It feels as though the monster is trying to saw you in half.\n\n";
+
+        auto DAMAGE = -6;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -4;
+        }
+
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::TALOS))
+        {
+            PreText += "[Codeword: TALOS] ";
+
+            DAMAGE++;
+        }
+
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story261 : public Story::Base
+{
+public:
+    Story261()
+    {
+        ID = 261;
+
+        Text = "You find Boche recovering from the blast. Despite a gash on his forehead, he is in good spirits. \"It worked!\" he says. \"I'd been barring that grenade all along, but the joke was that I didn't even know it myself. It was the only way to foil the baron's mind-reading you see.\"\n\n\"I don't understand.\"\n\nBoche spits out rock dust before explaining. \"I knew the baron was heading for Du-En and that he'd be the hardest foe I'd have to face, so I got myself hypnotized to forget that I was carrying a grenade. I had a post-hypnotic suggestion planted that I should use it at a key moment. He never knew what hit him, did he?\"\n\n\"A ruthlessly clever scheme.\"\n\nIf you intended any sarcasm, Boche fails to notice it. \"Thanks,\" he says. \"Now, let's get going and find the Heart.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 175; }
+};
+
+class Story262 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story262()
+    {
+        ID = 262;
+
+        Bye = "YAs the smoke disperses you see that Golgoth had attached his gun to the wall magnetically and set it for remote-controlled fire. Retrieving it, he casts a wary glance at you. \"It's just up to us now,\" he says. \"We can make a shoot-out of it, and probably both die, or we can cooperate to get rid of that.\" And he jerks his thumb towards the ominously glittering Heart of Volent.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "A swishing in the air is followed by a noise like a knife being driven into an apple. You are startled to see a crossbow bolt protruding from Singh's eye. He is spun round by the impact, dead on his feet, raking the floor with a random blast from the mantramukta as he falls. Molten chunks of marble fly up, one of them striking you heavily across the left arm.\n\n";
+
+        auto DAMAGE = -4;
+
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::TALOS))
+        {
+            PreText += "[Codeword: TALOS] ";
+
+            DAMAGE = -1;
+        }
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 431; }
+};
+
+class Story263 : public Story::Base
+{
+public:
+    Story263()
+    {
+        ID = 263;
+
+        Text = "Golgoth gives you a bleak smile. His gun is aimed at your chest. \"So we can't destroy the damned thing after all,\" he says without relish. \"I certainly can't get it back to the States, so I guess that leaves one option.\"\n\n\"You can't...\" you say, shaking your head. \"It'll be the end of the world.\"\n\n\"The world is on its last legs anyway. No one thinks humanity will survive another century. Maybe I can make a better world.\"\n\nYou give him a withering look. \"You're just trying to justify yourself, Golgoth. You're like all the rest. It was power you wanted all along.\"\n\nHe shrugs. \"Just doing my job.\" And his gun spurts fire, killing you instantly.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
     }
 };
 
-auto notImplemented = NotImplemented();
-
-auto Stories = std::vector<Story::Base *>();
-
-void *findStory(int id)
+class Story264 : public Story::Base
 {
-    Story::Base *story = &notImplemented;
-
-    if (Stories.size() > 0)
+public:
+    Story264()
     {
-        for (auto i = 0; i < Stories.size(); i++)
-        {
-            if (((Story::Base *)Stories[i])->ID == id)
-            {
-                story = (Story::Base *)Stories[i];
+        ID = 264;
 
-                break;
-            }
-        }
+        Text = "Boche scrambles up to the ledge and goes through the pockets of one of the corpses. \"I don't like robbing the dead, but there might be some food,\" he mutters.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
     }
 
-    return story;
-}
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ROGUERY))
+        {
+            return 328;
+        }
+        else if (Character::VERIFY_SKILL(player, Skill::Type::PARADOXING))
+        {
+            return 370;
+        }
+        else
+        {
+            return 306;
+        }
+    }
+};
+
+class Story265 : public Story::Base
+{
+public:
+    Story265()
+    {
+        ID = 265;
+
+        Text = "After reassuring the anxious scribe that you will do nothing to damage his hardware, you connect one of the laptops into the phone network. The antiquity of the modem will limit your ability to converse with Gaia, but it also means that the terminal you are using is safe from Gaia's resident hyperviruses, which are too complex to copy themselves across the primitive modem link.\n\nThe scribe watches in amazement as you type your questions. In this world of declining technology, what you are doing seems to him like magic.\n\n> HELLO, GAIA. PLEASE TELL ME ABOUT THE HEART OF VOLENT.\n> IT WAS FORMED AT THE BEGINNING OF TIME. THE PERSON WHO ATTUNES IT WILL HAVE POWER OVER EVERYTHING.\n> HOW CAN YOU HELP ME TO GET IT?\n> MY MIND IS NOT ALWAYS CLEAR. YOU WILL NEED AN ALLY. GO TO GIZA. SEEK GILGAMESH UNDER THE PYRAMID. HUMBABA WILL GIVE YOU ENTRY.\n> WHAT THEN?\n> UNKNOWN. THE FUTURE. A TABULA RASA.\n\nThe screen goes blank as the scribe reaches out and pulls the plug. \"Enough, please,\" he says firmly. \"I know you've assured me there is no risk, but bear in mind it is my livelihood that's at stake.\"\n\nResolving to establish a better link with Gaia when you have time, you leave the stall and head off along the street.\n\nYou gained the codeword HUMBABA.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::HUMBABA});
+    }
+
+    int Continue(Character::Base &player) { return 372; }
+};
+
+class Story266 : public Story::Base
+{
+public:
+    Story266()
+    {
+        ID = 266;
+
+        Text = "You identify each of the potions, describing its effects in detail. Malengin takes out a pad and eagerly scribbles down everything you can tell him. \"This will be invaluable,\" he says, so pleased that he agrees to sell to you at a discount.\n\nThe potion he calls the VIRID MYSTERY is easiest to identify. It is simply an antidote designed to reverse unwanted genetic changes. Luckily the other three potions are more useful.\n\nThe potion called the EXALTED ENHANCER costs 7 scads and will toughen your skin so that you gain 5 Life Points, even above your initial score. However it also slows your reflexes so that you must lose the [AGILITY] skill if you have it.\n\nThe MASK OF OCCULTATION costs 6 scads and gives the ability to alter your appearance and colouring.\n\nThe PEERLESS PERCEPTIVATE costs 4 scads and confers the ability to see in almost total darkness.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::SHOP;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Shop = {{Item::VIRID_MYSTERY, 3}, {Item::EXALTED_ENHANCER, 7}, {Item::MASK_OF_OCCULTATION, 6}, {Item::PEERLESS_PERCEPTIVATE, 4}};
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        {
+            return 25;
+        }
+        else
+        {
+            return 414;
+        }
+    }
+};
+
+class Story267 : public Story::Base
+{
+public:
+    Story267()
+    {
+        ID = 267;
+
+        Image = "images/filler3.png";
+
+        Text = "Boche frowns in indignation and amazement. \"I cannot understand your attitude. I've worked very hard getting you this far, and now you propose to abandon me!\"\n\nYou thank the official for your ticket and then turn to Boche, saying, \"In the area of wilderness survival, you turned out to be long on opinion but short on expertise. Even so, I tolerated your company because you gave me to understand that your contacts would be useful once we reached civilization. However, I have not seen anything of you for the two days we've spent in Venis. Now you show up like a bad penny, having squandered your money on fancy gear such as that new barysal gun, and you have the audacity to expect me to pay for your passage. Boche, you are an idiot.\"\n\nThough taken aback, he is not at a loss for words. \"I expected a little more support from you. Have you forgotten that I started out with a gesture of comradeship by paying your bill at the Etruscan Inn before I knew a thing about you?\"\n\n\"That, more than anything else, should have warned me off associating with you. It's the typical con-man's opening gambit.\" You give a bored sigh. \"Farewell, Boche.\"\n\nYou walk off towards the seafront before he can say anything else.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::REMOVE_CODEWORD(player, Codeword::Type::DIAMOND);
+    }
+
+    int Continue(Character::Base &player) { return 246; }
+};
+
+class Story268 : public Story::Base
+{
+public:
+    Story268()
+    {
+        ID = 268;
+
+        Text = "You travel upriver. Flurries of sleet sweep out of the evening sky. Veering west, you steer towards the pyramids of Giza where they stand outlined against the feeble afterglow of sunset. The Sphinx lies huddled with banks of snow along its stone flanks, its face ravaged by frostbite. You set the sky-car down and trudge across the icy plain towards those ancient ruins.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 440; }
+};
+
+class Story269 : public Story::Base
+{
+public:
+    Story269()
+    {
+        ID = 269;
+
+        Image = "images/filler1.png";
+
+        Text = "You catch on at once. The Fijian obviously works for the person who originally owned your ID card, and rushed up here in search of his boss, only to find you instead. \"There was another person here,\" you glibly tell him, \"who suffered a heart attack just minutes ago and was taken on a stretcher to the medical lounge. Could that have been your boss?\"\n\nHis jaw drops, then he races out and stabs anxiously at the elevator button. You join him and politely ask for the ground floor. Watching him fidget impatiently as the elevator descends, you say, \"Don't worry, the Society has excellent medical facilities -- the best in Kahira. I'm sure your boss will be all right.\"\n\nThe elevator stops at the floor for the medical lounge and the Fijian gets out. You continue down to the lobby and leave without delay, before he discovers he's been lied to.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 311; }
+};
 
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
@@ -6834,6 +7098,16 @@ auto story256 = Story256();
 auto story257 = Story257();
 auto story258 = Story258();
 auto story259 = Story259();
+auto story260 = Story260();
+auto story261 = Story261();
+auto story262 = Story262();
+auto story263 = Story263();
+auto story264 = Story264();
+auto story265 = Story265();
+auto story266 = Story266();
+auto story267 = Story267();
+auto story268 = Story268();
+auto story269 = Story269();
 
 void InitializeStories()
 {
@@ -6864,7 +7138,8 @@ void InitializeStories()
         &story220, &story221, &story222, &story223, &story224, &story225, &story226, &story227, &story228, &story229,
         &story230, &story231, &story232, &story233, &story234, &story235, &story236, &story237, &story238, &story239,
         &story240, &story241, &story242, &story243, &story244, &story245, &story246, &story247, &story248, &story249,
-        &story250, &story251, &story252, &story253, &story254, &story255, &story256, &story257, &story258, &story259};
+        &story250, &story251, &story252, &story253, &story254, &story255, &story256, &story257, &story258, &story259,
+        &story260, &story261, &story262, &story263, &story264, &story265, &story266, &story267, &story268, &story269};
 }
 
 #endif

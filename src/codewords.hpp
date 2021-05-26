@@ -45,7 +45,8 @@ namespace Codeword
         {Codeword::Type::SCYTHE, "Scythe"},
         {Codeword::Type::TALOS, "Talos"},
         {Codeword::Type::URUK, "Uruk"},
-        {Codeword::Type::YELLOW, "Yellow"}};
+        {Codeword::Type::YELLOW, "Yellow"},
+        {Codeword::Type::SHORTSWORD, "Shortsword"}};
 
 } // namespace Codeword
 #endif
