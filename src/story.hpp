@@ -527,11 +527,11 @@ public:
 
         if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
         {
-            Choices[0].Destination = 160;
+            Choices[1].Destination = 160;
         }
         else
         {
-            Choices[0].Destination = 182;
+            Choices[1].Destination = 182;
         }
     }
 };
@@ -6331,6 +6331,209 @@ public:
     }
 };
 
+class Story250 : public Story::Base
+{
+public:
+    Story250()
+    {
+        ID = 250;
+
+        Image = "images/marsay.png";
+
+        Text = "Crashing through a thicket of glossy green fronds, you are brought up short by an astounding sight. A majestic ruined city spreads off into the jungle in front of you, seeming to shimmer in the haze of eternal tree-filtered sunlight. Some of the buildings have been choked by vegetation, grappled to destruction by cables of vine, walls uprooted by inexorable growth and carpeted with moss. But other towers still stand gleaming, bright glass and polished steel glorious in the dappled green-gold light. Those must be the buildings still cleaned and maintained by careteks, the diligent robot janitors left by the ancients.\n\nYou skirt the perimeter of the city, stumbling and staggering as much from sheer awe as from your throbbing wound. It can only be the remnants of old Marsay, the mythic place lost to the sight of man for two centuries.\n\nA bee as big as a child's fist goes careering cumbersomely past your ear, legs sprawling like a helicopter's skids, to disappear into a vast buzzing hive in the eaves of a crumbled house. Birds sit pecking at lichen-stained girders, sparing you only a disdainful glance. You feel like an intruder here.\n\nA barren patch of ground lies ahead, about fifty paces across, forming an avenue towards the intact area of the city.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Follow it", 271));
+        Choices.push_back(Choice::Base("Press on into the jungle", 184));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story251 : public Story::Base
+{
+public:
+    Story251()
+    {
+        ID = 251;
+
+        Text = "The city gate is a metal shutter that opens into a wide cargo lift at the bottom of a concrete abutment. Those entering are conveyed up inside the abutment to the lowest street level twenty metres above. You have arrived just before the gates are closed for the night, and as you step out into the street you draw the attention of a man in blue-&-grey combat dress.\n\nBoche recognizes him, throwing out his chest in a display of wary truculence. The man stops and nods, a relaxed smile on his slim features. \"Kyle Boche. And is this your accomplice, or your latest victim?\"\n\n\"Chaim Golgoth! Are you still a hired murderer?\" pipes up Boche in a tone of bravado. He turns to you. \"This man kills people for a living.\"\n\nYou notice the insignia on Golgoth's sleeve: the blazoned sliver eagle and blue stars of United States Intelligence. Even with the world close to collapse, the United States remains a force to be reckoned with. If Golgoth really is a USI assassin, Boche is being reckless in bantering with him like this. You size up what you can see.\n\nGolgoth has a holstered a barysal gun and, to your surprise, a steel crossbow slung behind his hip. At a glance he looks open and friendly, his voice mild with wry amusement. But there is something almost chilling about the eyes. Those are the eyes of a man who is always alert.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[ESP] Probe Golgoth's mind", 121, Skill::Type::ESP));
+        Choices.push_back(Choice::Base("Query him about Giza", 337));
+        Choices.push_back(Choice::Base("Ask about his reason for carrying a crossbow", 315));
+        Choices.push_back(Choice::Base("Simply pass by him into the city", 358));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story252 : public Story::Base
+{
+public:
+    Story252()
+    {
+        ID = 252;
+
+        Text = "At last the fearsome twins begin to show signs of lassitude. They call for plates of stew, which they devour with gusto, then go crashing off into the dormitory where they hurl themselves down on cots and are soon snoring like lionesses.\n\n\"What fearsome furies,\" says the innkeeper in a disconsolate whisper. \"They drank a hundred scads' worth of vodka. I think there's little hope of getting my money, however.\"\n\nThe other customers of the inn set up bedding on the floor of the taproom. No one dares to share the dormitory for fear of the Gargan sisters awakening and setting on them in a drunken rage. You cannot blame them. You pass an uneasy night yourself, rising early to set out on your way.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 273; }
+};
+
+class Story253 : public Story::Base
+{
+public:
+    Story253()
+    {
+        ID = 253;
+
+        Text = "Fishermonger Plaza, on the lowest level of the city, is a wide paved area surrounding an area of gratings directly above the river. At night, the gratings are opened and nets lowered. Bright lamps are shone down into the river to attract the attention of the fish, which are then hauled up in huge writhing shoals. This continues throughout the night, and the promise of fresh fried fish brings all manner of night-time workers to the plaza. At stalls ranged around the gratings, a curious band rub shoulders: off-duty policemen, fishmongers, prostitutes, street cleaners, beggars, and burglars.\n\nYou huddle down beside a shuttered pastry stall. The bright light and bustle make it difficult to sleep here, but at least you are safe from muggers. You pass a restless night, awakening before the dawn with a gritty feeling in your eyes and cramp in your limbs. \"Get away from here,\" say the stall-holder as he opens up for the day. \"I will not have my wares contaminated by a beggar's lice.\"\n\nYou wait until he is not looking to steal a pastry for your breakfast, then make your way to the bazaar.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 333; }
+};
+
+class Story254 : public Story::Base
+{
+public:
+    Story254()
+    {
+        ID = 254;
+
+        Text = "A young technician sees you wandering around bewildered and takes you on a tour of the laboratories. \"The al-Lat station was originally intended as a base of pure scientific research,\" he explains. \"Luckily we were always designed to be self sufficient, so the degradation of Earth's climate and population has not affected us.\"\n\nYou pause beside a bank of supercooled chambers. \"What research is going on here?\"\n\n\"These are neural networks -- artificial brains into which we are loading the original weather control programs used when Gaia was first set up. They are works of genius, unsurpassed even today. Naturally we cannot tap into Gaia herself, by reason of the viruses that have invaded the system. But these original programs are uninfected.\"\n\n\"What is the purpose of the work?\" you ask.\n\n\"We hope to terraform the planet Venus -- that is, make it suitable for human habitation. Then we can colonize.\"\n\nYou give a snort of incredulous laughter. \"Why not use your skills on Earth? Although inhospitable, it is still a better place than Venus!\"\n\nHe smile. \"We thought of that, of course. Any attempt to alter the Earth's current climate might meet with Gaia's displeasure, and al-Lat would be targeted by nuclear missiles against which we have no defence.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Argue that the Earth should not be callously abandoned", 296));
+        Choices.push_back(Choice::Base("Offer to join the people of al-Lat and help with the terraforming project", 317));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story255 : public Story::Base
+{
+public:
+    Story255()
+    {
+        ID = 255;
+
+        Text = "You step onto the hovering platform, surprised and relieved that it remains steady under your weight and does not go plummeting to the bottom of the shaft. Once again, as so often in the past, you have cause to marvel at the technology of your ancestors. Touching the lowest button, you activate the elevator and the platform glides gently down the shaft, depositing you in a circular chamber from which several doors lead off. All are closed. As you stand pondering which way to go, an automatic circuit engages and a synthesized voice speaks from a slot in the wall, enquiring your reason for being there. What will you answer?";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Answer: Gaia", 297));
+        Choices.push_back(Choice::Base("Answer: Gilgamesh", 318));
+        Choices.push_back(Choice::Base("Answer: Du-En", 441));
+        Choices.push_back(Choice::Base("Answer: The Heart of Volent", 383));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story256 : public Story::Base
+{
+public:
+    Story256()
+    {
+        ID = 256;
+
+        Text = "A hunter who makes a habit of tangling with bomeths will not live very long. Instead of grand heroics, you decide to track the beast to its lair. Crouching motionless until the moon rises, you see the bometh rouse itself and go loping away across the undulating hillocks of snow. You follow until you see it disappear into a snowdrift, whereupon you drop low and compose yourself for a long wait. Two or three hours go by. At last it emerges from the lair, sniffs the wind, and lumbers off in search of prey.\n\nOnce it is out of sight, you scramble over the snowdrift, pushing along a tunnel into a hollowed-out cavity where there are three small bomeths on a nest of moulted fur. Ignoring them, you turn your attention to the closely packed walls of the lair: the bometh's larder, where the beast has stored remains of previous kills. You dig out the carcass of a large fowl, which the icy cold has preserved well. Wrapping the flesh carefully, you make two FOOD PACKs.";
+
+        Bye = "One of the young bomeths nips at your ankle. The teeth do not penetrate your boot, but it is a timely reminder that the parent might return any time. You squirm back to the open and hurry away.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 2;
+    }
+
+    int Continue(Character::Base &player) { return 298; }
+};
+
+class Story257 : public Story::Base
+{
+public:
+    Story257()
+    {
+        ID = 257;
+
+        Text = "Your fingers show signs of frostbite and you have dozen small bruises. You does yourself with antibiotics and apply ointments and dressings from the MEDICAL KIT.\n\nYou RECOVER 1 Life Point.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 278; }
+};
+
+class Story258 : public Story::Base
+{
+public:
+    Story258()
+    {
+        ID = 258;
+
+        Text = "When he folds his hands across his chest and speaks in his mild whimsical way, Janus Gaunt puts you in mind of a priest. \"Vajra Singh is the lion among us,\" he says; \"proud, brave and noble -- but cross him, and you'll measure your remaining span in seconds. So, if Singh is a lion, Golgoth is a fox, agile and crafty. For Baron Siriasis's totem I would suggest the spider: a brooding, spiteful, sinister creature, always ready to cast its net.\"\n\n\"And Thadra Bey is evidently a tigress,\" you say, \"for I have never seen a woman so sleek and fierce. And Kyle Boche?\"\n\n\"Boche?\" He gives a snort of contempt. \"He is a jackal... no, an albatross around your neck, I think.\"\n\n\"And what about you, Janus Gaunt?\" breaks in a voice abruptly. You turn to see Kyle Boche sauntering out across the snow. He casts a hooded glance around the throng of silent xoms. \"Perhaps you're the worm of the group? The maggot that eats from within?\"\n\nGaunt turns on his heel and stalks away without reply, his xoms clustering along behind like sleepwalkers. Boche takes your arm and leads you back to the main square. \"You should be more careful,\" he chides. \"Gaunt might have murdered you out there and turned you into one of his undead. You're lucky I came along when I did.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 104; }
+};
+
+class Story259 : public Story::Base
+{
+public:
+    Story259()
+    {
+        ID = 259;
+
+        Text = "You are in a dimly lit room with a number of smaller rooms leading off it. You guess that this was where the acolytes of the Volentine cult lived. Even after two hundred years, there are still signs of the rioting that led to the city's downfall. You clamber through a wreckage of broken furniture and toppled cupboards. Crumpled sheets of writing-plastic litter the floor.\n\nBoche picks up a book, ruffles the charred pages and drops it to the floor. \"There's nothing here to interest us,\" he says. \"Let's press on.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Insist on searching the wreckage", 242));
+        Choices.push_back(Choice::Base("Go back to the antechamber and take either the passage to the left", 3));
+        Choices.push_back(Choice::Base("... or the passage to the right", 128));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ROGUERY))
+        {
+            Choices[0].Destination = 412;
+        }
+        else
+        {
+            Choices[0].Destination = 138;
+        }
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -6621,6 +6824,16 @@ auto story246 = Story246();
 auto story247 = Story247();
 auto story248 = Story248();
 auto story249 = Story249();
+auto story250 = Story250();
+auto story251 = Story251();
+auto story252 = Story252();
+auto story253 = Story253();
+auto story254 = Story254();
+auto story255 = Story255();
+auto story256 = Story256();
+auto story257 = Story257();
+auto story258 = Story258();
+auto story259 = Story259();
 
 void InitializeStories()
 {
@@ -6650,7 +6863,8 @@ void InitializeStories()
         &story210, &story211, &story212, &story213, &story214, &story215, &story216, &story217, &story218, &story219,
         &story220, &story221, &story222, &story223, &story224, &story225, &story226, &story227, &story228, &story229,
         &story230, &story231, &story232, &story233, &story234, &story235, &story236, &story237, &story238, &story239,
-        &story240, &story241, &story242, &story243, &story244, &story245, &story246, &story247, &story248, &story249};
+        &story240, &story241, &story242, &story243, &story244, &story245, &story246, &story247, &story248, &story249,
+        &story250, &story251, &story252, &story253, &story254, &story255, &story256, &story257, &story258, &story259};
 }
 
 #endif
