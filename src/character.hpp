@@ -55,7 +55,7 @@ namespace Character
 
         int StoryID = 0;
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__arm__)
         long long Epoch = 0;
 #else
         long Epoch = 0;

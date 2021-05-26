@@ -1673,7 +1673,7 @@ bool aboutScreen(SDL_Window *window, SDL_Renderer *renderer)
     return done;
 }
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__arm__)
 std::string time_string(long long deserialised)
 {
     auto epoch = std::chrono::time_point<std::chrono::system_clock>();
@@ -1893,7 +1893,7 @@ Character::Base loadGame(std::string file_name)
         try
         {
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__arm__)
             character.Epoch = (long long)(data["epoch"]);
 #else
             character.Epoch = (long)(data["epoch"]);
@@ -1928,7 +1928,7 @@ std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, 
 
             auto character = loadGame(list[index]);
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__arm__)
             long long epoch_long;
 #else
             long epoch_long;
@@ -1937,7 +1937,12 @@ std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, 
             if (character.Epoch == 0)
             {
                 auto epoch = list[index].substr(list[index].find_last_of("/") + 1, list[index].find_last_of(".") - list[index].find_last_of("/") - 1);
+
+#if defined(_WIN32) || defined(__arm__)
+                epoch_long = std::stoull(epoch);
+#else
                 epoch_long = std::stol(epoch);
+#endif
             }
             else
             {
@@ -2025,7 +2030,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
             {
                 auto time_stamp = entry.last_write_time();
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__arm__)
                 std::string file_name = entry.path().string();
 #else
                 std::string file_name = entry.path();
@@ -2106,7 +2111,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
                 auto character = loadGame(entries[selected_file]);
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__arm__)
                 long long epoch_long;
 #else
                 long epoch_long;
@@ -2119,7 +2124,12 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
                 else
                 {
                     auto epoch = entries[selected_file].substr(entries[selected_file].find_last_of("/") + 1, entries[selected_file].find_last_of(".") - entries[selected_file].find_last_of("/") - 1);
+
+#if defined(_WIN32) || defined(__arm__)
+                    epoch_long = std::stoull(epoch);
+#else
                     epoch_long = std::stol(epoch);
+#endif
                 }
 
                 if (character.StoryID != -1)
@@ -2983,7 +2993,7 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 {
                                     inventoryScreen(window, renderer, player, story, player.Items, Control::Type::LOSE, limit);
                                 }
-                                
+
                                 next = (Story::Base *)findStory(story->Choices[current].Destination);
 
                                 done = true;
