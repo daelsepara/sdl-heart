@@ -34,7 +34,7 @@ namespace Control
         MINUS,
         TRADE,
         GIVE,
-        STEAL,
+        LOSE,
         YES,
         NO
     };

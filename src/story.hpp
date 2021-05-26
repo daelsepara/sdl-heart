@@ -33,7 +33,8 @@ namespace Choice
         LOSE_SKILLS,
         GET_CODEWORD,
         LOSE_CODEWORD,
-        GAIN_MONEY
+        GAIN_MONEY,
+        GIVE
     };
 
     class Base
@@ -6060,6 +6061,276 @@ public:
     int Continue(Character::Base &player) { return 261; }
 };
 
+class Story240 : public Story::Base
+{
+public:
+    Story240()
+    {
+        ID = 240;
+
+        Text = "You feel a jolting impact as though someone had punched you in the throat. Looking down, you are amazed to see a steel crossbow bolt has pierced your windpipe. You stagger back a couple of steps and then fall, dying in a pool of blood. You have failed with success almost in your grasp.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story241 : public Story::Base
+{
+public:
+    Story241()
+    {
+        ID = 241;
+
+        Text = "Golgoth checks Boche's gun, but the charge has been used up.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::BATTERY_UNIT}))
+        {
+            return 219;
+        }
+        else
+        {
+            return 263;
+        }
+    }
+};
+
+class Story242 : public Story::Base
+{
+public:
+    Story242()
+    {
+        ID = 242;
+
+        Text = "You sift carefully through the debris, but find nothing more than torn clothes and broken ornaments. Boche points out a rusty brown stain on a broken tabletop. \"The rioters went in for human sacrifice,\" he says.\n\nThe baron hovers over the spot, peering back through the curtain of time. Finally he gives a curt nod. \"Yes. The populace broke in here and slaughtered the acolytes. But this is not where the high priest and his adepts dwelled. That lies deeper in the catacombs, and there we shall find the Shrine of the Heart.\" He swivels in the air and glides rapidly back to the antechamber, calling over his shoulder: \"Come.\"\n\nYou and Boche exchange a glance, then follow. The baron is inspecting the two passages, but his psychic senses cannot tell which is better. \"You choose,\" he says.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go right", 128));
+        Choices.push_back(Choice::Base("Go Left", 3));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story243 : public Story::Base
+{
+public:
+    Story243()
+    {
+        ID = 243;
+
+        Text = "Passing under a broken arch, you enter the central plaza. This is a broad area of snow-covered flagstones, roughly three hundred metres across, enclosed by ruined palaces that gleam like lead in the white haze.\n\nThere are several campfires built up against a fallen colonnade. As you get closer you see antique furniture and splintered doors crackling in the flames: plunder from the once great city of Du-En, list art treasures beyond price. In this desolate place, their only value is the warmth they give.\n\nA man steps forward from the fireside and pulls off his glove to shake hands. \"Greetings. I am Janus Gaunt.\"\n\nWhile Boche makes the introductions, you take stock of Gaunt. He is younger than his grey hair would suggest, with an open friendly manner. His servants stumble along behind him in the snow, but they wear only thin clothes and you guess they are past feeling the cold. Gaunt sees you looking at them and nods. \"These are my xoms -- reanimated cadavers, loyal and tireless.\"\n\nOthers are now emerging from their tents along the colonnade. A wizened old man with no legs who comes drifting through the air like a ghost is introduced as Baron Siriasis, a psionic from Bezant. Next comes a woman who walks with long feline strides, eyes glittering like jade in the wan afternoon light. She gives you a single guarded look and then turns away. \"That is Thadra Bey of al-Lat,\" says Gaunt. \"An here is Commander Chaim Golgoth, an agent of United States Intelligence. The two strapping bronzed ladies behind him are Gargan XIII and Gargan XIV, sole survivors of a clone superwarrior group.\"\n\nGolgoth smiles and shakes hands. The Gargan twins watch you with a glare like Medusa's sisters. \"There's also Vajra Singh,\" adds Golgoth, nodding towards a large scarlet-and-black pavilion across the plaza. \"You'll meet him soon enough, I'll warrant.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::SCYTHE))
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::SCYTHE);
+
+            return 89;
+        }
+        else
+        {
+            return 111;
+        }
+    }
+};
+
+class Story244 : public Story::Base
+{
+public:
+    Story244()
+    {
+        ID = 244;
+
+        Text = "The Hotel Paradise proves to be a converted temple overlooked by a high bell-tower. You stand looking up at the inside of the splendid domes. Once, centuries ago, this vast hall must have rung with orisons to the forgotten deity of that age. Now it echoes instead to the grunt and clamour of people eating in the refectory or clattering up and down the wooden stairway to their rooms.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 329; }
+};
+
+class Story245 : public Story::Base
+{
+public:
+    Story245()
+    {
+        ID = 245;
+
+        Text = "You eventually find a man who can do what you want: a fat sweaty fellow with a profusion of ancient tools and devices strewn around his shop. Guiding his laser by hand, he makes a few deft changes to the image on the card until it could pass for your own likeness. \"Five scads,\" he says, holding it out to you.\n\n\"Five?\" You scowl.\n\n\"Membership of the prestigious Compass Society is usually much more expensive than that,\" he says with a shrug.\n\nYou consider snatching the card back, but the fat man cannily anticipates you and holds it close to the laser beam until you pay. If you refuse to pay, he destroys the ID card.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Agree to his terms (5 scads, gain codeword PROTEUS)", -245, Choice::Type::LOSE_MONEY, 5));
+        Choices.push_back(Choice::Base("You refuse to or cannot pay him (ID CARD is destroyed)", 25, Choice::Type::LOSE_ITEMS, {Item::ID_CARD}));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Event245 : public Story::Base
+{
+public:
+    Event245()
+    {
+        ID = -245;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::PROTEUS});
+
+        return 25;
+    }
+};
+
+class Story246 : public Story::Base
+{
+public:
+    Story246()
+    {
+        ID = 246;
+
+        Text = "After fifteen minutes, a pale green light flashes through the murk out to sea. The assembled travellers start to rise and gather their belongings as the ferry comes sweeping in towards the dock. A massive hovercraft of the tree tiered decks surmounted by a high conning-tower, the ferry glides up the frosty foreshore and settles on its metal skirt. Workers immediately rush out with planks to assemble a boardwalk, and you go aboard with the others.\n\nThere is a delay while supplies are loaded. You find a couch on the middle deck and gaze out to sea. A polarizing tint in the glass adds to the gloominess of the scene, with tall iron-black clouds pile high above a sea of grey swell and ice floes.\n\nEventually the craft raises itself and you are under way. Stewards come round and lunch is served at long curved tables in the central lounge. You chew at the stodgy gruel formulated from sea algae, washed down with spiced tea.\n\nYou take a promenade of outside deck, but the chill of the afternoon soon drives you back inside. Some of the other passengers started card games. As the daylight fades, a gap in the louring cloud reveals a handful of diamond-bright stars. The bar is opened and the atmosphere aboard gradually acquires a current of bonhomie, but you remain aloof and troubled. Most of these people have no further destination in mind than Kahira, no ambition beyond a small profit and a frisson of petty adventure. But your own goal is directly remote: the lost ruins of Du-En, in the far hinterland of the Saharan Ice Wastes. It seems impossible to believe, but here in Du-En you will either grasp the ultimate power -- or perish.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 10; }
+};
+
+class Story247 : public Story::Base
+{
+public:
+    Story247()
+    {
+        ID = 247;
+
+        Text = "You travel upriver until Kahira comes in sight through the veils of sparkling river-mist. It straddles the river on huge concrete buttresses, a city built on many levels, with gleaming towers stretching towards the darkening sky. Steering the sky-car towards the gate set into one of the colossal buttresses, you cast your eyes west across the Sahara. The pyramids of Giza are half-hidden by dusk and mist. Beyond lies the implacable desert of ice which you must cross to reach your goal.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            return 251;
+        }
+        else
+        {
+            return 229;
+        }
+    }
+};
+
+class Story248 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story248()
+    {
+        ID = 248;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The Fijian is strong and well-trained, but you have the advantage of suppleness. His foot lashes out. You dodge to one side, catch the ankle, and twist him off balance. Rather than allow you to dislocate his knee, he falls back, braces his arms on the ground, and delivers a thrust with both legs that sends you slamming back against the wall.\n\n";
+
+        auto DAMAGE = -2;
+
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nThe impact leaves you stunned, giving your opponent time to get to his feet. He charges towards you bellowing. You steady yourself to meet the attack, and by luck a wall-mounted extinguisher comes to hand. You feel no compunction at using it; any weapon is fair in such a fight. A spray of foam to the eyes blinds the Fijian long enough for you to swing the canister in a solid clout to the side of his head. He falls like a sack of bricks.\n\nYou stoop and check his pulse, relieved to discover he is still alive. You had better get well away before he comes round.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 311; }
+};
+
+class Story249 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story249()
+    {
+        ID = 249;
+
+        Bye = "Outside Venis, Shandor tells you he is detouring north to meet some friends who live in an isolated manor house.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The third bodyguard, Goro, is found only fifty metres from the ice cave where you took shelter. He is frozen on his hands and knees, having died crawling in the merciless fury of the blizzard. Snow is piled around the body.\n\nThe other two, who may be his brothers for all you know, betray no emotion at the sight. Of course, they must have known he could not have survived. \"Shall we bury him, boss?\" says one.\n\nShandor looks at the sky. Dusk is already descending along the edge of the valley, shadows creeping like blots of soot across the crisp white snow. He considers, then gives you a curt nod back towards the crevasse. \"Toss the body down into the cave -- it's as good a tomb as any. I want to be off this glacier by nightfall.\"\n\nYour journey continues for another week. Hungry and beset by chilling winds, you feel drained of strength. The unbroken glower of grey cloud across the sky leaves you dispirited. By the time you reach the eastern foothills, your fingers are tingling with the first stages of frostbite.";
+
+        auto DAMAGE = -2;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            DAMAGE = -1;
+        }
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        {
+            return 438;
+        }
+        else
+        {
+            return 117;
+        }
+    }
+};
+
 class NotImplemented : public Story::Base
 {
 public:
@@ -6339,11 +6610,22 @@ auto story236 = Story236();
 auto story237 = Story237();
 auto story238 = Story238();
 auto story239 = Story239();
+auto story240 = Story240();
+auto story241 = Story241();
+auto story242 = Story242();
+auto story243 = Story243();
+auto story244 = Story244();
+auto story245 = Story245();
+auto event245 = Event245();
+auto story246 = Story246();
+auto story247 = Story247();
+auto story248 = Story248();
+auto story249 = Story249();
 
 void InitializeStories()
 {
     Stories = {
-        &earth23rdCentury, &event179,
+        &earth23rdCentury, &event179, &event245,
         &prologue, &story001, &story002, &story003, &story004, &story005, &story006, &story007, &story008, &story009,
         &story010, &story011, &story012, &story013, &story014, &story015, &story016, &story017, &story018, &story019,
         &story020, &story021, &story022, &story023, &story024, &story025, &story026, &story027, &story028, &story029,
@@ -6367,7 +6649,8 @@ void InitializeStories()
         &story200, &story201, &story202, &story203, &story204, &story205, &story206, &story207, &story208, &story209,
         &story210, &story211, &story212, &story213, &story214, &story215, &story216, &story217, &story218, &story219,
         &story220, &story221, &story222, &story223, &story224, &story225, &story226, &story227, &story228, &story229,
-        &story230, &story231, &story232, &story233, &story234, &story235, &story236, &story237, &story238, &story239};
+        &story230, &story231, &story232, &story233, &story234, &story235, &story236, &story237, &story238, &story239,
+        &story240, &story241, &story242, &story243, &story244, &story245, &story246, &story247, &story248, &story249};
 }
 
 #endif

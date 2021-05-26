@@ -886,9 +886,9 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                 {
                     putText(renderer, "Select an item to USE", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, boxh, startx, starty);
                 }
-                else if (mode == Control::Type::STEAL)
+                else if (mode == Control::Type::LOSE)
                 {
-                    std::string stolen_message = "You were robbed. DROP item(s) until only " + std::to_string(limit) + " item" + std::string(limit > 1 ? "s" : "") + " remains.";
+                    std::string stolen_message = "DROP item(s) until only " + std::to_string(limit) + " item" + std::string(limit > 1 ? "s" : "") + " remains.";
 
                     putText(renderer, stolen_message.c_str(), font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, boxh, startx, starty);
                 }
@@ -1045,7 +1045,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
                             flash_message = true;
                         }
-                        else if (mode == Control::Type::STEAL)
+                        else if (mode == Control::Type::LOSE)
                         {
                             if (Items.size() > limit)
                             {
@@ -1086,7 +1086,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                                     description += ")";
                                 }
 
-                                temp_message = description + " STOLEN!";
+                                temp_message = description + " DROPPED!";
 
                                 message = temp_message.c_str();
 
@@ -2973,6 +2973,42 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 error = true;
                             }
                         }
+                        else if (story->Choices[current].Type == Choice::Type::GIVE)
+                        {
+                            if (player.Items.size() >= story->Choices[current].Value)
+                            {
+                                auto limit = player.Items.size() - story->Choices[current].Value;
+
+                                while (player.Items.size() > limit)
+                                {
+                                    inventoryScreen(window, renderer, player, story, player.Items, Control::Type::LOSE, limit);
+                                }
+                                
+                                next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                                done = true;
+
+                                break;
+                            }
+                            else if (player.Items.size() > 0)
+                            {
+                                Character::LOSE_POSSESSIONS(player);
+
+                                next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                                done = true;
+
+                                break;
+                            }
+                            else if (player.Items.size() == 0)
+                            {
+                                message = "You do not have anything to give!";
+
+                                start_ticks = SDL_GetTicks();
+
+                                error = true;
+                            }
+                        }
                         else if (story->Choices[current].Type == Choice::Type::GET_CODEWORD)
                         {
                             Character::GET_CODEWORDS(player, {story->Choices[current].Codeword});
@@ -3932,7 +3968,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                                 {
                                     while (story->ToLose.size() > story->Limit)
                                     {
-                                        inventoryScreen(window, renderer, player, story, story->ToLose, Control::Type::STEAL, story->Limit);
+                                        inventoryScreen(window, renderer, player, story, story->ToLose, Control::Type::LOSE, story->Limit);
                                     }
                                 }
 
