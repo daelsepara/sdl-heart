@@ -6472,7 +6472,7 @@ public:
     {
         ID = 257;
 
-        Text = "Your fingers show signs of frostbite and you have dozen small bruises. You does yourself with antibiotics and apply ointments and dressings from the MEDICAL KIT.\n\nYou RECOVER 1 Life Point.";
+        Text = "Your fingers show signs of frostbite and you have dozen small bruises. You dose yourself with antibiotics and apply ointments and dressings from the MEDICAL KIT.\n\nYou RECOVER 1 Life Point.";
 
         Choices.clear();
 
