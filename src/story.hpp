@@ -7695,6 +7695,213 @@ public:
     }
 };
 
+class Story301 : public Story::Base
+{
+public:
+    Story301()
+    {
+        ID = 301;
+
+        Text = "\"What is the Truth?\" asks the computer enigmatically.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::LUNAR))
+        {
+            return 322;
+        }
+        else
+        {
+            return 61;
+        }
+    }
+};
+
+class Story302 : public Story::Base
+{
+public:
+    Story302()
+    {
+        ID = 302;
+
+        Text = "You hear a scuttling of many insectoid legs and the a giant black centipede bursts from the cloisters, mandibles churning like oiled blades. It was expecting you to stand helpless as it attacked, but you surprise it by evading its charge and racing off along the gallery, dragging Boche behind you. The baron is guided by his psychic senses, but you see it bite a bloody swathe in his flesh before he breaks away. The three of you hurtle through the iron-bound door, slamming it behind you. A moment later the monster slams against the door, buckling it inwards on its hinges, but the bolt holds.\n\n\"That was a close call,\" breathes Boche, wiping a trickle of cold sweat out of his eyes.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 281; }
+};
+
+class Story303 : public Story::Base
+{
+public:
+    Story303()
+    {
+        ID = 303;
+
+        Text = "Vajra Singh stabs at the trigger of his cannot and swings it round towards Golgoth. But the USI agent is not taken by surprise. He grabs Boche and throws him forward to take the brunt of the blast. Boche dies instantly, and at the same moment Golgoth drops a canister that releases a thick cloud of white smoke.\n\nSingh looms like a ghost in the spreading cloud. Holding the cannon ready, he peers through the smoke for any sign of movement. You've lost sight of Golgoth.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Attack Singh with a BARYSAL GUN", 20, Choice::Type::FIRE_WEAPON));
+        Choices.push_back(Choice::Base("Or a STUN GRENADE", 20, Choice::Type::LOSE_ITEMS, {Item::STUN_GRENADE}));
+        Choices.push_back(Choice::Base("Move in closer to give him back-up", 42));
+        Choices.push_back(Choice::Base("Step away and wait to see what happens", 262));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story304 : public Story::Base
+{
+public:
+    Story304()
+    {
+        ID = 304;
+
+        Text = "Golgoth has no time to reload the crossbow. Drawing a knife, he charges forward, but he is to late to stop you from firing. The shot catches him in the chest and he falls dead at your feet.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 72; }
+};
+
+class Story305 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story305()
+    {
+        ID = 305;
+
+        Bye = "You finally manage to defeat this titanic foe.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Vajra Singh is a Sikh warlord, and a man of unyielding honour. Since you have no gun, he does not deign to use his own, but instead leaps forward to settle the matter with his bare hands. You see at once that he is a powerful fighter. His punch chops through the air, and even though you manage to twist aside you can almost feel the shockwave. A single blow from such a warrior could smash through stone.\n\nYou skip back on the balls of your feet, trying to make best use of your speed against his naked strength. A punch hammers into your stomach, and Singh follows it up with a great leonine roar as his foot crunches against your breastbone. You feel ribs crack, but you dive in with a gasp and launch a rapid series of strikes at his face.\n\n";
+
+        auto DAMAGE = -9;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -5;
+        }
+
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story306 : public Story::Base
+{
+public:
+    Story306()
+    {
+        ID = 306;
+
+        Text = "Boche shudders as he looks along the row of dead white faces. There are at least ten corpses here in the pass, some on this ledge and others are perched further along among the rocks. \"The must have climbed up onto the ledge to get away from wolves,\" says Boche.\n\nHe's wrong. There are no wolves up here in the mountains. And these people were not cowering from predators when they died. In every case they are frozen in postures that suggest curiosity: poised peering out from the ledge, lines of amazement stamped on their faces, icicles across their wide eyes. Death did not surround them with shivering jaws, but stole up softly like a thief in the night.\n\nThe sky is fading from grey to black. If you press on now, you will have to spend the night in open country, unprotected from the bitter wind.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Spend the night in open country", 285));
+        Choices.push_back(Choice::Base("Shelter here in the pass", 349));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story307 : public Story::Base
+{
+public:
+    Story307()
+    {
+        ID = 307;
+
+        Text = "You give Thadra Bey a contact who should be able to put her in touch with Malengin. \"This will save me considerable effort,\" she murmurs, glancing at the name and address you have written out for her. As she carefully burns the paper over a candle flame, she adds: \"On al-Lat we adhere to a principle of equity in business. I must pay you for this information.\"\n\nYou wave your hand expansively. \"It's not necessary.\"\n\n\"But it is.\" She speaks firmly. \"I do not wish to be in your debt.\" She gives you a packet of antidote pills. \"We take these while on Earth to protect us from the toxins in the air. They are effective against most diseases and poisons. Keep them. I have more in my room.\"\n\nShe gets up and sweeps out of the bar.\n\nYou RECEIVED the ANTIDOTE PILLs.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_ITEMS(player, {Item::ANTIDOTE_PILLS});
+    }
+
+    int Continue(Character::Base &player) { return 329; }
+};
+
+class Story308 : public Story::Base
+{
+public:
+    Story308()
+    {
+        ID = 308;
+
+        Text = "This retrovirus toughens your skin so that you gain 5 Life points -- even above your initial score. However, there is a drawback: it also slows your reflexes so that you must lose the [AGILITY] skill if you have it.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::EXALTED_ENHANCER(player, false);
+    }
+
+    int Continue(Character::Base &player) { return 434; }
+};
+
+class Story309 : public Story::Base
+{
+public:
+    Story309()
+    {
+        ID = 309;
+
+        Text = "You get talking to members of the relief crew who are waiting on the quayside for the ferry to arrive. After a brief discussion of general matters, you turn the conversation onto the specifics of your profession. \"I hear that the ferry is a Bauer Turbo-400 hovercraft,\" you say. \"Such a machine handles well, particularly in the turbulent waters around the Isis Delta, but you must take care to power down slowly and maintain it at a reasonable temperature. Cooling too quickly risks damage to the skirt and can cause cracks in the jet housings.\"\n\n\"You are a pilot or shipmaster?\" asks a thin-whiskered man who introduces himself as the captain.\n\n\"I have often navigated the Inland Sea -- usually skirting the coast in a mud-skimmer to avoid pirates, though I have handled a Bauer once or twice.\"\n\nThe captain points the stem of his pipe at you and nods thoughtfully. \"How would you be fixed for a trip to Kahira?\"\n\n\"As it happens, that is precisely where I wish to go,\" you say, shouldering your pack.\n\n\"Well, if you're not afraid of hard work then I think I can find a job for you aboard.\"\n\nHe goes on to discuss the details of employment. In addition to earning your passage to Kahira, you will be PAID a further twenty scads.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_MONEY(player, 20);
+    }
+
+    int Continue(Character::Base &player) { return 246; }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -7999,6 +8206,15 @@ auto story297 = Story297();
 auto story298 = Story298();
 auto story299 = Story299();
 auto story300 = Story300();
+auto story301 = Story301();
+auto story302 = Story302();
+auto story303 = Story303();
+auto story304 = Story304();
+auto story305 = Story305();
+auto story306 = Story306();
+auto story307 = Story307();
+auto story308 = Story308();
+auto story309 = Story309();
 
 void InitializeStories()
 {
@@ -8034,7 +8250,7 @@ void InitializeStories()
         &story270, &story271, &story272, &story273, &story274, &story275, &story276, &story277, &story278, &story279,
         &story280, &story281, &story282, &story283, &story284, &story285, &story286, &story287, &story288, &story289,
         &story290, &story291, &story292, &story293, &story294, &story295, &story296, &story297, &story298, &story299,
-        &story300};
+        &story300, &story301, &story302, &story303, &story304, &story305, &story306, &story307, &story308, &story309};
 }
 
 #endif

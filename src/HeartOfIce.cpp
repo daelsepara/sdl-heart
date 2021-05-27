@@ -3494,6 +3494,34 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 }
                             }
                         }
+                        else if (story->Choices[current].Type == Choice::Type::FIRE_WEAPON)
+                        {
+                            if (Character::VERIFY_ITEMS(player, {Item::Type::BARYSAL_GUN}))
+                            {
+                                Character::FIRE_BARYSAL(player, 1);
+
+                                next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                                done = true;
+
+                                break;
+                            }
+                            else
+                            {
+                                if (Item::FIND_TYPE(player.Items, Item::Type::BARYSAL_GUN) >= 0)
+                                {
+                                    message = "The BARYSAL GUN you are carrying is not charged!";
+                                }
+                                else
+                                {
+                                    message = "You do not have a charged BARYSAL GUN!";
+                                }
+
+                                start_ticks = SDL_GetTicks();
+
+                                error = true;
+                            }
+                        }
                     }
                 }
                 else if (controls[current].Type == Control::Type::CHARACTER && !hold)
