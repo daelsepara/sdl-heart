@@ -3718,6 +3718,18 @@ Story::Base *renderChoices(SDL_Window *window, SDL_Renderer *renderer, Character
     return next;
 }
 
+void clipValue(int &val, int min, int max)
+{
+    if (val < min)
+    {
+        val = min;
+    }
+    if (val > max)
+    {
+        val = max;
+    }
+}
+
 bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story)
 {
     auto quit = false;
@@ -3760,7 +3772,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
         auto run_once = true;
 
         SDL_Surface *splash = NULL;
-
+        SDL_Texture *splashTexture = NULL;
         SDL_Surface *text = NULL;
 
         if (run_once)
@@ -3788,6 +3800,11 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
             if (splash->w != splashw)
             {
                 splash_h = (int)((double)splashw / splash->w * splash->h);
+            }
+
+            if (splash)
+            {
+                splashTexture = SDL_CreateTextureFromSurface(renderer, splash);
             }
         }
 
@@ -3907,7 +3924,63 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                     renderImage(renderer, vehicle_text, (SCREEN_WIDTH - vehicle_text->w) / 2, message_y + text_space);
 
                     renderButtons(renderer, vehicle_controls, current, intWH, border_space, border_pts);
+                }
 
+                if (splash)
+                {
+                    auto mousex = 0;
+                    auto mousey = 0;
+
+                    auto state = SDL_GetMouseState(&mousex, &mousey);
+
+                    auto zoomw = (int)(0.80 * (double)textwidth);
+                    auto zoomh = (int)(0.80 * (double)text_bounds);
+
+                    clipValue(zoomw, 0, splash->w);
+                    clipValue(zoomh, 0, splash->h);
+
+                    auto boundx = splashw;
+
+                    if (splash_h == text_bounds)
+                    {
+                        boundx = (int)((double)splash_h / splash->h * (double)splash->w);
+                    }
+
+                    if (mousex >= startx && mousex <= (startx + boundx) && mousey >= starty && mousey <= (starty + splash_h))
+                    {
+                        auto scalex = (double)(mousex - startx) / boundx;
+                        auto scaley = (double)(mousey - starty) / splash_h;
+
+                        int centerx = (int)(scalex * (double)splash->w);
+                        int centery = (int)(scaley * (double)splash->h);
+
+                        clipValue(centerx, zoomw / 2, splash->w - zoomw / 2);
+                        clipValue(centery, zoomh / 2, splash->h - zoomh / 2);
+
+                        if (splashTexture)
+                        {
+                            SDL_Rect src;
+                            
+                            src.w = zoomw;
+                            src.h = zoomh;
+                            src.x = centerx - zoomw / 2;
+                            src.y = centery - zoomh / 2;
+
+                            SDL_Rect dst;
+
+                            dst.w = zoomw;
+                            dst.h = zoomh;
+                            dst.x = (textx + (textwidth - zoomw) / 2);
+                            dst.y = (texty + (text_bounds - zoomh) / 2);
+
+                            SDL_RenderCopy(renderer, splashTexture, &src, &dst);
+                            drawRect(renderer, dst.w, dst.h, dst.x, dst.y, intBK);
+                        }
+                    }
+                }
+
+                if (vehicle_trigger)
+                {
                     quit = Input::GetInput(renderer, vehicle_controls, current, selected, scrollUp, scrollDown, hold);
                 }
                 else
@@ -4299,6 +4372,13 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
             SDL_FreeSurface(splash);
 
             splash = NULL;
+        }
+
+        if (splashTexture)
+        {
+            SDL_DestroyTexture(splashTexture);
+
+            splashTexture = NULL;
         }
 
         if (text)
