@@ -3967,6 +3967,10 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
         {
             controls = Story::SellControls(compact);
         }
+        else if (story->Controls == Story::Controls::BUY_AND_SELL)
+        {
+            controls = Story::BuyAndSellControls(compact);
+        }
         else if (story->Controls == Story::Controls::TRADE)
         {
             controls = Story::TradeControls(compact);

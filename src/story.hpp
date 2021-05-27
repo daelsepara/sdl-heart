@@ -192,6 +192,7 @@ namespace Story
         NONE = 0,
         STANDARD,
         SHOP,
+        BUY_AND_SELL,
         SELL,
         TRADE
     };
@@ -314,6 +315,31 @@ namespace Story
     }
 
     std::vector<Button> SellControls(bool compact = false)
+    {
+        auto idx = 0;
+
+        auto controls = std::vector<Button>();
+
+        if (!compact)
+        {
+            controls.push_back(Button(0, "icons/up-arrow.png", 0, 1, 0, 1, (1.0 - Margin) * SCREEN_WIDTH - arrow_size, texty + border_space, Control::Type::SCROLL_UP));
+            controls.push_back(Button(1, "icons/down-arrow.png", 0, 2, 0, 2, (1.0 - Margin) * SCREEN_WIDTH - arrow_size, texty + text_bounds - arrow_size - border_space, Control::Type::SCROLL_DOWN));
+
+            idx = 2;
+        }
+
+        controls.push_back(Button(idx, "icons/map.png", idx, idx + 1, compact ? idx : 1, idx, startx, buttony, Control::Type::MAP));
+        controls.push_back(Button(idx + 1, "icons/disk.png", idx, idx + 2, compact ? idx + 1 : 1, idx + 1, startx + gridsize, buttony, Control::Type::GAME));
+        controls.push_back(Button(idx + 2, "icons/user.png", idx + 1, idx + 3, compact ? idx + 2 : 1, idx + 2, startx + 2 * gridsize, buttony, Control::Type::CHARACTER));
+        controls.push_back(Button(idx + 3, "icons/items.png", idx + 2, idx + 4, compact ? idx + 3 : 1, idx + 3, startx + 3 * gridsize, buttony, Control::Type::USE));
+        controls.push_back(Button(idx + 4, "icons/next.png", idx + 3, idx + 5, compact ? idx + 4 : 1, idx + 4, startx + 4 * gridsize, buttony, Control::Type::NEXT));
+        controls.push_back(Button(idx + 5, "icons/selling.png", idx + 4, idx + 6, compact ? idx + 5 : 1, idx + 5, startx + 5 * gridsize, buttony, Control::Type::SELL));
+        controls.push_back(Button(idx + 6, "icons/exit.png", idx + 5, idx + 6, compact ? idx + 6 : 1, idx + 6, (1.0 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
+
+        return controls;
+    }
+
+    std::vector<Button> BuyAndSellControls(bool compact = false)
     {
         auto idx = 0;
 
@@ -7294,7 +7320,7 @@ public:
 
         Choices.clear();
 
-        Controls = Story::Controls::SELL;
+        Controls = Story::Controls::BUY_AND_SELL;
     }
 
     void Event(Character::Base &player)
@@ -8922,6 +8948,237 @@ public:
     }
 };
 
+class Story350 : public Story::Base
+{
+public:
+    Story350()
+    {
+        ID = 350;
+
+        Image = "images/venis.png";
+
+        Text = "The main market of Venis is located inside a lavish three-decked gallery perched incongruously amid the muddy lower streets. Here, on benches where rowers once plied gilded oars, merchants sit and call out their trade. When a customer shows interest, he is led off to the merchant's storehouse in one of the neighbouring side streets.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Look for ordinary goods", 394));
+        Choices.push_back(Choice::Base("Weaponry and other devices", 283));
+        Choices.push_back(Choice::Base("Undergo genetic enhancement", 434));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story351 : public Story::Base
+{
+public:
+    Story351()
+    {
+        ID = 351;
+
+        Text = "You pass a street-corner scribe who has two antique laptop computers. When you ask about using these to make contact with Gaia, he turns on a bland smile. Flicking one of the laptops to life, he gestures at the lines of dimly glowing green text that appear on the screen.\n\n\"My business is letters and contracts, not computers. I use the computer simply as a tools of the trade -- just as my forerunners used clay tablets, sheets of papyrus and quill pens.\"\n\nYou examine the equipment. \"There must be peripherals for linking these into the global computer net. Isn't this a modem socket?\"\n\nThe scribe whistles between his teeth. \"No doubt. However, I heard of a man who linked his computer to Gaia and forever afterward it would do nothing except iterate between prime numbers. I would as soon infect myself with the yellow pox!";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            return 265;
+        }
+        else
+        {
+            return 372;
+        }
+    }
+};
+
+class Story352 : public Story::Base
+{
+public:
+    Story352()
+    {
+        ID = 352;
+
+        Text = "All you can do is sell some possessions in order to raise the money for a ticket. You reluctantly go looking for a street pedlar, knowing that the need to make a quick sale will lose you money. At least you find a buyer without delay -- or rather, he finds you. He is a gimlet-eyed man with a shock of pink-dyed hair, loitering at the quayside gate with the obvious intent of preying on people like yourself. \"A ferry ticket costs a bit more than you thought, doesn't it?\" he says patronizingly. \"Now then, let's see what you've got to sell.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Buy a ferry ticket", 246, Choice::Type::MONEY, 10));
+        Choices.push_back(Choice::Base("You cannot afford a ticket", 332));
+
+        Controls = Story::Controls::SELL;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Sell = {{Item::FOOD_PACK, 1}, {Item::MAKE_BARYSAL_GUN(6), 5}, {Item::FLASHLIGHT, 5}, {Item::MEDICAL_KIT, 5}, {Item::POLARIZED_GOGGLES, 2}, {Item::ID_CARD, 10}};
+    }
+};
+
+class Story353 : public Story::Base
+{
+public:
+    Story353()
+    {
+        ID = 353;
+
+        Text = "The card identifies its owner as a member of the Society of the Compass, a secretive and select organization with considerable resources worldwide. The society has a building here in Kahira. You stand on the other side of the street and look up at the tower of steel and glass rising off into the dank evening mist. In the colourless fluorescent glow of the lobby you can see a receptionist sitting at the front desk.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::ROGUERY) && !Character::VERIFY_SKILL(player, Skill::Type::PARADOXING) && !Character::VERIFY_CODEWORD(player, Codeword::Type::PROTEUS) && !Character::VERIFY_CODEWORD(player, Codeword::Type::CAMOUFLAGE))
+        {
+            Choices.push_back(Choice::Base("Enter and try to bluff your way past the receptionist", 436));
+            Choices.push_back(Choice::Base("Give up any hope of entering the building", 311));
+        }
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::PROTEUS))
+        {
+            Character::REMOVE_CODEWORD(player, {Codeword::Type::PROTEUS});
+
+            return 374;
+        }
+        else if (Character::VERIFY_SKILL(player, Skill::Type::PARADOXING))
+        {
+            return 417;
+        }
+        else
+        {
+            return 396;
+        }
+    }
+};
+
+class Story354 : public Story::Base
+{
+public:
+    Story354()
+    {
+        ID = 354;
+
+        Text = "TAt the elevator door, you turn to look back at the others locked in stasis. They will outlive this frigid dying world. Perhaps even outlive the universe, forever just out of arm's reach of the power they coveted.\n\nIf the hover-droids are still waiting above then you will have a hard fight returning to the surface. And even if you survive the Ice Wastes, the Earth's time is running out. You don't know how long you have left.";
+
+        Type = Story::Type::UNKNOWN;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story355 : public Story::Base
+{
+public:
+    Story355()
+    {
+        ID = 355;
+
+        Text = "The scintillant beam of deadly radiation stabs out, striking the mysterious figure full in the chest. His smile does not waver. Although his clothing is burned away, his smooth pale skin is completely unscathed by the blast. Your arm drops limply to your side as you stare in disbelief. You have never seen anyone survive a direct hit from a barysal gun, unless protected by body armour.\n\nThe look in those silvery eyes confirms what you have guessed already. This is not a living man you are facing. It is a blood-drinking predator, one of the vampires of ancient myth.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 419; }
+};
+
+class Story356 : public Story::Base
+{
+public:
+    Story356()
+    {
+        ID = 356;
+
+        Text = "Portrin Fax provides you with a makeshift couch and you drift gratefully off to sleep, being weary after your long trek through the steaming swamplands.\n\nIt seems only a moment later that he is shaking awake. As you open your eyes, he jumps back and gives a jittery laugh. \"Morning.\" he says.\n\nYou yawn and stretch. The air inside the building feels almost chill in comparison to the sweltering heat outside. \"Morning?\" How can you tell?\"\n\nFax points to a clock on the wall, above an archway leading to a staircase that descends underground. \"There is one indicator. Also, although the sun never sets here, it does not move across the sky. Indeed, at times I have thought to see two suns.\"\n\n\"No doubt the 'second sun' is an orbiting mirror aligned so as to focus the sunlight on this region.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask Fax to show you where he gets his food", 378));
+        Choices.push_back(Choice::Base("Ask first about the barren patch of ground you discovered leading to his dwelling", 399));
+        Choices.push_back(Choice::Base("Leave now and press on westwards", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story357 : public Story::Base
+{
+public:
+    Story357()
+    {
+        ID = 357;
+
+        Text = "The panel bends inward, then gives with a crack. You push through past a blanket which had been hanging against the wall. A fire crackles in the centre of the foyer, which is so badly dilapidated that it is little more than a cave. A rug hangs across the entrance, sealing out a keening blizzard. The chamber is warm, with a sweaty reek from its three occupants. You take them to be trappers, judging by the animal skins hung around the walls.\n\nThe three jump to their feet. Their surprise at your sudden appearance soon turns to open hostility. Two draw weapons.. One has a long knife, while the man nearest to the fire has a barysal gun.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Use [CLOSE COMBAT]", 97, Skill::Type::CLOSE_COMBAT));
+        Choices.push_back(Choice::Base("[SHOOTING] a charged BARYSAL GUN", 119, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("Fall back on [CUNNING]", 185, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Try a spot of [ROGUERY]", 163, Skill::Type::ROGUERY));
+        Choices.push_back(Choice::Base("Rely on [AGILITY]", 207, Skill::Type::AGILITY));
+        Choices.push_back(Choice::Base("Otherwise", 272));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story358 : public Story::Base
+{
+public:
+    Story358()
+    {
+        ID = 358;
+
+        Text = "Boche pulls you away, expelling a hiss of breath between his teeth as he glances back at Golgoth through the fog. \"A stroke of bad luck, running into that one,\" he mutters.\n\n\"Why should a USI agent be interested in us?\"\n\nBoche scowls. \"Golgoth is a loose cannon. He wouldn't wait to ask what his superiors thought about something. Did you hear about the hijack of the warship Illustrious by the Seventh Seal Cult a couple of years ago? The Vice President was aboard and a ransom was being negotiated until USI stepped in.\"\n\nYou cast your mind back across the sketchy rumours and news reports that stretched across the Atlantic. \"I seem to remember that the Seventh Seal Cult was al but eradicated -- at least eighty people dead. Don't tell me Golgoth was in charge of that operation.\"\n\n\"In charge? He was the operation -- one-man death squad. He went in alone under disguise and variously stabbed, poisoned, shot or blew up every terrorist aboard.\"\n\n\"Well, it seems pretty impressive...\" you venture.\n\nBoche shakes his head grimly. \"He's a psychopath; he relishes killing. His USI badge just give him carte blanche to indulge his depravities. Such people are evil no matter how noble a mask they wear.\" Boche's mood brightens as he changes the subject: \"Now I have a few things to take care of. I'll meet you tomorrow morning at the Empty Quarter Cafe, next to the bazaar.\"\n\nBoche hurries off into the swirling fog. You are left alone on the street.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 95; }
+};
+
+class Story359 : public Story::Base
+{
+public:
+    Story359()
+    {
+        ID = 359;
+
+        Text = "Strolling through the bazaar, you check what items are on sale.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::SHOP;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Shop = {{Item::FOOD_PACK, 2}, {Item::GAS_MASK, 15}, {Item::FLASHLIGHT, 8}, {Item::MEDICAL_KIT, 8}, {Item::POLARIZED_GOGGLES, 6}, {Item::ROPE, 3}};
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            return 381;
+        }
+        else
+        {
+            return 402;
+        }
+    }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -9275,6 +9532,16 @@ auto story346 = Story346();
 auto story347 = Story347();
 auto story348 = Story348();
 auto story349 = Story349();
+auto story350 = Story350();
+auto story351 = Story351();
+auto story352 = Story352();
+auto story353 = Story353();
+auto story354 = Story354();
+auto story355 = Story355();
+auto story356 = Story356();
+auto story357 = Story357();
+auto story358 = Story358();
+auto story359 = Story359();
 
 void InitializeStories()
 {
@@ -9314,7 +9581,8 @@ void InitializeStories()
         &story310, &story311, &story312, &story313, &story314, &story315, &story316, &story317, &story318, &story319,
         &story320, &story321, &story322, &story323, &story324, &story325, &story326, &story327, &story328, &story329,
         &story330, &story331, &story332, &story333, &story334, &story335, &story336, &story337, &story338, &story339,
-        &story340, &story341, &story342, &story343, &story344, &story345, &story346, &story347, &story348, &story349};
+        &story340, &story341, &story342, &story343, &story344, &story345, &story346, &story347, &story348, &story349,
+        &story350, &story351, &story352, &story353, &story354, &story355, &story356, &story357, &story358, &story359};
 }
 
 #endif
