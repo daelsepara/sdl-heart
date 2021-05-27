@@ -4143,7 +4143,7 @@ public:
 
         Image = "images/heart-of-volent.png";
 
-        Text = "You step out of the elevator to find Singh, Boche and Golgoth already here. Thadra Bey didn't make it.\n\nYou are in a dome so vast that it feels like a gulf in the black void of intergalactic space. Boche's flashlight does not reach the far wall. In the centre of the chamber, on a raised dais at the end of a ramp, lies a purple gemstone almost two metres in diameter. Scintillant sparks stream from deep in its core, giving off a violet radiation that causes a pain at the back of your eyes.\n\n\"The Heart of Volent...\" breathes Boche in a voice of awe. \"The key to ultimate power.\"";
+        Text = "You step out of the elevator to find Singh, Boche and Golgoth already here. Thadra Bey didn't make it.\n\nYou are in a dome so vast that it feels like a gulf in the black void of intergalactic space. Boche's FLASHLIGHT does not reach the far wall. In the centre of the chamber, on a raised dais at the end of a ramp, lies a purple gemstone almost two metres in diameter. Scintillant sparks stream from deep in its core, giving off a violet radiation that causes a pain at the back of your eyes.\n\n\"The Heart of Volent...\" breathes Boche in a voice of awe. \"The key to ultimate power.\"";
 
         Controls = Story::Controls::STANDARD;
     }
@@ -5703,7 +5703,7 @@ public:
     {
         ID = 216;
 
-        Text = "You are used to sneaking about in the dark, and you have learned to rely on your other sense almost as well as on your sight. Even as the huge predator comes darting out from the cloisters to attack, you are racing nimbly ahead to the feeble glimmer of light from the doorway.\n\nReaching it, you turn to see Boche and the baron fleeing in terror. In the light of Boche's flashlight you have a brief glimpse of a gigantic centipede with flanks like polished steel. As the others dive through, you slam the door shut and drop the bolt. A second later the door judders as the monster throws itself against it.\n\n\"Let's hope it holds,\" says Boche grimly. \"I wouldn't want to fight that beastie!\"";
+        Text = "You are used to sneaking about in the dark, and you have learned to rely on your other sense almost as well as on your sight. Even as the huge predator comes darting out from the cloisters to attack, you are racing nimbly ahead to the feeble glimmer of light from the doorway.\n\nReaching it, you turn to see Boche and the baron fleeing in terror. In the light of Boche's FLASHLIGHT you have a brief glimpse of a gigantic centipede with flanks like polished steel. As the others dive through, you slam the door shut and drop the bolt. A second later the door judders as the monster throws itself against it.\n\n\"Let's hope it holds,\" says Boche grimly. \"I wouldn't want to fight that beastie!\"";
 
         Choices.clear();
 
