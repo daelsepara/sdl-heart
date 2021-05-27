@@ -3279,6 +3279,57 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                                 error = true;
                             }
                         }
+                        else if (story->Choices[current].Type == Choice::Type::BUY_VEHICLE && story->Choices[current].Vehicle != Vehicle::Type::NONE)
+                        {
+                            if (player.Money >= story->Choices[current].Value)
+                            {
+                                if (Character::CHECK_VEHICLE(player, story->Choices[current].Vehicle))
+                                {
+                                    message = "You already have this!";
+
+                                    start_ticks = SDL_GetTicks();
+
+                                    error = true;
+                                }
+                                else if (story->Choices[current].Vehicle == Vehicle::Type::BURREK && Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+                                {
+                                    message = "There is no point in buying a BURREK, as it would not fit inside the MANTA SKY-CAR";
+
+                                    start_ticks = SDL_GetTicks();
+
+                                    error = true;
+                                }
+                                else
+                                {
+                                    if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
+                                    {
+                                        message = "You have abandonned your BURREK.";
+
+                                        start_ticks = SDL_GetTicks();
+
+                                        error = true;
+                                    }
+
+                                    player.Vehicle = story->Choices[current].Vehicle;
+
+                                    player.Money -= story->Choices[current].Value;
+
+                                    next = (Story::Base *)findStory(story->Choices[current].Destination);
+
+                                    done = true;
+
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                message = "You do not have enough money!";
+
+                                start_ticks = SDL_GetTicks();
+
+                                error = true;
+                            }
+                        }
                         else if (story->Choices[current].Type == Choice::Type::GAIN_MONEY)
                         {
                             player.Money += story->Choices[current].Value;

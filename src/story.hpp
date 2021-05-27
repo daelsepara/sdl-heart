@@ -34,7 +34,8 @@ namespace Choice
         GET_CODEWORD,
         LOSE_CODEWORD,
         GAIN_MONEY,
-        GIVE
+        GIVE,
+        BUY_VEHICLE
     };
 
     class Base
@@ -49,6 +50,8 @@ namespace Choice
         std::vector<Item::Base> Items = std::vector<Item::Base>();
 
         Codeword::Type Codeword = Codeword::Type::NONE;
+
+        Vehicle::Type Vehicle = Vehicle::Type::NONE;
 
         int Value = 0;
 
@@ -150,6 +153,23 @@ namespace Choice
             Destination = destination;
             Type = type;
             Codeword = codeword;
+        }
+
+        Base(const char *text, int destination, Choice::Type type, Vehicle::Type vehicle)
+        {
+            Text = text;
+            Destination = destination;
+            Type = type;
+            Vehicle = vehicle;
+        }
+
+        Base(const char *text, int destination, Choice::Type type, Vehicle::Type vehicle, int value)
+        {
+            Text = text;
+            Destination = destination;
+            Type = type;
+            Vehicle = vehicle;
+            Value = value;
         }
     };
 } // namespace Choice
@@ -760,12 +780,14 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "Sunlight, hazed by a high overcast, is thrown up from the snow dunes in an unremitting glare as white and harsh as exposed bone. Squinting does no good. Your eyes feel gritty and tired. On the fourth evening, huddling behind the shelter of a crag of ice, you gaze across the landscape. It is like looking through a film of blood. The next day you find the sunrise burn so hard that you cannot stand to open your eyes.\n\nSnow-blinded, you can only sit and wait for the dazzle to clear. If you were to press on now, you would soon lose your bearings and die. As you wait, the chill crawls deeper into your bones.";
+        PreText = "Sunlight, hazed by a high overcast, is thrown up from the snow dunes in an unremitting glare as white and harsh as exposed bone. Squinting does no good. Your eyes feel gritty and tired. On the fourth evening, huddling behind the shelter of a crag of ice, you gaze across the landscape. It is like looking through a film of blood. The next day you find the sunrise burn so hard that you cannot stand to open your eyes.\n\nSnow-blinded, you can only sit and wait for the dazzle to clear. If you were to press on now, you would soon lose your bearings and die. As you wait, the chill crawls deeper into your bones.\n\n";
 
         auto DAMAGE = -3;
 
         if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
         {
+            PreText += "[Vehicle: BURREK] ";
+
             DAMAGE = -2;
         }
 
@@ -774,7 +796,17 @@ public:
             DAMAGE--;
         }
 
-        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        if (Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}))
+        {
+            PreText += "[FUR COAT] ";
+        }
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
+        {
+            PreText += "[COLD WEATHER SUIT] ";
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         Character::GAIN_LIFE(player, DAMAGE);
 
@@ -2375,7 +2407,7 @@ public:
     {
         ID = 77;
 
-        Text = "Bador expresses dismay when you tell him you intend to cross the Ice Wastes. \"By your father's beard! Do you wish to become a corpse with hoarfrost in your veins? Put aside all thought of such a scheme, I pray you!\" You cannot help smiling. \"What?\" says Bador, starting to weep. \"Do you mock my concern?\"\n\nYou place a hand on his sleeve. \"Calm yourself. You and I are strangers, and you already have your fee. Do not allow thought of my death to upset you, but give me advice on how to avoid such a fate.\"\n\n\"Only the barbarian Ebor venture into the Sahara, and even they go no further that its fringes. It is a place of ghosts and devils, and the wind is like flint.\"\n\n\"The Ebor? A nomad tribe? How do they survive?\"\n\n\"They have burreks, shaggy thick-necked beasts that grow folds of fat. When the blizzard comes, the Ebor rider shelters by his burrek and bleeds the animal, frying up a blood pudding to sustain him.\" Bador grimaces to show what he thinks of such a custom.";
+        Text = "Bador expresses dismay when you tell him you intend to cross the Ice Wastes. \"By your father's beard! Do you wish to become a corpse with hoarfrost in your veins? Put aside all thought of such a scheme, I pray you!\" You cannot help smiling. \"What?\" says Bador, starting to weep. \"Do you mock my concern?\"\n\nYou place a hand on his sleeve. \"Calm yourself. You and I are strangers, and you already have your fee. Do not allow thought of my death to upset you, but give me advice on how to avoid such a fate.\"\n\n\"Only the barbarian Ebor venture into the Sahara, and even they go no further that its fringes. It is a place of ghosts and devils, and the wind is like flint.\"\n\n\"The Ebor? A nomad tribe? How do they survive?\"\n\n\"They have BURREKs, shaggy thick-necked beasts that grow folds of fat. When the blizzard comes, the Ebor rider shelters by his BURREK and bleeds the animal, frying up a blood pudding to sustain him.\" Bador grimaces to show what he thinks of such a custom.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Ask what he knows about the city", 143));
@@ -4028,7 +4060,7 @@ public:
             {
                 Character::LOSE_VEHICLE(player);
 
-                PreText += "\n\nYou slaughter the burrek in desperation for its meat.";
+                PreText += "\n\nYou slaughter the BURREK in desperation for its meat.";
             }
         }
 
@@ -8421,6 +8453,259 @@ public:
     }
 };
 
+class Story330 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story330()
+    {
+        ID = 330;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        auto reversed = 0;
+
+        if (Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
+        {
+            reversed++;
+
+            PreText += "EXALTED ENHANCER";
+
+            Character::EXALTED_ENHANCER(player, true);
+        }
+
+        if (Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
+        {
+            if (reversed > 0)
+            {
+                PreText += ", ";
+            }
+
+            reversed++;
+
+            PreText += "MASK OF OCCULTATION";
+
+            Character::MASK_OF_OCCULTATION(player, true);
+        }
+
+        if (Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
+        {
+            if (reversed > 0)
+            {
+                PreText += ", ";
+            }
+
+            reversed++;
+
+            PreText += "PEERLESS PERCEPTIVATE";
+
+            Character::PEERLESS_PERCEPTIVATE(player, true);
+        }
+
+        Character::APPLY_VIRUS(player, Item::Type::VIRID_MYSTERY);
+
+        if (reversed == 0)
+        {
+            PreText = "No retrovirus effects reversed!";
+        }
+        else
+        {
+            PreText += " effects reversed!";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 434; }
+};
+
+class Story331 : public Story::Base
+{
+public:
+    Story331()
+    {
+        ID = 331;
+
+        Text = "Sidling up beside a man in a fur-trimmed cape of scarlet silk, you gesture out to sea. \"Is that the ferry?\"\n\nHe glances around, peers out through the icy haze swathing the coastline and then turns to regard you with a withering stare. \"It was a seagull. The ferry is not due for half an hour at least.\" With a flourish of his cape he stalks away, unaware that you have picked his pocket while he was distracted.\n\nYou now have a ticket for the ferry.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 246; }
+};
+
+class Story332 : public Story::Base
+{
+public:
+    Story332()
+    {
+        ID = 332;
+
+        Text = "There is nothing for it but to set out on foot, skirting the Inland Sea so as to reach Kahira by way of Bezant.\n\nYou are destined never to reach your goal. As you cross the hills south-east of Bezant that rise to form the Anatolian Plateau, there is a flare of light that spreads rapidly across the sky from the west. It seems as though titanic shockwaves are resounding over the world from a terrible explosion. You turn to run, but space and time flow around you like water. You fall and, looking up, you imagine a colossal face staring from the far horizon.\n\n\"I am Vajra Singh,\" says a voice inside your head. \"Now the Heart of Volent is mine, and I shall use it to remake all creation in my own image.\"\n\nThe world is swept away. Because you delayed too long, the power of the Heart fell into another's hand. The whole cosmos ends here.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story333 : public Story::Base
+{
+public:
+    Story333()
+    {
+        ID = 333;
+
+        Text = "Early morning sunlight drives away the wisps of mist, but there is still a nip in the air as you walk along the narrow streets. Even in this impoverished age, the bazaar of Kahira retains the quaint and colourful air for which it is famous. The alleyways are barely wide enough for one man to pass another without intimacy. Shutters of dark wood open onto shops which display artwork of ancient times: carpets and tapestries, silks, ivory carvings, gold and silver filigree, amulets, spices, wines, dyes and sultry perfumes. A thousand scents mingle in the hazy morning air, wafting from the food stalls where coffee bubbles in tall kettles and pancakes sizzle on the stoves. You pass a man with along clay pipe. No doubt his ancestors looked out from that very stall with the same brown high-cheekboned features. Mistaking your thoughtful expression, he beckons you over. \"See my fine goods. I have thick furs to keep out the cold.\"\n\nWhen the stall-holder learns you are undertaking a journey, he insists that you follow him to a courtyard wedged between the narrow buildings where his cousin sells animals and slaves.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go with him", 338));
+        Choices.push_back(Choice::Base("Look around the rest of the bazaar", 359));
+
+        Controls = Story::Controls::SHOP;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Shop = {{Item::FUR_COAT, 3}};
+    }
+};
+
+class Story334 : public Story::Base
+{
+public:
+    Story334()
+    {
+        ID = 334;
+
+        Text = "Dusk is falling by the time you reach the ancient city of Venis. It shimmers with a thousand lights under a sky like dull green bronze. Hungry and cold, you quicken your pace through the outlying streets. You pass the temporary shacks where hunters and traders dwell, then the slums of corrugated iron and plastic filling the narrow, sunken streets that some say were once canals. Above them loom the blocks of ancient plazas, where the rich and powerful of the city reside in palatial buildings shored up with wooden scaffolding to support them from the ravages of time.\n\nYou soon learn that the ferry to Kahira is not due for a couple of days. While waiting, you have a choice of where to take lodging. The lavish Marco Polo Hotel will charge 12 scads for two nights; the Hotel Paradise will charge 6 scads; the disreputable Doge's Inn will cost only 3 scads.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Choose Marco Polo (12 scads)", 286, Choice::Type::LOSE_MONEY, 12));
+        Choices.push_back(Choice::Base("Opt for Paradise (6 scads)", 244, Choice::Type::LOSE_MONEY, 6));
+        Choices.push_back(Choice::Base("Check in at the Doge's Inn (3 scads)", 371, Choice::Type::LOSE_MONEY, 3));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::ID_CARD}))
+        {
+            Choices[0].Destination = 222;
+        }
+        else
+        {
+            Choices[0].Destination = 286;
+        }
+    }
+};
+
+class Story335 : public Story::Base
+{
+public:
+    Story335()
+    {
+        ID = 335;
+
+        Text = "Although the computers monitoring and maintaining the power supply must still be functioning, it is obvious that they are not connected to Gaia. Gaia is too erratic to have kept up such a task for two centuries. However, if you can get access to the computers here in the city then you might be able to set up a link with Gaia.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 356; }
+};
+
+class Story336 : public Story::Base
+{
+public:
+    Story336()
+    {
+        ID = 336;
+
+        Text = "\"Possibly you overestimate Gaia's powers; she does not control the sun,\" you reply with a scornful laugh. The screen flickers and a blue globe logo appears announcing access to Gaia. Quickly you type: \"GAIA. ARE YOU THERE?\"\n\n\"WHERE IS THERE? THERE IS EVERYWHERE.\"\n\nUnfortunately Gaia is in one of her confused phases. You try again: \"HOW MUST I REACH DU-EN?\"\n\n\"GIZA FIRST. THE PYRAMID.\" You seem to sense in the juddering way the type appears on the screen, a great struggle going on inside Gaia's mind. \"YOU CAN FIND A FRIEND IN GILGAMESH. ENTER HUMBABA...\"\n\nThe message degenerates into gibberish. You break the link then, after pausing to reflect, you order the local computer to shut down. There is a chance it became afflicted with Gaia's viruses during the link, and it would not do to have a nuclear reactor go critical somewhere nearby.\n\n\"I'm afraid you'll lose electricity soon,\" you tell Fax. \"There's probably enough power in the storage cells for a day or two, then you'll have to make other arrangements for your lighting and so forth.\"\n\nHis jaw drops. \"What have you done? You have wreck my little paradise, all for the sake of a word with your precious Gaia!\"\n\nYou shrug. \"Those few words might mean the salvation of mankind -- if I can work out what they mean.\"\n\nYou gained the codeword HUMBABA.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try one of the tunnels", 439));
+        Choices.push_back(Choice::Base("Say goodbye to Fax and continue your journey west", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::HUMBABA});
+    }
+};
+
+class Story337 : public Story::Base
+{
+public:
+    Story337()
+    {
+        ID = 337;
+
+        Text = "His gaze narrows just for an instant as he listens to the question. \"Giza was a military base a few klicks west. Long before that, I'm told it was an ancient burial ground. It's deserted now anyway. And off limits. I recommend you steer well clear of the place.\"\n\nBoche takes your arm. \"Excuse us,\" he says to Golgoth, \"but we have business in Kahira and I don't care to have my throat slit beforehand.\"\n\n\"Golgoth grins. \"Boche, you slit your throat every time you open your mouth.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 358; }
+};
+
+class Story338 : public Story::Base
+{
+public:
+    Story338()
+    {
+        ID = 338;
+
+        Text = "You are shown a BURREK -- a hulking, thick-shouldered animal with shaggy white fur and a lugubrious snout. \"The nomads use such creatures when they wish to cross the Ice Wastes,\" the trader tells you. \"They huddle beside the beast in blizzards, and when hungry they tap its veins to make a blood pudding.\"\n\n\"What a sickening though.\"\n\nHe nods sagely. \"Indeed, it is probably only just preferable to dying of starvation. Still, if you intend to cross the Sahara you cannot do without a burrek. This stout animal is for sale at the generous price of thirty scads.\n\nAfter some haggling, the price drops to 10 scads.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Buy the BURREK for 10 scads", 359, Choice::Type::BUY_VEHICLE, Vehicle::Type::BURREK, 10));
+        Choices.push_back(Choice::Base("Move on", 359));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story339 : public Story::Base
+{
+public:
+    Story339()
+    {
+        ID = 339;
+
+        Text = "Your fingers fly across the keyboard, bringing up a rapid sequence of access codes, file menus and options. Safety systems are in place to prevent accidental communication with Gaia. You override them, opening a channel via one of the al-Lat station's external radio dishes which connects you to an Earth weather satellite. In less than thirty seconds you are through to Gaia herself. You flip the link to \"Display Only\" so that no one overhears you. Glancing nervously at the door, you quickly bring Gaia up to date with what has been happening.\n\nThe screen fills with a torrent of glowing words: ACTIVATION OF THE HEART WILL CREATE A NEW UNIVERSE. THE PRESENT UNIVERSE WILL BE DESTROYED IN THE PROCESS. I RECOMMEND DESTRUCTION OF THE HEART. ACCOMPLISH THIS USING TWO BARYSAL BEAMS ALIGNED AT RIGHT ANGLES: THE CRYSTALLINE LATTICE OF THE HEART WILL BE DISRUPTED.\n\nStartling news. You are anxious to question Gaia further while she is in a communicative mood, but someone might come in and find you at any minute. You break the link, turning from the screen just in time to see the door open and Riza Baihaqi come back in.\n\nYou gained the codeword NEMESIS.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+    }
+
+    int Continue(Character::Base &player) { return 382; }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -8754,6 +9039,16 @@ auto story326 = Story326();
 auto story327 = Story327();
 auto story328 = Story328();
 auto story329 = Story329();
+auto story330 = Story330();
+auto story331 = Story331();
+auto story332 = Story332();
+auto story333 = Story333();
+auto story334 = Story334();
+auto story335 = Story335();
+auto story336 = Story336();
+auto story337 = Story337();
+auto story338 = Story338();
+auto story339 = Story339();
 
 void InitializeStories()
 {
@@ -8791,7 +9086,8 @@ void InitializeStories()
         &story290, &story291, &story292, &story293, &story294, &story295, &story296, &story297, &story298, &story299,
         &story300, &story301, &story302, &story303, &story304, &story305, &story306, &story307, &story308, &story309,
         &story310, &story311, &story312, &story313, &story314, &story315, &story316, &story317, &story318, &story319,
-        &story320, &story321, &story322, &story323, &story324, &story325, &story326, &story327, &story328, &story329};
+        &story320, &story321, &story322, &story323, &story324, &story325, &story326, &story327, &story328, &story329,
+        &story330, &story331, &story332, &story333, &story334, &story335, &story336, &story337, &story338, &story339};
 }
 
 #endif
