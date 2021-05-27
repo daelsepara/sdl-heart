@@ -2485,20 +2485,23 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
             std::string choice = item.Name;
 
-            if (item.Charge >= 0)
+            if (mode == Control::Type::BUY)
             {
-                choice += " (";
-
-                if (item.Charge > 0)
+                if (item.Charge >= 0)
                 {
-                    choice += std::to_string(item.Charge) + " charges";
-                }
-                else
-                {
-                    choice += "empty";
-                }
+                    choice += " (";
 
-                choice += ")";
+                    if (item.Charge > 0)
+                    {
+                        choice += std::to_string(item.Charge) + " charges";
+                    }
+                    else
+                    {
+                        choice += "empty";
+                    }
+
+                    choice += ")";
+                }
             }
 
             choice += " (" + std::to_string(price) + " scads)";

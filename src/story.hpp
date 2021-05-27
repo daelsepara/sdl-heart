@@ -5893,6 +5893,8 @@ public:
     {
         ID = 229;
 
+        Image = "images/kahira.png";
+        
         Text = "Kahira is shrouded in a perpetual mist that rises from the warm river waters that flow beneath the city. The city gate is a metal shutter opening into a wide cargo lift at the bottom of a concrete buttress. You hurry through just before the gate closes for the final time this evening. Standing in a crowd of people, donkeys and camels, you wait while the lift rattles up to the street level and opens to disgorge its passengers onto a fog-draped plaza. You step out under the dank glare of a neon lamp and gaze around the plaza, ignoring the stragglers barging past you with their packs. The babble of voices is muffled by the fog. The air is dankly cold, with a flat reek of mist and wet concrete.\n\nA man wearing an illuminated fez scurries up to you, brushing his fingertips together as though washing. A clutch of snaggled teeth gleam in the street-light as he bows. \"Greetings! I am Bador, a dracoman. For a single scad I will be pleased to assist you with the many queries you must have regarding this estimable city.\"";
 
         Choices.clear();
@@ -7399,7 +7401,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("Make use of [PILOTING]", 309, Skill::Type::PILOTING));
         Choices.push_back(Choice::Base("Rely on [ROGUERY]", 331, Skill::Type::ROGUERY));
-        Choices.push_back(Choice::Base("Resort to [ROGUERY]", 226, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Resort to [CUNNING]", 226, Skill::Type::CUNNING));
         Choices.push_back(Choice::Base("Otherwise", 352));
 
         Controls = Story::Controls::STANDARD;
@@ -7420,6 +7422,8 @@ public:
     Story289()
     {
         ID = 289;
+
+        Image = "images/du-en.png";
 
         Text = "From a cruising height of thirty metres, the Ice Wastes resemble a sea of luminous snow broken by islands of exposed black rock. The wind shrieks across the land without respite, driving swathes of powdery snow that has carved strange shapes from the surrounding cliffs. You see few signs of life. This is one of the most desolate regions of Earth. The daylight is bleakly pale, the dusk as blue as smoke, and the night sky is filled with a thousand stars scintillating in the gaps between colossal crags of cloud.\n\nDays pass like a blur. And then at last, glowering on the horizon, you see the grim black walls of a ruined city, You have arrived at Du-En.";
 
@@ -7769,7 +7773,7 @@ void InitializeStories()
         &story250, &story251, &story252, &story253, &story254, &story255, &story256, &story257, &story258, &story259,
         &story260, &story261, &story262, &story263, &story264, &story265, &story266, &story267, &story268, &story269,
         &story270, &story271, &story272, &story273, &story274, &story275, &story276, &story277, &story278, &story279,
-        &story270, &story281, &story282, &story283, &story284, &story285, &story286, &story287, &story288, &story289};
+        &story280, &story281, &story282, &story283, &story284, &story285, &story286, &story287, &story288, &story289};
 }
 
 #endif
