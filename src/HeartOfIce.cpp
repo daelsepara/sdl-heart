@@ -4161,7 +4161,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                                         {
                                             fillWindow(renderer, intWH);
 
-                                            fillRect(renderer, (1.0 - 2.0 * Margin) * SCREEN_WIDTH, 2 * bye->h, startx, (SCREEN_HEIGHT - 2 * bye->h) / 2, intBE);
+                                            fillRect(renderer, (1.0 - 2.0 * Margin) * SCREEN_WIDTH, bye->h + 2 * text_space, startx, (SCREEN_HEIGHT - (bye->h + 2 * text_space)) / 2, intBE);
                                             renderText(renderer, bye, intBE, (SCREEN_WIDTH - bye->w) / 2, (SCREEN_HEIGHT - bye->h) / 2, SCREEN_HEIGHT, 0);
 
                                             renderImage(renderer, forward, SCREEN_WIDTH * (1.0 - Margin) - buttonw - button_space, buttony);

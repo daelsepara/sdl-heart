@@ -228,13 +228,13 @@ namespace Item
         return found;
     }
 
-    int COUNT_TYPES(std::vector<Item::Type> list, Item::Type item)
+    int COUNT_TYPES(std::vector<Item::Base> &list, Item::Type item)
     {
         auto found = 0;
 
         for (auto i = 0; i < list.size(); i++)
         {
-            if (list[i] == item)
+            if (list[i].Type == item)
             {
                 found++;
             }

@@ -5787,6 +5787,8 @@ public:
     {
         ID = 225;
 
+        Image = "images/vampire.png";
+
         Text = "The next morning you are overtaken by a blizzard that turns the sky dark as Doomsday. Stumbling on, you are barely able to see the others through the thick snowfall. Then a blue flare erupts in the gloom, drawing you to where Shandor stands with two of his bodyguards. He has a sputtering magnesium torch in his hand which drips hissing fragments of hot metal into the snow. \"Where's Goro?\" says one of the bodyguards.\n\nYou all gaze off into the blizzard. No one says a thing until Shandor grabs your sleeve. \"We can't do anything for him now,\" he calls over the shrieking wind. \"Come on, there's an ice cave we can shelter in.\"\n\nYou follow the others down a crevice in the ground. In the light of Shandor's flare, the walls around you gleam like old blue glass. \"This is frozen meltwater,\" you say, running your hand across the smooth ice. \"We must be on another glacier.\"\n\n\"Inside a glacier, you mean,\" mutters Shandor. \"Eerie, isn't it? We're safer here than out in that storm, though.\"\n\nYou walk along the gallery of ice, overwhelmed by a sense of awe. Perhaps this was a mighty river once, a raging torrent, before the summers died and the Ice Age took root in the world. Now it slides imperceptibly along the rate of a few centimetres a year.\n\nYou see a face in the ice and jump back with a startled cry. Shandor comes over and raises the torch. Frozen just inside the surface of the wall is a man in black military-style overalls, a shortsword held in one hand. Perhaps he has been there for centuries, but what makes you shudder is that fact that his eyes are wide open. \"I could almost fancy he's watching us,\" you say.\n\n\"Tell you what I fancy,\" says Shandor. \"That sword he's got.\"";
 
         Choices.clear();
@@ -6643,7 +6645,7 @@ public:
     {
         ID = 262;
 
-        Bye = "YAs the smoke disperses you see that Golgoth had attached his gun to the wall magnetically and set it for remote-controlled fire. Retrieving it, he casts a wary glance at you. \"It's just up to us now,\" he says. \"We can make a shoot-out of it, and probably both die, or we can cooperate to get rid of that.\" And he jerks his thumb towards the ominously glittering Heart of Volent.\"";
+        Bye = "As the smoke disperses you see that Golgoth had attached his gun to the wall magnetically and set it for remote-controlled fire. Retrieving it, he casts a wary glance at you. \"It's just up to us now,\" he says. \"We can make a shoot-out of it, and probably both die, or we can cooperate to get rid of that.\" And he jerks his thumb towards the ominously glittering Heart of Volent.\"";
 
         Choices.clear();
 
@@ -6833,6 +6835,294 @@ public:
     }
 
     int Continue(Character::Base &player) { return 311; }
+};
+
+class Story270 : public Story::Base
+{
+public:
+    Story270()
+    {
+        ID = 270;
+
+        Text = "You find the missing bodyguard, Goro, lying only fifty metres from the ice cave where you took shelter. He froze to death on his hands and knees, crawling in the teeth of the blizzard. Snow is piled around the body. Ice cakes his features, locked rigid in an expression of stubborn intensity. The other two, who may be his brothers for all you know, betray no emotion at the sight. Of course, they must have realized he couldn't have survived. \"Shall we bury him, boss?\" says one.\n\nShandor looks at the sky. Dusk is already descending along the edge of the valley, shadows creeping like blots of soot across the crisp white snow. He considers, then gives a curt nod back towards the crevasse. \"Toss the body down into the cave -- it's as good a tomb as any. I want to be off this glacier by nightfall.\"\n\nAfter sliding Goro's body down into the crevasse, the four of you trudge on in silence. By the time you crest the shoulder of bare black rock bordering the glacier, stars begin to glimmer between the low banks of cloud. Something impels you to glance back. You see the last of the sunlight trickle off the world. In the same instant, a slurry of thick purple steam gushes out of the crack in the ice far behind. You rub your eyes and look again. Now there is nothing. It must have been a trick of the fading light.\n\nShandor's bodyguards have found a spar of rock to give cover from the night winds. They heat it with blasts from their barysal guns, leaving the rock surface pleasantly warm when you hunker down beside it to eat the rations that Shandor shares out.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SHORT_SWORD}))
+        {
+            return 291;
+        }
+        else
+        {
+            return 312;
+        }
+    }
+};
+
+class Story271 : public Story::Base
+{
+public:
+    Story271()
+    {
+        ID = 271;
+
+        Image = "images/filler2.png";
+
+        Text = "A man emerges from a low building and stands in a wary posture as he watches you approach. He licks his lips nervously and shifts his grip on the shovel he is holding, but your impression is that he is nervous rather than hostile. When you smile and hold out your hand, he relaxes with a shrug and tosses the shovel aside, introducing himself as Portrin Fax. He is a loose-limbed fellow, slender as a starved mantis, with fretfully pursed lips and wet blinking eyes.\n\nHis dwelling is paved with umber and grey tiles and show signs of having once been a transit terminal of some kind. The air is cool. Panels along the side wall shed a brisk white light. The only items of furniture are rickety frameworks of wood with ragged furs stretched over them. Fax waves you to what he describes as a chair and pours drinks. You take the mug he offers, wincing at the powerful fumes. \"My own liquor,\" he explains. \"I brew it by mixing herbs into a tank of cleaning fluid.\"\n\nYou pour the drink away when he isn't looking. \"You live alone here?\"\n\nHe sits, folds his arms, only to leap up and stride around the room. Company clearly makes him nervous. \"A hermit, that's old Fax,\" he says. \"In the outside world I was a misfit, but here I live like the Sun King. The city has generators which supply light and keep the air cooled.\" He giggles. \"Who would dream, in this time of the fimbulwinter, that a man might wish for a cool breath of air? But here in Lyonesse it is necessary.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            return 313;
+        }
+        else
+        {
+            return 356;
+        }
+    }
+};
+
+class Story272 : public Story::Base
+{
+public:
+    Story272()
+    {
+        ID = 272;
+
+        Text = "You are held at gunpoint while your arms are wrenched behind your back and securely tied. You test the bonds, but these are men who have learned not to be careless. One of them rummages through your belongings, then jerks his thumb contemptuously towards you. \"Are we keeping an extra mouth to feed, then, Snarvo?\"\n\nThe man with the knife sneers. \"Not unless you want yourself a pet, mate.\"\n\n\"Just get on with it, Snarvo,\" mutters the third man, tucking the gun back into his belt. \"And don't get blood on the rug.\"\n\nSnarvo steps forward, an unpleasant grin creasing his weather-hardened features, and his knife brings your life to a sticky end.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story273 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story273()
+    {
+        ID = 273;
+
+        Bye = "The only other people you spy are a group of Hamadan ascetics on their shaggy camels. They pay no attention to you, as their creed insists that they disdain all outsiders.\n\nAdjusting their white-and-tan turbans with cold contempt, they go bounding off across the lone and level snows.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The sun shows itself as a golden blur in the east, smoky and cheerless under an overhang of sullen cloud. The air grows colder as you walk, the warm geysers of the pass soon lost to view in the overcast.\n\nThe way rises into foothills, then the brooding hulks of the Atlas Mountains. Long shoulders of rock lie bare to the sky: the carcass of old Earth, gaunt under its pall of snow. Crags scrape up past you on all sides, stern and daunting, like pillars supporting a canopy of snow-bloated clouds.\n\nA frosty halitus hangs over the high hills. You find the landscape both magnificent and dispiriting and are glad when, after another two days, you begin to descend towards a broad windswept plain.\n\n";
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL) && !Character::HAS_FOOD(player, 0))
+        {
+            Character::GAIN_LIFE(player, -1);
+
+            PreText += "You LOSE 1 Life Point.";
+        }
+        else
+        {
+            if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+            {
+                PreText += "[SURVIVAL] You manage to locate a few rodents in their burrows; once wind-dried, the meat is hard but acceptable.";
+            }
+            else
+            {
+                Character::CONSUME_FOOD(player, 1);
+
+                PreText += "You consumed 1 FOOD PACK.";
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 393; }
+};
+
+class Story274 : public Story::Base
+{
+public:
+    Story274()
+    {
+        ID = 274;
+
+        Text = "You must choose what to donate.";
+
+        Bye = "With broad witless smiles, the priestess and her followers accept your donation. \"Thank you pilgrim,\" says the priestess. \"The goddess will watch over you.\"\n\n\"May she bring you as much good fortune as I believe you deserve,\" you reply ambiguously. \"Now, if you'll excuse me, I'd like to get some sleep.\"\n\nYou settle down among the litter, finding sleep hard to come by now that you are seething with fury at having been robbed. As daylight begins to show as a pearly gleam beyond the city spires, you rouse yourself and head towards the bazaar";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Give them all your money", 333, Choice::Type::LOSE_MONEY, 0));
+        Choices.push_back(Choice::Base("Give them two of your possessions", 333, Choice::Type::GIVE, 2));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices[0].Value = player.Money;
+    }
+};
+
+class Story275 : public Story::Base
+{
+public:
+    Story275()
+    {
+        ID = 275;
+
+        Image = "images/riza.png";
+
+        Text = "Riza conducts you along a passage which leads out into what seems at first like open air. Seeing you look around in amazement, he laughs and points across a lawn towards a group of buildings. You now see that the horizon seems to rise upwards and the further you look, curving over into the sky until it is lost behind a haze of light directly overhead. To either side of you, only a few hundred metres away, unimaginably vast slabs of cliff reach off into the sky.\n\n\"Did you expect a cramped space-station in the ancient style?\" says Riza. \"We have enlarged al-Lat over the centuries until it is what you see today: a cylinder some two kilometres wide and half a kilometre long. Rotation provides us with gravity, the sun's rays with light and heat.\"\n\nYou have to admit that it is more comfortable than Earth is these days. Riza takes you to his flyer, and soon you are dropping towards Earth's atmosphere. You descend just ahead of the dawn, touching down on the shore of the Sea of Reeds at a fishing village called Sudan. You bid Riza farewell and stand watching as the flyer climbs back up into the early morning sky.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Do some shopping", 101));
+        Choices.push_back(Choice::Base("Set out for Du-En without delay", 234));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story276 : public Story::Base
+{
+public:
+    Story276()
+    {
+        ID = 276;
+
+        Text = "The hovering platform conveys you to a circular landing marked \"Research Level.\" You step off and conduct a quick exploration of the rooms on this floor. In a long hall you find lockers containing COLD-WEATHER clothing, FOOD PACKs and MEDICAL KITs -- many more than any one person would ever need. You rip open one of the food packs. The contents are still fresh.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT, Item::COLD_WEATHER_SUIT, Item::FOOD_PACK, Item::MEDICAL_KIT};
+
+        Limit = 24;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::LITTLE_GAIA}))
+        {
+            return 14;
+        }
+        else
+        {
+            return 36;
+        }
+    }
+};
+
+class Story277 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story277()
+    {
+        ID = 277;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Type = Story::Type::NORMAL;
+
+        PreText = "The bometh sits like a sphinx atop the rise, head lifted to the star-filled sky. Wisps of breath escape its nostrils. It seems oblivious of your approach as you slowly work your way around and then stalk closer from downwind. But as you close the last few metres and leap from hiding, it rises with a languid growl and turns into long scything fangs to slash at you. Only now, as it rears to grapple, do you get a sense of the bometh's size and power. It is enough to make your knees go weak. The beast must weigh half a tonne!\n\nThe battle is ferocious and bloody.";
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            auto DAMAGE = -5;
+
+            DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+            PreText += "\n\n[CLOSE COMBAT] You LOSE " + std::to_string(-DAMAGE) +" Life Points.";
+        }
+        else
+        {
+            Type = Story::Type::DOOM;
+
+            player.Life = 0;
+        }
+
+        if (player.Life <= 0)
+        {
+            PreText += "\n\nYou did not stand a chance: the bometh sinks its teeth deep into your chest and proceeds to rip out your lungs.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 341; }
+};
+
+class Story278 : public Story::Base
+{
+public:
+    Story278()
+    {
+        ID = 278;
+
+        Text = "The sun lurches into view above the city walls -- a disk as pale as watered milk. Out in the main square, the others are preparing to set off into the ruins. You see Golgoth clipping on his weapon-belt as he chats to the Gargan sisters, Apparently they have agreed to explore as a team. Surprisingly, Gaunt and Thadra Bey have also formed a group. Baron Siriasis and Vajra Singh both opt to search for the Heart alone.\n\nVajra Singh oversees the drawing of lots. \"We shall set off into the ruins at fifteen-minute intervals determined by the lots,\" he tells others. \"You can explore individually or in groups, as you prefer. Remember that the truce applies only here in the open. If groups encounter each other while in the catacombs below the city, they must negotiate or else do battle.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Descend into the catacombs", 385));
+        Choices.push_back(Choice::Base("Rest for a day", 363));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story279 : public Story::Base
+{
+public:
+    Story279()
+    {
+        ID = 279;
+
+        Image = "images/filler1.png";
+
+        Text = "\"You don't have what it takes, Gaunt,\" you as you gaze up at the constellations. \"You're too reflective, too prone to see all sides of an issue. You lack that heart of ice that makes a ruthless man successful.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 299;
+        }
+        else
+        {
+            return 321;
+        }
+    }
 };
 
 auto earth23rdCentury = Earth23rdCentury();
@@ -7108,6 +7398,16 @@ auto story266 = Story266();
 auto story267 = Story267();
 auto story268 = Story268();
 auto story269 = Story269();
+auto story270 = Story270();
+auto story271 = Story271();
+auto story272 = Story272();
+auto story273 = Story273();
+auto story274 = Story274();
+auto story275 = Story275();
+auto story276 = Story276();
+auto story277 = Story277();
+auto story278 = Story278();
+auto story279 = Story279();
 
 void InitializeStories()
 {
@@ -7139,7 +7439,8 @@ void InitializeStories()
         &story230, &story231, &story232, &story233, &story234, &story235, &story236, &story237, &story238, &story239,
         &story240, &story241, &story242, &story243, &story244, &story245, &story246, &story247, &story248, &story249,
         &story250, &story251, &story252, &story253, &story254, &story255, &story256, &story257, &story258, &story259,
-        &story260, &story261, &story262, &story263, &story264, &story265, &story266, &story267, &story268, &story269};
+        &story260, &story261, &story262, &story263, &story264, &story265, &story266, &story267, &story268, &story269,
+        &story270, &story271, &story272, &story273, &story274, &story275, &story276, &story277, &story278, &story279};
 }
 
 #endif

@@ -640,6 +640,31 @@ namespace Character
         }
     }
 
+    bool HAS_FOOD(Character::Base &player, int threshold)
+    {
+        return Item::COUNT_TYPES(player.Items, Item::Type::FOOD_PACK) > threshold;
+    }
+
+    int CONSUME_FOOD(Character::Base &player, int amount)
+    {
+        auto consumed = 0;
+
+        if (HAS_FOOD(player, 0))
+        {
+            for (auto i = 0; i < amount; i++)
+            {
+                if (Character::VERIFY_ITEMS(player, {Item::Type::FOOD_PACK}))
+                {
+                    Character::LOSE_ITEMS(player, {Item::Type::FOOD_PACK});
+
+                    consumed++;
+                }
+            }
+        }
+
+        return consumed;
+    }
+
 } // namespace Character
 
 #endif
