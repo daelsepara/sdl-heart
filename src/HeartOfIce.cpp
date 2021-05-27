@@ -3547,7 +3547,14 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
                         }
                         else if (story->Choices[current].Type == Choice::Type::FIRE_WEAPON)
                         {
-                            if (Character::VERIFY_ITEMS(player, {Item::Type::BARYSAL_GUN}))
+                            auto weapons = std::vector<Item::Type>();
+
+                            for (auto i = 0; i < story->Choices[current].Items.size(); i++)
+                            {
+                                weapons.push_back(story->Choices[current].Items[i].Type);
+                            }
+
+                            if (Character::VERIFY_ITEMS(player, weapons))
                             {
                                 Character::FIRE_BARYSAL(player, 1);
 

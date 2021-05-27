@@ -7781,7 +7781,7 @@ public:
         Text = "Vajra Singh stabs at the trigger of his cannot and swings it round towards Golgoth. But the USI agent is not taken by surprise. He grabs Boche and throws him forward to take the brunt of the blast. Boche dies instantly, and at the same moment Golgoth drops a canister that releases a thick cloud of white smoke.\n\nSingh looms like a ghost in the spreading cloud. Holding the cannon ready, he peers through the smoke for any sign of movement. You've lost sight of Golgoth.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Attack Singh with a BARYSAL GUN", 20, Choice::Type::FIRE_WEAPON));
+        Choices.push_back(Choice::Base("Attack Singh with a BARYSAL GUN", 20, Choice::Type::FIRE_WEAPON, {Item::BARYSAL_GUN}));
         Choices.push_back(Choice::Base("Or a STUN GRENADE", 20, Choice::Type::LOSE_ITEMS, {Item::STUN_GRENADE}));
         Choices.push_back(Choice::Base("Move in closer to give him back-up", 42));
         Choices.push_back(Choice::Base("Step away and wait to see what happens", 262));
@@ -8706,6 +8706,222 @@ public:
     int Continue(Character::Base &player) { return 382; }
 };
 
+class Story340 : public Story::Base
+{
+public:
+    Story340()
+    {
+        ID = 340;
+
+        Text = "You walk through to the adjacent chamber, Gilgamesh following with clanking strides. \"The podium is empty.\" Are there others like you?\" you ask him. \"Where can I find them?\"\n\nThere is the briefest of pauses as his artificial mind assimilates the question. \"I am the prototype,\" he responds. \"I was created to guard against danger from the Volentine sect. I know of no others.\"\n\nYou glance at him, a huge armoured automaton thrumming with power. The way that he stands so immobile, inexorably measuring each remark in the depths of his nonhuman brain, makes for an eerie and unnerving scene. You remind yourself that he is your servant -- dangerous to your foes, not to you. \"Come with me,\" you tell him. \"We are leaving.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 361; }
+};
+
+class Story341 : public Story::Base
+{
+public:
+    Story341()
+    {
+        ID = 341;
+
+        Text = "You look down at the huge carcass stretched out in the pale moonlight.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Cut it up with a KNIFE", 362, {Item::KNIFE}));
+        Choices.push_back(Choice::Base("Use a SHORT SWORD", 384, {Item::SHORT_SWORD}));
+        Choices.push_back(Choice::Base("Otherwise", 298));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story342 : public Story::Base
+{
+public:
+    Story342()
+    {
+        ID = 342;
+
+        Text = "The truth dawns on you with chilling horror: you have a wasting disease. It will spread, gnawing away at you from inside. Now the race for the Heart takes on a vivid new importance, as it is only by obtaining its power that you can cure your body of the sickness.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_ITEMS(player, {Item::Type::MEDICAL_KIT}) && !Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+        {
+            return 278;
+        }
+        else
+        {
+            return 257;
+        }
+    }
+};
+
+class Story343 : public Story::Base
+{
+public:
+    Story343()
+    {
+        ID = 343;
+
+        Text = "You hurry to catch up with Singh and tell him about Gaia's warnings. At first he seems barely interested, but gradually your words get through. He comes to a halt and turns to stare into your face. \"You propose an alliance,\" he says. \"his is wise. If we are allies, we are virtually certain to prevail against all others and reach the Heart. Tomorrow, you go with Baron Siriasis and I shall team up with Golgoth. They are our most dangerous adversaries. If the opportunity arises, we must slay them.\"\n\n\"What if your group finds the Heart first? Or my group, for that matter?\"\n\n\"I swear I shall not take its power until only you and I are left. Then together wee can discuss the future of the cosmos.\"\n\nYou watch him march back to his tent. You feel sure Singh will keep his oath of alliance. If only you didn't have a sneaking suspicion that you've just tied yourself to the lion's tail.\n\nYou gained the codeword RED.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::RED});
+    }
+
+    int Continue(Character::Base &player) { return 192; }
+};
+
+class Story344 : public Story::Base
+{
+public:
+    Story344()
+    {
+        ID = 344;
+
+        Text = "Through the glass door you can see that Golgoth's elevator is starting to descend. Hastily you reach out and scan his mind to find out what he said. You learn that the code takes the form of a question-and-answer formula central to the Volentine faith. Golgoth found it when he watched the tapes showing the interrogation of Eleazar Picard, the high priest of the cult who escaped when Du-En fell.\n\nIt worked for Golgoth. Now you can see if it will work for you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 18; }
+};
+
+class Story345 : public Story::Base
+{
+public:
+    Story345()
+    {
+        ID = 345;
+
+        Text = "It is strange to witness the barysal beam slowing down as it enters the time-distortion zone, like watching a white-hot needle pressing through ice. As it strikes the stasis bomb, there is a muffled explosion and the bomb splits into molten fragments. At the same instant, the man takes half a step forward and then jerks back in surprise as he sees the three of you standing around him.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 409; }
+};
+
+class Story346 : public Story::Base
+{
+public:
+    Story346()
+    {
+        ID = 346;
+
+        Text = "Golgoth suddenly explodes into action. Seizing Boche around the neck and pressing his gun to his temple, he orders him to shoot Singh unless he wants to die at once. Boche raises his own gun and fires at Singh is turning to act. As Singh staggers back, his armour breastplate charred by the blast, Golgoth coolly shoots Boche through the head, holding the body up as a shield.\n\nSingh is fumbling for the trigger of his mantramukta cannon. \"Get him now!\" Golgoth shouts to you. \"Before he recovers!\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Attack with a BARYSAL GUN", 389, Choice::Type::FIRE_WEAPON, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Or a STUN GRENADE", 389, Choice::Type::LOSE_ITEMS, {Item::STUN_GRENADE}));
+        Choices.push_back(Choice::Base("Decide not to act", 410));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story347 : public Story::Base
+{
+public:
+    Story347()
+    {
+        ID = 347;
+
+        Text = "Your gun is in your hand before Boche can react. The shot lashes through the air, catching him directly between the eyes. He dies without even realizing what has happened. Now nothing stands between you and the Heart of Volent.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story348 : public Story::Base
+{
+public:
+    Story348()
+    {
+        ID = 348;
+
+        Text = "The barysal beam cleaves through Singh's armour, but his own shot slays you at once. You die knowing that victory was almost within your grasp.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story349 : public Story::Base
+{
+public:
+    Story349()
+    {
+        ID = 349;
+
+        Text = "Finding another ledge where there are no corpses, you sweep it clear of snow and settle down for the night. Boche casts a wry gaze along the rock face. \"A bit like sleeping in a graveyard,\" he remarks.\n\nYou can only shrug. \"Try not to think about it. At least here we're out of the wind.\"\n\n\"And safe from predators.\"\n\n\"Are we?\" You wonder.\n\nAs the feeble daylight gives way to night, snow comes in fast flurries on the wind coursing through the pass. The sound is like a banshee's wailing. Huddled in your jacket, you try to get to sleep. Then you hear the unmistakable tread of footsteps in the snow. Someone is coming.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::ESP) && !Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            Choices.push_back(Choice::Base("Leap out and attack", 433));
+            Choices.push_back(Choice::Base("Wait where you are", 2));
+        }
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::ESP))
+        {
+            return 392;
+        }
+        else
+        {
+            return 413;
+        }
+    }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -9049,6 +9265,16 @@ auto story336 = Story336();
 auto story337 = Story337();
 auto story338 = Story338();
 auto story339 = Story339();
+auto story340 = Story340();
+auto story341 = Story341();
+auto story342 = Story342();
+auto story343 = Story343();
+auto story344 = Story344();
+auto story345 = Story345();
+auto story346 = Story346();
+auto story347 = Story347();
+auto story348 = Story348();
+auto story349 = Story349();
 
 void InitializeStories()
 {
@@ -9087,7 +9313,8 @@ void InitializeStories()
         &story300, &story301, &story302, &story303, &story304, &story305, &story306, &story307, &story308, &story309,
         &story310, &story311, &story312, &story313, &story314, &story315, &story316, &story317, &story318, &story319,
         &story320, &story321, &story322, &story323, &story324, &story325, &story326, &story327, &story328, &story329,
-        &story330, &story331, &story332, &story333, &story334, &story335, &story336, &story337, &story338, &story339};
+        &story330, &story331, &story332, &story333, &story334, &story335, &story336, &story337, &story338, &story339,
+        &story340, &story341, &story342, &story343, &story344, &story345, &story346, &story347, &story348, &story349};
 }
 
 #endif
