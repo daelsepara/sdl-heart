@@ -9042,7 +9042,7 @@ public:
     {
         if (Character::VERIFY_CODEWORD(player, Codeword::Type::PROTEUS))
         {
-            Character::REMOVE_CODEWORD(player, {Codeword::Type::PROTEUS});
+            Character::REMOVE_CODEWORD(player, Codeword::Type::PROTEUS);
 
             return 374;
         }
