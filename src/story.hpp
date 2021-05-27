@@ -8176,6 +8176,251 @@ public:
     int Continue(Character::Base &player) { return 298; }
 };
 
+class Story320 : public Story::Base
+{
+public:
+    Story320()
+    {
+        ID = 320;
+
+        Text = "You swallow the pills and soon begin to feel much better. Even so, the sleepless night has left you exhausted. Out in the main square, the others are preparing for another day's exploration of the ruins. With submerged tension forever threatening to boil over into open warfare, you know that you need all your wits about you. Your rivals are unlikely to find the Heart today -- better that you rest now, and gather your strength for what lies ahead.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+        {
+            Character::GAIN_LIFE(player, 1);
+        }
+        else if (Character::VERIFY_ITEMS(player, {Item::Type::MEDICAL_KIT}))
+        {
+            Character::GAIN_LIFE(player, 1);
+        }
+
+        Character::REMOVE_CODEWORD(player, Codeword::Type::HOURGLASS);
+    }
+
+    int Continue(Character::Base &player) { return 363; }
+};
+
+class Story321 : public Story::Base
+{
+public:
+    Story321()
+    {
+        ID = 321;
+
+        Text = "\"I shall always think of you as having been a friend,\" says Gaunt after a long pause.\n\nSomething in the words makes them sound like an epitaph. You look round to see the xoms facing you with long crystal knives.\n\n\"What's going on?\"\n\nIn the dulled light of the glow-lamps, Gaunt himself looks like a pale phantom. You see the gleam of his teeth as he smiles. \"I must find the key to my own ruthless nature, or tomorrow I shall die,\" he murmurs. \"Do you know that the desire for power and change is the desire for one's own death? By expunging you, whom I admire, I expunge that weakness in myself. For you see, come what may, I shall have the Heart.\"\n\n\"You're completely mad.\"\n\nHe nods. \"I must be. It is not sane to covet the role of God.\" He gestures and the xoms shuffle forward, jabbing their knives towards your chest.\n\nA shot rings out and one of the xoms falls, flames spouting from a blast hole through its torso. Gaunt whirls in time to see a small man in combat fatigues who rushes out of the darkness and tackles him to the ground.\n\nVajra Singh steps into the light with his two other guards behind him. They are Brits -- small men with pallid pinched faces, thuggish but famed for their loyalty. The one standing over Gaunt presses a gun to his head and glances at Singh. \"Shall I kill 'im, sah?\" he barks. Singh nods. A blast of plasma scrambles Gaunt's brains into the snow. The xoms jerk back and their arms drop listlessly to their sides.\n\nYou breathe a sigh. \"A timely intervention. You saved my life.\"\n\nVajra Singh hardly looks at you. \"Gaunt broke the terms of the truce. He would have died tomorrow, in any case. He was a weak man.\" He turns and strides off with his guards following.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("(Nemesis) Tell Singh what you know", 343, Codeword::Type::NEMESIS));
+        Choices.push_back(Choice::Base("Return to the main square and either converse with Kyle Boche", 104));
+        Choices.push_back(Choice::Base("Talk to Chaim Golgoth", 126));
+        Choices.push_back(Choice::Base("Get some sleep", 192));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story322 : public Story::Base
+{
+public:
+    Story322()
+    {
+        ID = 322;
+
+        Text = "You remember the catechism that Eleazar Picard kept reciting after the fall of Du-En. What better code for the high priests to use than the most basic tenets of their faith? If only you can recall the precise wording...";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 18; }
+};
+
+class Story323 : public Story::Base
+{
+public:
+    Story323()
+    {
+        ID = 323;
+
+        Text = "He is wearing the red-and-violet uniform of the Monitor Corps, personal troops of Eleazar Picard, the Volentine high priest. Perhaps he was fighting to defend him when the populace of the city rebelled. If you want to free him, it might be possible.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("(BARYSAL GUN) Destroy the STASIS BOMB", 345, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("[PARADOXING] Cancel the time distortion effect", 366, Skill::Type::PARADOXING));
+        Choices.push_back(Choice::Base("Continue deeper into the catacombs", 388));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story324 : public Story::Base
+{
+public:
+    Story324()
+    {
+        ID = 324;
+
+        Text = "Boche suddenly yells: \"Let's get him, Golgoth!\"\n\nVajra Singh, whirling, makes a split-second decision as to who is his most dangerous adversary. Pressing the power button on the mantramukta, he directs a blistering torrent of raw energy at Golgoth. Golgoth reacts by flinging himself into a sideways roll, firing a continuous barrage at Singh as he moves. Both blasts find their target at the same time. Singh falls with a pencil-thin barysal burn through his eye-socket. Golgoth is engulfed and blown to cinders.\n\nIt has all taken place in seconds. Now only you and Boche are left. He smiles and winks at you. You start to smile back, but it freezes on your face as he turns to show you the barysal gun he has trained on you.\n\n\"Well, Boche,\" you say, \"is this post-hypnotic treachery, or the regular kind?\"\n\n\"I knew you'd turn on me if I didn't act first,\" he replies with a shrug. \"Only one can have the Heart.\"\n\nIt is not pleasant to stare down the barrel of a gun. You had better decide what to do.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[SHOOTIG] Shoot him", 347, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("[PARADOXING] Use a PSIONIC FOCUS", 390, Skill::Type::PARADOXING));
+        Choices.push_back(Choice::Base("Throw a KNIFE at him", 368, {Item::KNIFE}));
+        Choices.push_back(Choice::Base("Otherwise", 411));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story325 : public Story::Base
+{
+public:
+    Story325()
+    {
+        ID = 325;
+
+        Image = "images/puppets.png";
+
+        Text = "You spend an hour or so exploring the area, which turns out to be a range of storerooms and living quarters. \"Obviously it's one of the bomb shelters built in the last days of Du-En.\" says Golgoth, shining his torch into a dusty hospital ward. He bangs the map box against the wall to encourage it to give a clearer picture. \"That being the case, I'm not so sure we'll find a route through to the temple area. The society's leaders would have had more luxurious shelters than this.\"\n\n\"You want luxury?\" calls Gargan XIV from down the corridor. \"We got your luxury right here.\"\n\nJoining the sisters, you enter an auditorium with banks of seats facing a curtain. Cold silver light flickers from plates of frosted glass set into the ceiling. The light gives a strobe effect, so that you all seem to be moving like figures in a jerky freeze-frame video. Gargan XIII pulls the curtain aside. In the flashes of light and dark, you see a stage where a dozen puppets stand in elegant postures.\n\nYou follow Golgoth up onto the sage. The puppets, about a metre tall, are suspended by thin copper wires from high in the grid above the stage. Each is robed like warrior of ancient times and has a scimitar in his hand. You reach out and feel one. It is sharp enough to prick your finger.\n\nThen, in the space between one flicker of light and the next, something changes. At first you cannot tell what, then it hits you: the puppets are moving. Gargan XIII gives a grunt of pain and you see the livid streak of a wound on her forearm. \"They're alive!\" she cries. \"Let's get out of here!\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 132;
+        }
+        else if (Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+        {
+            return 22;
+        }
+        else
+        {
+            return 66;
+        }
+    }
+};
+
+class Story326 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story326()
+    {
+        ID = 326;
+
+        Bye = "You manage to twist the KNIFE around and impale him.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Golgoth wastes no time reloading the crossbow. Throwing it aside, he draws a knife and dives at you. You block his first thrust but take gash on your forearm, countering with a leg sweep which leaves him off balance.\n\nThe fight is short and brutal. Golgoth is a master of lethal killing techniques.\n\n";
+
+        auto DAMAGE = -5;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -5;
+        }
+
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 72; }
+};
+
+class Story327 : public Story::Base
+{
+public:
+    Story327()
+    {
+        ID = 327;
+
+        Text = "Singh is more used to his cannon than the light pistol, and you are just a fraction faster. Your barysal beam splits the air and he falls without a sound. It is only as you go over to inspect the body that you realize he had a chance of hitting you with a dying shot. He chose not to take that shot. Why?\n\nBecause it would have been petty to deprive you of victory when you had beaten him fairly? You can think of no better explanation. Sing died as he had lived: a man of uncompromising honour.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story328 : public Story::Base
+{
+public:
+    Story328()
+    {
+        ID = 328;
+
+        Text = "Boche is not only interested in food. While he extracts a parcel of rations from the corpse's pocket, his other hand adroitly filches a money token out of its wallet. He slips into his boot without telling you. A casual observer would never have noticed. Not to be outdone, you deftly remove the token while Boche is checking another of the bodies. Touching it to your own money token, you TRANSFER the sum of 60 scads and then replace the token before Boche is any wiser.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_MONEY(player, 60);
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::PARADOXING))
+        {
+            return 370;
+        }
+        else
+        {
+            return 306;
+        }
+    }
+};
+
+class Story329 : public Story::Base
+{
+public:
+    Story329()
+    {
+        ID = 329;
+
+        Text = "With a day or two to wait until the ferry to Kahira arrives, you have time to make preparations for the adventure ahead. You take a stroll along the esplanade overlooking the gambling rooms of the notorious Hazard Strip. Below you, in the deep alley that was once the grandest of the canals glaring neon lights and raucous music intrude on the wistful grandeur of Venis by night.\n\nYou consider your options.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try to communicate with Gaia", 351));
+        Choices.push_back(Choice::Base("Discover more about the Heart of Volent", 91));
+        Choices.push_back(Choice::Base("enquire after travellers who have gone missing on their way to Venis recently", 451));
+        Choices.push_back(Choice::Base("Go look for gossip about Kyle Boche", 179));
+        Choices.push_back(Choice::Base("Find some special purchases for the trip", 350));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -8499,7 +8744,16 @@ auto story316 = Story316();
 auto story317 = Story317();
 auto story318 = Story318();
 auto story319 = Story319();
-
+auto story320 = Story320();
+auto story321 = Story321();
+auto story322 = Story322();
+auto story323 = Story323();
+auto story324 = Story324();
+auto story325 = Story325();
+auto story326 = Story326();
+auto story327 = Story327();
+auto story328 = Story328();
+auto story329 = Story329();
 
 void InitializeStories()
 {
@@ -8536,7 +8790,8 @@ void InitializeStories()
         &story280, &story281, &story282, &story283, &story284, &story285, &story286, &story287, &story288, &story289,
         &story290, &story291, &story292, &story293, &story294, &story295, &story296, &story297, &story298, &story299,
         &story300, &story301, &story302, &story303, &story304, &story305, &story306, &story307, &story308, &story309,
-        &story310, &story311, &story312, &story313, &story314, &story315, &story316, &story317, &story318, &story319,};
+        &story310, &story311, &story312, &story313, &story314, &story315, &story316, &story317, &story318, &story319,
+        &story320, &story321, &story322, &story323, &story324, &story325, &story326, &story327, &story328, &story329};
 }
 
 #endif
