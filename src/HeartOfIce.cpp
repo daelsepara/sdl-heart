@@ -3921,6 +3921,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                 if (vehicle_trigger)
                 {
                     fillRect(renderer, textwidth, messageh, message_x, message_y, intLB);
+
                     renderImage(renderer, vehicle_text, (SCREEN_WIDTH - vehicle_text->w) / 2, message_y + text_space);
 
                     renderButtons(renderer, vehicle_controls, current, intWH, border_space, border_pts);
