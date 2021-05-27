@@ -7902,6 +7902,280 @@ public:
     int Continue(Character::Base &player) { return 246; }
 };
 
+class Story310 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story310()
+    {
+        ID = 310;
+
+        Bye = "Morning pushes crooked fingers of wan silver light through the thick clouds. Rising and rubbing the circulation back into your weary limbs, you gather your things together and set off towards Venis.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Sheltered from the freezing blast of the night wind by the craggy walls of the pass, you huddle down and snatch a few hours of fitful sleep. In this you take turns, one of you trudging up and down to stay warm while the other dozes. Even your best efforts cannot keep the deathly chill out of your bones.\n\n";
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            PreText += "[SURVIVAL] You are hardy enough to endure the cold.";
+        }
+        else
+        {
+            Character::GAIN_LIFE(player, -1);
+
+            PreText += "You LOSE 1 Life Point.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 199; }
+};
+
+class Story311 : public Story::Base
+{
+public:
+    Story311()
+    {
+        ID = 311;
+
+        Text = "The hour is late. It is time you found somewhere to pass the night. The Ossiman Hotel is still open, and charges 5 scads for a bed.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take a room there", 333, Choice::Type::LOSE_MONEY, 5));
+        Choices.push_back(Choice::Base("Save money by sleeping rough on the streets", 165));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story312 : public Story::Base
+{
+public:
+    Story312()
+    {
+        ID = 312;
+
+        Text = "You awaken and look around, then give a sob of horror and leap half to your feet, scrambling back against the rock. The others are dead, their bodies ripped apart and scattered far across the fresh white snow. When you see there is no immediate threat, your pounding heartbeat starts to return to normal and you venture over to a headless torso which you identify as Hal Shandor. Strange to see a man so vital and full of strength, now a broken shell as lifeless as clay.\n\nAnd as bloodless. You can the snow, puzzled. Despite the dreadful carnage, there is hardly a drop of blood to be seen.\n\nYou do not know what animal could have torn Shandor and his hulking bodyguards limb from limb in total silence. Nor do you want to find out. You make a cursory search of the shreds of clothing you can see, finding an ID CARD, a FLASHLIGHT, and a BARYSAL GUN with one remaining charge.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::ID_CARD, Item::FLASHLIGHT, Item::MAKE_BARYSAL_GUN(1)};
+
+        Limit = 3;
+    }
+
+    int Continue(Character::Base &player) { return 161; }
+};
+
+class Story313 : public Story::Base
+{
+public:
+    Story313()
+    {
+        ID = 313;
+
+        Text = "Electric lighting is rare enough in this age, and is usually arranged by means of a coal- or oil-fuelled generator. For there still to be electricity here, when Marsay has been abandoned for nearly two centuries, there must be a nuclear power source. Presumably such a power source would have to be regulated by computers, which means the possibility of a link to Gaia.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            return 335;
+        }
+        else
+        {
+            return 356;
+        }
+    }
+};
+
+class Story314 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story314()
+    {
+        ID = 314;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "You stumble on through the snow with a howling wind at your back. The air is so cold that each breath rasps in your throat, and your limbs are soon weary and numb. You are on the point of collapse when you find a rocky outcropping that gives partial shelter from the blizzard. You huddle down behind it and wait for daybreak.";
+
+        auto DAMAGE = -2;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            PreText += "[SURVIVAL] ";
+
+            DAMAGE = -1;
+        }
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        if (player.Life > 0)
+        {
+            if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+            {
+                PreText += "\n\n[SURVIVAL] You improvise a scooped shell of snow for better protection from the wind chill.";
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 393; }
+};
+
+class Story315 : public Story::Base
+{
+public:
+    Story315()
+    {
+        ID = 315;
+
+        Text = "A look of keen enthusiasm crackles behind his tranquil gaze and for a moment you feel you've glimpsed the true Chaim Golgoth. \"The barysal gun is a potent weapon,\" he admits, \"but it is limited by charges and is prone to malfunction. This can lead to inconvenience. The crossbow also has its limitations, of course, but against the unarmoured human opponents I find it quite reliable.\"\n\n\"Golgoth is a stickler for efficiency,\" remarks Boche with a smile of undisguised dislike. \"Efficiency, in his case, is usually measured in terms of deaths per minute.\"\n\nGolgoth shrugs, apparently not bothered by Boche's views. \"By that criterion, the efficient agent just needs to equip himself with a few plutonium bombs. If only my superiors weren't so stingy with expenses.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 358; }
+};
+
+class Story316 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story316()
+    {
+        ID = 316;
+
+        Bye = "You manage to fight free of them and run off, taking shelter in a boarded-up doorway as they clatter past in angry pursuit. You listen to them recede into the fog. Hobbling painfully from your wounds, you go in search of a safer place to spend the rest of the night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The alley is too narrow for you to have space to use a gun, even if you are carrying one. Launching yourself at the fanatics with a roar of rage, you lash out with fists and feet. Somebody grabs your arm, but you twist free and shove him back into the priestess. A punch spins you round, but you keep your wits enough to drop low to avoid a follow-up, then straighten and drive your shoulder into your attacker's belly. He slumps with a groan.\n\n";
+
+        auto DAMAGE = -4;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT))
+        {
+            PreText += "[CLOSE COMBAT] ";
+
+            DAMAGE = -2;
+        }
+
+        DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 253; }
+};
+
+class Story317 : public Story::Base
+{
+public:
+    Story317()
+    {
+        ID = 317;
+
+        Text = "He gives you a dubious sidelong look. \"It is not so simple as all that. Our way of life here on al-Lat is governed by a complex creed, of which you know nothing. We are a society which is closed to outsiders.\"\n\nThe door of the laboratory slides open at this point and Riza Baihaqi comes in. \"I'm about to take a flyer back down to Earth, so I can drop you at Sudan,\" he says bluffly. \"Have you been learning about our work here? I hope it will prove useful in your venture.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 275; }
+};
+
+class Story318 : public Story::Base
+{
+public:
+    Story318()
+    {
+        ID = 318;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 340;
+        }
+        else
+        {
+            return 425;
+        }
+    }
+};
+
+class Story319 : public Story::Base
+{
+public:
+    Story319()
+    {
+        ID = 319;
+
+        Text = "The bometh moves off and the binoculars enable you to follow at a safe distance. You watch it slinking between the furrows of snow, a blot of shadow flowing in the moonlight. Seeing it disappear into a snowdrift, you move closer and compose yourself for a long wait. Two or three hours go by. At last it emerges, sniffs at the air, and lopes off in search of prey.\n\nOnce it is out of sight, you scramble over to the snowdrift, pushing along a tunnel into a hollowed-out cavity where there are three small bomeths on a nest of moulted fur. Ignoring them, you turn your attention to the closely packed walls of the lair -- the bometh's larder, where the beast has stored remains of previous kills. You dig out what looks like the carcass of a large fowl. The icy cold has preserved it well. Wrapping the flesh carefully, you make two food packs.";
+
+        Bye = "One of the young bomeths nips at your ankle. The teeth do not penetrate your boot, but it is a timely reminder that the parent might return at any time. You squirm back to the open and hurry away.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 2;
+    }
+
+    int Continue(Character::Base &player) { return 298; }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -8215,6 +8489,17 @@ auto story306 = Story306();
 auto story307 = Story307();
 auto story308 = Story308();
 auto story309 = Story309();
+auto story310 = Story310();
+auto story311 = Story311();
+auto story312 = Story312();
+auto story313 = Story313();
+auto story314 = Story314();
+auto story315 = Story315();
+auto story316 = Story316();
+auto story317 = Story317();
+auto story318 = Story318();
+auto story319 = Story319();
+
 
 void InitializeStories()
 {
@@ -8250,7 +8535,8 @@ void InitializeStories()
         &story270, &story271, &story272, &story273, &story274, &story275, &story276, &story277, &story278, &story279,
         &story280, &story281, &story282, &story283, &story284, &story285, &story286, &story287, &story288, &story289,
         &story290, &story291, &story292, &story293, &story294, &story295, &story296, &story297, &story298, &story299,
-        &story300, &story301, &story302, &story303, &story304, &story305, &story306, &story307, &story308, &story309};
+        &story300, &story301, &story302, &story303, &story304, &story305, &story306, &story307, &story308, &story309,
+        &story310, &story311, &story312, &story313, &story314, &story315, &story316, &story317, &story318, &story319,};
 }
 
 #endif
