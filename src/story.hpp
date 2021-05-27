@@ -7949,7 +7949,7 @@ public:
         Text = "The hour is late. It is time you found somewhere to pass the night. The Ossiman Hotel is still open, and charges 5 scads for a bed.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Take a room there", 333, Choice::Type::LOSE_MONEY, 5));
+        Choices.push_back(Choice::Base("Take a room there (5 scads)", 333, Choice::Type::LOSE_MONEY, 5));
         Choices.push_back(Choice::Base("Save money by sleeping rough on the streets", 165));
 
         Controls = Story::Controls::STANDARD;
@@ -8023,7 +8023,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "You stumble on through the snow with a howling wind at your back. The air is so cold that each breath rasps in your throat, and your limbs are soon weary and numb. You are on the point of collapse when you find a rocky outcropping that gives partial shelter from the blizzard. You huddle down behind it and wait for daybreak.";
+        PreText = "You stumble on through the snow with a howling wind at your back. The air is so cold that each breath rasps in your throat, and your limbs are soon weary and numb. You are on the point of collapse when you find a rocky outcropping that gives partial shelter from the blizzard. You huddle down behind it and wait for daybreak.\n\n";
 
         auto DAMAGE = -2;
 
