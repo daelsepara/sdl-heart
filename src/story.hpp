@@ -5281,9 +5281,9 @@ public:
         Text = "Dusk is falling on the tenth day after leaving the Etruscan Inn when you finally come in sight of Venis. It shimmers with a thousand lights under a sky like dull green bronze. Hungry and cold, you quicken your pace until you can make out individual buildings -- first the temporary shacks where hunters and traders dwell, then the slums of corrugated iron and plastic which fill the narrow streets that some say were once canals. Above them loom the blocks of ancient plazas, where the rich and powerful of the city reside in palatial buildings shored up with wooden scaffolding to support them from the ravages of time.\n\nYou soon learn that the ferry to Kahira is not due for a couple of days. Kyle Boche tells you that he has friends he must visit, and arranges to meet up with you when the ferry arrives. While waiting, you have a choice of where to take lodging. The lavish Marco Polo Hotel will charge 12 scads for two nights; the Hotel Paradise will charge 6 scads; the disreputable Doge's Inn will cost only 3 scads.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Go to the Marco Polo", 286, Choice::Type::MONEY, 12));
-        Choices.push_back(Choice::Base("Opt for Paradise", 244, Choice::Type::MONEY, 6));
-        Choices.push_back(Choice::Base("Check in at the Doge's Inn", 371, Choice::Type::MONEY, 3));
+        Choices.push_back(Choice::Base("Go to the Marco Polo", 286, Choice::Type::LOSE_MONEY, 12));
+        Choices.push_back(Choice::Base("Opt for Paradise", 244, Choice::Type::LOSE_MONEY, 6));
+        Choices.push_back(Choice::Base("Check in at the Doge's Inn", 371, Choice::Type::LOSE_MONEY, 3));
 
         Controls = Story::Controls::STANDARD;
     }
