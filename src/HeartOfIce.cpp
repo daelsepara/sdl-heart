@@ -39,7 +39,7 @@ bool loseSkills(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID);
 bool mapScreen(SDL_Window *window, SDL_Renderer *renderer);
 bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
-bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
+bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story, Control::Type mode);
 bool storyScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, int id);
 bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, std::vector<Item::Base> items, int limit);
 bool tradeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Item::Base mine, Item::Base theirs);
@@ -2454,13 +2454,11 @@ bool tradeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pl
     return done;
 }
 
-void applyRetrovirus(Character::Base &player, Item::Type virus, bool reverse)
+bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story, Control::Type mode)
 {
-}
+    auto shop = mode == Control::Type::BUY ? story->Shop : story->Sell;
 
-bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story)
-{
-    if (story->Shop.size() > 0)
+    if (shop.size() > 0)
     {
         std::string message;
 
@@ -2480,7 +2478,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
         auto idx = 0;
 
-        for (auto i = story->Shop.begin(); i != story->Shop.end(); i++)
+        for (auto i = shop.begin(); i != shop.end(); i++)
         {
             auto item = i->first;
             auto price = i->second;
@@ -2509,7 +2507,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
             auto y = texty + (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H : 2 * text_space);
 
-            controls.push_back(Button(idx, text, idx, idx, (idx > 0 ? idx - 1 : idx), (idx < story->Shop.size() ? idx + 1 : idx), textx + 2 * text_space, y, Control::Type::ACTION));
+            controls.push_back(Button(idx, text, idx, idx, (idx > 0 ? idx - 1 : idx), (idx < shop.size() ? idx + 1 : idx), textx + 2 * text_space, y, Control::Type::ACTION));
             controls[idx].W = textwidth + button_space;
             controls[idx].H = text->h;
 
@@ -2573,7 +2571,14 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
             if (!error && !purchased)
             {
-                putText(renderer, "Select an item to buy", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, messageh, startx, starty);
+                if (mode == Control::Type::BUY)
+                {
+                    putText(renderer, "Select an item to buy", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, messageh, startx, starty);
+                }
+                else
+                {
+                    putText(renderer, "You may sell your items at prices indicated here", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, messageh, startx, starty);
+                }
             }
 
             putText(renderer, "Possessions", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (boxh + infoh));
@@ -2586,7 +2591,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
             renderButtons(renderer, controls, current, intGR, text_space, text_space / 2);
 
-            for (auto i = 0; i < story->Shop.size(); i++)
+            for (auto i = 0; i < shop.size(); i++)
             {
                 if (i != current)
                 {
@@ -2600,197 +2605,241 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
             {
                 if (controls[current].Type == Control::Type::ACTION && !hold)
                 {
-                    if (current >= 0 && current < story->Shop.size())
+                    if (current >= 0 && current < shop.size())
                     {
-                        auto element = story->Shop.at(current);
+                        auto element = shop.at(current);
                         auto item = element.first;
                         auto price = element.second;
 
-                        if (player.Money >= price)
+                        if (mode == Control::Type::BUY)
                         {
-                            if (item.Type == Item::Type::EXALTED_ENHANCER || item.Type == Item::Type::VIRID_MYSTERY || item.Type == Item::Type::PEERLESS_PERCEPTIVATE || item.Type == Item::Type::MASK_OF_OCCULTATION)
+                            if (player.Money >= price)
                             {
-                                if (Character::IS_APPLIED(player, item.Type))
+                                if (item.Type == Item::Type::EXALTED_ENHANCER || item.Type == Item::Type::VIRID_MYSTERY || item.Type == Item::Type::PEERLESS_PERCEPTIVATE || item.Type == Item::Type::MASK_OF_OCCULTATION)
                                 {
-                                    message = "Malengin no longer has this retrovirus in stock!";
-
-                                    start_ticks = SDL_GetTicks();
-
-                                    purchased = false;
-
-                                    error = true;
-                                }
-                                else
-                                {
-                                    player.Money -= price;
-
-                                    if (item.Type == Item::Type::EXALTED_ENHANCER)
+                                    if (Character::IS_APPLIED(player, item.Type))
                                     {
-                                        auto agility_lost = Character::VERIFY_SKILL(player, Skill::Type::AGILITY);
-
-                                        Character::EXALTED_ENHANCER(player, false);
-
-                                        message = "You gain 5 Maximum Life Points.";
-
-                                        if (agility_lost)
-                                        {
-                                            message += " However, your [AGILITY] skill is LOST.";
-                                        }
+                                        message = "Malengin no longer has this retrovirus in stock!";
 
                                         start_ticks = SDL_GetTicks();
 
-                                        purchased = true;
+                                        purchased = false;
 
-                                        error = false;
+                                        error = true;
                                     }
-                                    else if (item.Type == Item::Type::MASK_OF_OCCULTATION)
+                                    else
                                     {
-                                        Character::MASK_OF_OCCULTATION(player, false);
+                                        player.Money -= price;
 
-                                        message = "You now have the ability to alter your appearance and colouring. You gain the codeword CAMOUFLAGE.";
-
-                                        start_ticks = SDL_GetTicks();
-
-                                        purchased = true;
-
-                                        error = false;
-                                    }
-                                    else if (item.Type == Item::Type::PEERLESS_PERCEPTIVATE)
-                                    {
-                                        Character::PEERLESS_PERCEPTIVATE(player, false);
-
-                                        message = "You now have the ability to see in almost total darkness. You gain the codeword SCOTOPIC.";
-
-                                        start_ticks = SDL_GetTicks();
-
-                                        error = false;
-
-                                        purchased = true;
-                                    }
-                                    else if (item.Type == Item::Type::VIRID_MYSTERY)
-                                    {
-                                        auto reversed = 0;
-
-                                        message = "";
-
-                                        if (Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
+                                        if (item.Type == Item::Type::EXALTED_ENHANCER)
                                         {
-                                            reversed++;
+                                            auto agility_lost = Character::VERIFY_SKILL(player, Skill::Type::AGILITY);
 
-                                            message += "EXALTED ENHANCER effects reversed.";
+                                            Character::EXALTED_ENHANCER(player, false);
 
-                                            Character::EXALTED_ENHANCER(player, true);
-                                        }
+                                            message = "You gain 5 Maximum Life Points.";
 
-                                        if (Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
-                                        {
-                                            if (reversed > 0)
+                                            if (agility_lost)
                                             {
-                                                message += " ";
+                                                message += " However, your [AGILITY] skill is LOST.";
                                             }
 
-                                            reversed++;
+                                            start_ticks = SDL_GetTicks();
 
-                                            message += "MASK OF OCCULTATION effects reversed.";
+                                            purchased = true;
 
-                                            Character::MASK_OF_OCCULTATION(player, true);
+                                            error = false;
                                         }
-
-                                        if (Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
+                                        else if (item.Type == Item::Type::MASK_OF_OCCULTATION)
                                         {
-                                            if (reversed > 0)
-                                            {
-                                                message += " ";
-                                            }
+                                            Character::MASK_OF_OCCULTATION(player, false);
 
-                                            reversed++;
+                                            message = "You now have the ability to alter your appearance and colouring. You gain the codeword CAMOUFLAGE.";
 
-                                            message += "PEERLESS PERCEPTIVATE effects reversed.";
+                                            start_ticks = SDL_GetTicks();
 
-                                            Character::PEERLESS_PERCEPTIVATE(player, true);
+                                            purchased = true;
+
+                                            error = false;
                                         }
-
-                                        Character::APPLY_VIRUS(player, Item::Type::VIRID_MYSTERY);
-
-                                        if (reversed == 0)
+                                        else if (item.Type == Item::Type::PEERLESS_PERCEPTIVATE)
                                         {
-                                            message = "No retrovirus effects reversed!";
+                                            Character::PEERLESS_PERCEPTIVATE(player, false);
 
-                                            error = true;
+                                            message = "You now have the ability to see in almost total darkness. You gain the codeword SCOTOPIC.";
 
-                                            purchased = false;
-                                        }
-                                        else
-                                        {
+                                            start_ticks = SDL_GetTicks();
+
                                             error = false;
 
                                             purchased = true;
                                         }
+                                        else if (item.Type == Item::Type::VIRID_MYSTERY)
+                                        {
+                                            auto reversed = 0;
+
+                                            message = "";
+
+                                            if (Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
+                                            {
+                                                reversed++;
+
+                                                message += "EXALTED ENHANCER effects reversed.";
+
+                                                Character::EXALTED_ENHANCER(player, true);
+                                            }
+
+                                            if (Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
+                                            {
+                                                if (reversed > 0)
+                                                {
+                                                    message += " ";
+                                                }
+
+                                                reversed++;
+
+                                                message += "MASK OF OCCULTATION effects reversed.";
+
+                                                Character::MASK_OF_OCCULTATION(player, true);
+                                            }
+
+                                            if (Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
+                                            {
+                                                if (reversed > 0)
+                                                {
+                                                    message += " ";
+                                                }
+
+                                                reversed++;
+
+                                                message += "PEERLESS PERCEPTIVATE effects reversed.";
+
+                                                Character::PEERLESS_PERCEPTIVATE(player, true);
+                                            }
+
+                                            Character::APPLY_VIRUS(player, Item::Type::VIRID_MYSTERY);
+
+                                            if (reversed == 0)
+                                            {
+                                                message = "No retrovirus effects reversed!";
+
+                                                error = true;
+
+                                                purchased = false;
+                                            }
+                                            else
+                                            {
+                                                error = false;
+
+                                                purchased = true;
+                                            }
+
+                                            start_ticks = SDL_GetTicks();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (Item::IsUnique(item.Type) && Character::VERIFY_ITEMS(player, {item.Type}))
+                                    {
+                                        message = "You already have this item!";
 
                                         start_ticks = SDL_GetTicks();
+
+                                        purchased = false;
+
+                                        error = true;
+                                    }
+                                    else
+                                    {
+                                        Character::GET_ITEMS(player, {item});
+
+                                        player.Money -= price;
+
+                                        while (!Character::VERIFY_POSSESSIONS(player))
+                                        {
+                                            inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
+                                        }
+
+                                        std::string description = item.Name;
+
+                                        if (item.Charge >= 0)
+                                        {
+                                            description += " (";
+
+                                            if (item.Charge > 0)
+                                            {
+                                                description += std::to_string(item.Charge) + " charges";
+                                            }
+                                            else
+                                            {
+                                                description += "empty";
+                                            }
+
+                                            description += ")";
+                                        }
+
+                                        message = description + " purchased.";
+
+                                        start_ticks = SDL_GetTicks();
+
+                                        purchased = true;
+
+                                        error = false;
                                     }
                                 }
                             }
                             else
                             {
-                                if (Item::IsUnique(item.Type) && Character::VERIFY_ITEMS(player, {item.Type}))
+                                message = "You do not have enough scads to buy that!";
+
+                                start_ticks = SDL_GetTicks();
+
+                                purchased = false;
+
+                                error = true;
+                            }
+                        }
+                        else if (mode == Control::Type::SELL)
+                        {
+                            auto result = Item::FIND_TYPE(player.Items, item.Type);
+
+                            if (result >= 0)
+                            {
+                                message = std::string(item.Name) + " SOLD.";
+
+                                start_ticks = SDL_GetTicks();
+
+                                purchased = true;
+
+                                error = false;
+
+                                Character::GAIN_MONEY(player, price);
+
+                                if (Item::COUNT_TYPES(player.Items, item.Type) > 1)
                                 {
-                                    message = "You already have this item!";
+                                    auto least = Item::FIND_LEAST(player.Items, item.Type);
 
-                                    start_ticks = SDL_GetTicks();
-
-                                    purchased = false;
-
-                                    error = true;
+                                    if (least >= 0)
+                                    {
+                                        player.Items.erase(player.Items.begin() + least);
+                                    }
                                 }
                                 else
                                 {
-                                    Character::GET_ITEMS(player, {item});
-
-                                    player.Money -= price;
-
-                                    while (!Character::VERIFY_POSSESSIONS(player))
-                                    {
-                                        inventoryScreen(window, renderer, player, story, player.Items, Control::Type::DROP, 0);
-                                    }
-
-                                    std::string description = item.Name;
-
-                                    if (item.Charge >= 0)
-                                    {
-                                        description += " (";
-
-                                        if (item.Charge > 0)
-                                        {
-                                            description += std::to_string(item.Charge) + " charges";
-                                        }
-                                        else
-                                        {
-                                            description += "empty";
-                                        }
-
-                                        description += ")";
-                                    }
-
-                                    message = description + " purchased.";
-
-                                    start_ticks = SDL_GetTicks();
-
-                                    purchased = true;
-
-                                    error = false;
+                                    Character::LOSE_ITEMS(player, {item.Type});
                                 }
                             }
-                        }
-                        else
-                        {
-                            message = std::string("You do not have enough scads to buy that!");
+                            else
+                            {
+                                message = "You do not have that item!";
 
-                            start_ticks = SDL_GetTicks();
+                                start_ticks = SDL_GetTicks();
 
-                            purchased = false;
+                                purchased = false;
 
-                            error = true;
+                                error = true;
+                            }
                         }
                     }
                 }
@@ -3825,6 +3874,10 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
         {
             controls = Story::ShopControls(compact);
         }
+        else if (story->Controls == Story::Controls::SELL)
+        {
+            controls = Story::SellControls(compact);
+        }
         else if (story->Controls == Story::Controls::TRADE)
         {
             controls = Story::TradeControls(compact);
@@ -3961,7 +4014,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         if (splashTexture)
                         {
                             SDL_Rect src;
-                            
+
                             src.w = zoomw;
                             src.h = zoomh;
                             src.x = centerx - zoomw / 2;
@@ -4068,11 +4121,18 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
 
                         selected = false;
                     }
-                    else if (controls[current].Type == Control::Type::SHOP && !hold)
+                    else if ((controls[current].Type == Control::Type::SHOP || controls[current].Type == Control::Type::SELL) && !hold)
                     {
                         if (story->Type == Story::Type::NORMAL && player.Life > 0)
                         {
-                            shopScreen(window, renderer, player, story);
+                            if (controls[current].Type == Control::Type::SHOP)
+                            {
+                                shopScreen(window, renderer, player, story, Control::Type::BUY);
+                            }
+                            else
+                            {
+                                shopScreen(window, renderer, player, story, Control::Type::SELL);
+                            }
                         }
                         else
                         {

@@ -36,7 +36,9 @@ namespace Control
         GIVE,
         LOSE,
         YES,
-        NO
+        NO,
+        BUY,
+        SELL
     };
 
     class Base

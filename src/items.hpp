@@ -243,5 +243,27 @@ namespace Item
         return found;
     }
 
+    int FIND_LEAST(std::vector<Item::Base> &list, Item::Type item)
+    {
+        auto found = -1;
+        
+        auto min = 255;
+
+        for (auto i = 0; i < list.size(); i++)
+        {
+            if (list[i].Type == item)
+            {
+                if (list[i].Charge < min)
+                {
+                    found = i;
+
+                    min = list[i].Charge;
+                }
+            }
+        }
+
+        return found;
+    }
+
 } // namespace Item
 #endif

@@ -172,6 +172,7 @@ namespace Story
         NONE = 0,
         STANDARD,
         SHOP,
+        SELL,
         TRADE
     };
 
@@ -193,6 +194,7 @@ namespace Story
         std::vector<Choice::Base> Choices = std::vector<Choice::Base>();
 
         std::vector<std::pair<Item::Base, int>> Shop = std::vector<std::pair<Item::Base, int>>();
+        std::vector<std::pair<Item::Base, int>> Sell = std::vector<std::pair<Item::Base, int>>();
 
         std::pair<Item::Base, Item::Base> Trade;
 
@@ -287,6 +289,32 @@ namespace Story
         controls.push_back(Button(idx + 4, "icons/next.png", idx + 3, idx + 5, compact ? idx + 4 : 1, idx + 4, startx + 4 * gridsize, buttony, Control::Type::NEXT));
         controls.push_back(Button(idx + 5, "icons/shop.png", idx + 4, idx + 6, compact ? idx + 5 : 1, idx + 5, startx + 5 * gridsize, buttony, Control::Type::SHOP));
         controls.push_back(Button(idx + 6, "icons/exit.png", idx + 5, idx + 6, compact ? idx + 6 : 1, idx + 6, (1.0 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
+
+        return controls;
+    }
+
+    std::vector<Button> SellControls(bool compact = false)
+    {
+        auto idx = 0;
+
+        auto controls = std::vector<Button>();
+
+        if (!compact)
+        {
+            controls.push_back(Button(0, "icons/up-arrow.png", 0, 1, 0, 1, (1.0 - Margin) * SCREEN_WIDTH - arrow_size, texty + border_space, Control::Type::SCROLL_UP));
+            controls.push_back(Button(1, "icons/down-arrow.png", 0, 2, 0, 2, (1.0 - Margin) * SCREEN_WIDTH - arrow_size, texty + text_bounds - arrow_size - border_space, Control::Type::SCROLL_DOWN));
+
+            idx = 2;
+        }
+
+        controls.push_back(Button(idx, "icons/map.png", idx, idx + 1, compact ? idx : 1, idx, startx, buttony, Control::Type::MAP));
+        controls.push_back(Button(idx + 1, "icons/disk.png", idx, idx + 2, compact ? idx + 1 : 1, idx + 1, startx + gridsize, buttony, Control::Type::GAME));
+        controls.push_back(Button(idx + 2, "icons/user.png", idx + 1, idx + 3, compact ? idx + 2 : 1, idx + 2, startx + 2 * gridsize, buttony, Control::Type::CHARACTER));
+        controls.push_back(Button(idx + 3, "icons/items.png", idx + 2, idx + 4, compact ? idx + 3 : 1, idx + 3, startx + 3 * gridsize, buttony, Control::Type::USE));
+        controls.push_back(Button(idx + 4, "icons/next.png", idx + 3, idx + 5, compact ? idx + 4 : 1, idx + 4, startx + 4 * gridsize, buttony, Control::Type::NEXT));
+        controls.push_back(Button(idx + 5, "icons/shop.png", idx + 4, idx + 6, compact ? idx + 5 : 1, idx + 5, startx + 5 * gridsize, buttony, Control::Type::SHOP));
+        controls.push_back(Button(idx + 6, "icons/selling.png", idx + 5, idx + 7, compact ? idx + 6 : 1, idx + 6, startx + 6 * gridsize, buttony, Control::Type::SELL));
+        controls.push_back(Button(idx + 7, "icons/exit.png", idx + 6, idx + 7, compact ? idx + 7 : 1, idx + 7, (1.0 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
 
         return controls;
     }
@@ -884,16 +912,18 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "Captain Novak comes racing towards you out of the smoke. His uniform is torn and signed by the explosion and he has a wild look in his eyes. You are not sure whether to block his way or stand aside, when suddenly a barysal shot streams through the air, piercing his brain. A second shot hits him as he falls, but glances off his armour and ricochets into you.\n\nYou are badly burned.";
+        PreText = "Captain Novak comes racing towards you out of the smoke. His uniform is torn and signed by the explosion and he has a wild look in his eyes. You are not sure whether to block his way or stand aside, when suddenly a barysal shot streams through the air, piercing his brain. A second shot hits him as he falls, but glances off his armour and ricochets into you.\n\nYou are badly burned.\n\n";
 
         auto DAMAGE = -6;
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
         {
+            PreText += "[Item: SPECULUM JACKET] ";
+
             DAMAGE = -4;
         }
 
-        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         Character::GAIN_LIFE(player, DAMAGE);
 
@@ -1471,16 +1501,18 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "Golgoth fires back, but he has no defence against the unstoppable power of the MANTRAMUKTA CANNON, which literally blasts him apart. His last shot strikes you glancingly, however, and you feel an agonizing pain coursing through your side.";
+        PreText = "Golgoth fires back, but he has no defence against the unstoppable power of the MANTRAMUKTA CANNON, which literally blasts him apart. His last shot strikes you glancingly, however, and you feel an agonizing pain coursing through your side.\n\n";
 
         auto DAMAGE = -3;
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
         {
+            PreText += "[Item: SPECULUM JACKET] ";
+
             DAMAGE = -2;
         }
 
-        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         Character::GAIN_LIFE(player, DAMAGE);
 
@@ -3568,16 +3600,18 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "With the ghastly brain floating after you, you race out of the hall. The passage soon forks, but you have no time to pause and get your bearings. You blunder on, gasping for breath, looking back over your shoulder to see if your pursuer is still there. Losing sight of it around a bend in the tunnel, you begin to calm down and think. The baron is a powerful psychic .. ore powerful than you ever dreamed, to outlive his body like this -- but he cannot survive once the remaining oxygen in his brain tissue is used up. All you have to do is stay ahead of him that long.\n\nYour simple plan is ruined a moment later when, darting around a junction in the passage, you come face to face with a hover-droid. A quarter of a second is long enough for you to start tor turn, and for the hover-droid to identify you as an intruder in the catacombs. As you leap back, its laser flares up and you feel a sickening pain as the hot beam cuts through your gut.";
+        PreText = "With the ghastly brain floating after you, you race out of the hall. The passage soon forks, but you have no time to pause and get your bearings. You blunder on, gasping for breath, looking back over your shoulder to see if your pursuer is still there. Losing sight of it around a bend in the tunnel, you begin to calm down and think. The baron is a powerful psychic .. ore powerful than you ever dreamed, to outlive his body like this -- but he cannot survive once the remaining oxygen in his brain tissue is used up. All you have to do is stay ahead of him that long.\n\nYour simple plan is ruined a moment later when, darting around a junction in the passage, you come face to face with a hover-droid. A quarter of a second is long enough for you to start tor turn, and for the hover-droid to identify you as an intruder in the catacombs. As you leap back, its laser flares up and you feel a sickening pain as the hot beam cuts through your gut.\n\n";
 
         auto DAMAGE = -4;
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
         {
+            PreText += "[Item: SPECULUM JACKET] ";
+
             DAMAGE = -3;
         }
 
-        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         Character::GAIN_LIFE(player, DAMAGE);
 
@@ -3623,16 +3657,18 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "Your shot burns through Singh's armour and he staggers back, but although wounded he is far from beaten. He presses the fire button on his MANTRAMUKTA CANNON just as Boche goes for an opportunist shot at you. The beam carves through your shoulder.";
+        PreText = "Your shot burns through Singh's armour and he staggers back, but although wounded he is far from beaten. He presses the fire button on his MANTRAMUKTA CANNON just as Boche goes for an opportunist shot at you. The beam carves through your shoulder.\n\n";
 
         auto DAMAGE = -2;
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
         {
+            PreText += "[Item: SPECULUM JACKET] ";
+
             DAMAGE = -1;
         }
 
-        PreText += "\n\nYou LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
 
         Character::GAIN_LIFE(player, DAMAGE);
 
@@ -7059,7 +7095,7 @@ public:
 
             DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
 
-            PreText += "\n\n[CLOSE COMBAT] You LOSE " + std::to_string(-DAMAGE) +" Life Points.";
+            PreText += "\n\n[CLOSE COMBAT] You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
         }
         else
         {
@@ -7121,6 +7157,288 @@ public:
         else
         {
             return 321;
+        }
+    }
+};
+
+class Story280 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story280()
+    {
+        ID = 280;
+
+        Bye = "You stab desperately at the button. As the door closes, you see Thadra Bey die in a hail of laser-blasts. If you cannot figure out the answers that the computer wants to hear, you will be next.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "The elevator door slides open. You are confronted by one of the hover-droids, which immediately open fire. Although you twist to one side, the blast rips through your arm, burning you to the bone.\n\n";
+
+        auto DAMAGE = -6;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            PreText += "[Item: SPECULUM JACKET] ";
+
+            DAMAGE = -4;
+        }
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 301; }
+};
+
+class Story281 : public Story::Base
+{
+public:
+    Story281()
+    {
+        ID = 281;
+
+        Text = "You enter a lofty room plunged in gloom. Boche flicks his torchlight around and it falls on a curious sight. The light seems to spill slowly, like a puddle of oil, through a zone several metres across. In the the middle stands a man in old-fashioned military dress. Beside him on the floor lies a metal globe about the size of an egg, covered with glowing studs.\n\n\"It is a stasis bomb, I believe,\" announces the baron in his stern clipped tones. \"Watch.\"\n\nHe glides off, skirting the zone where the torch beam slowed down. You see him drifting around the far perimeter. But then suddenly he comes back into view around the edge of the zone, even though you can still see his image moving beyond it.\n\n\"The stasis bomb slows down time in a two-mere radius,\" explains the baron. \"Like takes several seconds to cross the zone, which is why you can still see my image floating on the other side.\"\n\nAs you watch, the image moves around the zone, disappearing like a ghost as it reaches the edge. \"How long has that man been frozen there?\" wonders Boche.\n\n\"Probably since the fall of Du-En. Almost two hundred years. That period will have seemed to him like only a few seconds.\"";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            Choices.push_back(Choice::Base("Try to free the man using either a charged BARYSAL GUN", 345, {Item::BARYSAL_GUN}));
+            Choices.push_back(Choice::Base("[PARADOXING] Free him using a PSIONIC FOCUS", 366, Skill::Type::PARADOXING));
+            Choices.push_back(Choice::Base("Leave him frozen and continue on your way", 388));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 323; }
+};
+
+class Story282 : public Story::Base
+{
+public:
+    Story282()
+    {
+        ID = 282;
+
+        Text = "You take a step back and shoot again as the baron's brain swoops closer. This time you use your own psionic power to break through the force field. The blast strikes the brain dead centre. There is a horrible psychic shriek as it falls to the floor and shrivels. You press your hands to your ears, but you cannot shut out those death-cries -- cries that will haunt your dreams forevermore.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 261; }
+};
+
+class Story283 : public Story::Base
+{
+public:
+    Story283()
+    {
+        ID = 283;
+
+        Text = "A merchant takes you to a vault tunnelled into the block of one of the great piazzas. Passing through a door guarded by two burly men with iron batons, you wait in a short corridor lit by a flickering light panel. At last a steel door opens at the far end and you walk through into the merchant's storeroom. \"I will also buy such items,\" the merchant tells you, \"at half the price I've quoted for sale.\"\n\n\"Why should I wish to sell?\"\n\nHis lips curls in an inscrutable half-smile. \"You have come to Venis for the ferry, I presume. You'll need money for your ticket.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::SELL;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Shop = {{Item::MAKE_BARYSAL_GUN(6), 16}, {Item::PSIONIC_FOCUS, 18}, {Item::POLARIZED_GOGGLES, 8}, {Item::FLASHLIGHT, 10}, {Item::GAS_MASK, 10}, {Item::STUN_GRENADE, 8}, {Item::KNIFE, 4}};
+
+        Sell = {{Item::MAKE_BARYSAL_GUN(6), 8}, {Item::PSIONIC_FOCUS, 9}, {Item::POLARIZED_GOGGLES, 4}, {Item::FLASHLIGHT, 5}, {Item::GAS_MASK, 5}, {Item::STUN_GRENADE, 4}, {Item::KNIFE, 2}};
+    }
+
+    int Continue(Character::Base &player) { return 261; }
+};
+
+class Story284 : public Story::Base
+{
+public:
+    Story284()
+    {
+        ID = 284;
+
+        Text = "You both draw your guns at the same time.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::SHOOTING))
+        {
+            Choices.push_back(Choice::Base("Aim at his chest", 348));
+            Choices.push_back(Choice::Base("Aim at his throat", 369));
+            Choices.push_back(Choice::Base("Aim between his eyes", 391));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 327; }
+};
+
+class Story285 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story285()
+    {
+        ID = 285;
+
+        Bye = "Morning comes as a sullen grey intrusion of light across the cloud draped-sky. Stamping the circulation back into your weary limbs, you set off towards Venis.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Night overtakes you on the slope of the mountain. You have to scoop snow to make a rudimentary shelter, and even so the wind numbs you to the core of your bones.\n\n";
+
+        auto DAMAGE = -2;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            PreText += "[SURVIVAL] ";
+
+            DAMAGE = -1;
+        }
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        if (player.Life > 0)
+        {
+            if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+            {
+                PreText += "\n\n[SURVIVAL] You were able to construct an effective shelter.";
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 301; }
+};
+
+class Story286 : public Story::Base
+{
+public:
+    Story286()
+    {
+        ID = 286;
+
+        Text = "In the hotel bar, you strike up conversation with a tall sloe-eyed woman called Thadra Bey. Her accent tells you she is a native of al-Lat, the huge space colony in Earth-Moon orbit. \"I hear that conditions on al-Lat are vastly better than on Earth,\" you remark over a glass of synthash. \"But perhaps you are down on business?\"\n\nShe sips at her drink. \"What I seek is only available here. ON al-Lat, the science of genetic engineering cannot be practised for fear of infecting the colony with a deadly plague. Consequently, the only improvements that can be made to the human body are by mechanical means.\"\n\n\"Your own body appears not to need any improvement,\" you put in politely.\n\nShe continues as though you had not spoken. \"A friend of mine had an implant along her optic nerve so that she could tell the time merely by blinking. The device became stuck permanently on, so that she could not sleep because of seeing lighted numerals in front of her eyes. Worse, it was three minutes fast.\" She finishes her drink, waving away the waiter who tries to refill it. \"Here on Earth the body can be enhanced more efficiently using genetic retroviruses. Specifically, I seek a man called Malengin who is said to trade in such things.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[STREETWISE] Help her", 307, Skill::Type::STREETWISE));
+        Choices.push_back(Choice::Base("Consult a VADE-MECUM", 307, {Item::VADE_MECUM}));
+        Choices.push_back(Choice::Base("Leaver her alone", 329));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story287 : public Story::Base
+{
+public:
+    Story287()
+    {
+        ID = 287;
+
+        Text = "This retrovirus confers the ability to see in almost total darkness.\n\nYou gained the codeword SCOTOPIC.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::PEERLESS_PERCEPTIVATE(player, false);
+    }
+
+    int Continue(Character::Base &player) { return 434; }
+};
+
+class Story288 : public Story::Base
+{
+public:
+    Story288()
+    {
+        ID = 288;
+
+        Text = "Perhaps one of your skills could help you secure a place on the ferry.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Make use of [PILOTING]", 309, Skill::Type::PILOTING));
+        Choices.push_back(Choice::Base("Rely on [ROGUERY]", 331, Skill::Type::ROGUERY));
+        Choices.push_back(Choice::Base("Resort to [ROGUERY]", 226, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Otherwise", 352));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::DIAMOND);
+        }
+    }
+};
+
+class Story289 : public Story::Base
+{
+public:
+    Story289()
+    {
+        ID = 289;
+
+        Text = "From a cruising height of thirty metres, the Ice Wastes resemble a sea of luminous snow broken by islands of exposed black rock. The wind shrieks across the land without respite, driving swathes of powdery snow that has carved strange shapes from the surrounding cliffs. You see few signs of life. This is one of the most desolate regions of Earth. The daylight is bleakly pale, the dusk as blue as smoke, and the night sky is filled with a thousand stars scintillating in the gaps between colossal crags of cloud.\n\nDays pass like a blur. And then at last, glowering on the horizon, you see the grim black walls of a ruined city, You have arrived at Du-En.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
+        {
+            Character::REMOVE_CODEWORD(player, Codeword::Type::DIAMOND);
+
+            return 191;
+        }
+        else
+        {
+            return 213;
         }
     }
 };
@@ -7408,6 +7726,16 @@ auto story276 = Story276();
 auto story277 = Story277();
 auto story278 = Story278();
 auto story279 = Story279();
+auto story280 = Story280();
+auto story281 = Story281();
+auto story282 = Story282();
+auto story283 = Story283();
+auto story284 = Story284();
+auto story285 = Story285();
+auto story286 = Story286();
+auto story287 = Story287();
+auto story288 = Story288();
+auto story289 = Story289();
 
 void InitializeStories()
 {
@@ -7440,7 +7768,8 @@ void InitializeStories()
         &story240, &story241, &story242, &story243, &story244, &story245, &story246, &story247, &story248, &story249,
         &story250, &story251, &story252, &story253, &story254, &story255, &story256, &story257, &story258, &story259,
         &story260, &story261, &story262, &story263, &story264, &story265, &story266, &story267, &story268, &story269,
-        &story270, &story271, &story272, &story273, &story274, &story275, &story276, &story277, &story278, &story279};
+        &story270, &story271, &story272, &story273, &story274, &story275, &story276, &story277, &story278, &story279,
+        &story270, &story281, &story282, &story283, &story284, &story285, &story286, &story287, &story288, &story289};
 }
 
 #endif
