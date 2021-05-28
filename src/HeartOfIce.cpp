@@ -4425,7 +4425,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         }
                         else if (story->Type == Story::Type::DOOM)
                         {
-                            message = "This adventure is over.";
+                            message = "This adventure is over. You have failed.";
 
                             start_ticks = SDL_GetTicks();
 
@@ -4445,7 +4445,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         }
                         else if (story->Type == Story::Type::SACRIFICE)
                         {
-                            message = "This adventure is over. You have given your lives for the sake of the whole world.";
+                            message = "This adventure is over. You have sacrificed your lives for the sake of the whole world.";
 
                             start_ticks = SDL_GetTicks();
 
@@ -4465,7 +4465,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         }
                         else if (story->Type == Story::Type::UNKNOWN)
                         {
-                            message = "This adventure is over. You don't know how long you'll live. But then, who does?";
+                            message = "You have rejected the chance for power. This adventure is over now. You don't know how long you'll live. But then, who does?";
 
                             start_ticks = SDL_GetTicks();
 
@@ -4475,7 +4475,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                         }
                         else if (story->Type == Story::Type::GOOD)
                         {
-                            message = "You found the Heart of Volent! This adventure is over. Further adventure awaits!";
+                            message = "You found the Heart of Volent and rejected the chance for power. Perhaps your destiny now is to save the world. But for now, this adventure is over.";
 
                             start_ticks = SDL_GetTicks();
 

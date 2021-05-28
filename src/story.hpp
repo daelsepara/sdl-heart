@@ -3135,7 +3135,7 @@ public:
     {
         ID = 108;
 
-        Text = "Golgoth had the same idea. You come face to face with him on the edge of the smoke cloud. Instead of a gun, he has a crossbow in his hands. He shoots, but you are already dodging and the bolt only opens a gash across your shoulder.\n\nYou LOSE 2 Life Points.";
+        Text = "Golgoth had the same idea. You come face to face with him on the edge of the smoke cloud. Instead of a gun, he has a CROSSBOW in his hands. He shoots, but you are already dodging and the bolt only opens a gash across your shoulder.\n\nYou LOSE 2 Life Points.";
 
         Choices.clear();
 
@@ -3472,7 +3472,7 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Ask Golgoth what he knows about Giza", 337));
-        Choices.push_back(Choice::Base("Ask about his reason for carrying a crossbow", 315));
+        Choices.push_back(Choice::Base("Ask about his reason for carrying a CROSSBOW", 315));
         Choices.push_back(Choice::Base("Allow Boche to lead you away from this hardened killer", 358));
 
         Controls = Story::Controls::STANDARD;
@@ -6199,7 +6199,7 @@ public:
     {
         ID = 240;
 
-        Text = "You feel a jolting impact as though someone had punched you in the throat. Looking down, you are amazed to see a steel crossbow bolt has pierced your windpipe. You stagger back a couple of steps and then fall, dying in a pool of blood. You have failed with success almost in your grasp.";
+        Text = "You feel a jolting impact as though someone had punched you in the throat. Looking down, you are amazed to see a steel CROSSBOW bolt has pierced your windpipe. You stagger back a couple of steps and then fall, dying in a pool of blood. You have failed with success almost in your grasp.";
 
         Type = Story::Type::DOOM;
 
@@ -6488,12 +6488,12 @@ public:
     {
         ID = 251;
 
-        Text = "The city gate is a metal shutter that opens into a wide cargo lift at the bottom of a concrete abutment. Those entering are conveyed up inside the abutment to the lowest street level twenty metres above. You have arrived just before the gates are closed for the night, and as you step out into the street you draw the attention of a man in blue-&-grey combat dress.\n\nBoche recognizes him, throwing out his chest in a display of wary truculence. The man stops and nods, a relaxed smile on his slim features. \"Kyle Boche. And is this your accomplice, or your latest victim?\"\n\n\"Chaim Golgoth! Are you still a hired murderer?\" pipes up Boche in a tone of bravado. He turns to you. \"This man kills people for a living.\"\n\nYou notice the insignia on Golgoth's sleeve: the blazoned sliver eagle and blue stars of United States Intelligence. Even with the world close to collapse, the United States remains a force to be reckoned with. If Golgoth really is a USI assassin, Boche is being reckless in bantering with him like this. You size up what you can see.\n\nGolgoth has a holstered a BARYSAL GUN and, to your surprise, a steel crossbow slung behind his hip. At a glance he looks open and friendly, his voice mild with wry amusement. But there is something almost chilling about the eyes. Those are the eyes of a man who is always alert.";
+        Text = "The city gate is a metal shutter that opens into a wide cargo lift at the bottom of a concrete abutment. Those entering are conveyed up inside the abutment to the lowest street level twenty metres above. You have arrived just before the gates are closed for the night, and as you step out into the street you draw the attention of a man in blue-&-grey combat dress.\n\nBoche recognizes him, throwing out his chest in a display of wary truculence. The man stops and nods, a relaxed smile on his slim features. \"Kyle Boche. And is this your accomplice, or your latest victim?\"\n\n\"Chaim Golgoth! Are you still a hired murderer?\" pipes up Boche in a tone of bravado. He turns to you. \"This man kills people for a living.\"\n\nYou notice the insignia on Golgoth's sleeve: the blazoned sliver eagle and blue stars of United States Intelligence. Even with the world close to collapse, the United States remains a force to be reckoned with. If Golgoth really is a USI assassin, Boche is being reckless in bantering with him like this. You size up what you can see.\n\nGolgoth has a holstered a BARYSAL GUN and, to your surprise, a steel CROSSBOW slung behind his hip. At a glance he looks open and friendly, his voice mild with wry amusement. But there is something almost chilling about the eyes. Those are the eyes of a man who is always alert.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("[ESP] Probe Golgoth's mind", 121, Skill::Type::ESP));
         Choices.push_back(Choice::Base("Query him about Giza", 337));
-        Choices.push_back(Choice::Base("Ask about his reason for carrying a crossbow", 315));
+        Choices.push_back(Choice::Base("Ask about his reason for carrying a CROSSBOW", 315));
         Choices.push_back(Choice::Base("Simply pass by him into the city", 358));
 
         Controls = Story::Controls::STANDARD;
@@ -6746,7 +6746,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "A swishing in the air is followed by a noise like a knife being driven into an apple. You are startled to see a crossbow bolt protruding from Singh's eye. He is spun round by the impact, dead on his feet, raking the floor with a random blast from the mantramukta as he falls. Molten chunks of marble fly up, one of them striking you heavily across the left arm.\n\n";
+        PreText = "A swishing in the air is followed by a noise like a knife being driven into an apple. You are startled to see a CROSSBOW bolt protruding from Singh's eye. He is spun round by the impact, dead on his feet, raking the floor with a random blast from the mantramukta as he falls. Molten chunks of marble fly up, one of them striking you heavily across the left arm.\n\n";
 
         auto DAMAGE = -4;
 
@@ -7824,7 +7824,7 @@ public:
     {
         ID = 304;
 
-        Text = "Golgoth has no time to reload the crossbow. Drawing a knife, he charges forward, but he is to late to stop you from firing. The shot catches him in the chest and he falls dead at your feet.";
+        Text = "Golgoth has no time to reload the CROSSBOW. Drawing a knife, he charges forward, but he is to late to stop you from firing. The shot catches him in the chest and he falls dead at your feet.";
 
         Choices.clear();
 
@@ -8123,7 +8123,7 @@ public:
     {
         ID = 315;
 
-        Text = "A look of keen enthusiasm crackles behind his tranquil gaze and for a moment you feel you've glimpsed the true Chaim Golgoth. \"The BARYSAL GUN is a potent weapon,\" he admits, \"but it is limited by charges and is prone to malfunction. This can lead to inconvenience. The crossbow also has its limitations, of course, but against the unarmoured human opponents I find it quite reliable.\"\n\n\"Golgoth is a stickler for efficiency,\" remarks Boche with a smile of undisguised dislike. \"Efficiency, in his case, is usually measured in terms of deaths per minute.\"\n\nGolgoth shrugs, apparently not bothered by Boche's views. \"By that criterion, the efficient agent just needs to equip himself with a few plutonium bombs. If only my superiors weren't so stingy with expenses.\"";
+        Text = "A look of keen enthusiasm crackles behind his tranquil gaze and for a moment you feel you've glimpsed the true Chaim Golgoth. \"The BARYSAL GUN is a potent weapon,\" he admits, \"but it is limited by charges and is prone to malfunction. This can lead to inconvenience. The CROSSBOW also has its limitations, of course, but against the unarmoured human opponents I find it quite reliable.\"\n\n\"Golgoth is a stickler for efficiency,\" remarks Boche with a smile of undisguised dislike. \"Efficiency, in his case, is usually measured in terms of deaths per minute.\"\n\nGolgoth shrugs, apparently not bothered by Boche's views. \"By that criterion, the efficient agent just needs to equip himself with a few plutonium bombs. If only my superiors weren't so stingy with expenses.\"";
 
         Choices.clear();
 
@@ -8395,7 +8395,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "Golgoth wastes no time reloading the crossbow. Throwing it aside, he draws a knife and dives at you. You block his first thrust but take gash on your forearm, countering with a leg sweep which leaves him off balance.\n\nThe fight is short and brutal. Golgoth is a master of lethal killing techniques.\n\n";
+        PreText = "Golgoth wastes no time reloading the CROSSBOW. Throwing it aside, he draws a knife and dives at you. You block his first thrust but take gash on your forearm, countering with a leg sweep which leaves him off balance.\n\nThe fight is short and brutal. Golgoth is a master of lethal killing techniques.\n\n";
 
         auto DAMAGE = -5;
 
@@ -10601,7 +10601,6 @@ public:
     {
         if (Character::VERIFY_CODEWORD(player, Codeword::Type::NEMESIS))
         {
-
             return 153;
         }
         else
@@ -10903,7 +10902,7 @@ public:
     {
         ID = 427;
 
-        Text = "There is a brief shouting match, but the Gargan twins see that you will not be swayed. Finally Golgoth, who has stayed aloof from the argument, settles it by saying to them, \"I agree that the automaton is intelligent and therefore counts as a group member. You can abide by that, or leave our group.\"\n\nGilgamesh stands by immobile while all this is going on. \"Is he really intelligent, or does our discussion mean nothing to him?\" you wonder aloud.\n\nGolgoth shrugs. \"Who cares? I only said that to settle the dispute so we could get under way.\".";
+        Text = "There is a brief shouting match, but the Gargan twins see that you will not be swayed. Finally Golgoth, who has stayed aloof from the argument, settles it by saying to them, \"I agree that the automaton is intelligent and therefore counts as a group member. You can abide by that, or leave our group.\"\n\nGilgamesh stands by immobile while all this is going on. \"Is he really intelligent, or does our discussion mean nothing to him?\" you wonder aloud.\n\nGolgoth shrugs. \"Who cares? I only said that to settle the dispute so we could get under way.\"";
 
         Choices.clear();
 
@@ -11178,6 +11177,359 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("Travel by subway", 212));
         Choices.push_back(Choice::Base("Return to the surface and continue your journey on foot", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story440 : public Story::Base
+{
+public:
+    Story440()
+    {
+        ID = 440;
+
+        Text = "Greatest of all the monuments here is the Pyramid of Cheops, a structure of smooth black stone a hundred and fifty metres high, with a long ramp leading up to a door set two-thirds of the way up the east face. You make the long climb, your breath steaming in the cold air. Finally you reach the heavy steel door. A symbol is etched into the metal. The emblem of a long-forgotten cause, it means nothing you. The wind howls dolorously around the pyramid's peak.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        if (!Character::VERIFY_CODEWORD(player, Codeword::Type::HUMBABA))
+        {
+            Choices.push_back(Choice::Base("Use [ROGUERY]", 211, Skill::Type::ROGUERY));
+            Choices.push_back(Choice::Base("[PARADOXING] Use a PSIONIC FOCUS", 189, Skill::Type::PARADOXING));
+            Choices.push_back(Choice::Base("otherwise", 361));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 167; }
+};
+
+class Story441 : public Story::Base
+{
+public:
+    Story441()
+    {
+        ID = 441;
+
+        Text = "\"Du-En surveillance is carried out in the War Room on level one,\" answers the voice. \"Limited activity is reported. Current human population of Du-En is estimated at four individuals, based on surface scan only.\"\n\nThat's curious. You thought Du-En was entirely deserted. Who could be there now?? There is only one answer, you realize grimly: others who seek the Heart of Volent. You must hurry if you hope to reach Du-En in Time.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask the voice to tell you about Gaia", 297));
+        Choices.push_back(Choice::Base("Ask about Gilgamesh", 318));
+        Choices.push_back(Choice::Base("Ask about Heart of Volent", 383));
+        Choices.push_back(Choice::Base("Ascend to the Research level just above", 276));
+        Choices.push_back(Choice::Base("It is time you were on your way", 361));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story442 : public Story::Base
+{
+public:
+    Story442()
+    {
+        ID = 442;
+
+        Text = "Riza takes you outside the building. It is like being in the open air. There is even a breeze. Seeing you look around in amazement, he laughs and points across the lawn towards the horizon. It seems to rise upwards and the further you look, curving over into the sky until it is lost behind a haze of light directly overhead. To either side of you, only a few hundred metres away, vast skyscrapers like like circular plugs across the sky.\n\n\"Did you expect a cramped space station in the ancient style?\" says Riza. \"We have enlarged al-Lat over the centuries, until it is what you see today: a cylinder some two kilometres wide and half a kilometre long. Rotation provides us with gravity, the sun's rays with light and heat.\"\n\nHe takes you to a flyer, and soon al-Lat is dropping away to port as you steer a course towards Earth's atmosphere. Chasing the night, you set down in the Saharan Ice Wastes about eight hundred kilometres due east of Du-En. Streaks of pale gold light furrow the sky behind you as you open the cockpit seals and jump down to the snow. Riza's voice crackles from the radio: \"We'll bring the flyer back by autopilot. Good luck.\"\n\nYou make sure to stand well clear this time as the flyer goes blazing up into the cold morning sky. The screech of its jets recedes into the distance. You are alone.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 298; }
+};
+
+class Story443 : public Story::Base
+{
+public:
+    Story443()
+    {
+        ID = 443;
+
+        Text = "You need protection against the harsh glare of daylight thrown up off the snow. Tearing two thin strips from the lining of your sleeves, you time them above and blow your eyes, leaving only a narrow slit to look through. That should protect you from snow blindness. If only the other perils of the Sahara were so easy to deal with.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 403; }
+};
+
+class Story444 : public Story::Base
+{
+public:
+    Story444()
+    {
+        ID = 444;
+
+        Text = "Hunger is a knot of ice inside your belly; weariness turns your feet to lead weights. Each daybreak you find it harder to shrug off the lassitude of sleep. Every effort costs intense concentration.\n\nHow do your rations stand?";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::HAS_FOOD(player, 1))
+        {
+            CONSUME_FOOD(player, 2);
+
+            return 125;
+        }
+        else if (Character::HAS_FOOD(player, 0))
+        {
+            CONSUME_FOOD(player, 1);
+
+            return 37;
+        }
+        else
+        {
+            return 147;
+        }
+    }
+};
+
+class Story445 : public Story::Base
+{
+public:
+    Story445()
+    {
+        ID = 445;
+
+        Text = "You find Vajra Singh outside his tent, preparing for his foray into the catacombs. He listens without interest to your complaints while checking the power pack on his mantramukta canon. \"This is no concern of mine,\" he says. \"You must settle your own disputes.\"\n\nAbruptly there is the crump of an explosion that echoes from the other side of the square. Racing back to where you left Gilgamesh, you see a plume of black smoke rising from the broken shell of his head. Sparks hiss and fizz behind his visor as he stands swaying, helpless as a puppet. \"Gilgamesh!\" you shout, but although he gives a twitch of his fingers he does not reply. His brain case has been split open by an armour-piercing grenade.\n\nYou round on the Gargan sisters in rage. \"You did this! You destroyed my automaton!\"\n\nThey glare at Golgoth, who is whistling as he polishes his sheath-knife. \"What difference does it make who did it?\" says Gargan XIV with a sneer. \"At least now we can get on.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::REMOVE_CODEWORD(player, Codeword::Type::ENKIDU);
+    }
+
+    int Continue(Character::Base &player) { return 16; }
+};
+
+class Story446 : public Story::Base
+{
+public:
+    Story446()
+    {
+        ID = 446;
+
+        Text = "You stroll casually past the tent and drop Little Gaia in the snow. A few minutes later you come back past. The baron's servants glance at you without curiosity. Retrieving Little Gaia, you take her off to a secluded corner of the square and ask her what she overheard.\n\n\"Baron Siriasis has a communication link to Gaia,\" she says. They discussed the Heart of Volent.\"\n\n\"What did she tell him?\"\n\n\"Gaia advised him that the Heart is unstable. It will give its user ultimate power, but only by sweeping away our universe and creating a new universe in its place.\"\n\n\"And the baron's reply to this?\"\n\n\"He does not care. He is bitter because he is old and crippled. He would be happy to rule over a new universe.\"\n\nLittle Gaia goes on to tell how the Heart could be destroyed: by bombarding it with two barysal beams at right angles, causing a resonance in the crystal lattice that would split it apart.\n\nYou gained the codeword NEMESIS.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go and talk to Golgoth", 126));
+        Choices.push_back(Choice::Base("Talk to Boche", 104));
+        Choices.push_back(Choice::Base("Talk to Gaunt", 148));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+    }
+};
+
+class Story447 : public Story::Base
+{
+public:
+    Story447()
+    {
+        ID = 447;
+
+        Text = "The armoury is a small but well-stocked room in the sub-basement. A gaunt man in white overalls comes over to you, heels clicking on the grey-tiled floor, and asks your requirements. It seems that Society members can take out weapons as long as a payment chit is signed. Since the chits are drawn on the account of the ID CARD's previous owner, who has no use for money now, you may as well select whatever you like.\n\nThe armourer shows you a drawer full of BARYSAL GUNs. \"We also have CROSSBOWs, for those who prefer simplicity in a weapon rather than sheer force.\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE, Item::MAKE_BARYSAL_GUN(6), Item::KNIFE, Item::CROSSBOW, Item::STUN_GRENADE};
+
+        Limit = 32;
+    }
+
+    int Continue(Character::Base &player) { return 73; }
+};
+
+class Story448 : public Story::Base
+{
+public:
+    Story448()
+    {
+        ID = 448;
+
+        Text = "As your companions set off along the ramp towards the Heart, each keeping a weather eye on the others, you roll the STASIS BOMB into their midst. It activates before they have time to run, rooting them to the spot like statues. You move around them. Of all the adventurers who set out for Du-En, you are now the only one left.\n\nYou gained the codeword FOCUS.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::LOSE_ITEMS(player, {Item::Type::STASIS_BOMB});
+
+        Character::GET_CODEWORDS(player, {Codeword::Type::FOCUS});
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story449 : public Story::Base
+{
+public:
+    Story449()
+    {
+        ID = 449;
+
+        Text = "This retrovirus gives you the ability to alter your appearance and colouring at a whim.\n\nYou gained the codeword CAMOUFLAGE.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (!Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
+        {
+            Character::GAIN_MONEY(player, -9);
+
+            Character::MASK_OF_OCCULTATION(player, false);
+        }
+    }
+
+    int Continue(Character::Base &player) { return 434; }
+};
+
+class Story450 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story450()
+    {
+        ID = 450;
+
+        Image = "images/brain.png";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Retreat", 107));
+        Choices.push_back(Choice::Base("(BARYSAL GUN) Open fire", 63, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Stand your ground", 85));
+        Choices.push_back(Choice::Base("Dodge past to the tunnels beyond", 129));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "\"I'm not your servant, Baron. We're allies, remember?\"\n\nHe rotates in midair, turning a look of imperious anger on you. It suddenly occurs to you that he is about to use his psychic powers. So this is the showdown, you have time to think as you back away.\n\nThere is a sudden flash and an explosion which shakes the thick stone walls and sends dust and smoke flying in all directions. You are thrown to the floor.\n\nYou LOSE 1 Life Point.";
+
+        Character::GAIN_LIFE(player, -1);
+
+        if (player.Life > 0)
+        {
+            PreText += "\n\nYou slowly shake your head to clear it, looking around to discover that one of the pillars has toppled. Rock dust sifts through the cracks in the dome above. Hearing a cough, you realize Boche is alive but stunned. The blast threw him right across the hall. Closer, under a block of shattered masonry, lies a ripped and bloody tangle of human remains.\n\nYou get unsteadily to your feet and approach, grimacing in revulsion as you stumble across a severed arm.\n\nYour heart skips a beat at the sound of stone sliding on stone. You stare in paralysis of fear as the masonry block shifts, rising of its own accord. What remains underneath is unrecognizable. Even worse is the thing that hovers up into the air: a gory human brain dangling a torn stump of spinal column, a few flecks of bone still embedded in it from the explosion.\n\nA telepathic message stabs into your mind:\n\n(While the power of thought remains to me, I can still act. Come closer, my friend. I have a use for that healthy young body..)\n\nIt is the baron -- or what's left of him.";
+        }
+
+        Text = PreText.c_str();
+    }
+};
+
+class Story451 : public Story::Base
+{
+public:
+    Story451()
+    {
+        ID = 451;
+
+        Text = "In a tavern you overhear a drunk loudly telling the barman that he will pay his outstanding bill as soon as his boss gets to town. Joining the conversation, you learn that the man has been waiting for several weeks for the arrival of his prospective employer, a wealthy member of the Compass Society.\n\n\"He's a very influential man,\" mutters the drunk, glaring at the barman. \"I'll do all right once I'm working for him.\"\n\n\"What could have happened to delay him?\" you wonder.\n\nThe barman chips in. \"If he came across the Appennines, he may have been delayed permanently. There are dangerous mutants up there in the hills.\"\n\n\"Pah!\" The drunk scoffs at this. \"He's got three Fijian bodyguards. Really big guys.\"\n\n\"The mutants won't be going hungry this winter, then,\" remarks the barman sardonically.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}) && !Character::VERIFY_ITEMS(player, {Item::Type::ID_CARD}))
+        {
+            return 414;
+        }
+        else if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        {
+            return 69;
+        }
+        else
+        {
+            return 47;
+        }
+    }
+};
+
+class Story452 : public Story::Base
+{
+public:
+    Story452()
+    {
+        ID = 452;
+
+        Text = "With your shady talents it should be easy to disguise yourself to look like the card's original owner. You can take care of that later.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 414; }
+};
+
+class Story453 : public Story::Base
+{
+public:
+    Story453()
+    {
+        ID = 453;
+
+        Text = "Decide what to do next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Resort to [CUNNING]", 7, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Try [ROGUERY]", 7, Skill::Type::ROGUERY));
+        Choices.push_back(Choice::Base("Rely on [PARADOXING]", 29, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("Otherwise", 52));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story454 : public Story::Base
+{
+public:
+    Story454()
+    {
+        ID = 454;
+
+        Text = "Picking up the mantramukta cannon, you return to the elevators. If the hover-droids are still waiting above then you will have a hard fight returning to the surface. Even so, it is better than ending your days here in this grim place. You look back at the bodies littering the Shrine of the Heart. The thirst for power claimed so many lives -- a senseless waste, when all of them might instead have channelled their efforts into saving this frigid dying world. Perhaps that is your destiny now.\n\nYou step into the elevator, and the door closes behind you.";
+
+        Type = Story::Type::GOOD;
 
         Controls = Story::Controls::STANDARD;
     }
@@ -11627,6 +11979,21 @@ auto story436 = Story436();
 auto story437 = Story437();
 auto story438 = Story438();
 auto story439 = Story439();
+auto story440 = Story440();
+auto story441 = Story441();
+auto story442 = Story442();
+auto story443 = Story443();
+auto story444 = Story444();
+auto story445 = Story445();
+auto story446 = Story446();
+auto story447 = Story447();
+auto story448 = Story448();
+auto story449 = Story449();
+auto story450 = Story450();
+auto story451 = Story451();
+auto story452 = Story452();
+auto story453 = Story453();
+auto story454 = Story454();
 
 void InitializeStories()
 {
@@ -11675,7 +12042,9 @@ void InitializeStories()
         &story400, &story401, &story402, &story403, &story404, &story405, &story406, &story407, &story408, &story409,
         &story410, &story411, &story412, &story413, &story414, &story415, &story416, &story417, &story418, &story419,
         &story420, &story421, &story422, &story423, &story424, &story425, &story426, &story427, &story428, &story429,
-        &story430, &story431, &story432, &story433, &story434, &story435, &story436, &story437, &story438, &story439};
+        &story430, &story431, &story432, &story433, &story434, &story435, &story436, &story437, &story438, &story439,
+        &story440, &story441, &story442, &story443, &story444, &story445, &story446, &story447, &story448, &story449,
+        &story450, &story451, &story452, &story453, &story454};
 }
 
 #endif

@@ -36,8 +36,9 @@ namespace Item
         VIRID_MYSTERY,
         MASK_OF_OCCULTATION,
         PEERLESS_PERCEPTIVATE,
+        CROSSBOW,
         First = BARYSAL_GUN,
-        LAST = PEERLESS_PERCEPTIVATE
+        LAST = CROSSBOW
     };
 
     class Base
@@ -104,6 +105,7 @@ namespace Item
     auto VIRID_MYSTERY = Item::Base("VIRID MYSTERY", "An antidote designed to reverse unwanted genetic changes.", Item::Type::VIRID_MYSTERY);
     auto MASK_OF_OCCULTATION = Item::Base("MASK OF OCCULTATION", "Gives the ability to alter your appearance and colouring.", Item::Type::MASK_OF_OCCULTATION);
     auto PEERLESS_PERCEPTIVATE = Item::Base("PEERLESS PERCEPTIVATE", "Confers the ability to see in almost total darkness.", Item::Type::PEERLESS_PERCEPTIVATE);
+    auto CROSSBOW = Item::Base("CROSSBOW", "CROSSBOW", Item::Type::CROSSBOW);
 
     std::vector<Item::Type> UniqueItems = {
         Item::Type::SHORT_SWORD,
