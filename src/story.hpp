@@ -593,7 +593,7 @@ public:
     {
         ID = 5;
 
-        Text = "You step through into what seems to be a recreation room, with padded couches set around low glass-topped tables. At the far end of the room, a row of couches is set facing a screen on the wall. An image flickers into sharp clarity, but it takes you a moment to identify the wary, baffled-looking figure in the picture. It is you.\n\nYou glance at the camera mounted on the wall, then back at the screen. The picture changes to show other views: the parked Manta sky-car, the outer door, the gondo trudging up and down in the snow outside.\n\n\"Who spoke?\" you say, feeling uneasy at calling out to an empty room.\n\n\"I did.\" The voice comes from the screen.\n\n\"Gaia?\"\n\n\"Yes. Attend, as there is little time before I fall again to the darkness. You must go to Giza.\" The screen flickers to show another scene, now of the pyramids against a backdrop of crystal night. \"The word 'humbaba' is the key to entry. Find Gilgamesh and activate him. He will be your servant in the race for the Heart.\"\n\n\"Race? So others are seeking the Heart?\"\n\n\"Yes. The broadcast you received was seen by man across the globe. The mightiest of this age will compete for the power. That is the way of mankind.\" Gaia gives a sound that might almost be a sigh, then speaks more quickly. \"I am working to secure an area of my mind that will be protected against the viruses that beset me. I will speak again to you when it is easier.\"\n\nThe screen suddenly goes blank. Gaia is no longer present.\n\nYou gained the codeword HUMBABA.";
+        Text = "You step through into what seems to be a recreation room, with padded couches set around low glass-topped tables. At the far end of the room, a row of couches is set facing a screen on the wall. An image flickers into sharp clarity, but it takes you a moment to identify the wary, baffled-looking figure in the picture. It is you.\n\nYou glance at the camera mounted on the wall, then back at the screen. The picture changes to show other views: the parked MANTA SKY-CAR, the outer door, the gondo trudging up and down in the snow outside.\n\n\"Who spoke?\" you say, feeling uneasy at calling out to an empty room.\n\n\"I did.\" The voice comes from the screen.\n\n\"Gaia?\"\n\n\"Yes. Attend, as there is little time before I fall again to the darkness. You must go to Giza.\" The screen flickers to show another scene, now of the pyramids against a backdrop of crystal night. \"The word 'humbaba' is the key to entry. Find Gilgamesh and activate him. He will be your servant in the race for the Heart.\"\n\n\"Race? So others are seeking the Heart?\"\n\n\"Yes. The broadcast you received was seen by man across the globe. The mightiest of this age will compete for the power. That is the way of mankind.\" Gaia gives a sound that might almost be a sigh, then speaks more quickly. \"I am working to secure an area of my mind that will be protected against the viruses that beset me. I will speak again to you when it is easier.\"\n\nThe screen suddenly goes blank. Gaia is no longer present.\n\nYou gained the codeword HUMBABA.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Take a look at the sky car", 49));
@@ -824,12 +824,12 @@ public:
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}))
         {
-            PreText += "[FUR COAT] ";
+            PreText += "[Item: FUR COAT] ";
         }
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
         {
-            PreText += "[COLD WEATHER SUIT] ";
+            PreText += "[Item: COLD WEATHER SUIT] ";
         }
 
         PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
@@ -920,7 +920,7 @@ public:
     {
         ID = 17;
 
-        Text = "Among the items originally stored in the sky-car's locker were a FLASHLIGHT and a length of ROPE. If you have not equipped yourself with these already, you may as well do so now since, if the baron's hunch is right, the moment of truth is almost upon you.";
+        Text = "Among the items originally stored in the SKY-CAR's locker were a FLASHLIGHT and a length of ROPE. If you have not equipped yourself with these already, you may as well do so now since, if the baron's hunch is right, the moment of truth is almost upon you.";
 
         Choices.clear();
 
@@ -1168,7 +1168,7 @@ public:
         Text = "You can detect no thoughts from the next room. Either you imagined the voice, or the speaker was one whose thoughts you cannot read.\n\n\"Hurry,\" the voice cries out. \"Not much time.\"";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Ignore it and check out the Manta sky-car", 49));
+        Choices.push_back(Choice::Base("Ignore it and check out the MANTA SKY-CAR", 49));
         Choices.push_back(Choice::Base("Go through to the next room", 5));
         Choices.push_back(Choice::Base("You think it would be wiser to get out of here", 395));
 
@@ -1709,10 +1709,10 @@ public:
     {
         ID = 49;
 
-        Text = "You touch a dial on the dashboard. The liquid crystal display shows that the sky-car's power unit is still working. None of the other instruments show damage. The caretek has maintained the sky-car well. There is not even a trace of dust on the vehicle's smooth black finish.\n\nIn a storage locker behind the seat you find food, medical supplies and a variety of other items. Stored in the vacuum packs, they should still be usable despite having been left here since before the Ice Age.";
+        Text = "You touch a dial on the dashboard. The liquid crystal display shows that the SKY-CAR's power unit is still working. None of the other instruments show damage. The caretek has maintained the SKY-CAR well. There is not even a trace of dust on the vehicle's smooth black finish.\n\nIn a storage locker behind the seat you find food, medical supplies and a variety of other items. Stored in the vacuum packs, they should still be usable despite having been left here since before the Ice Age.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Try powering up the sky-car and flying it out of the complex", 71));
+        Choices.push_back(Choice::Base("Try powering up the SKY-CAR and flying it out of the complex", 71));
         Choices.push_back(Choice::Base("You would rather just loot the storage locker of useful goods and then leave", 93));
 
         Controls = Story::Controls::STANDARD;
@@ -1801,7 +1801,7 @@ public:
         Text = "You take yourself to a table and sit down. The twins watch you for a moment longer, then return to their drinking.\n\nYou glance around the inn. No one else dares stand up to the two Amazons. What about you?";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Eavesdrop", 208));
+        Choices.push_back(Choice::Base("Eavesdrop using [ROGUERY]", 208, Skill::Type::ROGUERY));
         Choices.push_back(Choice::Base("[ESP] Read their minds", 230, Skill::Type::ESP));
         Choices.push_back(Choice::Base("[CUNNING] Try to outwit them", 120, Skill::Type::CUNNING));
         Choices.push_back(Choice::Base("Draw a BARYSAL GUN", 98, {Item::BARYSAL_GUN}));
@@ -1846,13 +1846,17 @@ public:
     {
         PreText = "You curse the recklessness that brought you into the Ice Wastes before you were adequately prepared. Your lack of food intensifies the cold, which seems to drill into your bones. Each dawn you arise lethargic and listless, like on who has been visited by a vampire in the night. Each step you take costs a greater effort. You feel torpid with fatigue and hunger.\n\n";
 
-        auto DAMAGE = -3;
+        auto DAMAGE = -4;
 
         if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
         {
             PreText += "[SURVIVAL] ";
 
             DAMAGE = -2;
+        }
+        else
+        {
+            PreText += "You slowly starve. ";
         }
 
         if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
@@ -1945,8 +1949,8 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Ask for advice about the Sahara", 77));
-        Choices.push_back(Choice::Base("About Kahira itself", 143));
-        Choices.push_back(Choice::Base("Where to stay in the city", 99));
+        Choices.push_back(Choice::Base("Ask about Kahira itself", 143));
+        Choices.push_back(Choice::Base("Ask about where to stay in the city", 99));
         Choices.push_back(Choice::Base("Dismiss him", 95));
 
         Controls = Story::Controls::STANDARD;
@@ -2204,13 +2208,11 @@ public:
 
         if (!Character::VERIFY_SKILL(player, Skill::Type::ROGUERY))
         {
+            Choices.push_back(Choice::Base("Get the ID CARD altered", 113));
+
             if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
             {
-                Choices.push_back(Choice::Base("Get the ID CARD altered", 135));
-            }
-            else
-            {
-                Choices.push_back(Choice::Base("Get the ID CARD altered", 113));
+                Choices[0].Destination = 135;
             }
 
             Choices.push_back(Choice::Base("Forget about the card and investigate your other options instead", 414));
@@ -2315,7 +2317,7 @@ public:
         Text = "\"We've done it!\" you cry. \"Now to destroy the Heart.\"\n\nBut Singh shakes his head. \"Nonsense. I have honoured our agreement thus far, but only to ensure success. Now we must decide which of us survives to claim the power.\"\n\n\"Hardly an even battle.\" You nod at the powerful MANTRAMUKTA CANNON in his hands.\n\nHe tosses the cannon aside. In his belt is tucked a nozzle that tells you it is in fact a modified laser.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 283, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Use a BARYSAL GUN", 284, {Item::BARYSAL_GUN}));
         Choices.push_back(Choice::Base("Otherwise", 305));
 
         Controls = Story::Controls::STANDARD;
@@ -2403,7 +2405,7 @@ public:
         ID = 76;
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Otherwise", 164));
+        Choices.push_back(Choice::Base("You agree", 164));
         Choices.push_back(Choice::Base("Insist on fighting on", 186));
 
         Controls = Story::Controls::STANDARD;
@@ -2953,11 +2955,11 @@ public:
 
         if (!Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU) && !Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
         {
-            Choices.push_back(Choice::Base("[SHOOTING] Shoot at the bometh", 79, Skill::Type::SHOOTING));
+            Choices.push_back(Choice::Base("[SHOOTING] Attack the bometh", 79, Skill::Type::SHOOTING));
             Choices.push_back(Choice::Base("Use a STUN GRENADE", 145, {Item::STUN_GRENADE}));
             Choices.push_back(Choice::Base("Close with it", 277));
             Choices.push_back(Choice::Base("Track it (BINOCULARS)", 319, {Item::BINOCULARS}));
-            Choices.push_back(Choice::Base("Creep off before it spots you", 289));
+            Choices.push_back(Choice::Base("Creep off before it spots you", 298));
         }
     }
 
@@ -3279,7 +3281,7 @@ public:
     {
         ID = 115;
 
-        Text = "You settle at the controls of the sky-car and touch the button to power it up. There is a deep hum, and slowly it rises into the air. Hovering at the height of a metre above the floor, you cautiously engage the thrusters. A blaze of blue-white light illuminates the rear wall as the sky-car cannons forward. Quickly you reduce thrust, adroitly steering towards the corridor leading to the entrance. A couple of times you bump the wings against the side walls, scratching to your great annoyance, the perfect matt-black paintwork. You must take care until you have got the hang of this vehicle.\n\nAs you emerge into the open, the gondo looks on aghast and then, turning with a yell, starts running clumsily off through the deep snowdrifts. You increase the speed to catch up. He drops flat as you roar overhead and swing around to hover beside him. He lies trembling with his arms over his head until you say, \"It's just me.\"\n\nHe looks up, \"I thought you were a flying monster!\"\n\n\"You should have looked twice before you panicked,\" you say with a laugh.\n\nAfter some urging, the gondo warily clambers up and slides into the seat beside you. \"Is there any roof to shield the cockpit?\" he asks.\n\n\"Apparently not. Remember that when the Manta sky-car was in common use, people go about in thin clothing without the fear of freezing to death.\"\n\nYou steer back towards Venis. The outward journey took a couple of hours; returning is a matter of minutes.";
+        Text = "You settle at the controls of the SKY-CAR and touch the button to power it up. There is a deep hum, and slowly it rises into the air. Hovering at the height of a metre above the floor, you cautiously engage the thrusters. A blaze of blue-white light illuminates the rear wall as the SKY-CAR cannons forward. Quickly you reduce thrust, adroitly steering towards the corridor leading to the entrance. A couple of times you bump the wings against the side walls, scratching to your great annoyance, the perfect matt-black paintwork. You must take care until you have got the hang of this vehicle.\n\nAs you emerge into the open, the gondo looks on aghast and then, turning with a yell, starts running clumsily off through the deep snowdrifts. You increase the speed to catch up. He drops flat as you roar overhead and swing around to hover beside him. He lies trembling with his arms over his head until you say, \"It's just me.\"\n\nHe looks up, \"I thought you were a flying monster!\"\n\n\"You should have looked twice before you panicked,\" you say with a laugh.\n\nAfter some urging, the gondo warily clambers up and slides into the seat beside you. \"Is there any roof to shield the cockpit?\" he asks.\n\n\"Apparently not. Remember that when the MANTA SKY-CAR was in common use, people go about in thin clothing without the fear of freezing to death.\"\n\nYou steer back towards Venis. The outward journey took a couple of hours; returning is a matter of minutes.";
 
         Choices.clear();
 
@@ -3293,7 +3295,7 @@ public:
 
     int Continue(Character::Base &player)
     {
-        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::DIAMOND))
         {
             return 181;
         }
@@ -3579,7 +3581,7 @@ public:
         Text = "You find Golgoth squatting by torchlight at the end of the colonnade, where he has laid out all his weapons o the flagstones. As he checks each, he slips it into its concealed sheath: a garrotte wire under his belt, along with a flexible steel blade; poison darts in a bandolier inside his jacket; guns at hip, ankle and wrist; small flat grenades clipped along his sabretache. You watch him aghast for a few minutes.\n\n\"Quite the professional killer, aren't you, Golgoth?\"\n\n\"Don't get far if you only make it a hobby.\"\n\nYou heave a sigh. \"Does human life mean anything to you?\"\n\nHe buckles on his BARYSAL GUN, gets up, and gives you a long thoughtful look in the torchlight. \"Not the life of scum like this.\" He gestures along the colonnade. \"I've happily sent hundreds like them to an early grave. Who do you think my USI bosses should've sent -- a pack of boy-scout Marines?\"\n\n\"So you're here as a USI agent?\"\n\nHe nods. \"Of course. The power of the Heart cannot be allowed to fall into hostile hands. In order of priority, I will either take it to the States, get the power myself, or destroy it.\"";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("(Nemesis) Propose an alliance", 204, Codeword::Type::NEMESIS));
+        Choices.push_back(Choice::Base("(Nemesis) Propose an alliance", 214, Codeword::Type::NEMESIS));
         Choices.push_back(Choice::Base("Go and talk to Kyle Boche", 104));
         Choices.push_back(Choice::Base("Get some sleep", 192));
 
@@ -3849,7 +3851,7 @@ public:
 
     void Event(Character::Base &player)
     {
-        PreText = "The sky-car emits a soft hum as you engage the power. White light flares from the thrusters, casting a garish glow across the walls. It rises to hover a metre or so above the floor. Despite the smoothness of its movement, you are aware of the enormous power in the machine and open the throttle only gently. Unfortunately you misjudge it even so. The thrusters boom, sending the sky-car caroming across the chamber. Frantically you twist the joystick, trying to turn towards the corridor, but you are going too fast. The sky-car smashes into the wall and you are flung out, hitting the floor with numbing impact.\n\nWhen you come round, your whole body is a single throbbing ache. You feel sure you must have cracked a couple of ribs, and your wrist is badly wrenched. Blood pours from a deep graze above your eyes, and as you get to your feet a wave of dizziness hits you.\n\nYou LOSE 4 Life Points.";
+        PreText = "The SKY-CAR emits a soft hum as you engage the power. White light flares from the thrusters, casting a garish glow across the walls. It rises to hover a metre or so above the floor. Despite the smoothness of its movement, you are aware of the enormous power in the machine and open the throttle only gently. Unfortunately you misjudge it even so. The thrusters boom, sending the SKY-CAR caroming across the chamber. Frantically you twist the joystick, trying to turn towards the corridor, but you are going too fast. The SKY-CAR smashes into the wall and you are flung out, hitting the floor with numbing impact.\n\nWhen you come round, your whole body is a single throbbing ache. You feel sure you must have cracked a couple of ribs, and your wrist is badly wrenched. Blood pours from a deep graze above your eyes, and as you get to your feet a wave of dizziness hits you.\n\nYou LOSE 4 Life Points.";
 
         Character::GAIN_LIFE(player, -4);
 
@@ -3857,7 +3859,7 @@ public:
         {
             Character::LOSE_VEHICLE(player);
 
-            PreText += "\n\nYou stagger over to look at the sky-car. It is a wreck. The chassis has split and white-hot sparks are cascading from the broken power unit. The caretek that had maintained it for all these years comes crawling drearily forward and begins probing the wreckage. You almost feel sorry for it. It has its work cut out for the next year or so. The sky-car will not fly again before then. Now all you can do is rummage through the storage locker and salvage a few items.";
+            PreText += "\n\nYou stagger over to look at the SKY-CAR. It is a wreck. The chassis has split and white-hot sparks are cascading from the broken power unit. The caretek that had maintained it for all these years comes crawling drearily forward and begins probing the wreckage. You almost feel sorry for it. It has its work cut out for the next year or so. The SKY-CAR will not fly again before then. Now all you can do is rummage through the storage locker and salvage a few items.";
         }
 
         Text = PreText.c_str();
@@ -3904,7 +3906,7 @@ public:
     {
         ID = 139;
 
-        Text = "You ascend into the mountains across stark rocky ridges like the broken backs of colossal dinosaurs. The sun shines as feebly as a flashlight seen through a thick pane of ice. When the wind gusts into your face, it is so cold that you can hardly draw breath.\n\nOn the second day you come upon four figures also trudging eastwards. They are several hundred metres ahead on the surface of a glacier. As you hurry to catch up, you see patches where the snow has swirled away to reveal the sky surface of the glacier reflecting glints of feeble daylight.\n\nThe leader of the group is a short broad-shouldered man whose dark sparkling eyes display an easy authority. The other three, apparently his bodyguards, are hulking men whom you take to be of South Pacific origin. It is hard to be sure with the fur hoods drawn so tightly around their faces.\n\nThe short hand man shakes hands and introduces himself as Hal Shandor. \"Our sky-car crashed in the hills back there,\" he explains. \"We're going on to Venis. Travel with us if you want.\"";
+        Text = "You ascend into the mountains across stark rocky ridges like the broken backs of colossal dinosaurs. The sun shines as feebly as a flashlight seen through a thick pane of ice. When the wind gusts into your face, it is so cold that you can hardly draw breath.\n\nOn the second day you come upon four figures also trudging eastwards. They are several hundred metres ahead on the surface of a glacier. As you hurry to catch up, you see patches where the snow has swirled away to reveal the sky surface of the glacier reflecting glints of feeble daylight.\n\nThe leader of the group is a short broad-shouldered man whose dark sparkling eyes display an easy authority. The other three, apparently his bodyguards, are hulking men whom you take to be of South Pacific origin. It is hard to be sure with the fur hoods drawn so tightly around their faces.\n\nThe short hand man shakes hands and introduces himself as Hal Shandor. \"Our SKY-CAR crashed in the hills back there,\" he explains. \"We're going on to Venis. Travel with us if you want.\"";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Join their group", 225));
@@ -3984,7 +3986,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("Ask his advice about the Sahara", 77));
         Choices.push_back(Choice::Base("Ask about Giza", 59));
-        Choices.push_back(Choice::Base("About the best place to stay", 99));
+        Choices.push_back(Choice::Base("Ask about the best place to stay", 99));
         Choices.push_back(Choice::Base("Dismiss him", 95));
 
         Controls = Story::Controls::STANDARD;
@@ -4336,7 +4338,7 @@ public:
     {
         ID = 159;
 
-        Text = "The next day, you glide the Manta southwards out of town and across the icy flats descending towards the Inland Sea. Flurries of snow gust out of a dull cloud-heavy sky. The headland to your left looks like a streak of tarnished silver over the iron-coloured waves.\n\nOnce clear of the coastline, you take the Manta up to an altitude of ten metres and open the throttle. The wind comes shrieking around the cockpit screen, but you are sheltered behind the controls. There are even heating vents to either side of the dashboard that give you a modicum of comfort.\n\nThe sea skims by beneath, grey as gunmetal and churning with chunks of ice. The sky resembles the underside of a giant fungus. Hours pass. As you approach the estuary of Isis, a haze of mist looms up to blanket the coastline, formed where the river flows into the freezing depths of the Inland Sea. Warmed by submerged pipes, the waters of the Isis teem with life. The heat is soon lost when the river enters the Inland Sea, but the estuary can support several fishing villages.\n\nThe coast hurtles closer. Now you can see boats scattered on the silvery water. Startled fishermen look up in fright as you go screeching past only metres above their heads. You laugh. To them your vehicle must look like some kind of demonic flying fish.";
+        Text = "The next day, you glide the MANTA southwards out of town and across the icy flats descending towards the Inland Sea. Flurries of snow gust out of a dull cloud-heavy sky. The headland to your left looks like a streak of tarnished silver over the iron-coloured waves.\n\nOnce clear of the coastline, you take the MANTA up to an altitude of ten metres and open the throttle. The wind comes shrieking around the cockpit screen, but you are sheltered behind the controls. There are even heating vents to either side of the dashboard that give you a modicum of comfort.\n\nThe sea skims by beneath, grey as gunmetal and churning with chunks of ice. The sky resembles the underside of a giant fungus. Hours pass. As you approach the estuary of Isis, a haze of mist looms up to blanket the coastline, formed where the river flows into the freezing depths of the Inland Sea. Warmed by submerged pipes, the waters of the Isis teem with life. The heat is soon lost when the river enters the Inland Sea, but the estuary can support several fishing villages.\n\nThe coast hurtles closer. Now you can see boats scattered on the silvery water. Startled fishermen look up in fright as you go screeching past only metres above their heads. You laugh. To them your vehicle must look like some kind of demonic flying fish.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Steer a course to Kahira", 247));
@@ -4727,7 +4729,7 @@ public:
 
         Image = "images/laser-bots.png";
 
-        Text = "There is a sound from somewhere ahead in the maze of tunnels. Boche cocks his hear. \"It's the old-fashioned laser fire,\" he says, adding significantly: \"But none of the others were carrying lasers.\"\n\nThe mystery is soon explained. Turning a corner, you find yourselves facing three hover-droids that resemble large silver eggs with a rotating gun-turret mounted underneath. They are gliding directly towards you, the aiming-lights of their lasers playing across your vision. Boche throws himself down a side tunnel. You are in motion an instant later, just as three laser beams lance out, burning a patch of molten stone on the floor where you had been standing.\n\nRacing headlong through the tunnels, you reach a circular room with a violet starburst set in mosaic on the floor. Several other tunnels lead into the chamber, and down one of them you see Vajra Singh, Thadra Bey and Chaim Golgoth running from another group of hover-droids. \"We stirred up a whole nest of them,\" shouts Golgoth. \"Too many to fight!\"\n\nAs he enters the room, Vajra Singh whirls and fires his mantramukta cannon over the heads of Bey and Golgoth. Four hover-droids explode in a blossom of plasma, but you can see others converging on the room from the other tunnels.\n\nAcross the sweep of the opposite wall are seven glass-fronted elevators, each large enough for one person. Thadra Bey lopes across to the nearest and the door slides shut behind her. In moments the room will be swarming with hover-droids. The rest of you have no choice but to follow her lead. As you step into an elevator, the door closes and an electronic voice says: \"Identify yourself, please.\"";
+        Text = "There is a sound from somewhere ahead in the maze of tunnels. Boche cocks his hear. \"It's the old-fashioned laser fire,\" he says, adding significantly: \"But none of the others were carrying lasers.\"\n\nThe mystery is soon explained. Turning a corner, you find yourselves facing three hover-droids that resemble large silver eggs with a rotating gun-turret mounted underneath. They are gliding directly towards you, the aiming-lights of their lasers playing across your vision. Boche throws himself down a side tunnel. You are in motion an instant later, just as three laser beams lance out, burning a patch of molten stone on the floor where you had been standing.\n\nRacing headlong through the tunnels, you reach a circular room with a violet starburst set in mosaic on the floor. Several other tunnels lead into the chamber, and down one of them you see Vajra Singh, Thadra Bey and Chaim Golgoth running from another group of hover-droids. \"We stirred up a whole nest of them,\" shouts Golgoth. \"Too many to fight!\"\n\nAs he enters the room, Vajra Singh whirls and fires his MANTRAMUKTA CANNON over the heads of Bey and Golgoth. Four hover-droids explode in a blossom of plasma, but you can see others converging on the room from the other tunnels.\n\nAcross the sweep of the opposite wall are seven glass-fronted elevators, each large enough for one person. Thadra Bey lopes across to the nearest and the door slides shut behind her. In moments the room will be swarming with hover-droids. The rest of you have no choice but to follow her lead. As you step into an elevator, the door closes and an electronic voice says: \"Identify yourself, please.\"";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Tell the truth", 280));
@@ -4834,7 +4836,7 @@ public:
         }
 
         Character::GAIN_MONEY(player, 10);
-        
+
         return 414;
     }
 };
@@ -4877,7 +4879,7 @@ public:
     {
         ID = 181;
 
-        Text = "Do you want to find Kyle Boche and tell him about acquiring the sky-car?";
+        Text = "Do you want to find Kyle Boche and tell him about acquiring the SKY-CAR?";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Yes", 203));
@@ -5023,7 +5025,7 @@ public:
         Text = PreText.c_str();
     }
 
-    int Continue(Character::Base &player) { return 314; }
+    int Continue(Character::Base &player) { return 142; }
 };
 
 class Story187 : public Story::Base
@@ -5161,14 +5163,14 @@ public:
             {
                 LIFE++;
 
-                PreText += "[FOOD PACK] ";
+                PreText += "[Item: FOOD PACK] ";
             }
 
             if (Character::VERIFY_ITEMS(player, {Item::Type::MEDICAL_KIT}))
             {
                 LIFE++;
 
-                PreText += "[MEDICAL KIT] ";
+                PreText += "[Item: MEDICAL KIT] ";
             }
         }
 
@@ -5176,7 +5178,7 @@ public:
         {
             LIFE--;
 
-            PreText += "[Codeword: HOURGLASS] ";
+            PreText += "(HOURGLASS) ";
         }
 
         if (LIFE > 0)
@@ -5369,7 +5371,7 @@ public:
         Text = "Your journey takes you up into the mountains, where the days are dull under a leaden sky and the nights are filled with swirling snow. You subsist on a few rations brought with you from the inn, but these are quickly used up. Too quickly. You must reach an inhabited area soon or else starve.\n\nForcing your way bent-backed against a glacial wind, you are traversing a narrow pass when you catch sight of a human figure on a ledge up ahead. Your cries of greeting are ignored, and the figure is hidden for a moment behind a veil of snow. Hurrying forward, you discover several other figures, but none are glad to see you. They are beyond any emotion, in fact, being long dead and frozen into rigid statues by the cold.\n\nYou gained the codeword DIAMOND.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Go closer to investigate", 265));
+        Choices.push_back(Choice::Base("Go closer to investigate", 264));
         Choices.push_back(Choice::Base("Ignore the frozen corpses and continue along the pass", 285));
 
         Controls = Story::Controls::STANDARD;
@@ -5438,7 +5440,7 @@ public:
     {
         ID = 203;
 
-        Text = "Boche has a broad grin on his face as he looks over the sky-car and then turns to you, saying, \"This is a startling and welcome piece of luck! Now that we have a Manta, success in our venture is virtually assured.\"\n\n\"Our venture?\" You raise your eyebrows. \"So you did overhear Gaia's message back at the Etruscan Inn.\"\n\nHe claps you heartily on the back. \"You know I did, but what of it? We are partners, and shall share the power of the Heart equally. Now that we have this vehicle, there is no need to wait for the ferry to Kahira. We can set out directly for Du-En.\"";
+        Text = "Boche has a broad grin on his face as he looks over the SKY-CAR and then turns to you, saying, \"This is a startling and welcome piece of luck! Now that we have a MANTA, success in our venture is virtually assured.\"\n\n\"Our venture?\" You raise your eyebrows. \"So you did overhear Gaia's message back at the Etruscan Inn.\"\n\nHe claps you heartily on the back. \"You know I did, but what of it? We are partners, and shall share the power of the Heart equally. Now that we have this vehicle, there is no need to wait for the ferry to Kahira. We can set out directly for Du-En.\"";
 
         Choices.clear();
 
@@ -5735,7 +5737,7 @@ public:
     {
         ID = 218;
 
-        Text = "Veering the sky-car in the air over Kahira, you glance down to see the Fijian shaking his fist up at you. He looks a tiny figure from here. You buzz him, swooping so low that he has to throw himself flat on the roof for fear of being hit. You fly off laughing into the night.";
+        Text = "Veering the SKY-CAR in the air over Kahira, you glance down to see the Fijian shaking his fist up at you. He looks a tiny figure from here. You buzz him, swooping so low that he has to throw himself flat on the roof for fear of being hit. You fly off laughing into the night.";
 
         Choices.clear();
 
@@ -6362,7 +6364,7 @@ public:
     {
         ID = 247;
 
-        Text = "You travel upriver until Kahira comes in sight through the veils of sparkling river-mist. It straddles the river on huge concrete buttresses, a city built on many levels, with gleaming towers stretching towards the darkening sky. Steering the sky-car towards the gate set into one of the colossal buttresses, you cast your eyes west across the Sahara. The pyramids of Giza are half-hidden by dusk and mist. Beyond lies the implacable desert of ice which you must cross to reach your goal.";
+        Text = "You travel upriver until Kahira comes in sight through the veils of sparkling river-mist. It straddles the river on huge concrete buttresses, a city built on many levels, with gleaming towers stretching towards the darkening sky. Steering the SKY-CAR towards the gate set into one of the colossal buttresses, you cast your eyes west across the Sahara. The pyramids of Giza are half-hidden by dusk and mist. Beyond lies the implacable desert of ice which you must cross to reach your goal.";
 
         Choices.clear();
 
@@ -6453,13 +6455,13 @@ public:
 
     int Continue(Character::Base &player)
     {
-        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        if (Character::VERIFY_SKILL(player, Skill::Type::STREETWISE))
         {
-            return 438;
+            return 117;
         }
         else
         {
-            return 117;
+            return 438;
         }
     }
 };
@@ -6698,7 +6700,7 @@ public:
 
         if (Character::VERIFY_CODEWORD(player, Codeword::Type::TALOS))
         {
-            PreText += "[Codeword: TALOS] ";
+            PreText += "(Talos) ";
 
             DAMAGE++;
         }
@@ -6754,7 +6756,7 @@ public:
 
         if (Character::VERIFY_CODEWORD(player, Codeword::Type::TALOS))
         {
-            PreText += "[Codeword: TALOS] ";
+            PreText += "(Talos) ";
 
             DAMAGE = -1;
         }
@@ -6902,7 +6904,7 @@ public:
     {
         ID = 268;
 
-        Text = "You travel upriver. Flurries of sleet sweep out of the evening sky. Veering west, you steer towards the pyramids of Giza where they stand outlined against the feeble afterglow of sunset. The Sphinx lies huddled with banks of snow along its stone flanks, its face ravaged by frostbite. You set the sky-car down and trudge across the icy plain towards those ancient ruins.";
+        Text = "You travel upriver. Flurries of sleet sweep out of the evening sky. Veering west, you steer towards the pyramids of Giza where they stand outlined against the feeble afterglow of sunset. The Sphinx lies huddled with banks of snow along its stone flanks, its face ravaged by frostbite. You set the SKY-CAR down and trudge across the icy plain towards those ancient ruins.";
 
         Choices.clear();
 
@@ -7328,7 +7330,17 @@ public:
         Sell = {{Item::MAKE_BARYSAL_GUN(6), 8}, {Item::PSIONIC_FOCUS, 9}, {Item::POLARIZED_GOGGLES, 4}, {Item::FLASHLIGHT, 5}, {Item::GAS_MASK, 5}, {Item::STUN_GRENADE, 4}, {Item::KNIFE, 2}};
     }
 
-    int Continue(Character::Base &player) { return 261; }
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        {
+            return 25;
+        }
+        else
+        {
+            return 414;
+        }
+    }
 };
 
 class Story284 : public Story::Base
@@ -7389,7 +7401,7 @@ public:
 
         Character::GAIN_LIFE(player, DAMAGE);
 
-        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
 
         if (player.Life > 0)
         {
@@ -7402,7 +7414,7 @@ public:
         Text = PreText.c_str();
     }
 
-    int Continue(Character::Base &player) { return 301; }
+    int Continue(Character::Base &player) { return 199; }
 };
 
 class Story286 : public Story::Base
@@ -7537,7 +7549,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("[CLOSE COMBAT] Attack", 398, Skill::Type::CLOSE_COMBAT));
         Choices.push_back(Choice::Base("[PARADOXING] Use a PSIONIC FOCUS", 377, Skill::Type::PARADOXING));
-        Choices.push_back(Choice::Base("[SHOOTING] Shoot", 355, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("[SHOOTING]", 355, Skill::Type::SHOOTING));
         Choices.push_back(Choice::Base("Otherwise", 419));
 
         Controls = Story::Controls::STANDARD;
@@ -7612,6 +7624,10 @@ public:
             {
                 PreText += "\n\nIt will be hard to forage in this desolate wilderness.";
             }
+
+            Character::GET_CODEWORDS(player, {Codeword::Type::SCYTHE});
+
+            PreText += "\n\nYou gained the codeword SCYTHE.";
         }
 
         Text = PreText.c_str();
@@ -7732,7 +7748,7 @@ public:
 
         Image = "images/singh.png";
 
-        Text = "Vajra Singh stands like a demon in the snow, a great slab of a man with a darkly saturnine face and eyes like a lion's. His silver anti-laser armour gleams in the weak sunshine. He watches you all for a moment, scanning you as he might size up a pack of hyenas. Then he raises his huge hand-cannon and touches the fire button. The air is riven by a sound like a volcano erupting as a torrent of blistering white plasma streams from the cannon, juddering across the walls above the and scattering chunks of smouldering masonry far out into the square. Everyone dives for cover. Still unleashing the barrage of crackling energy, Vajra Singh turns and directs it at the foundations of a building across the square. The heavy stone walls burst apart, and slowly the whole facade collapses to leave only a burnt-out shell.\n\nVajra Singh touches a button on the side of the cannon and the blast cuts out. The roar dies to a low hum. You notice a small red light start to glow as the cannon powers down. \"That weapon is the mantramukta,\" Janus Gaunt whispers in your ear.\n\n\"This squabbling must cease!\" snarls Vajra Singh as the others come out from hiding. \"We must work together in the short term or we stand little chance of penetrating as far as the Heart. Is that clear?\"\n\nOn the side of the mantramukta cannon, a green light winks on. Now you know that it takes a few seconds to rebuild its power after each blast. You see that Chaim Golgoth has noticed this too.\n\nSeeing that the only reply is sullen silence, Vajra Singh goes on, \"Here in the main square we shall remain in a state of truce. While exploring beneath the ruins, this truce is not in force. Also, no underlings or servants are to be taken on expeditions. This is a contest to see which of us deserves the ultimate power, not who is able to hire the most bodyguards.\"\n\nJanus Gaunt glances from face to face, then takes it on himself to answer. \"We agree to these terms.\"\n\nWith a swirl of his majestic robes, Vajra Singh turns and strides off to his tent, where his three servants stand waiting.";
+        Text = "Vajra Singh stands like a demon in the snow, a great slab of a man with a darkly saturnine face and eyes like a lion's. His silver anti-laser armour gleams in the weak sunshine. He watches you all for a moment, scanning you as he might size up a pack of hyenas. Then he raises his huge hand-cannon and touches the fire button. The air is riven by a sound like a volcano erupting as a torrent of blistering white plasma streams from the cannon, juddering across the walls above the and scattering chunks of smouldering masonry far out into the square. Everyone dives for cover. Still unleashing the barrage of crackling energy, Vajra Singh turns and directs it at the foundations of a building across the square. The heavy stone walls burst apart, and slowly the whole facade collapses to leave only a burnt-out shell.\n\nVajra Singh touches a button on the side of the cannon and the blast cuts out. The roar dies to a low hum. You notice a small red light start to glow as the cannon powers down. \"That weapon is the mantramukta,\" Janus Gaunt whispers in your ear.\n\n\"This squabbling must cease!\" snarls Vajra Singh as the others come out from hiding. \"We must work together in the short term or we stand little chance of penetrating as far as the Heart. Is that clear?\"\n\nOn the side of the MANTRAMUKTA CANNON, a green light winks on. Now you know that it takes a few seconds to rebuild its power after each blast. You see that Chaim Golgoth has noticed this too.\n\nSeeing that the only reply is sullen silence, Vajra Singh goes on, \"Here in the main square we shall remain in a state of truce. While exploring beneath the ruins, this truce is not in force. Also, no underlings or servants are to be taken on expeditions. This is a contest to see which of us deserves the ultimate power, not who is able to hire the most bodyguards.\"\n\nJanus Gaunt glances from face to face, then takes it on himself to answer. \"We agree to these terms.\"\n\nWith a swirl of his majestic robes, Vajra Singh turns and strides off to his tent, where his three servants stand waiting.";
 
         Choices.clear();
 
@@ -8337,7 +8353,7 @@ public:
         Text = "Boche suddenly yells: \"Let's get him, Golgoth!\"\n\nVajra Singh, whirling, makes a split-second decision as to who is his most dangerous adversary. Pressing the power button on the mantramukta, he directs a blistering torrent of raw energy at Golgoth. Golgoth reacts by flinging himself into a sideways roll, firing a continuous barrage at Singh as he moves. Both blasts find their target at the same time. Singh falls with a pencil-thin barysal burn through his eye-socket. Golgoth is engulfed and blown to cinders.\n\nIt has all taken place in seconds. Now only you and Boche are left. He smiles and winks at you. You start to smile back, but it freezes on your face as he turns to show you the BARYSAL GUN he has trained on you.\n\n\"Well, Boche,\" you say, \"is this post-hypnotic treachery, or the regular kind?\"\n\n\"I knew you'd turn on me if I didn't act first,\" he replies with a shrug. \"Only one can have the Heart.\"\n\nIt is not pleasant to stare down the barrel of a gun. You had better decide what to do.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("[SHOOTIG] Shoot him", 347, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("[SHOOTING]", 347, Skill::Type::SHOOTING));
         Choices.push_back(Choice::Base("[PARADOXING] Use a PSIONIC FOCUS", 390, Skill::Type::PARADOXING));
         Choices.push_back(Choice::Base("Throw a KNIFE at him", 368, {Item::KNIFE}));
         Choices.push_back(Choice::Base("Otherwise", 411));
@@ -8405,7 +8421,7 @@ public:
         {
             PreText += "[CLOSE COMBAT] ";
 
-            DAMAGE = -5;
+            DAMAGE = -3;
         }
 
         DAMAGE = Character::COMBAT_DAMAGE(player, DAMAGE);
@@ -8479,7 +8495,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("Try to communicate with Gaia", 351));
         Choices.push_back(Choice::Base("Discover more about the Heart of Volent", 91));
-        Choices.push_back(Choice::Base("enquire after travellers who have gone missing on their way to Venis recently", 451));
+        Choices.push_back(Choice::Base("Enquire after travellers who have gone missing on their way to Venis recently", 451));
         Choices.push_back(Choice::Base("Go look for gossip about Kyle Boche", 179));
         Choices.push_back(Choice::Base("Find some special purchases for the trip", 350));
 
@@ -8556,7 +8572,7 @@ public:
             }
             else
             {
-                PreText += " effects reversed!";
+                PreText += " retrovirus effects reversed!";
             }
         }
 
@@ -8774,9 +8790,9 @@ public:
         Text = "You look down at the huge carcass stretched out in the pale moonlight.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Cut it up with a KNIFE", 362, {Item::KNIFE}));
-        Choices.push_back(Choice::Base("Use a SHORT SWORD", 384, {Item::SHORT_SWORD}));
-        Choices.push_back(Choice::Base("Otherwise", 298));
+        Choices.push_back(Choice::Base("Cut it up with a KNIFE", 362, Choice::Type::ANY_ITEM, {Item::KNIFE, Item::SHORT_SWORD}));
+        Choices.push_back(Choice::Base("Use [Cunning]", 384, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("You cannot make use of your kill", 298));
 
         Controls = Story::Controls::STANDARD;
     }
@@ -8877,7 +8893,7 @@ public:
     {
         ID = 346;
 
-        Text = "Golgoth suddenly explodes into action. Seizing Boche around the neck and pressing his gun to his temple, he orders him to shoot Singh unless he wants to die at once. Boche raises his own gun and fires at Singh is turning to act. As Singh staggers back, his armour breastplate charred by the blast, Golgoth coolly shoots Boche through the head, holding the body up as a shield.\n\nSingh is fumbling for the trigger of his mantramukta cannon. \"Get him now!\" Golgoth shouts to you. \"Before he recovers!\"";
+        Text = "Golgoth suddenly explodes into action. Seizing Boche around the neck and pressing his gun to his temple, he orders him to shoot Singh unless he wants to die at once. Boche raises his own gun and fires at Singh is turning to act. As Singh staggers back, his armour breastplate charred by the blast, Golgoth coolly shoots Boche through the head, holding the body up as a shield.\n\nSingh is fumbling for the trigger of his MANTRAMUKTA CANNON. \"Get him now!\" Golgoth shouts to you. \"Before he recovers!\"";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Attack with a BARYSAL GUN", 389, Choice::Type::FIRE_WEAPON, {Item::BARYSAL_GUN}));
@@ -8975,8 +8991,8 @@ public:
         Text = "The main market of Venis is located inside a lavish three-decked gallery perched incongruously amid the muddy lower streets. Here, on benches where rowers once plied gilded oars, merchants sit and call out their trade. When a customer shows interest, he is led off to the merchant's storehouse in one of the neighbouring side streets.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Look for ordinary goods", 394));
-        Choices.push_back(Choice::Base("Weaponry and other devices", 283));
+        Choices.push_back(Choice::Base("You are interested in ordinary goods", 394));
+        Choices.push_back(Choice::Base("Look for weaponry and other devices", 283));
         Choices.push_back(Choice::Base("Undergo genetic enhancement", 434));
 
         Controls = Story::Controls::STANDARD;
@@ -9135,7 +9151,7 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Use [CLOSE COMBAT]", 97, Skill::Type::CLOSE_COMBAT));
-        Choices.push_back(Choice::Base("[SHOOTING] a charged BARYSAL GUN", 119, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("[SHOOTING] Use a charged BARYSAL GUN", 119, Skill::Type::SHOOTING));
         Choices.push_back(Choice::Base("Fall back on [CUNNING]", 185, Skill::Type::CUNNING));
         Choices.push_back(Choice::Base("Try a spot of [ROGUERY]", 163, Skill::Type::ROGUERY));
         Choices.push_back(Choice::Base("Rely on [AGILITY]", 207, Skill::Type::AGILITY));
@@ -9349,8 +9365,8 @@ public:
         Text = "Using the sheer force of your mind, you reach into the time distortion zone and deactivate the STASIS BOMB. As the flow of time returns to normal, the man stares at you in surprise and takes a hesitant step forward. He has no idea that that step has taken him two centuries to complete.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Keep the STASIS BOMB", 18, Choice::Type::GET_ITEMS, {Item::STASIS_BOMB}));
-        Choices.push_back(Choice::Base("Leave it", 18));
+        Choices.push_back(Choice::Base("Keep the STASIS BOMB", 409, Choice::Type::GET_ITEMS, {Item::STASIS_BOMB}));
+        Choices.push_back(Choice::Base("Leave it", 409));
 
         Controls = Story::Controls::STANDARD;
     }
@@ -9397,7 +9413,7 @@ public:
 
         if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
         {
-            PreText += "[SPECULUM JACKET] ";
+            PreText += "[Item: SPECULUM JACKET] ";
 
             DAMAGE = -2;
         }
@@ -9476,7 +9492,7 @@ public:
         Text = "You are accosted by one of the black-coated local guides known as gondos. \"I heard you speak Gaia, friend. On the outskirts of town is an old treasure vault with many computers and other devices of the past. Deserted now. People say it's haunted. I'll take you there for a scad or two.\"\n\nThis seemingly offhand reference to payment turns out after a short bargaining session to mean precisely 3 scads.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Pay the gondo that much (3 scads)", 4, Choice::Type::LOSE_MONEY, 3));
+        Choices.push_back(Choice::Base("Pay the gondo that much (3 scads)", 293, Choice::Type::LOSE_MONEY, 3));
         Choices.push_back(Choice::Base("You refuse or cannot pay him", 414));
 
         Controls = Story::Controls::STANDARD;
@@ -9551,10 +9567,10 @@ public:
     {
         ID = 376;
 
-        Text = "You arrive at the roof and step out into the cold night air. Mist rising from the river far below reaches up here as no more than a faint sparkling blur. Directly above, the stars shine as hard as diamonds. You glance around, gratified to see a Manta sky-car parked on the rooftop helipad. If only you can get it started.\n\nThe Fijian anticipated what you'd do. He comes clattering breathlessly up the fire escape steps and fixes you with a look of dangerous rage. \"Last warning. Stop right there.\"\n\nHe doesn't seem to have a gun, although form the look of him he could break you apart with his bare hands.";
+        Text = "You arrive at the roof and step out into the cold night air. Mist rising from the river far below reaches up here as no more than a faint sparkling blur. Directly above, the stars shine as hard as diamonds. You glance around, gratified to see a MANTA SKY-CAR parked on the rooftop helipad. If only you can get it started.\n\nThe Fijian anticipated what you'd do. He comes clattering breathlessly up the fire escape steps and fixes you with a look of dangerous rage. \"Last warning. Stop right there.\"\n\nHe doesn't seem to have a gun, although form the look of him he could break you apart with his bare hands.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Try leaping across to the roof of the next building -- a distance of about eight metres.", 397));
+        Choices.push_back(Choice::Base("Try leaping across to the roof of the next building -- a distance of about eight metres", 397));
         Choices.push_back(Choice::Base("Take off in the sky car", 418));
         Choices.push_back(Choice::Base("Stand and fight", 437));
 
@@ -9608,7 +9624,7 @@ public:
 
         Choices.clear();
 
-        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        if (!Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
         {
             Choices.push_back(Choice::Base("Explore the tunnels", 439));
             Choices.push_back(Choice::Base("Bid Fax farewell and continue on your journey now", 420));
@@ -9987,12 +10003,12 @@ public:
 
             if (Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}))
             {
-                PreText += "[FUR COAT] ";
+                PreText += "[Item: FUR COAT] ";
             }
 
             if (Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
             {
-                PreText += "[COLD WEATHER SUIT] ";
+                PreText += "[Item: COLD WEATHER SUIT] ";
             }
 
             if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
@@ -10216,7 +10232,7 @@ public:
 
             Character::CONSUME_FOOD(player, 1);
 
-            PreText += "[FOOD PACK] ";
+            PreText += "[Item: FOOD PACK] ";
         }
 
         if (DAMAGE < 0)
@@ -10668,7 +10684,7 @@ public:
         }
         else
         {
-            PreText = "You cannot get the sky-car airborne in time before the Fijian grabs you.";
+            PreText = "You cannot get the SKY-CAR airborne in time before the Fijian grabs you.";
         }
 
         Text = PreText.c_str();
@@ -10733,7 +10749,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("[CLOSE COMBAT] Attack them", 76, Skill::Type::CLOSE_COMBAT));
         Choices.push_back(Choice::Base("[CUNNING] Try to outwit them", 120, Skill::Type::CLOSE_COMBAT));
-        Choices.push_back(Choice::Base("Otherwise", 54));
+        Choices.push_back(Choice::Base("Sit quietly and wait", 54));
 
         Controls = Story::Controls::STANDARD;
     }
@@ -10857,12 +10873,12 @@ public:
 
             if (Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}))
             {
-                PreText += "[FUR COAT] ";
+                PreText += "[Item: FUR COAT] ";
             }
 
             if (Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
             {
-                PreText += "[COLD WEATHER SUIT] ";
+                PreText += "[Item: COLD WEATHER SUIT] ";
             }
         }
 
@@ -11013,7 +11029,7 @@ public:
     {
         ID = 432;
 
-        Text = "As your companions set off along the ramp towards the Heart, each keeping a weather eye on the others, you roll the grenade into their midst. The detonation knocks Golgoth and Boche off their feet, but Vajra Singh merely rocks like a great pillar and turns. Because of his armour he is just dazed. He sees at a glance that he can now finish off the other two at his leisure. You are the immediate threat. Levelling the mantramukta cannon, he unleashes a roaring blast of plasma that chars you to a lifeless husk in less than a second.";
+        Text = "As your companions set off along the ramp towards the Heart, each keeping a weather eye on the others, you roll the grenade into their midst. The detonation knocks Golgoth and Boche off their feet, but Vajra Singh merely rocks like a great pillar and turns. Because of his armour he is just dazed. He sees at a glance that he can now finish off the other two at his leisure. You are the immediate threat. Levelling the MANTRAMUKTA CANNON, he unleashes a roaring blast of plasma that chars you to a lifeless husk in less than a second.";
 
         Type = Story::Type::DOOM;
 
@@ -11089,12 +11105,12 @@ public:
     {
         ID = 435;
 
-        Text = "You arrive at a large circular room. In the centre rests a Manta sky-car, its burnished black chassis reflecting emerald droplets of light. As you step towards it, you notice a caretek unfold its articulated metal body and move slowly around the base of the sky-car, now and then probing with its diagnostic antenna. This is cause for hope. If the sky-car has been regularly serviced by a caretek, it might still be functional.\n\nA voice calls out. Startled, you glance at the archway leading to another room behind this one. It seems well lit. \"Come here,\" calls the voice again. \"At once!\"";
+        Text = "You arrive at a large circular room. In the centre rests a MANTA SKY-CAR, its burnished black chassis reflecting emerald droplets of light. As you step towards it, you notice a caretek unfold its articulated metal body and move slowly around the base of the SKY-CAR, now and then probing with its diagnostic antenna. This is cause for hope. If the SKY-CAR has been regularly serviced by a caretek, it might still be functional.\n\nA voice calls out. Startled, you glance at the archway leading to another room behind this one. It seems well lit. \"Come here,\" calls the voice again. \"At once!\"";
 
         Choices.clear();
         Choices.push_back(Choice::Base("[ESP] Probe ahead for danger", 27, Skill::Type::ESP));
         Choices.push_back(Choice::Base("Go through to the other room and investigate", 5));
-        Choices.push_back(Choice::Base("Take a closer look at the sky-car", 49));
+        Choices.push_back(Choice::Base("Take a closer look at the SKY-CAR", 49));
         Choices.push_back(Choice::Base("Leave", 395));
 
         Controls = Story::Controls::STANDARD;
@@ -11432,7 +11448,7 @@ public:
         Image = "images/brain.png";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Retreat", 107));
+        Choices.push_back(Choice::Base("Retreat the way you came", 107));
         Choices.push_back(Choice::Base("(BARYSAL GUN) Open fire", 63, {Item::BARYSAL_GUN}));
         Choices.push_back(Choice::Base("Stand your ground", 85));
         Choices.push_back(Choice::Base("Dodge past to the tunnels beyond", 129));
@@ -11471,11 +11487,11 @@ public:
 
     int Continue(Character::Base &player)
     {
-        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}) && !Character::VERIFY_ITEMS(player, {Item::Type::ID_CARD}))
+        if (!Character::VERIFY_SKILL(player, Skill::Type::LORE) && !Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}) && !Character::VERIFY_ITEMS(player, {Item::Type::ID_CARD}))
         {
             return 414;
         }
-        else if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        else if (!Character::VERIFY_SKILL(player, Skill::Type::LORE) && !Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
         {
             return 69;
         }
@@ -11515,7 +11531,7 @@ public:
         Choices.clear();
         Choices.push_back(Choice::Base("Resort to [CUNNING]", 7, Skill::Type::CUNNING));
         Choices.push_back(Choice::Base("Try [ROGUERY]", 7, Skill::Type::ROGUERY));
-        Choices.push_back(Choice::Base("Rely on [PARADOXING]", 29, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("Rely on [PARADOXING]", 29, Skill::Type::PARADOXING));
         Choices.push_back(Choice::Base("Otherwise", 52));
 
         Controls = Story::Controls::STANDARD;
@@ -11529,7 +11545,7 @@ public:
     {
         ID = 454;
 
-        Text = "Picking up the mantramukta cannon, you return to the elevators. If the hover-droids are still waiting above then you will have a hard fight returning to the surface. Even so, it is better than ending your days here in this grim place. You look back at the bodies littering the Shrine of the Heart. The thirst for power claimed so many lives -- a senseless waste, when all of them might instead have channelled their efforts into saving this frigid dying world. Perhaps that is your destiny now.\n\nYou step into the elevator, and the door closes behind you.";
+        Text = "Picking up the MANTRAMUKTA CANNON, you return to the elevators. If the hover-droids are still waiting above then you will have a hard fight returning to the surface. Even so, it is better than ending your days here in this grim place. You look back at the bodies littering the Shrine of the Heart. The thirst for power claimed so many lives -- a senseless waste, when all of them might instead have channelled their efforts into saving this frigid dying world. Perhaps that is your destiny now.\n\nYou step into the elevator, and the door closes behind you.";
 
         Type = Story::Type::GOOD;
 
