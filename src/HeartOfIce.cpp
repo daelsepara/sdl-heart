@@ -713,7 +713,7 @@ bool glossaryScreen(SDL_Window *window, SDL_Renderer *renderer, std::vector<Skil
         {
             if (i > 0)
             {
-                text += "\n" + std::string(70, '-') + "\n";
+                text += "\n" + std::string(glossary_width / 10, '-') + "\n";
             }
 
             text += std::string(Skills[i].Name) + "\n\n";
