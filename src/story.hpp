@@ -11202,7 +11202,7 @@ public:
         {
             Choices.push_back(Choice::Base("Use [ROGUERY]", 211, Skill::Type::ROGUERY));
             Choices.push_back(Choice::Base("[PARADOXING] Use a PSIONIC FOCUS", 189, Skill::Type::PARADOXING));
-            Choices.push_back(Choice::Base("otherwise", 361));
+            Choices.push_back(Choice::Base("Otherwise", 361));
         }
     }
 
