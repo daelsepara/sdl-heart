@@ -9414,6 +9414,212 @@ public:
     int Continue(Character::Base &player) { return 415; }
 };
 
+class Story370 : public Story::Base
+{
+public:
+    Story370()
+    {
+        ID = 370;
+
+        Text = "No thoughts remain in the dead minds of these unfortunates. No ordinary psychic could glean anything from them now, but with your special talent you might be able to reconstruct the last thing they saw. Touching your fingers to the icy brow of the nearest corpse, you mentally strain to gather the last frozen wisps of memory from the lifeless brain inside the skull...\n\nThe next thing you know, Boche is shaking you by the arm. You feel as though you've just woken from a long drowsy torpor in which your dreams were dominated by a glowing golden eye. \"You went into a trance,\" Boche tells you. \"It was like you were hypnotized.\"\n\nYou gaze into the dead man's eyes, sightless under their cataracts of frost. What was the last thing he saw before dying? he glowing eye? Or was that just your own hallucination?";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 306; }
+};
+
+class Story371 : public Story::Base
+{
+public:
+    Story371()
+    {
+        ID = 371;
+
+        Image = "images/filler3.png";
+
+        Text = "The grandly-named Doge's Inn proves to be a group of iron-roofed shacks clustered along one of the town's seedier alleyways. The innkeeper is a thin dark-skinned man who is busy polishing the counter with a grimy rag. When you ask him how the inn got its name, he fixes you with an odd look, then casually removes his glass eye and wipes it with the rag before replacing it. You steady yourself against the counter, feeling slightly weak at the knees.\n\n\"The Doge was the ruler of Venis in ancient times,\" he explains. \"His attendants and courtiers were know as scarlatti. My own name is Scarlatti.\"\n\n\"So it's sort of a joke?\" You peer dubiously towards the sleeping quarters. A rat scuttles through a gap in the wall.\n\n\"Yeah, sort of.\"\n\nYou pay over the three scads and find yourself a bed in the dormitory, then go to the showers to wash off the sweat of your travels. The showers are located at the back of the building: a cold gloomy hall lined with the cracked tiles, lit only by a single oil lamp by the door. At the far end is a small steam room. You strip off your belongings and step inside. Noe one else is here. Twisting the nozzle of the shower, you flinch from the jet of boiling hot water that spurts out. Incredible that after all these centuries nobody has yet invented a shower that can be set to a comfortable temperature.\n\nBut that is the least of your worries now. A shadow moves in the doorway and you glance back to see two men behind you. Since they have not undressed, you guess that they have not come here to take a shower. The knives they are holding confirm it. They intend to kill you.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Run to the steam room", 4));
+        Choices.push_back(Choice::Base("Fight", 26));
+        Choices.push_back(Choice::Base("Try to get past them and escape", 70));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story372 : public Story::Base
+{
+public:
+    Story372()
+    {
+        ID = 372;
+
+        Text = "You are accosted by one of the black-coated local guides known as gondos. \"I heard you speak Gaia, friend. On the outskirts of town is an old treasure vault with many computers and other devices of the past. Deserted now. People say it's haunted. I'll take you there for a scad or two.\"\n\nThis seemingly offhand reference to payment turns out after a short bargaining session to mean precisely 3 scads.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Pay the gondo that much (3 scads)", 4, Choice::Type::LOSE_MONEY, 3));
+        Choices.push_back(Choice::Base("You refuse or cannot pay him", 414));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story373 : public Story::Base
+{
+public:
+    Story373()
+    {
+        ID = 373;
+
+        Text = "A lambent ray streams off along the corridor, splitting the air with an ultrasonic screech. You hear the hiss of molten metal and something erupts in a fountain of sparks. Advancing, you discover a caretek, feebly twitching on its back like a crushed metal cockroach. You were in no danger. It was patrolling the complex looking for things to repair, just as it must have been doing for centuries.\n\nAnnoyed at yourself for panicking and so wasting as hot, you press on deeper into the gloomy warren of tunnels.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::FIRE_BARYSAL(player, 1);
+    }
+
+    int Continue(Character::Base &player) { return 435; }
+};
+
+class Story374 : public Story::Base
+{
+public:
+    Story374()
+    {
+        ID = 374;
+
+        Text = "You stride confidently into the lobby. The receptionist, a prim-looking man with pursed lips, sits at a desk. Behind him on the wall is displayed the Society's symbol: a triangle enclosing a circle and central dot. To one side, a bronze-coloured elevator door is set into the black marble wall.\n\nThe receptionist looks up, blinks. \"Good evening. How may I help you?\"\n\nUnsure of protocol, you hand him your card. He slides it into a slot in the desk, consults a screen, then hands the card back. His blank expression has become an unctuous smile as he says, \"Our facilities are here at your disposal. There are no other members in residence at the moment, so you'll have the building to yourself.\"\n\nThe elevator door opens. You mutter a gruff thank-you and walk past. Inside the elevator, you study the panel and decide which floor to go to.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Library", 6));
+        Choices.push_back(Choice::Base("Medical lounge", 29));
+        Choices.push_back(Choice::Base("Gymnasium", 51));
+        Choices.push_back(Choice::Base("Armoury", 447));
+        Choices.push_back(Choice::Base("Canteen", 94));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story375 : public Story::Base
+{
+public:
+    Story375()
+    {
+        ID = 375;
+
+        Image = "images/flyer.png";
+
+        Text = "You step out of the carriage and set off along a deserted tunnel which soon brings you to a staircase. You climb until you can see a shaft of daylight filtering between toppled blocks of masonry. There is not much room, but you manage to squeeze through, emerging onto a broad expanse of tarmac with a few single-storey buildings nearby. The air is crisply cool but there is no snow here. To the south, outlined against a china blue sky, you can see a cluster of ancient spires surrounding a high stone fortress wall.\n\nA whine of jets begins to grow across the tarmac. Turning, you see a narrow-hulled flyer a few hundred metres away. On the stilts of its landing gear, gleaming in the past sunlight, it reminds you of an insect poised for flight. The nozzles of the flyer's vertical jets are beginning to glow. It is about to take off.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Hurry over and try to attract the pilot's attention", 102));
+        Choices.push_back(Choice::Base("Shelter in the subway entrance and watch the flyer leave", 78));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story376 : public Story::Base
+{
+public:
+    Story376()
+    {
+        ID = 376;
+
+        Text = "You arrive at the roof and step out into the cold night air. Mist rising from the river far below reaches up here as no more than a faint sparkling blur. Directly above, the stars shine as hard as diamonds. You glance around, gratified to see a Manta sky-car parked on the rooftop helipad. If only you can get it started.\n\nThe Fijian anticipated what you'd do. He comes clattering breathlessly up the fire escape steps and fixes you with a look of dangerous rage. \"Last warning. Stop right there.\"\n\nHe doesn't seem to have a gun, although form the look of him he could break you apart with his bare hands.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Try leaping across to the roof of the next building -- a distance of about eight metres.", 397));
+        Choices.push_back(Choice::Base("Take off in the sky car", 418));
+        Choices.push_back(Choice::Base("Stand and fight", 437));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story377 : public Story::Base
+{
+public:
+    Story377()
+    {
+        ID = 377;
+
+        Image = "images/filler3.png";
+
+        Text = "Even while reaching to your belt for the sword, pretending to comply, you are inwardly straining to exert your psychic power. The stranger does not notice as you enclose the pair of you in a time vortex, leaving the world outside to continue at its normal rate while each heartbeat within the vortex takes an hour to complete.\n\nYour fingers detach the shortsword from your belt. The night rushes on headlong towards dawn. As you are lifting the sword to hand it to the stranger, sunrise begins to show as a wan yellow blaze along the eastern hills. It reflects in golden glints from the sword blade. The stranger, seeing this, narrows his pale eyes in a frown, then whirls to stare in shock at the sun. A thin screech wells up from deep in his throat as he takes a step back. Then it is as though he is swept away, evaporated like a snowflake by the feeble heat of the sun.\n\nYou guessed right. He was a creature of the night, a bloodsucker who had good cause to shun the daylight. You cancel the psychic vortex and the flow of time returns to normal. There is nothing you can do for Shandor and his men: they were ripped apart while they slept. You make a cursory search of the shreds of clothing you can see, finding an ID CARD, a FLASHLIGHT, and a BARYSAL GUN with one remaining charge.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::ID_CARD, Item::FLASHLIGHT, Item::MAKE_BARYSAL_GUN(1)};
+
+        Limit = 3;
+    }
+
+    int Continue(Character::Base &player) { return 161; }
+};
+
+class Story378 : public Story::Base
+{
+public:
+    Story378()
+    {
+        ID = 378;
+
+        Text = "Fax leads you down the stairway. At the bottom lies a wide circular hall with various tunnels leading off it. A sign above each tunnel proclaims the destinations available. You read them with a feeling of melancholy: New York, Moscow, Edinburgh... Most of these places are now buried under a kilometre of ice.\n\nFax shows you a food machine set into the wall. \"Most of the buttons no longer work, but the 'Skudge Bar' is nutritious.\" He presses a button, the machine hums, and a moment later a foil-wrapped block drops out of a slot. Unwrapping it, you find a chewy fudge which surprises you in having a savoury taste.";
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 8;
+
+        Choices.clear();
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::CYBERNETICS))
+        {
+            Choices.push_back(Choice::Base("Explore the tunnels", 439));
+            Choices.push_back(Choice::Base("Bid Fax farewell and continue on your journey now", 420));
+        }
+    }
+
+    int Continue(Character::Base &player) { return 9; }
+};
+
+class Story379 : public Story::Base
+{
+public:
+    Story379()
+    {
+        ID = 379;
+
+        Text = "The numbers tattooed on their shoulders give you the clue: they can only be members of the Gargan clone-group. These were specially bred superbings employed by the Chikusa Corporation for tasks such as mining in the asteroid belt, where ordinary humans would find the work too strenuous. They were later used as enforcers when the corporation moved into criminal affairs. There was a rumour that the entire clone-group had been ambushed and killed in Bangkok, but it seems that at least these two survived.\n\nThey are very dangerous people.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Start something", 32));
+        Choices.push_back(Choice::Base("Swallow your pride and sit in silence while they drink", 54));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -9787,6 +9993,16 @@ auto story366 = Story366();
 auto story367 = Story367();
 auto story368 = Story368();
 auto story369 = Story369();
+auto story370 = Story370();
+auto story371 = Story371();
+auto story372 = Story372();
+auto story373 = Story373();
+auto story374 = Story374();
+auto story375 = Story375();
+auto story376 = Story376();
+auto story377 = Story377();
+auto story378 = Story378();
+auto story379 = Story379();
 
 void InitializeStories()
 {
@@ -9828,7 +10044,8 @@ void InitializeStories()
         &story330, &story331, &story332, &story333, &story334, &story335, &story336, &story337, &story338, &story339,
         &story340, &story341, &story342, &story343, &story344, &story345, &story346, &story347, &story348, &story349,
         &story350, &story351, &story352, &story353, &story354, &story355, &story356, &story357, &story358, &story359,
-        &story360, &story361, &story362, &story363, &story364, &story365, &story366, &story367, &story368, &story369};
+        &story360, &story361, &story362, &story363, &story364, &story365, &story366, &story367, &story368, &story369,
+        &story370, &story371, &story372, &story373, &story374, &story375, &story376, &story377, &story378, &story379};
 }
 
 #endif
