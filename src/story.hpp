@@ -2206,11 +2206,11 @@ public:
         {
             if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
             {
-                Choices.push_back(Choice::Base("Get the ID card altered", 135));
+                Choices.push_back(Choice::Base("Get the ID CARD altered", 135));
             }
             else
             {
-                Choices.push_back(Choice::Base("Get the ID card altered", 113));
+                Choices.push_back(Choice::Base("Get the ID CARD altered", 113));
             }
 
             Choices.push_back(Choice::Base("Forget about the card and investigate your other options instead", 414));
@@ -5849,7 +5849,7 @@ public:
         Text = "You hurry along to the end of the street, where an old man stops you and asks, \"Is Sarco the Poisoner still open for business?\"\n\n\"How should I know?\" you reply. \"I am not acquainted with the man you mention.\"\n\nHe returns a look that suggests you are either deranged or a liar. \"I just now saw you leave his shop!\" he declares.\n\nYou rub your jaw ruefully. \"Sarco the Poisoner, indeed.\"\n\nIt seems you've had a narrow escape.";
 
         Choices.clear();
-        Choices.push_back(Choice::Base("Keep trying to get the ID card altered", 245, {Item::ID_CARD}));
+        Choices.push_back(Choice::Base("Keep trying to get the ID CARD altered", 245, {Item::ID_CARD}));
         Choices.push_back(Choice::Base("See to other matters before the ferry to Kahira arrives", 414));
 
         Controls = Story::Controls::STANDARD;
@@ -6310,7 +6310,7 @@ public:
     {
         ID = 245;
 
-        Text = "You eventually find a man who can do what you want: a fat sweaty fellow with a profusion of ancient tools and devices strewn around his shop. Guiding his laser by hand, he makes a few deft changes to the image on the card until it could pass for your own likeness. \"Five scads,\" he says, holding it out to you.\n\n\"Five?\" You scowl.\n\n\"Membership of the prestigious Compass Society is usually much more expensive than that,\" he says with a shrug.\n\nYou consider snatching the card back, but the fat man cannily anticipates you and holds it close to the laser beam until you pay. If you refuse to pay, he destroys the ID card.";
+        Text = "You eventually find a man who can do what you want: a fat sweaty fellow with a profusion of ancient tools and devices strewn around his shop. Guiding his laser by hand, he makes a few deft changes to the image on the card until it could pass for your own likeness. \"Five scads,\" he says, holding it out to you.\n\n\"Five?\" You scowl.\n\n\"Membership of the prestigious Compass Society is usually much more expensive than that,\" he says with a shrug.\n\nYou consider snatching the card back, but the fat man cannily anticipates you and holds it close to the laser beam until you pay. If you refuse to pay, he destroys the ID CARD.";
 
         Choices.clear();
         Choices.push_back(Choice::Base("Agree to his terms (5 scads, gain codeword PROTEUS)", -245, Choice::Type::LOSE_MONEY, 5));
@@ -6923,7 +6923,7 @@ public:
 
         Image = "images/filler1.png";
 
-        Text = "You catch on at once. The Fijian obviously works for the person who originally owned your ID card, and rushed up here in search of his boss, only to find you instead. \"There was another person here,\" you glibly tell him, \"who suffered a heart attack just minutes ago and was taken on a stretcher to the medical lounge. Could that have been your boss?\"\n\nHis jaw drops, then he races out and stabs anxiously at the elevator button. You join him and politely ask for the ground floor. Watching him fidget impatiently as the elevator descends, you say, \"Don't worry, the Society has excellent medical facilities -- the best in Kahira. I'm sure your boss will be all right.\"\n\nThe elevator stops at the floor for the medical lounge and the Fijian gets out. You continue down to the lobby and leave without delay, before he discovers he's been lied to.";
+        Text = "You catch on at once. The Fijian obviously works for the person who originally owned your ID CARD, and rushed up here in search of his boss, only to find you instead. \"There was another person here,\" you glibly tell him, \"who suffered a heart attack just minutes ago and was taken on a stretcher to the medical lounge. Could that have been your boss?\"\n\nHis jaw drops, then he races out and stabs anxiously at the elevator button. You join him and politely ask for the ground floor. Watching him fidget impatiently as the elevator descends, you say, \"Don't worry, the Society has excellent medical facilities -- the best in Kahira. I'm sure your boss will be all right.\"\n\nThe elevator stops at the floor for the medical lounge and the Fijian gets out. You continue down to the lobby and leave without delay, before he discovers he's been lied to.";
 
         Choices.clear();
 
@@ -9501,7 +9501,7 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Library", 6));
-        Choices.push_back(Choice::Base("Medical lounge", 29));
+        Choices.push_back(Choice::Base("Medical lounge", 28));
         Choices.push_back(Choice::Base("Gymnasium", 51));
         Choices.push_back(Choice::Base("Armoury", 447));
         Choices.push_back(Choice::Base("Canteen", 94));
@@ -9873,6 +9873,375 @@ public:
     }
 
     int Continue(Character::Base &player) { return 431; }
+};
+
+class Story390 : public Story::Base
+{
+public:
+    Story390()
+    {
+        ID = 390;
+
+        Text = "Barysal guns sometimes misfire. It is a slim chance but, with your psychic powers to alter the odds, a slim chance is all you need. As Boche squeezes the trigger, the gun explodes in his hands. He is killed instantly. But you do not come off entirely unscathed -- a flying fragment of shrapnel slices through your thigh, inflicting some damage.\n\nYou LOSE 2 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -2);
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story391 : public Story::Base
+{
+public:
+    Story391()
+    {
+        ID = 391;
+
+        Text = "Your beam strikes Singh's headband. How could you have known that the jewels on it were no mere baubles, but retroflec crystals? The force of the blast is deflected back the way it came, exploding the BARYSAL GUN in your hands. You cry out in pain as you are burned to the bone.\n\nYou LOSE 2 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -2);
+
+        if (player.Life > 0)
+        {
+            auto least = Item::FIND_LEAST(player.Items, Item::Type::BARYSAL_GUN);
+
+            if (least >= 0)
+            {
+                player.Items.erase(player.Items.begin() + least);
+            }
+        }
+    }
+
+    int Continue(Character::Base &player) { return 305; }
+};
+
+class Story392 : public Story::Base
+{
+public:
+    Story392()
+    {
+        ID = 392;
+
+        Text = "Boche looks over at you. \"You heard it too?\"\n\n\"Be quiet.\"\n\nFocusing your concentration, you reach out to probe the mind of whoever -- or whatever -- is approaching. Your mind is flooded with cold dark alien thoughts. You have the fleeting impression of something with sharp predatory intelligence. It is coming to kill you.\n\nYou break off your mental probe and jump up into a crouch, tense and ready for action.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 433; }
+};
+
+class Story393 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story393()
+    {
+        ID = 393;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "A fierce wind with teeth of ice thunders relentlessly across the land, pushing billows of powdery snow ahead of it. You hunch behind each step as though pushing a heavy cart, at times having to crouch down to avoid being blown off your feet. By day you are surrounded by a painful white glare. At night, moonlight turns the snowscape into a scene of unearthly mystery. You trudge wearily on, feet numb with cold, eyebrows bristling with icicles.\n\n";
+
+        auto DAMAGE = -2;
+
+        if (Character::VERIFY_ITEMS_ANY(player, {Item::FUR_COAT, Item::COLD_WEATHER_SUIT}))
+        {
+            DAMAGE++;
+
+            if (Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}))
+            {
+                PreText += "[FUR COAT] ";
+            }
+
+            if (Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
+            {
+                PreText += "[COLD WEATHER SUIT] ";
+            }
+
+            if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+            {
+                DAMAGE++;
+
+                PreText += "[SURVIVAL] ";
+            }
+        }
+
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
+        {
+            DAMAGE++;
+
+            PreText += "[Vehicle: BURREK] ";
+        }
+
+        if (DAMAGE < 0)
+        {
+            Character::GAIN_LIFE(player, DAMAGE);
+        }
+        else
+        {
+            DAMAGE = 0;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::POLARIZED_GOGGLES}))
+        {
+            return 403;
+        }
+        else if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            return 443;
+        }
+        else
+        {
+            return 13;
+        }
+    }
+};
+
+class Story394 : public Story::Base
+{
+public:
+    Story394()
+    {
+        ID = 394;
+
+        Text = "Inspecting a range of items laid out on the market stalls, you haggle until you have agreed on the prices.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Buy or sell weaponry or other unusual items", 283));
+        Choices.push_back(Choice::Base("Pay for genetic enhancement", 434));
+        Choices.push_back(Choice::Base("You are finished with your shopping", 25));
+
+        Controls = Story::Controls::SHOP;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Shop = {{Item::FOOD_PACK, 2}, {Item::ROPE, 2}, {Item::LANTERN, 3}, {Item::MEDICAL_KIT, 12}};
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+        {
+            Choices[2].Destination = 25;
+        }
+        else
+        {
+            Choices[2].Destination = 414;
+        }
+    }
+};
+
+class Story395 : public Story::Base
+{
+public:
+    Story395()
+    {
+        ID = 395;
+
+        Text = "You hurry outside to where the gondo is waiting, shivering inside his black coat like a forlorn crow. \"So, have you finished here?\" he asks hopefully.\n\nYou nod. \"Let's go back to town.\"\n\nThe sun shows briefly in the west, flaring like a red searchlight in the colourless swirl of grey and white. By the time you return to Venis, night is falling and a deeper chill closes on the narrow streets. You are grateful for the fire in the common-room of your hotel. Tomorrow the ferry is due to arrive.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 25; }
+};
+
+class Story396 : public Story::Base
+{
+public:
+    Story396()
+    {
+        ID = 396;
+
+        Text = "You stride confidently into the lobby. The receptionist, a prim-looking man with pursed lips, sits at a desk. Behind him on the wall is displayed the Society's symbol: a triangle enclosing a circle and central dot. To one side, a bronze-coloured elevator door is set into the black marble wall.\n\nThe receptionist looks up, blinks. \"Good evening. How may I help you?\"\n\nUnsure of protocol, you hand him your card. He slides it into a slot in the desk, consults a screen, then hands the card back. His blank expression has become an unctuous smile as he says, \"Our facilities are here at your disposal. There are no other members in residence at the moment, so you'll have the building to yourself.\"\n\nThe elevator door opens. You mutter a gruff thank-you and walk past. Inside the elevator, you study the panel and decide which floor to go to.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Library", 6));
+        Choices.push_back(Choice::Base("Medical lounge", 28));
+        Choices.push_back(Choice::Base("Gymnasium", 51));
+        Choices.push_back(Choice::Base("Armoury", 447));
+        Choices.push_back(Choice::Base("Canteen", 94));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story397 : public Story::Base
+{
+public:
+    Story397()
+    {
+        ID = 397;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::AGILITY))
+        {
+            return 196;
+        }
+        else
+        {
+            return 173;
+        }
+    }
+};
+
+class Story398 : public Story::Base
+{
+public:
+    Story398()
+    {
+        ID = 398;
+
+        Text = "A gaze of grey agate fixes you. The stranger has a predator's cold, scrutinizing stare. He knows that you will not hand over the sword willingly. As you draw it from your belt, he flings up his arms and rushes soundlessly forward, his mouth gaping open to reveal long bloodsucking fangs.\n\nYou take a half step backwards and swing the sword in a backhanded arc. It slices cleanly through the stranger's neck. His head falls with a crunch into the snow. The body remains upright, fingers still groping blindly towards you. Almost numb with horror, you plunge the sword into your foe's heart. The body crumples, shrivelling like a dry husk. There is no blood.\n\nGrimacing, you roll the head over with your foot and peer down at it in the moonlight. Gone are the clear gaze and perfect marble features. Now it is an ancient brown skull with leathery face and a few wisps of cobwebby hair. It was a porphyr -- one of the undead. It may have lived for centuries, sustaining itself on the lifeblood of its victims. Only now you have slain it can you see it as it truly was.\n\nThere is nothing you can do for Shandor and his men. They were ripped apart while they slept. You make a cursory search of the shreds of clothing you can see, finding an ID CARD, a FLASHLIGHT, and a BARYSAL GUN with one remaining charge.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::ID_CARD, Item::FLASHLIGHT, Item::MAKE_BARYSAL_GUN(1)};
+
+        Limit = 3;
+    }
+
+    int Continue(Character::Base &player) { return 161; }
+};
+
+class Story399 : public Story::Base
+{
+public:
+    Story399()
+    {
+        ID = 399;
+
+        Text = "Instead of answering, he rummages in a locker and brings forth a metal canister. Taking this outside, he approaches a thin stalk of ferns sprouting form the ground beside the barren area and spray it with a chemical. It almost instantly withers. \"I found a storehouse full of the stuff,\" he cries gleefully, brandishing the canister. \"It's well to keep the surrounding area free of plant life, you see. The sanguivores travel rapidly through the trees, but they will not venture onto barren ground, where they are as clumsy as waterlogged tents flapping in a breeze.\"\n\nHe presses the cannister into your hand and urges you to keep it. You are on the point of commenting that the liquor he offered you is probably almost as toxic, but you decide not to offend him.\n\nYou RECEIVED a VINE KILLER.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ask him if he has any food", 378));
+        Choices.push_back(Choice::Base("Say good-bye and go on your way", 420));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_ITEMS(player, {Item::VINE_KILLER});
+    }
+};
+
+class Story400 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story400()
+    {
+        ID = 400;
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Image = NULL;
+
+        Choices.clear();
+
+        PreText = "In the following weeks you lose all memory of the brief spell of warmth you enjoyed in the jungle of Lyonesse. The deep chill has soon settle back in your bones.\n\n";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            DAMAGE += 2;
+
+            PreText += "[SURVIVAL] ";
+        }
+
+        if (Character::HAS_FOOD(player, 1))
+        {
+            DAMAGE++;
+
+            Character::CONSUME_FOOD(player, 1);
+
+            PreText += "[FOOD PACK] ";
+        }
+
+        if (DAMAGE < 0)
+        {
+            Character::GAIN_LIFE(player, DAMAGE);
+        }
+        else
+        {
+            DAMAGE = 0;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        if (player.Life > 0)
+        {
+            Image = "images/gargan-twins.png";
+
+            PreText += "\n\nSurveying the landscape, you see only a dazzling expanse of snow under a sky of merciless metallic blue. The few other people you catch sight of are hunched anonymous figures in the distance. You do not call out to them. In these grim and desperate times, a lone traveller is well advised not to seek out company.\n\nThe quaintly named Jib-and-Halter Pass shows itself under a gritty haze. The air takes on a sulphurous tang as you approach. Here the rocks lie under only a light dusting of snow. You throw back your hood. It does not seem quite so cold here. Volcanic vents in the ground release hot mud in geysers to the west. Bog moss thrives in the fertile mud, allowing a small settlement to survive here.\n\nYou arrive at the settlement, a collection of tottering huts around the long looming bulk of the ancient Jib-and-Halter Inn. The sun dips low in the sky, sending amber shafts of light through the thin air. You blow out a plume of breath. You are looking forward to a fire, a hot bath and a good meal.\n\nThe interior of the inn is a place of lantern light and low black rafters. Dozens of faces glowering as you enter. Several people sweep their hands irritably in your direction, a common twenty-third century gesture to urge haste on someone who is sluggish in closing a door.\n\nAs you cross over to the bar, you begin to sense something is amiss. None of the others here are eating or drinking. Each person sits sullenly silent. Then, as you move around a squat beam, you come in sight of two women standing at the bar. To judge from the stack of glasses in front of them, they have drunk enough vodka to kill a fair-sized rhino, but the only sign they might even be slightly drunk is their loud haughty bray of laughter on seeing you. You size them up at a glance. They are identical twins, both over six feet tall and with taut Olympian physiques, brimming with vitality, their eyes and closed-cropped hair the colour of sunrise. Each twin has a tattoo on her arm: a number in Roman numerals.\n\n\"Sit there and stay silent,\" commands one of the twins.\n\n\"We insist on drinking undisturbed,\" says her sister.";
+
+            if (!Character::VERIFY_SKILL(player, Skill::Type::LORE) && !Character::VERIFY_SKILL(player, Skill::Type::LORE))
+            {
+                Choices.push_back(Choice::Base("Take exception to their manners and do something about it", 32));
+                Choices.push_back(Choice::Base("Meekly do as you are told", 54));
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            return 379;
+        }
+        else
+        {
+            return 421;
+        }
+    }
 };
 
 auto earth23rdCentury = Earth23rdCentury();
@@ -10268,6 +10637,17 @@ auto story386 = Story386();
 auto story387 = Story387();
 auto story388 = Story388();
 auto story389 = Story389();
+auto story390 = Story390();
+auto story391 = Story391();
+auto story392 = Story392();
+auto story393 = Story393();
+auto story394 = Story394();
+auto story395 = Story395();
+auto story396 = Story396();
+auto story397 = Story397();
+auto story398 = Story398();
+auto story399 = Story399();
+auto story400 = Story400();
 
 void InitializeStories()
 {
@@ -10311,7 +10691,9 @@ void InitializeStories()
         &story350, &story351, &story352, &story353, &story354, &story355, &story356, &story357, &story358, &story359,
         &story360, &story361, &story362, &story363, &story364, &story365, &story366, &story367, &story368, &story369,
         &story370, &story371, &story372, &story373, &story374, &story375, &story376, &story377, &story378, &story379,
-        &story380, &story381, &story382, &story383, &story384, &story385, &story386, &story387, &story388, &story389};
+        &story380, &story381, &story382, &story383, &story384, &story385, &story386, &story387, &story388, &story389,
+        &story390, &story391, &story392, &story393, &story394, &story395, &story396, &story397, &story398, &story399,
+        &story400};
 }
 
 #endif
