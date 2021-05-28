@@ -9179,6 +9179,241 @@ public:
     }
 };
 
+class Story360 : public Story::Base
+{
+public:
+    Story360()
+    {
+        ID = 360;
+
+        Text = "Your fingers fly across the keyboard, brining up a rapid sequence of access codes, file menus and options. You set up a link to Gaia via an Earth weather satellite. Folding your fingers behind your head, you lean back in the chair and wait for the screen message that will tell you you are into Gaia. Your satisfaction evaporates as the screen flashes a red warning signal, accompanied by the chime of an alarm.\n\nThe door bursts open and Riza runs in with several technicians. \"Close down this system immediately!\" he calls to them. \"Purge all active files. Prepare for a full diagnostic.\"\n\nYou start to rise, intending to slip away in the confusion, but Riza has a gun aimed at the bridge of your nose. \"You stay where you are,\" he tells you. \"Don't you know that Gaia is riddled with viruses? In one thoughtless act you have put the entire computer system of al-Lat in jeopardy.\"\n\n\"I'll try to be more careful next time.\"\n\nHe shakes his head sadly. \"I'm sorry, but it's too late for that. Tampering with the computer systems here is a serious crime, punishable by death.\"\n\nLess than an hour later, you are forced into a pressure suit and ejected into space. They have given you air for just one hour, so that you can contemplate your crimes as you drift into the void waiting for the end.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story361 : public Story::Base
+{
+public:
+    Story361()
+    {
+        ID = 361;
+
+        Text = "You return down the ramp. The feeble low-slanting rays of the sun make the day feel colder than if it were night.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+        {
+            return 289;
+        }
+        else
+        {
+            return 393;
+        }
+    }
+};
+
+class Story362 : public Story::Base
+{
+public:
+    Story362()
+    {
+        ID = 362;
+
+        Text = "You hack through the lardy skin to the meat, which is easily parcelled into FOOD PACKs.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Strip of the pelt to make a FUR COAT", 298, Choice::Type::GET_ITEMS, {Item::FUR_COAT}));
+        Choices.push_back(Choice::Base("Leave it alone", 298));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 8;
+    }
+};
+
+class Story363 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story363()
+    {
+        ID = 363;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "You rest throughout the morning. ";
+
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::HOURGLASS))
+        {
+            PreText += "You feel feverish and do not RECOVER Life Points.";
+        }
+        else
+        {
+            Character::GAIN_LIFE(player, 1);
+
+            PreText += "You RECOVER 1 Life Point.";
+        }
+
+        PreText += "\n\nThe others start to return around midday, beginning with Janus Gaunt and Thadra Bey. They explored a warren of tunnels under the plaza but found no clue as to the location of the Heart. Next comes Chaim Golgoth, emerging from a military bunker which he investigated in company with the Gargan twins. There is no sign of the twins, and when you ask Golgoth about them he merely replies with a wink.\n\nThe ruins are bathed in the long light of sunset by the time Vajra Singh and the baron reappear. You soon learn that they met up underground, and are obviously excited by what they discovered. \"We have identified the temple precincts,\" announces Vajra Singh, gesturing to a cluster of buildings cross the square. \"The Heart of Volent lies somewhere below. Tomorrow may be the last day of the search.\"";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 38; }
+};
+
+class Story364 : public Story::Base
+{
+public:
+    Story364()
+    {
+        ID = 364;
+
+        Text = "Decide what to do next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[ESP] Delve into the baron's mind", 407, Skill::Type::ESP));
+        Choices.push_back(Choice::Base("(Camouflage) Sneak closer using chameleon skin", 428, Codeword::Type::CAMOUFLAGE));
+        Choices.push_back(Choice::Base("... or [ROGUERY]", 428, Skill::Type::ROGUERY));
+        Choices.push_back(Choice::Base("(LITTLE GAIA) Record what the baron says", 446, {Item::LITTLE_GAIA}));
+        Choices.push_back(Choice::Base("Retire for the night", 192));
+        Choices.push_back(Choice::Base("Talk to one of the others: Boche", 104));
+        Choices.push_back(Choice::Base("... to Golgoth", 126));
+        Choices.push_back(Choice::Base("... to Gaunt", 148));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story365 : public Story::Base
+{
+public:
+    Story365()
+    {
+        ID = 365;
+
+        Text = "Through the glass door you see Boche pull out a scrap of paper and recite from it. The computer is obviously satisfied with his response, because his elevator starts to descend. Having read his lips, you know the words he used. Now to find out if they will also work for you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 18; }
+};
+
+class Story366 : public Story::Base
+{
+public:
+    Story366()
+    {
+        ID = 366;
+
+        Text = "Using the sheer force of your mind, you reach into the time distortion zone and deactivate the STASIS BOMB. As the flow of time returns to normal, the man stares at you in surprise and takes a hesitant step forward. He has no idea that that step has taken him two centuries to complete.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Keep the STASIS BOMB", 18, Choice::Type::GET_ITEMS, {Item::STASIS_BOMB}));
+        Choices.push_back(Choice::Base("Leave it", 18));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story367 : public Story::Base
+{
+public:
+    Story367()
+    {
+        ID = 367;
+
+        Text = "This is the moment of truth. Four powerful adventurers all stand within reach of ultimate power. Only one can have the heart.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Use a STUN GRENADE", 432, {Item::STUN_GRENADE}));
+        Choices.push_back(Choice::Base("Use a STASIS BOMB", 448, {Item::STASIS_BOMB}));
+        Choices.push_back(Choice::Base("A charged BARYSAL GUN", 21, {Item::BARYSAL_GUN}));
+        Choices.push_back(Choice::Base("Otherwise", 324));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story368 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story368()
+    {
+        ID = 368;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "You snatch the knife from your belt and send it spinning across the space between you and Boche. It impales him though the throat, but a he slumps dying to he floor he has time for a single shot. It is wide of the mark. He was aiming at your heart, but instead sears through your shoulders.\n\n";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_ITEMS(player, {Item::Type::SPECULUM_JACKET}))
+        {
+            PreText += "[SPECULUM JACKET] ";
+
+            DAMAGE = -2;
+        }
+
+        Character::GAIN_LIFE(player, DAMAGE);
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Points.";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story369 : public Story::Base
+{
+public:
+    Story369()
+    {
+        ID = 369;
+
+        Text = "Singh is more used to his cannon than the pistol, and your reflexes are just a fraction quicker. The barysal beam cracks through the air and Singh falls without a sound. It is only as you go over to inspect the body that you realize he had a chance of hitting you with a dying shot. He chose not to take that shot. Was that because it would have been spiteful to deprive you of victory when you had beaten him fairly? No one could have called Vajra a spiteful man. He died as he lived: with honour.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -9542,6 +9777,16 @@ auto story356 = Story356();
 auto story357 = Story357();
 auto story358 = Story358();
 auto story359 = Story359();
+auto story360 = Story360();
+auto story361 = Story361();
+auto story362 = Story362();
+auto story363 = Story363();
+auto story364 = Story364();
+auto story365 = Story365();
+auto story366 = Story366();
+auto story367 = Story367();
+auto story368 = Story368();
+auto story369 = Story369();
 
 void InitializeStories()
 {
@@ -9582,7 +9827,8 @@ void InitializeStories()
         &story320, &story321, &story322, &story323, &story324, &story325, &story326, &story327, &story328, &story329,
         &story330, &story331, &story332, &story333, &story334, &story335, &story336, &story337, &story338, &story339,
         &story340, &story341, &story342, &story343, &story344, &story345, &story346, &story347, &story348, &story349,
-        &story350, &story351, &story352, &story353, &story354, &story355, &story356, &story357, &story358, &story359};
+        &story350, &story351, &story352, &story353, &story354, &story355, &story356, &story357, &story358, &story359,
+        &story360, &story361, &story362, &story363, &story364, &story365, &story366, &story367, &story368, &story369};
 }
 
 #endif
