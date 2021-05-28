@@ -386,7 +386,7 @@ void renderTextButtons(SDL_Renderer *renderer, std::vector<TextButton> controls,
 
             SDL_RenderFillRect(renderer, &rect);
 
-            renderText(renderer, text, bg, x, y, fontsize, 0);
+            renderText(renderer, text, bg, x, y, 2 * fontsize, 0);
 
             SDL_FreeSurface(text);
 
