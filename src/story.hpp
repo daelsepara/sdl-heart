@@ -7437,7 +7437,12 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::PEERLESS_PERCEPTIVATE(player, false);
+        if (!Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
+        {
+            Character::GAIN_MONEY(player, -6);
+
+            Character::PEERLESS_PERCEPTIVATE(player, false);
+        }
     }
 
     int Continue(Character::Base &player) { return 434; }
@@ -7928,7 +7933,12 @@ public:
 
     void Event(Character::Base &player)
     {
-        Character::EXALTED_ENHANCER(player, false);
+        if (!Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
+        {
+            Character::GAIN_MONEY(player, -10);
+
+            Character::EXALTED_ENHANCER(player, false);
+        }
     }
 
     int Continue(Character::Base &player) { return 434; }
@@ -8491,54 +8501,61 @@ public:
 
     void Event(Character::Base &player)
     {
-        auto reversed = 0;
+        PreText = "The Virid Mystery cancels any retroviruses you have taken already.\n\n";
 
-        if (Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
+        if (!Character::IS_APPLIED(player, Item::Type::VIRID_MYSTERY))
         {
-            reversed++;
+            Character::GAIN_MONEY(player, -7);
 
-            PreText += "EXALTED ENHANCER";
+            auto reversed = 0;
 
-            Character::EXALTED_ENHANCER(player, true);
-        }
-
-        if (Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
-        {
-            if (reversed > 0)
+            if (Character::IS_APPLIED(player, Item::Type::EXALTED_ENHANCER))
             {
-                PreText += ", ";
+                reversed++;
+
+                PreText += "EXALTED ENHANCER";
+
+                Character::EXALTED_ENHANCER(player, true);
             }
 
-            reversed++;
-
-            PreText += "MASK OF OCCULTATION";
-
-            Character::MASK_OF_OCCULTATION(player, true);
-        }
-
-        if (Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
-        {
-            if (reversed > 0)
+            if (Character::IS_APPLIED(player, Item::Type::MASK_OF_OCCULTATION))
             {
-                PreText += ", ";
+                if (reversed > 0)
+                {
+                    PreText += ", ";
+                }
+
+                reversed++;
+
+                PreText += "MASK OF OCCULTATION";
+
+                Character::MASK_OF_OCCULTATION(player, true);
             }
 
-            reversed++;
+            if (Character::IS_APPLIED(player, Item::Type::PEERLESS_PERCEPTIVATE))
+            {
+                if (reversed > 0)
+                {
+                    PreText += ", ";
+                }
 
-            PreText += "PEERLESS PERCEPTIVATE";
+                reversed++;
 
-            Character::PEERLESS_PERCEPTIVATE(player, true);
-        }
+                PreText += "PEERLESS PERCEPTIVATE";
 
-        Character::APPLY_VIRUS(player, Item::Type::VIRID_MYSTERY);
+                Character::PEERLESS_PERCEPTIVATE(player, true);
+            }
 
-        if (reversed == 0)
-        {
-            PreText = "No retrovirus effects reversed!";
-        }
-        else
-        {
-            PreText += " effects reversed!";
+            Character::APPLY_VIRUS(player, Item::Type::VIRID_MYSTERY);
+
+            if (reversed == 0)
+            {
+                PreText = "No retrovirus effects reversed!";
+            }
+            else
+            {
+                PreText += " effects reversed!";
+            }
         }
 
         Text = PreText.c_str();
@@ -10739,7 +10756,6 @@ public:
     {
         if (Character::VERIFY_SKILL(player, Skill::Type::STREETWISE))
         {
-
             return 95;
         }
         else
@@ -10755,6 +10771,8 @@ public:
     Story423()
     {
         ID = 423;
+
+        Image = "images/filler1.png";
 
         Text = "The landscape stretches on, a sea of white broken by islands of bare black rock. Rays of sunlight, skimming from the horizon behind you, make the snow flash like ground glass. Soon you can see man-made hills that jut up against the drab skyline. These are the pyramids, one of the seven wonders of the ancient world. And in front of them reclines the Sphinx, its inscrutable gaze fixed on Kahira, which is outlined by the rising sun. According to superstition, the Sphinx watches over Kahira and keeps it safe from the desert's threat. You are not so sure. Doesn't a watchdog face out from the place it is guarding? It looks to you as if the Sphinx carries in its proud impassive face a clear warning about the Sahara. You are reminded of the words written over the gates of Hell: Lasciate ogni speranza, voi ch'entrate -- abandon hope, you who venture here.";
 
@@ -10930,6 +10948,236 @@ public:
         Type = Story::Type::DOOM;
 
         Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story430 : public Story::Base
+{
+public:
+    Story430()
+    {
+        ID = 430;
+
+        Text = "You have gone no further than thirty metres along the first tunnel when there is the roar of an explosion from behind you. Running back towards the hall where you left the others, you see a cloud of smoke swirling in the air. In the rubble-strewn hall beyond someone gives a feeble cough. The force of the blast has cracked the stone lintel above the tunnel, and rock dust is trickling to the floor. It looks as though the tunnel could cave in at any moment.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::MALLET))
+        {
+            return 19;
+        }
+        else
+        {
+            return 41;
+        }
+    }
+};
+
+class Story431 : public Story::Base
+{
+public:
+    Story431()
+    {
+        ID = 431;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_ITEMS(player, {Item::Type::BARYSAL_GUN}))
+        {
+            return 219;
+        }
+        else
+        {
+            return 241;
+        }
+    }
+};
+
+class Story432 : public Story::Base
+{
+public:
+    Story432()
+    {
+        ID = 432;
+
+        Text = "As your companions set off along the ramp towards the Heart, each keeping a weather eye on the others, you roll the grenade into their midst. The detonation knocks Golgoth and Boche off their feet, but Vajra Singh merely rocks like a great pillar and turns. Because of his armour he is just dazed. He sees at a glance that he can now finish off the other two at his leisure. You are the immediate threat. Levelling the mantramukta cannon, he unleashes a roaring blast of plasma that chars you to a lifeless husk in less than a second.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story433 : public Story::Base
+{
+public:
+    Story433()
+    {
+        ID = 433;
+
+        Text = "Decide what to do next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[SHOOTIG]", 68, Skill::Type::SHOOTING));
+        Choices.push_back(Choice::Base("Try [ROGUERY]", 24, Skill::Type::ROGUERY));
+        Choices.push_back(Choice::Base("Resort to [CUNNING]", 46, Skill::Type::CUNNING));
+        Choices.push_back(Choice::Base("Otherwise", 2));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story434 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story434()
+    {
+        ID = 434;
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        PreText = "A man called Malengin offers retroviruses -- concoctions that alter your DNA, resulting in permanent changes in body structure. You see a selection laid out on a tray that Malengin carries with him. It occurs to you that he is like a sorcerer in one of the old fairytales, an alchemist peddling dubious potions.";
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            PreText += "\n\nYou can't identify the retroviruses and must accept Malengin's own fanciful description of his wares.\n\n\"I give no guarantees,\" he reminds you, \"but balance this against my very reasonable prices.\"\n\nHe has one of each of the following retroviruses:\n\nThe EXALTED ENHANCER (10 scads)\n\nThe VIRID MYSTERY (7 scads)\n\nThe MASK OF OCCULTATION (9 scads)\n\nThe PEERLESS PERCEPTIVATE (6 scads)";
+
+            Choices.push_back(Choice::Base("Purchase the EXALTED ENHANCER (10 scads)", 308, Choice::Type::MONEY, 10));
+            Choices.push_back(Choice::Base("Purchase the VIRID MYSTERY (7 scads)", 330, Choice::Type::MONEY, 7));
+            Choices.push_back(Choice::Base("Purchase the MASK OF OCCULTATION (9 scads)", 449, Choice::Type::MONEY, 9));
+            Choices.push_back(Choice::Base("Purchase the PEERLESS PERCEPTIVATE (6 scads)", 287, Choice::Type::MONEY, 6));
+            Choices.push_back(Choice::Base("You have finished your business with Malengin", 414));
+
+            if (!Character::VERIFY_SKILL(player, Skill::Type::STREETWISE) && !Character::VERIFY_ITEMS(player, {Item::Type::VADE_MECUM}))
+            {
+                Choices[4].Destination = 25;
+            }
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 266; }
+};
+
+class Story435 : public Story::Base
+{
+public:
+    Story435()
+    {
+        ID = 435;
+
+        Text = "You arrive at a large circular room. In the centre rests a Manta sky-car, its burnished black chassis reflecting emerald droplets of light. As you step towards it, you notice a caretek unfold its articulated metal body and move slowly around the base of the sky-car, now and then probing with its diagnostic antenna. This is cause for hope. If the sky-car has been regularly serviced by a caretek, it might still be functional.\n\nA voice calls out. Startled, you glance at the archway leading to another room behind this one. It seems well lit. \"Come here,\" calls the voice again. \"At once!\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[ESP] Probe ahead for danger", 27, Skill::Type::ESP));
+        Choices.push_back(Choice::Base("Go through to the other room and investigate", 5));
+        Choices.push_back(Choice::Base("Take a closer look at the sky-car", 49));
+        Choices.push_back(Choice::Base("Leave", 395));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story436 : public Story::Base
+{
+public:
+    Story436()
+    {
+        ID = 436;
+
+        Text = "A few tendrils of mist drift into the lobby behind you through the glass double-doors. The receptionist is a fussy-looking man who is dwarfed by his huge desk and the looming Society logo etched in silver on the black marble wall behind him. He peers up at you with suspicion in his eyes. \"Yes? can I help you?\"\n\nYou hand him the ID card. \"I am a member of the Society,\" you say, remembering to keep a lacing of disdain in your voice. Society members are rich, powerful and privileged.\n\nHe runs the card through a slot, punches buttons on the console in front of him, consults a flickering screen. You see him frown.\n\n\"Something is wrong?\"\n\nHe gives a quick nervous smile and hands your card back. \"No, all is in order.\"\n\nSuddenly the sound of tramping feet echoes from a doorway at the back of the lobby. You whirl, but you are too late to get away. Security guards are fanning out to surround you, rifles pointed at your chest. The chief of security is a man whose type you recognize. In earlier eras he might have herded people into gas chambers or ordered them into trenches. Now he snatches the card from your hand. His eyes are like pebbles of dirty ice, \"So, you killed a Society member and stole this,\" he says.\n\nYou start to protest, but he does not listen. He steps back and snaps his fingers, and you are torn apart in a hail of gunfire.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story437 : public Story::Base
+{
+public:
+    Story437()
+    {
+        ID = 437;
+
+        Text = "You aim a kick at his head. He blocks it with his forearm it feels as though someone has whacked a baseball bat across your shin. You do not even see his huge fist lash out, crunching into the bridge of your nose --\n\nYou come to your senses a few moments later. You are dimly aware that you're no longer on your feet. The Fijian has hoisted you over his head. You crane your neck and find yourself staring down eighty metres at the mist-shrouded streetlamps.\n\n\"You shouldn't have murdered my boss,\" mutters the Fijian. And he tosses you down to your doom.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story438 : public Story::Base
+{
+public:
+    Story438()
+    {
+        ID = 438;
+
+        Text = "You shake Shandor's hand, then turn to do the same to his bodyguards. They stand nonplussed for a moment and Shandor grins. Each in turn takes your hand in his own massive grip, forcing smiles despite their constant wariness. \"Don't mind Vatu and Suva,\" says Shandor. \"They don't trust anybody they haven't got drunk with.\"\n\nAt this, the two bodyguards erupt into broad beaming grins. You turn and gaze out across the windswept landscape. Venis is just visible in the far distance, towers and domes older than the millennium breaking the drab grey skyline.\n\n\"Farewell, Hal Shandor,\" you say. \"I suppose we'll not meet again.\"\n\n\"Wait.\" He takes an object out of his pocket and hands it to you. \"I've had this for years, but I know it all by heart now. It'll be more use to you.\"\n\nIt is a box of black plastic about as big as your hand, with a small video screen and speaker on the side. Lettering on the side reads: Guide to Venis.\n\n\"What is it?\"\n\n\"A vade-mecum,\" he says. \"It'll tell you almost anything you need to know about the town -- street plan, the best hostelries, areas to avoid, that sort of thing.\" \n\n(As long as you possess it, you can use options for STREETWISE even though you do not have that skill. However, this applies only while you remain in Venis; it does not work in any other city.)\n\nLeaving Shandor and his men to seek their friends, you head on into Venis.\n\nYou gained a VADE-MECUM.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_ITEMS(player, {Item::VADE_MECUM});
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (!Character::VERIFY_SKILL(player, Skill::Type::CLOSE_COMBAT) && !Character::VERIFY_ITEMS(player, {Item::Type::SHORT_SWORD}))
+        {
+            return 334;
+        }
+        else
+        {
+            return 8;
+        }
+    }
+};
+
+class Story439 : public Story::Base
+{
+public:
+    Story439()
+    {
+        ID = 439;
+
+        Text = "The tunnel echoes stonily to your footsteps. At the far end it widens into a long foyer with open doors at the intervals long the opposite wall. You step through into a cylindrical chamber with a glass window at one end. The chamber is lined with seats. It takes you a moment before you realize you are inside a subway carriage. Fax watches from the door, wringing his hands in agitation as you explore the carriage. The motilator, encased inside a brass cylinder at the front, senses your approach and activates, speaking in a chiming voice: \"Please specify your required destination.\"\n\nQuestioning the motilator, you consult a map which projects onto the front window of the carriage. The subway has an intercontinental range, but most of the terminuses are now either inactive or destroyed. Nevertheless there are several destinations which are still marked as in service, and nay of them would bring you closer to your goal.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Travel by subway", 212));
+        Choices.push_back(Choice::Base("Return to the surface and continue your journey on foot", 420));
 
         Controls = Story::Controls::STANDARD;
     }
@@ -11369,6 +11617,16 @@ auto story426 = Story426();
 auto story427 = Story427();
 auto story428 = Story428();
 auto story429 = Story429();
+auto story430 = Story430();
+auto story431 = Story431();
+auto story432 = Story432();
+auto story433 = Story433();
+auto story434 = Story434();
+auto story435 = Story435();
+auto story436 = Story436();
+auto story437 = Story437();
+auto story438 = Story438();
+auto story439 = Story439();
 
 void InitializeStories()
 {
@@ -11416,7 +11674,8 @@ void InitializeStories()
         &story390, &story391, &story392, &story393, &story394, &story395, &story396, &story397, &story398, &story399,
         &story400, &story401, &story402, &story403, &story404, &story405, &story406, &story407, &story408, &story409,
         &story410, &story411, &story412, &story413, &story414, &story415, &story416, &story417, &story418, &story419,
-        &story420, &story421, &story422, &story423, &story424, &story425, &story426, &story427, &story428, &story429};
+        &story420, &story421, &story422, &story423, &story424, &story425, &story426, &story427, &story428, &story429,
+        &story430, &story431, &story432, &story433, &story434, &story435, &story436, &story437, &story438, &story439};
 }
 
 #endif
