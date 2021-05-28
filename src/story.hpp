@@ -5185,11 +5185,7 @@ public:
         {
             PreText += "You LOSE " + std::to_string(-LIFE) + " Life Point(s).";
         }
-        else
-        {
-            PreText += "You managed to remain well enough not to lose any Life Points.";
-        }
-
+        
         Character::GAIN_LIFE(player, LIFE);
 
         Text = PreText.c_str();
@@ -10195,7 +10191,7 @@ public:
             PreText += "[SURVIVAL] ";
         }
 
-        if (Character::HAS_FOOD(player, 1))
+        if (Character::HAS_FOOD(player, 0))
         {
             DAMAGE++;
 
@@ -10221,7 +10217,7 @@ public:
 
             PreText += "\n\nSurveying the landscape, you see only a dazzling expanse of snow under a sky of merciless metallic blue. The few other people you catch sight of are hunched anonymous figures in the distance. You do not call out to them. In these grim and desperate times, a lone traveller is well advised not to seek out company.\n\nThe quaintly named Jib-and-Halter Pass shows itself under a gritty haze. The air takes on a sulphurous tang as you approach. Here the rocks lie under only a light dusting of snow. You throw back your hood. It does not seem quite so cold here. Volcanic vents in the ground release hot mud in geysers to the west. Bog moss thrives in the fertile mud, allowing a small settlement to survive here.\n\nYou arrive at the settlement, a collection of tottering huts around the long looming bulk of the ancient Jib-and-Halter Inn. The sun dips low in the sky, sending amber shafts of light through the thin air. You blow out a plume of breath. You are looking forward to a fire, a hot bath and a good meal.\n\nThe interior of the inn is a place of lantern light and low black rafters. Dozens of faces glowering as you enter. Several people sweep their hands irritably in your direction, a common twenty-third century gesture to urge haste on someone who is sluggish in closing a door.\n\nAs you cross over to the bar, you begin to sense something is amiss. None of the others here are eating or drinking. Each person sits sullenly silent. Then, as you move around a squat beam, you come in sight of two women standing at the bar. To judge from the stack of glasses in front of them, they have drunk enough vodka to kill a fair-sized rhino, but the only sign they might even be slightly drunk is their loud haughty bray of laughter on seeing you. You size them up at a glance. They are identical twins, both over six feet tall and with taut Olympian physiques, brimming with vitality, their eyes and closed-cropped hair the colour of sunrise. Each twin has a tattoo on her arm: a number in Roman numerals.\n\n\"Sit there and stay silent,\" commands one of the twins.\n\n\"We insist on drinking undisturbed,\" says her sister.";
 
-            if (!Character::VERIFY_SKILL(player, Skill::Type::LORE) && !Character::VERIFY_SKILL(player, Skill::Type::LORE))
+            if (!Character::VERIFY_SKILL(player, Skill::Type::LORE) && !Character::VERIFY_SKILL(player, Skill::Type::ESP))
             {
                 Choices.push_back(Choice::Base("Take exception to their manners and do something about it", 32));
                 Choices.push_back(Choice::Base("Meekly do as you are told", 54));
@@ -10242,6 +10238,241 @@ public:
             return 421;
         }
     }
+};
+
+class Story401 : public Story::Base
+{
+public:
+    Story401()
+    {
+        ID = 401;
+
+        Text = "A row of coffee stalls line the side of the plaza. There you discover that Baron Siriasis is a frequent visitor to Kahira.\n\n\"The one with no legs?\" says a man bearing the cape and baton of the city militia. \"Yes, he is a member of the Compass Society. I have heard that he is one of the psi-lords of Bezant.\"\n\nBezant -- formerly Istanbul -- suffered heavy bombardment of exotic radiation during the Paradox War. When the fallout stabilized and the city once again became habitable, it was discovered that psionic forces worked there to an enhanced degree. Those with psionic powers soon made themselves the hereditary overlords of Bezant -- a group characterized by arrogance and disdain for the common herd of mankind. Baron Siriasis is one of these.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::STREETWISE))
+        {
+            return 95;
+        }
+        else
+        {
+            return 311;
+        }
+    }
+};
+
+class Story402 : public Story::Base
+{
+public:
+    Story402()
+    {
+        ID = 402;
+
+        Text = "The time has come. You are as ready as you will ever be. Swinging your pack onto your shoulder, you set off at a brisk pace towards the city gate. The lift carries you down to ground level, where you emerge from the shelter of the concrete buttress into a raw wind. Pockets of mist swirl like smoke above the turbid river. Westwards lies the gleaming white expanse of snow that is the Sahara Desert.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take a detour to the pyramids at Giza", 423));
+        Choices.push_back(Choice::Base("Head straight out across the Sahara towards Du-En", 393));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+        {
+            Choices[1].Destination = 289;
+        }
+        else
+        {
+            Choices[1].Destination = 393;
+        }
+    }
+};
+
+class Story403 : public Story::Base
+{
+public:
+    Story403()
+    {
+        ID = 403;
+
+        Text = "You pass on through a plain of ice tors -- baroque crags which glint with a metallic sheen against the delicate blue sky. The wind, blasting between the tors, makes a desolate keening sound. You see no signs of life. Cold gnaws at you from outside, hunger from within.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::HAS_FOOD(player, 1))
+        {
+            CONSUME_FOOD(player, 2);
+
+            return 100;
+        }
+        else if (Character::HAS_FOOD(player, 0))
+        {
+            CONSUME_FOOD(player, 1);
+
+            return 35;
+        }
+        else
+        {
+            return 56;
+        }
+    }
+};
+
+class Story404 : public Story::Base
+{
+public:
+    Story404()
+    {
+        ID = 404;
+
+        Image = "images/filler2.png";
+
+        Text = "There is a small brass plate next to the door. Obviously there was originally a control for opening the door, but by replacing the button with a blank plate it was converted into a gaol cell. Using your belt buckle, you prise the plate free of the ball. It takes several hours of laborious work, by the end of which time your fingers are bleeding, but at last you tear it lose. A stack of wires are exposed, and you soon identify the connections you need in order to work the door.\n\nAs the door opens, an alarm starts to sound throughout the base, a softly insistent tone accompanied by an automatic message: \"Intruder alert. All security personnel, report to your stations.\"\n\nThere is no one to heart the alarm, of course, but all the same you had better not hang around. There might be an automatic sequence that locks the outer door. You jump on the elevator and ascend to the exit.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 361; }
+};
+
+class Story405 : public Story::Base
+{
+public:
+    Story405()
+    {
+        ID = 405;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            return 58;
+        }
+        else if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            return 81;
+        }
+        else
+        {
+            return 103;
+        }
+    }
+};
+
+class Story406 : public Story::Base
+{
+public:
+    Story406()
+    {
+        ID = 406;
+
+        Text = "\"You heard Vajra Singh's stipulation,\" growls Gargan XIV, jabbing a finger against Gilgamesh's chest-plate. \"Hirelings and servants are not allowed to join an expedition into the catacombs.\"\n\nYou protest. \"Gilgamesh is hardly a servant. He'll be like an invaluable member of our team.\"\n\nShe shakes her head doggedly. \"You cannot bring your automaton along. That is final.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Look for Vajra Singh to ask his opinion", 445));
+        Choices.push_back(Choice::Base("Insist that Gilgamesh accompanies the party", 427));
+        Choices.push_back(Choice::Base("(ENKIDU) Leave him behind", -406, Codeword::Type::ENKIDU));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Event406 : public Story::Base
+{
+public:
+    Event406()
+    {
+        ID = -406;
+
+        Choices.clear();
+
+        Controls = Story::Controls::NONE;
+    }
+
+    int Background(Character::Base &player)
+    {
+        Character::REMOVE_CODEWORD(player, Codeword::Type::ENKIDU);
+
+        Character::GET_CODEWORDS(player, {Codeword::Type::URUK});
+
+        return 16;
+    }
+};
+
+class Story407 : public Story::Base
+{
+public:
+    Story407()
+    {
+        ID = 407;
+
+        Text = "You made an error of judgement. Baron Siriasis instantly detects your mind-probe. Throwing up a mental shield, he drifts into the air on strands of telekinetic force and comes out hurtling out of the tent to confront you.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 386; }
+};
+
+class Story408 : public Story::Base
+{
+public:
+    Story408()
+    {
+        ID = 408;
+
+        Text = "You are in no mood to play guessing games with a two-hundred-year-old computer. Luckily you do not have to. Any computer that can understand speech can also be reprogrammed in the same way. It might take hours or even days if you were to do that, but Little Gaia is able to transmit instructions, she produces a burst of coded bleeps that override the computer's existing program and give it the command to start the elevator. You are on your way to the Sanctum of the Heart.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 150; }
+};
+
+class Story409 : public Story::Base
+{
+public:
+    Story409()
+    {
+        ID = 409;
+
+        Text = "The man tells you that he is Captain Casimir Novak, commander of the High Priest's personal guard. \"The populace became crazed,\" he says indignantly. \"They stormed the temple. I was escorting the High Priest to safety when a group burst in here and hurled that stasis bomb. It is the last thing I remember.\"\n\n\"It was all a long time ago,\" you say.\n\n\"One thing I must know. Did the High Priest get away?\"\n\nYou spare Novak the details. Let him have the satisfaction of having succeeded in his duty. \"Picard? He got away. No one else did.\"\n\nBoche and Baron Siriasis are both looking at him guardedly. You can guess what they're thinking. How will Novak react when he learns you have come here to take the Heart -- the sacred object of his faith?\n\n\"Let us worry about explanations later,\" says the baron, reading your mind. \"For now, we must hurry or the others will reach our goal ahead of us.\"\n\nYou gained the codeword MALLET.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::MALLET});
+    }
+
+    int Continue(Character::Base &player) { return 388; }
 };
 
 auto earth23rdCentury = Earth23rdCentury();
@@ -10648,11 +10879,21 @@ auto story397 = Story397();
 auto story398 = Story398();
 auto story399 = Story399();
 auto story400 = Story400();
+auto story401 = Story401();
+auto story402 = Story402();
+auto story403 = Story403();
+auto story404 = Story404();
+auto story405 = Story405();
+auto story406 = Story406();
+auto event406 = Event406();
+auto story407 = Story407();
+auto story408 = Story408();
+auto story409 = Story409();
 
 void InitializeStories()
 {
     Stories = {
-        &earth23rdCentury, &event179, &event245,
+        &earth23rdCentury, &event179, &event245, &event406,
         &prologue, &story001, &story002, &story003, &story004, &story005, &story006, &story007, &story008, &story009,
         &story010, &story011, &story012, &story013, &story014, &story015, &story016, &story017, &story018, &story019,
         &story020, &story021, &story022, &story023, &story024, &story025, &story026, &story027, &story028, &story029,
@@ -10693,7 +10934,7 @@ void InitializeStories()
         &story370, &story371, &story372, &story373, &story374, &story375, &story376, &story377, &story378, &story379,
         &story380, &story381, &story382, &story383, &story384, &story385, &story386, &story387, &story388, &story389,
         &story390, &story391, &story392, &story393, &story394, &story395, &story396, &story397, &story398, &story399,
-        &story400};
+        &story400, &story401, &story402, &story403, &story404, &story405, &story406, &story407, &story408, &story409};
 }
 
 #endif
