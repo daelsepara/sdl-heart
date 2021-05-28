@@ -19,7 +19,7 @@ This is an implementation of the **Heart of Ice** game book (Critical IF Gameboo
 
 **About screen**
 
-![About Screen](/screenshots/About-screen.png)
+![About Screen](/screenshots/about-screen.png)
 
 **Select Character**
 
