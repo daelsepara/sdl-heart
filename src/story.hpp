@@ -5185,7 +5185,7 @@ public:
         {
             PreText += "You LOSE " + std::to_string(-LIFE) + " Life Point(s).";
         }
-        
+
         Character::GAIN_LIFE(player, LIFE);
 
         Text = PreText.c_str();
@@ -10475,6 +10475,217 @@ public:
     int Continue(Character::Base &player) { return 388; }
 };
 
+class Story410 : public Story::Base
+{
+public:
+    Story410()
+    {
+        ID = 410;
+
+        Image = "images/filler3.png";
+
+        Text = "Despite Golgoth's searing volley of barysal shots, Singh manages to raise his canon. There is a deep thrumming as the power kicks in, sending a blast of incandescent energy streaming through the air. As you dive for cover inside one of the elevator tubes, you can see that Singh is already dead on his feet. But Golgoth has no defence against the raw power of the cannon, and he too is blown to pieces.\n\nYou emerge slowly and step through the carnage. Vajra looks up at you weakly and your muscles go tense. His cannon's power will take time to build up, but he could still shoot you down with his pistol.\n\nBut he is nobler than that. \"There's no chance for me now,\" he groans. \"The the power. Use it wisely...\"\n\nHe slumps and his eyes roll up. You are the only one left.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 415; }
+};
+
+class Story411 : public Story::Base
+{
+public:
+    Story411()
+    {
+        ID = 411;
+
+        Text = "Boche waves you along beside him, keeping the gun trained on you. \"I could kill you now,\" he says, \"but I want someone to be alive to witness this. After all, I'm about to become a god.\"\n\nReaching the Heart, he kneels and embraces it. You think this is your chance to act, but even as you rush forward you see you are too late. Coruscating bands of energy blaze from the depths of the unearthly gem, swathing Boche in an aura of blinding violet light. The fabric of reality is ripped apart. You feel weightless. A vortex spins up through the dome, sweeping away rock and air rising up into space, out past the moon and planets. In what seems like seconds you have been hurled like a ghost through all of creation. You witness the birth of a new cosmos -- a cosmos fashioned by Boche's whims. He is everywhere and all-powerful, while you are but a spark that swiftly vanishes into eternity.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story412 : public Story::Base
+{
+public:
+    Story412()
+    {
+        ID = 412;
+
+        Text = "After fifteen minutes of careful searching, you find a secret compartment under one of the pallets in a side room. It slides open at your touch to reveal an ornamental knife. You have no idea why the knife's owner went to such lengths to hide it. \"The Volentines were all barmy,\" is Boche's dismissive opinion. \"If you'd been High Priest, would you have allowed them to keep sharp implements?\"\n\nBaron Siriasis drifts across the broken furniture and glances at the knife. \"Probably the acolytes were not supposed to have any personal possessions,\" he says. \"The idea of them all living together here would be to focus their spiritual identity. Now, if you have quite finished looking for mementoes, let us be on our way.\"\n\nReturning to the antechamber, you decide what to to next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take the left-hand passage", 3));
+        Choices.push_back(Choice::Base("The right-hand one", 128));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story413 : public Story::Base
+{
+public:
+    Story413()
+    {
+        ID = 413;
+
+        Text = "Peering along the pass, you catch sight of a hunched shambling figure in the snow-clouded darkness. It is thin, with a large hooded head. It is still too far away for you to get a clear view of its face, but something about it stirs atavistic fears at the back of your mind.\n\nYou glance suddenly at the rigid corpses on the other ledge. All were entranced, turned to hypnotized statues before they froze to death.\n\n\"By Gaia!\" You seize Boche's arm. \"We're in the larder of the Gorgon!\"";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 433; }
+};
+
+class Story414 : public Story::Base
+{
+public:
+    Story414()
+    {
+        ID = 414;
+
+        Text = "Decide what to do next.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Attempt to make contact with Gaia", 351));
+        Choices.push_back(Choice::Base("Research the legend of the Heart of Volent", 91));
+        Choices.push_back(Choice::Base("Buy supplies for your adventure", 350));
+        Choices.push_back(Choice::Base("Investigate the background of Kyle Boche", 179));
+        Choices.push_back(Choice::Base("Find out if any travellers have recently gone missing in the Apennine Mountains", 451));
+        Choices.push_back(Choice::Base("You have completed all your business here and are ready to leave", 25));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story415 : public Story::Base
+{
+public:
+    Story415()
+    {
+        ID = 415;
+
+        Text = "Squinting in the flux of radiation from the Heart, you approach it with a sense of wonder. This is the artifact created in the Big Bang, the key to infinite power. Many people gave their lives for the chance to possess it. Now it lies within your grasp.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::NEMESIS))
+        {
+
+            return 153;
+        }
+        else
+        {
+            return 174;
+        }
+    }
+};
+
+class Story416 : public Story::Base
+{
+public:
+    Story416()
+    {
+        ID = 416;
+
+        Text = "A robotic caretek scurries past your foot and continues on, gliding up the wall until it settles over an access panel which it begins to probe. It must have been diagnosing repairing faults here for centuries. You smile. Obviously the gondo's stories of ghosts have left you jittery, if you are jumping at the sight of a harmless caretek.\n\nThe corridor ahead is wide, oval in cross-section. The green light gleams off the polished curve of the walls. Seeing a chamber at the end, you press on.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 435; }
+};
+
+class Story417 : public Story::Base
+{
+public:
+    Story417()
+    {
+        ID = 417;
+
+        Text = "Under the ochre-tinged gleam of a streetlamp, you scrutinize the face shown on the card, impressing it into your mind. Your eyes close. The face remains hovering before you, mentally you rotate it so that in your mind's eye you are looking from behind those unfamiliar features. You make them your own, drawing the face over yours like a mask.\n\nIf anyone were nearby, they would have seen your own face swim and alter in the dim light: the nose narrowing, brows drawing closer over eyes of altered colour. You turn and peer at your reflection in a grimy windowpane. The illusion is good enough to satisfy a casual glance, and should last at least as long as you'll need to get past the receptionist.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 374; }
+};
+
+class Story418 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story418()
+    {
+        ID = 418;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::PILOTING))
+        {
+            PreText = "You engage the thrusters and soar up from the helipad in a blaze of white jet-light.";
+        }
+        else
+        {
+            PreText = "You cannot get the sky-car airborne in time before the Fijian grabs you.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::PILOTING))
+        {
+            return 218;
+        }
+        else
+        {
+            return 437;
+        }
+    }
+};
+
+class Story419 : public Story::Base
+{
+public:
+    Story419()
+    {
+        ID = 419;
+
+        Text = "A terrifying howl erupts from the stranger's throat, rooting you to the spot. You hardly see him move as he closes in and locks his bloodless fingers around your windpipe. You try to wrestle free, but your muscles are slack with fear and you can only kick feebly as he lifts you clear of the ground and snaps your neck like a farmer killing a chicken. Your lifeblood will nourish the unnatural creature that has slain you.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -10889,6 +11100,16 @@ auto event406 = Event406();
 auto story407 = Story407();
 auto story408 = Story408();
 auto story409 = Story409();
+auto story410 = Story410();
+auto story411 = Story411();
+auto story412 = Story412();
+auto story413 = Story413();
+auto story414 = Story414();
+auto story415 = Story415();
+auto story416 = Story416();
+auto story417 = Story417();
+auto story418 = Story418();
+auto story419 = Story419();
 
 void InitializeStories()
 {
@@ -10934,7 +11155,8 @@ void InitializeStories()
         &story370, &story371, &story372, &story373, &story374, &story375, &story376, &story377, &story378, &story379,
         &story380, &story381, &story382, &story383, &story384, &story385, &story386, &story387, &story388, &story389,
         &story390, &story391, &story392, &story393, &story394, &story395, &story396, &story397, &story398, &story399,
-        &story400, &story401, &story402, &story403, &story404, &story405, &story406, &story407, &story408, &story409};
+        &story400, &story401, &story402, &story403, &story404, &story405, &story406, &story407, &story408, &story409,
+        &story410, &story411, &story412, &story413, &story414, &story415, &story416, &story417, &story418, &story419};
 }
 
 #endif
