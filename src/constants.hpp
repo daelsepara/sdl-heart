@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+const char *FONT_FILE = "fonts/bookman-old-style.ttf";
+
 const SDL_Color clrBK = {0, 0, 0, 0};
 const SDL_Color clrDB = {7, 7, 58, 0};
 const SDL_Color clrWH = {255, 255, 255, 0};
@@ -53,16 +55,16 @@ int textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_spa
 void Recompute()
 {
     splashw = 0.30 * (SCREEN_WIDTH * (1.0 - 3.0 * Margin));
-    
+
     startx = (SCREEN_WIDTH * Margin);
     starty = (SCREEN_HEIGHT * Margin);
-    
+
     textx = startx * 2 + splashw;
     texty = starty;
-    
+
     buttony = (int)(SCREEN_HEIGHT * (1.0 - Margin) - buttonh);
     gridsize = buttonw + button_space;
-    
+
     textwidth = ((1.0 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
     text_bounds = SCREEN_HEIGHT * (1.0 - Margin * 2.0) - buttonh - button_space * 2;
 }
