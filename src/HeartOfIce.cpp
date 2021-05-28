@@ -847,7 +847,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
         auto hold = false;
 
         auto infoh = 0.06 * SCREEN_HEIGHT;
-        auto boxh = 0.125 * SCREEN_HEIGHT;
+        auto boxh = 0.150 * SCREEN_HEIGHT;
         auto box_space = 10;
         auto messageh = 0.25 * SCREEN_HEIGHT;
 
