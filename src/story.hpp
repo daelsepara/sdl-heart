@@ -1024,7 +1024,7 @@ public:
 
         Choices.clear();
         Choices.push_back(Choice::Base("Fire at Golgoth", 109));
-        Choices.push_back(Choice::Base("Fire at Boche", 97));
+        Choices.push_back(Choice::Base("Fire at Boche", 87));
         Choices.push_back(Choice::Base("Fire at Vajra Singh", 131));
 
         Controls = Story::Controls::STANDARD;
