@@ -9620,6 +9620,261 @@ public:
     }
 };
 
+class Story380 : public Story::Base
+{
+public:
+    Story380()
+    {
+        ID = 380;
+
+        Text = "A street vendor offers books, pamphlets and disks containing a vast wealth of chaotic information. You search through shelves and old boxes until you learn everything you need. Gilgamesh was the name of a military project centuries ago. The idea was to construct a battle-droid which was immune to paradoxing, in the hope that an army of such warriors could overwhelm Du-En. But then Du-En fell of its own accord, and the project was apparently abandoned.\n\nYou check the location of the Gilgamesh research base. It was at Giza, just outside Kahira.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::LORE))
+        {
+            return 95;
+        }
+        else
+        {
+            return 311;
+        }
+    }
+};
+
+class Story381 : public Story::Base
+{
+public:
+    Story381()
+    {
+        ID = 381;
+
+        Text = "By the time you have finished your shopping it is mid-morning. Crossing the street at the entrance of the bazaar, you see Kyle Boche lounging at a pavement table in front of the Empty Quarter Cafe. \"Where were you earlier?\" you ask him. \"We were supposed to meet at sunrise.\"\n\n\"I don't know what you mean. I was here. You must have missed me. In fact, I was just about to give up and leave.\"\n\nGlancing beyond the awning of the cafe, you see that the place cannot have been open for more than a few minutes. You sigh. Boche is the sort of person who will never admit he is in the wrong. \"Come on, then,\" you say to him, swinging your pack onto your shoulder and setting off at a brisk stride towards the city gate. The lift carries you down to ground level, where you emerge into a raw wind. Pockets of mist swirl above the river. West lies the gleaming white expanse of snow that is the Sahara Desert.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Take a detour to the pyramids at Giza", 423));
+        Choices.push_back(Choice::Base("Head straight out across the Sahara towards Du-En", 393));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::MANTA_SKY_CAR))
+        {
+            Choices[1].Destination = 289;
+        }
+        else
+        {
+            Choices[1].Destination = 393;
+        }
+    }
+};
+
+class Story382 : public Story::Base
+{
+public:
+    Story382()
+    {
+        ID = 382;
+
+        Text = "Riza explains your options for returning to Earth. \"I'm going back to Maka quite soon, and I could drop you at Sudan. Of course, you'd have along walk from there to Du-En.\"\n\n\"Can't you drop me any closer?\"\n\n\"We can't risk our flyers. There might be automated defences at Du-En which would shoot them down. If you know how to pilot it, I could lend you a one-man flyer which you could take down within eight hundred kilometres of Du-En. That's the closest we can land you without risking the loss of a vehicle.\"\n\n\"Not quite,\" puts in one of the technicians standing nearby. \"There's away you could be delivered straight into the city itself. We have an experimental matter transporter.\"\n\nRiza glares at the technician, then turns to you. \"I wouldn't recommend that. It's only been used on mice so far, and over quite short distances.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go with Riza to Sudan", 275));
+        Choices.push_back(Choice::Base("Risk the matter transporter", 424));
+        Choices.push_back(Choice::Base("[PILOTING] take the one-man flyer", 442, Skill::Type::PILOTING));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story383 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story383()
+    {
+        ID = 383;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Type = Story::Type::NORMAL;
+
+        PreText = "A door slides open and you step through, only to whirl as it clangs shut behind you. You are trapped inside a small cubicle. As you pound at the door, the synthetic voice speaks again: \"The facility you requested is not on record. Please wait here while the matter is investigated. Security teams will arrive in due course.\"\n\nSecurity teams? There hasn't been a living soul here in over a hundred years!";
+
+        if (!Character::VERIFY_SKILL(player, Skill::Type::ROGUERY))
+        {
+            Type = Story::Type::DOOM;
+
+            PreText += "\n\nYou are trapped and your remains will languish here for ever as the ice shield slips further and further south and finally chokes of all life on earth.";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 404; }
+};
+
+class Story384 : public Story::Base
+{
+public:
+    Story384()
+    {
+        ID = 384;
+
+        Text = "Working one of the giant sabre-teeth loose from the jaw, you use it to cut through the thick leather hide so that you can disjoint the bometh's carcass. You need only string the haunches of meat across your backpack -- they will keep fresh enough in this wintry clime.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Take = {Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK, Item::FOOD_PACK};
+
+        Limit = 8;
+    }
+
+    int Continue(Character::Base &player) { return 298; }
+};
+
+class Story385 : public Story::Base
+{
+public:
+    Story385()
+    {
+        ID = 385;
+
+        Text = "At first there is no sign of Kyle Boche, until you notice him snoozing in his bedroll beside the remains of last night's fire. \"They'll find no sign of the Heart today,\" he reckons. \"It's wiser to rest for now and build our strength. When that lot finds the Heart there's going to be a battle royal. We'll need to be ready for that moment when it comes.\"\n\nYou see Chaim Golgoth waving to you and stroll over to where he is standing with the Gargan clones. \"Are you planning to go exploring today?\" he asks. \"You're welcome to join our group, if so.\" The Gargan twins glower at this, but do not dispute it.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Back out and spend the day resting", 363));
+        Choices.push_back(Choice::Base("Accept Golgoth's invitation", 16));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        if (Character::VERIFY_CODEWORD(player, Codeword::Type::ENKIDU))
+        {
+            Choices[1].Destination = 406;
+        }
+        else
+        {
+            Choices[1].Destination = 16;
+        }
+    }
+};
+
+class Story386 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story386()
+    {
+        ID = 386;
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Choices.clear();
+
+        PreText = "Baron Siriasis is outraged by your intrusion. Supported by the immense force of his mind, he hovers eerily towards you, paralysing you with a bolt of psychic force. You are left rooted to the spot, unable to move a muscle as he drifts around you like a ghastly rag doll hanging on invisible strings. \"The paralysis will wear off in a few hours,\" he hisses. \"I shall leave you to contemplate your folly.\"\n\nHe returns to his tent and closes the flap.\n\n";
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::PARADOXING))
+        {
+            PreText += "You break free from his mental paralysis.";
+
+            Choices.push_back(Choice::Base("Go talk to Boche", 104));
+            Choices.push_back(Choice::Base("Talk to Golgoth", 126));
+            Choices.push_back(Choice::Base("Talk Gaunt", 148));
+        }
+        else
+        {
+            Character::GAIN_LIFE(player, -1);
+
+            PreText += "You were immobile in the snow for hours.\n\nYou LOSE 1 Life Point from exposure";
+        }
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 192; }
+};
+
+class Story387 : public Story::Base
+{
+public:
+    Story387()
+    {
+        ID = 387;
+
+        Text = "The computer is looking for a specific set of responses: the code that will convince it to start the elevator instead of opening the door and allowing the hover-droids to blast you away. Something strikes a chord in your memory, and you hastily think back over what you know of the Volentine cult. There was something that Eleazar, founder of the cult, repeated over and over after he escaped from the fall of Du-En. At the time you assumed it was just a catechism of his faith. But it is worth a try...";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 18; }
+};
+
+class Story388 : public Story::Base
+{
+public:
+    Story388()
+    {
+        ID = 388;
+
+        Text = "You make your way along a wide passage where your footsteps echo stonily on hard tiles. As elsewhere in the catacombs, light comes from a row of globes along the ceiling. Some have dimmed over the years, but most still burn brightly. When you wonder aloud what the power source is, the baron is in o doubt: \"The Heart itself. The tiniest fraction of its power is enough to illuminate all the cities of the world.\"\n\nAt last you arrive at a domed hall. Beyond lies a network of tunnels. \"Scout ahead,\" the baron tells you. \"One of those tunnels must lead to the Shrine of the Heart.\"";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Do as he says", 430));
+        Choices.push_back(Choice::Base("Bridle at being ordered about", 450));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story389 : public Story::Base
+{
+public:
+    Story389()
+    {
+        ID = 389;
+
+        Text = "Singh falters under the onslaught of your combined attacks. The mantramukta is blasted out of his hands, but he manages to draw his pistol as he falls. Golgoth's next shot sears through his breastplate and pierces his heart, but even as he dies his finger constricts on the trigger. The shot strikes you painfully through the leg.\n\nYou LOSE 3 Life Points.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GAIN_LIFE(player, -3);
+    }
+
+    int Continue(Character::Base &player) { return 431; }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -10003,6 +10258,16 @@ auto story376 = Story376();
 auto story377 = Story377();
 auto story378 = Story378();
 auto story379 = Story379();
+auto story380 = Story380();
+auto story381 = Story381();
+auto story382 = Story382();
+auto story383 = Story383();
+auto story384 = Story384();
+auto story385 = Story385();
+auto story386 = Story386();
+auto story387 = Story387();
+auto story388 = Story388();
+auto story389 = Story389();
 
 void InitializeStories()
 {
@@ -10045,7 +10310,8 @@ void InitializeStories()
         &story340, &story341, &story342, &story343, &story344, &story345, &story346, &story347, &story348, &story349,
         &story350, &story351, &story352, &story353, &story354, &story355, &story356, &story357, &story358, &story359,
         &story360, &story361, &story362, &story363, &story364, &story365, &story366, &story367, &story368, &story369,
-        &story370, &story371, &story372, &story373, &story374, &story375, &story376, &story377, &story378, &story379};
+        &story370, &story371, &story372, &story373, &story374, &story375, &story376, &story377, &story378, &story379,
+        &story380, &story381, &story382, &story383, &story384, &story385, &story386, &story387, &story388, &story389};
 }
 
 #endif
