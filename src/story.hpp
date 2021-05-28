@@ -10686,6 +10686,255 @@ public:
     }
 };
 
+class Story420 : public Story::Base
+{
+public:
+    Story420()
+    {
+        ID = 420;
+
+        Text = "The ruined city is soon left far behind. You slog through the dense undergrowth, slowly making progress to the fringes of Lyonesse. Here, where the heat is less stifling, a few ramshackle communities farm the valleys. You collect some provisions to sustain you on your journey, knowing that you will soon pass beyond the oasis of sunlit warmth.\n\nTwo days later finds you on the lip of a glacier. Lyonesse is now visible only as a distant aurora in the eastern sky at night. Your boots make a hard crumping sound as you trudge through the snow. Shortly after dawn, the thick clouds suddenly lift, revealing majestic mountains sweeping up against the sky to your right. You stand and gaze at the long streamers of snow that are curling out from the highest peaks, stripped from the mountain flanks by a titanic wind. You feel a sense of uncanny isolation. There is no trace of a breeze where you are standing, and the only sound is a far-off whistling and yet that wind is strong enough to blast the hard-packed snow to powder. The power of the elements is awesome. You are no more than a speck in Nature's eye. And yet the power that awaits you in Du-En is enough to blind that eye -- power to reshape the world. At this moment, as you stare up at the soaring mountains, it all seems unreal.\n\nYou turn to look south. You cannot waste time here, idly indulging your fancies. Ahead lies your goal: the power to make your dreams real.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 400; }
+};
+
+class Story421 : public Story::Base
+{
+public:
+    Story421()
+    {
+        ID = 421;
+
+        Text = "Curious... their memories and thought patterns are almost identical. Both are proud, uncompromising, certain of their superiority to the common herd of mankind. You scan deeper, uncovering images of murder and stark savagery. They once had twelve sisters, all identical -- obviously clones. You suspect a military or criminal past. Reading still deeper, you find a memory of Gaia. They also heard the broadcast. They, like you, are bound for Du-En.\n\nYou weigh up your options. It might be reckless to start anything before you know more about them, but it would be equally dangerous to leave the first move to them.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("[CLOSE COMBAT] Attack them", 76, Skill::Type::CLOSE_COMBAT));
+        Choices.push_back(Choice::Base("[CUNNING] Try to outwit them", 120, Skill::Type::CLOSE_COMBAT));
+        Choices.push_back(Choice::Base("Otherwise", 54));
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
+class Story422 : public Story::Base
+{
+public:
+    Story422()
+    {
+        ID = 422;
+
+        Text = "In a dingy smoke-filled gambling hall, you find a man who takes you to the table of Harek Asfar, the chief of the city's criminals. Asfar is a dapper man in a suit of shimmering black cloth, with a gold-tinted band shielding his eyes. A cigarette in an enamelled holder sends lazy curls of smoke up in front of tall mirror against the wall. Its chipped surface speaks poignantly of faded grandeur. \"You want to know about Chaim Golgoth,\" says Asfar.\n\nYou nod and wait. Asfar considers, then gives an indulgent click of his tongue and motions for you to sit. He raises his glass and sips, but does not offer you a drink. \"Commander Chaim Golgoth, an agent -- I should say assassin and saboteur -- for United States Intelligence. Seconded from the military, he bears the codename 'Vector'. A thorn in my side.\"\n\n\"Why should a US operative concern himself with affairs in Kahira?\"\n\nAsfar gives a soft laugh, like a puff of escaping gas. \"You have not heard? The President has arrogated to himself police authority over the entire world, on the specious premise that the United States now constitutes the majority of the human population. Golgoth has disrupted several of my activities on this basis.\"\n\n\"Why not kill him? You have an air of ruthless ability about you, if you don't mind me saying.\"\n\n\"I take that as compliment,\" says Asfar. \"In fact I did formulate a plan. A retired US colonel lived at a hunting lodge near Karthag. I had him murdered and installed my fifteen best men in the lodge, then lured Golgoth there with a fake message.\"\n\n\"And what happened?\"\n\nAsfar pauses, blows out a stream of cigarette smoke, frowns. \"I lost my fifteen best men.\"\n\nHe signals that your brief discussion is at an end, and a bodyguard leads you from the table.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player)
+    {
+        if (Character::VERIFY_SKILL(player, Skill::Type::STREETWISE))
+        {
+
+            return 95;
+        }
+        else
+        {
+            return 311;
+        }
+    }
+};
+
+class Story423 : public Story::Base
+{
+public:
+    Story423()
+    {
+        ID = 423;
+
+        Text = "The landscape stretches on, a sea of white broken by islands of bare black rock. Rays of sunlight, skimming from the horizon behind you, make the snow flash like ground glass. Soon you can see man-made hills that jut up against the drab skyline. These are the pyramids, one of the seven wonders of the ancient world. And in front of them reclines the Sphinx, its inscrutable gaze fixed on Kahira, which is outlined by the rising sun. According to superstition, the Sphinx watches over Kahira and keeps it safe from the desert's threat. You are not so sure. Doesn't a watchdog face out from the place it is guarding? It looks to you as if the Sphinx carries in its proud impassive face a clear warning about the Sahara. You are reminded of the words written over the gates of Hell: Lasciate ogni speranza, voi ch'entrate -- abandon hope, you who venture here.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 440; }
+};
+
+class Story424 : public Story::Base
+{
+public:
+    Story424()
+    {
+        ID = 424;
+
+        Text = "Riza leads the way to the transporter bay. You step onto the platform and a heavy glass partition closes behind you. There is no turning back now. Through the glass, you see Riza giving orders to the technicians, but no sound reaches your ears. Lights come on, bathing you in a dazzling glow, and you feel a wrenching sensation deep inside.\n\nThe light fades. Your first impression is of an icy wind that tears the breath from your lungs. A rolling snowscape stretches off in all directions as far as the eye can see. You are back on Earth, in the middle of the Saharan Ice Wastes. If Riza set the coordinates properly, you should be only a few kilometres form Du-En.\n\nYou gained the codeword HOURGLASS.";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::HOURGLASS});
+    }
+
+    int Continue(Character::Base &player) { return 125; }
+};
+
+class Story425 : public Story::Base
+{
+public:
+    Story425()
+    {
+        ID = 425;
+
+        Image = "images/gilgamesh.png";
+
+        Text = "A door opens, admitting you to a short passage that gives onto a dimly lit room. On a podium in the centre stands a bulky humanoid figure whose violet-and-black armoured body gleams with a dull lustre. At your approach, the eye-slit of the figure's visor illuminates, and for an instant you falter as you sense the scrutiny of an unhuman intelligence. Then the figure speaks in resonant mechanical tones: \"I am Gilgamesh. Identify yourself.\"\n\n\"Gaia has sent me for you,\" you answer. \"We are to voyage to Du-En.\"\n\nDespite your uncertainty, the automaton seems to accept this. With clanking steps he descends from the podium. Your every instinct is to turn and run, but you force yourself to wait calmly as you watch Gilgamesh approach. The heavy armoured plates of his body leave you in no doubt he was designed for battle. Along the back of his forearm is a blaster tube connected by cables to a power pack across his wide shoulders.\n\nHe stops a metre away, staring into space above your head. \"I am ready to serve you,\" comes the harsh electronic voice.\n\n\"Then come,\" you tell him.\n\nYou gained the codeword ENKIDU.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Ascend to the next level", 276));
+        Choices.push_back(Choice::Base("Leave the pyramid", 361));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::ENKIDU});
+    }
+};
+
+class Story426 : public Story::Base
+{
+public:
+    std::string PreText = "";
+
+    Story426()
+    {
+        ID = 426;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        PreText = "Surrounded by a limitless expanse of snow, you slog wearily towards your goal. The sun slides low in the sky, wavering like a blob of flame-orange oil against a sky of swirling violet. As it disappears in a scud of cloud lying along the horizon, you feel the dreary chill of day begin to yield to the frigid tyranny of night.\n\n";
+
+        auto DAMAGE = -3;
+
+        if (Character::VERIFY_ITEMS_ANY(player, {Item::FUR_COAT, Item::COLD_WEATHER_SUIT}))
+        {
+            DAMAGE = -2;
+
+            if (Character::VERIFY_ITEMS(player, {Item::Type::FUR_COAT}))
+            {
+                PreText += "[FUR COAT] ";
+            }
+
+            if (Character::VERIFY_ITEMS(player, {Item::Type::COLD_WEATHER_SUIT}))
+            {
+                PreText += "[COLD WEATHER SUIT] ";
+            }
+        }
+
+        if (Character::VERIFY_SKILL(player, Skill::Type::SURVIVAL))
+        {
+            DAMAGE++;
+
+            PreText += "[SURVIVAL] ";
+        }
+
+        if (Character::CHECK_VEHICLE(player, Vehicle::Type::BURREK))
+        {
+            DAMAGE++;
+
+            PreText += "[Vehicle: BURREK] ";
+        }
+
+        if (DAMAGE < 0)
+        {
+            Character::GAIN_LIFE(player, DAMAGE);
+        }
+        else
+        {
+            DAMAGE = 0;
+        }
+
+        PreText += "You LOSE " + std::to_string(-DAMAGE) + " Life Point(s).";
+
+        Text = PreText.c_str();
+    }
+
+    int Continue(Character::Base &player) { return 444; }
+};
+
+class Story427 : public Story::Base
+{
+public:
+    Story427()
+    {
+        ID = 427;
+
+        Text = "There is a brief shouting match, but the Gargan twins see that you will not be swayed. Finally Golgoth, who has stayed aloof from the argument, settles it by saying to them, \"I agree that the automaton is intelligent and therefore counts as a group member. You can abide by that, or leave our group.\"\n\nGilgamesh stands by immobile while all this is going on. \"Is he really intelligent, or does our discussion mean nothing to him?\" you wonder aloud.\n\nGolgoth shrugs. \"Who cares? I only said that to settle the dispute so we could get under way.\".";
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    int Continue(Character::Base &player) { return 16; }
+};
+
+class Story428 : public Story::Base
+{
+public:
+    Story428()
+    {
+        ID = 428;
+
+        Text = "No one observes you creeping behind the tent, where you conceal yourself in a snowdrift and listen to what the baron is saying.\n\n\"You say the Heart must be destroyed?\" comes his reedy voice.\n\nSomeone else answers from the video screen: \"The 'ultimate power' it confers entails the remaking of the whole universe. This world would cease to exist.\"\n\n\"And how could it be destroyed?\"\n\n\"Twin barysal beams at right angles. They would excite the crystal matrix and cause it to blow apart.\"\n\n\"So the world would cease to be...\" muses the baron. Seeming to reach a decision, he says in a forceful tone, \"Very well, then. I shall sweep aside this universe and fashion a new one in my image. I shall be god of a new cosmos.\"\n\n\"Everything will be destroyed,\" protests the other voice.\n\n\"Except me!\" screeches the baron. \"Did you really think I would give up the chance for such power? The chance to be whole and young again? The chance for immortality? Gaia, you are mad.\"\n\nHe snaps off the communicator. So he has spoken to Gaia -- and she counsels him that the Heart be destroyed. This is food for thought.\n\nYou gained the codeword NEMESIS.";
+
+        Choices.clear();
+        Choices.push_back(Choice::Base("Go and talk to Golgoth", 126));
+        Choices.push_back(Choice::Base("Talk to Boche", 104));
+        Choices.push_back(Choice::Base("Talk to Gaunt", 148));
+
+        Controls = Story::Controls::STANDARD;
+    }
+
+    void Event(Character::Base &player)
+    {
+        Character::GET_CODEWORDS(player, {Codeword::Type::NEMESIS});
+    }
+};
+
+class Story429 : public Story::Base
+{
+public:
+    Story429()
+    {
+        ID = 429;
+
+        Text = "You hesitate too long over your response. The elevator door opens and locks. Several of the hover-droid swivel in midair and come floating towards you. Behind them, you see the smouldering corpse that seconds ago was Thadra Bey. Boche and the others seem to have got away.\n\nThe red beams of the droids' aiming-lights appear on your chest. You take a step forward. Lasers blister the air. With a single cry, you slump to the floor.";
+
+        Type = Story::Type::DOOM;
+
+        Choices.clear();
+
+        Controls = Story::Controls::STANDARD;
+    }
+};
+
 auto earth23rdCentury = Earth23rdCentury();
 auto prologue = Prologue();
 auto story001 = Story001();
@@ -11110,6 +11359,16 @@ auto story416 = Story416();
 auto story417 = Story417();
 auto story418 = Story418();
 auto story419 = Story419();
+auto story420 = Story420();
+auto story421 = Story421();
+auto story422 = Story422();
+auto story423 = Story423();
+auto story424 = Story424();
+auto story425 = Story425();
+auto story426 = Story426();
+auto story427 = Story427();
+auto story428 = Story428();
+auto story429 = Story429();
 
 void InitializeStories()
 {
@@ -11156,7 +11415,8 @@ void InitializeStories()
         &story380, &story381, &story382, &story383, &story384, &story385, &story386, &story387, &story388, &story389,
         &story390, &story391, &story392, &story393, &story394, &story395, &story396, &story397, &story398, &story399,
         &story400, &story401, &story402, &story403, &story404, &story405, &story406, &story407, &story408, &story409,
-        &story410, &story411, &story412, &story413, &story414, &story415, &story416, &story417, &story418, &story419};
+        &story410, &story411, &story412, &story413, &story414, &story415, &story416, &story417, &story418, &story419,
+        &story420, &story421, &story422, &story423, &story424, &story425, &story426, &story427, &story428, &story429};
 }
 
 #endif
