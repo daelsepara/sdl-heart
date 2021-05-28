@@ -9810,7 +9810,7 @@ public:
         {
             Character::GAIN_LIFE(player, -1);
 
-            PreText += "You were immobile in the snow for hours.\n\nYou LOSE 1 Life Point from exposure";
+            PreText += "You were immobile in the snow for hours.\n\nYou LOSE 1 Life Point from exposure.";
         }
 
         Text = PreText.c_str();

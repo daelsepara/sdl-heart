@@ -33,4 +33,4 @@ This is an implementation of the **Heart of Ice** game book (Critical IF Gameboo
 
 # Other Gamebooks implemented with SDL
 
-- [Necklace of Skulls](https://www.github.com/daelsepara/sdl-skulls)
+[Necklace of Skulls](https://www.github.com/daelsepara/sdl-skulls)
