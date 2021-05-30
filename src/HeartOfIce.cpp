@@ -10,6 +10,11 @@
 #include <vector>
 #include <filesystem>
 
+#if defined(_WIN32)
+#include <windows.h>
+#include <shlobj.h>
+#endif
+
 namespace fs = std::filesystem;
 
 // Using SDL
@@ -1714,7 +1719,32 @@ bool saveGame(Character::Base &player, const char *overwrite)
 
     std::ostringstream buffer;
 
-    fs::create_directory("save");
+#if defined(_WIN32)
+
+    PWSTR path_str;
+    
+    SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_DEFAULT, NULL, &path_str);
+    
+    std::wstring wpath(path_str);
+    
+    CoTaskMemFree(path_str);
+
+    std::string save(wpath.length(), ' ');
+    
+    std::copy(wpath.begin(), wpath.end(), save.begin());
+
+    save += "/Saved Games";
+
+    std::string path = save + "/";
+
+#else
+    
+    std::string save = "save";
+    std::string path = "./" + save + "/";
+
+#endif
+
+    fs::create_directory(save);
 
     if (overwrite != NULL)
     {
@@ -2039,9 +2069,29 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
     if (window && renderer)
     {
-        fs::create_directory("save");
+#if defined(_WIN32)
+        PWSTR path_str;
+        
+        SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_DEFAULT, NULL, &path_str);
+        
+        std::wstring wpath(path_str);
+        
+        CoTaskMemFree(path_str);
 
-        std::string path = "./save/";
+        std::string save(wpath.length(), ' ');
+        
+        std::copy(wpath.begin(), wpath.end(), save.begin());
+
+        save += "/Saved Games";
+
+        std::string path = save + "/";
+#else
+        std::string save = "save";
+
+        std::string path = "./" + save + "/";
+#endif
+
+        fs::create_directory(save);
 
         std::vector<std::string> entries;
 
