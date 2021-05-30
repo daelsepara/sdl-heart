@@ -1733,7 +1733,7 @@ bool saveGame(Character::Base &player, const char *overwrite)
     
     std::copy(wpath.begin(), wpath.end(), save.begin());
 
-    save += "/Saved Games";
+    save += "/Saved Games/Heart of Ice";
 
     std::string path = save + "/";
 
@@ -1744,7 +1744,7 @@ bool saveGame(Character::Base &player, const char *overwrite)
 
 #endif
 
-    fs::create_directory(save);
+    fs::create_directories(save);
 
     if (overwrite != NULL)
     {
@@ -1752,7 +1752,7 @@ bool saveGame(Character::Base &player, const char *overwrite)
     }
     else
     {
-        buffer << "save/" << std::to_string(seed) << ".save";
+        buffer << path << std::to_string(seed) << ".save";
     }
 
     nlohmann::json data;
@@ -2082,7 +2082,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
         
         std::copy(wpath.begin(), wpath.end(), save.begin());
 
-        save += "/Saved Games";
+        save += "/Saved Games/Heart of Ice";
 
         std::string path = save + "/";
 #else
@@ -2091,7 +2091,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
         std::string path = "./" + save + "/";
 #endif
 
-        fs::create_directory(save);
+        fs::create_directories(save);
 
         std::vector<std::string> entries;
 
