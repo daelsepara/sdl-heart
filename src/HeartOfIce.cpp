@@ -1658,10 +1658,10 @@ bool aboutScreen(SDL_Window *window, SDL_Renderer *renderer)
         while (!done)
         {
             // Fill the surface with background color
-            fillWindow(renderer, intDB);
+            fillWindow(renderer, intLB);
 
             fitImage(renderer, splash, startx, starty, splashw, text_bounds);
-            renderText(renderer, text, intDB, startx * 2 + splashw, starty, SCREEN_HEIGHT * (1.0 - 2 * Margin), 0);
+            renderText(renderer, text, intLB, startx * 2 + splashw, starty, SCREEN_HEIGHT * (1.0 - 2 * Margin), 0);
             renderTextButtons(renderer, controls, FONT_FILE, current, clrWH, intBK, intRD, 20, TTF_STYLE_NORMAL);
 
             bool scrollUp = false;
@@ -4681,10 +4681,10 @@ bool mainScreen(SDL_Window *window, SDL_Renderer *renderer, int storyID)
         while (!done)
         {
             // Fill the surface with background
-            fillWindow(renderer, intDB);
+            fillWindow(renderer, intLB);
 
             fitImage(renderer, splash, startx, starty, splashw, text_bounds);
-            renderText(renderer, text, intDB, startx * 2 + splashw, starty, SCREEN_HEIGHT * (1.0 - 2 * Margin), 0);
+            renderText(renderer, text, intLB, startx * 2 + splashw, starty, SCREEN_HEIGHT * (1.0 - 2 * Margin), 0);
             renderTextButtons(renderer, controls, FONT_FILE, current, clrWH, intBK, intRD, font_size, TTF_STYLE_NORMAL);
 
             bool scrollUp = false;
