@@ -538,11 +538,12 @@ std::vector<Button> createItemList(SDL_Window *window, SDL_Renderer *renderer, s
 
             auto text = createText(item_string.c_str(), FONT_FILE, 20, clrBK, textwidth - 4 * text_space, TTF_STYLE_NORMAL);
 
-            auto y = texty + (i > 0 ? controls[i - 1].Y + controls[i - 1].H : 2 * text_space);
+            auto y = (i > 0 ? controls[i - 1].Y + controls[i - 1].H + 3 * text_space : texty + 2 * text_space);
 
             controls.push_back(Button(i, text, i, i, (i > 0 ? i - 1 : i), (i < (last - start) ? i + 1 : i), textx + 2 * text_space, y, Control::Type::ACTION));
 
             controls[i].W = textwidth - 4 * text_space;
+
             controls[i].H = text->h;
         }
     }
@@ -820,8 +821,10 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 {
     if (Items.size() > 0)
     {
+        auto font_size = 20;
+        auto text_space = 8;
         auto scrollSpeed = 1;
-        auto display_limit = 8;
+        auto display_limit = (text_bounds) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + display_limit;
 
@@ -842,15 +845,13 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
         auto done = false;
 
-        auto text_space = 8;
-
         auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
         auto controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
         TTF_Init();
 
-        auto font = TTF_OpenFont(FONT_FILE, 20);
+        auto font = TTF_OpenFont(FONT_FILE, font_size);
 
         auto selected = false;
         auto current = -1;
@@ -951,6 +952,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                         }
 
                         controls.clear();
+
                         controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
                         SDL_Delay(50);
@@ -985,6 +987,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                         }
 
                         controls.clear();
+
                         controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
                         SDL_Delay(50);
@@ -1028,6 +1031,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                             }
 
                             controls.clear();
+
                             controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
                             std::string description = item.Name;
@@ -1079,6 +1083,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
                                 }
 
                                 controls.clear();
+
                                 controls = createItemList(window, renderer, Items, offset, last, display_limit, false);
 
                                 std::string description = item.Name;
@@ -1147,8 +1152,10 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
     if (TakeLimit > 0)
     {
+        auto text_space = 8;
+        auto font_size = 20;
         auto scrollSpeed = 1;
-        auto limit = 8;
+        auto limit = (text_bounds) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + limit;
 
@@ -1164,15 +1171,13 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
         Uint32 start_ticks = 0;
         Uint32 duration = 3000;
 
-        auto text_space = 8;
-
         auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
         auto controls = createItemList(window, renderer, items, offset, last, limit, true);
 
         TTF_Init();
 
-        auto font = TTF_OpenFont(FONT_FILE, 20);
+        auto font = TTF_OpenFont(FONT_FILE, font_size);
 
         auto selected = false;
         auto current = -1;
@@ -1315,6 +1320,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
                         }
 
                         controls.clear();
+
                         controls = createItemList(window, renderer, items, offset, last, limit, true);
 
                         SDL_Delay(50);
@@ -1530,7 +1536,7 @@ std::vector<Button> skillsList(SDL_Window *window, SDL_Renderer *renderer, int s
 
         auto text = createText(item_string.c_str(), FONT_FILE, 20, clrBK, textwidth - 4 * text_space, TTF_STYLE_NORMAL);
 
-        auto y = texty + (i > 0 ? controls[i - 1].Y + controls[i - 1].H : 2 * text_space);
+        auto y = (i > 0 ? controls[i - 1].Y + controls[i - 1].H + 3 * text_space : texty + 2 * text_space);
 
         controls.push_back(Button(i, text, i, i, (i > 0 ? i - 1 : i), (i < (last - start) ? i + 1 : i), textx + 2 * text_space, y, Control::Type::ACTION));
 
@@ -1600,7 +1606,7 @@ Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
 
         auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
-        auto Limit = 4;
+        auto Limit = (2 * text_bounds / 3) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + Limit;
 
@@ -2436,10 +2442,12 @@ std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, 
 
             auto button = createHeaderButton(window, game_string.c_str(), clrWH, intLB, textwidth - 3 * button_space / 2, 0.125 * SCREEN_HEIGHT, text_space);
 
-            auto y = texty + (i > 0 ? controls[i - 1].Y + controls[i - 1].H : 2 * text_space);
+            auto y = (i > 0 ? controls[i - 1].Y + controls[i - 1].H + 3 * text_space : texty + 2 * text_space);
 
             controls.push_back(Button(i, button, i, i, (i > 0 ? i - 1 : i), (i < (last - start) ? i + 1 : i), textx + 2 * text_space, y, Control::Type::ACTION));
+
             controls[i].W = button->w;
+
             controls[i].H = button->h;
         }
     }
@@ -2516,8 +2524,6 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
         std::vector<std::string> entries;
 
-        int limit = 4;
-
         auto splash = createImage("images/filler1.png");
 
         auto saved_games = std::multimap<std::filesystem::file_time_type, std::string, std::greater<std::filesystem::file_time_type>>();
@@ -2550,8 +2556,15 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
             entries.push_back(entry.second);
         }
 
+        auto font_size = 20;
+        auto text_space = 8;
+        auto infoh = 0.06 * SCREEN_HEIGHT;
+        auto boxh = 0.125 * SCREEN_HEIGHT;
+        auto box_space = 10;
+
         auto offset = 0;
         auto last = 0;
+        int limit = (text_bounds) / (boxh + 3 * text_space);
 
         last = offset + limit;
 
@@ -2574,12 +2587,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
         TTF_Init();
 
-        auto font = TTF_OpenFont(FONT_FILE, 20);
-
-        auto text_space = 8;
-        auto infoh = 0.06 * SCREEN_HEIGHT;
-        auto boxh = 0.125 * SCREEN_HEIGHT;
-        auto box_space = 10;
+        auto font = TTF_OpenFont(FONT_FILE, font_size);
 
         while (!done)
         {
@@ -2979,7 +2987,7 @@ bool shopScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
 
             auto text = createText(choice.c_str(), FONT_FILE, 16, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
 
-            auto y = texty + (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H : 2 * text_space);
+            auto y = (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H + 3 * text_space : texty + 2 * text_space);
 
             controls.push_back(Button(idx, text, idx, idx, (idx > 0 ? idx - 1 : idx), (idx < shop.size() ? idx + 1 : idx), textx + 2 * text_space, y, Control::Type::ACTION));
             controls[idx].W = textwidth + button_space;
@@ -3450,10 +3458,12 @@ Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Characte
         {
             auto text = createText(choices[i].Text, FONT_FILE, 20, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
 
-            auto y = texty + (i > 0 ? controls[i - 1].Y + controls[i - 1].H : 2 * text_space);
+            auto y = (i > 0 ? controls[i - 1].Y + controls[i - 1].H + 3 * text_space : texty + 2 * text_space);
 
             controls.push_back(Button(i, text, i, i, (i > 0 ? i - 1 : i), (i < choices.size() ? i + 1 : i), textx + 2 * text_space, y, Control::Type::ACTION));
+
             controls[i].W = textwidth + button_space;
+
             controls[i].H = text->h;
         }
 
@@ -4128,11 +4138,12 @@ std::vector<Button> createSkillControls(std::vector<Skill::Base> Skills)
     {
         auto text = createText(Skills[idx].Name, FONT_FILE, 20, clrBK, textwidth + button_space, TTF_STYLE_NORMAL);
 
-        auto y = texty + (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H : 2 * text_space);
+        auto y = (idx > 0 ? controls[idx - 1].Y + controls[idx - 1].H + 3 * text_space : texty + 2 * text_space);
 
         controls.push_back(Button(idx, text, idx, idx, (idx > 0 ? idx - 1 : idx), (idx < Skills.size() ? idx + 1 : idx), textx + 2 * text_space, y, Control::Type::ACTION));
 
         controls[idx].W = textwidth + button_space;
+
         controls[idx].H = text->h;
     }
 
@@ -4452,7 +4463,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
         }
 
         std::string vehicle_message = "There is a " + std::string(Vehicle::Descriptions[story->Vehicle]) + " here. Do you want to take it?";
-        auto vehicle_text = createText(vehicle_message.c_str(), FONT_FILE, 20, clrWH, textwidth - 2 * text_space, TTF_STYLE_NORMAL);
+        auto vehicle_text = createText(vehicle_message.c_str(), FONT_FILE, font_size, clrWH, textwidth - 2 * text_space, TTF_STYLE_NORMAL);
         auto vehicle_trigger = false;
         auto vehicle_done = false;
         auto message_x = (SCREEN_WIDTH - textwidth) / 2;
