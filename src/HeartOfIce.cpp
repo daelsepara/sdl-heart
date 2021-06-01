@@ -1607,7 +1607,7 @@ Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
 
         auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
-        auto Limit = (2 * text_bounds / 3 - 2 * text_space) / (font_size + 7 * text_space / 2);
+        auto Limit = (2 * text_bounds / 3 - text_space) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + Limit;
 
@@ -1664,7 +1664,7 @@ Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
                 }
             }
 
-            putText(renderer, "SELECTED", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * boxh + infoh));
+            putText(renderer, "SELECTED", font, text_space, clrWH, intLB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * boxh + infoh));
 
             putText(renderer, selection.size() > 0 ? selection_string.c_str() : "(None)", font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, 2 * boxh, startx, starty + text_bounds - 2 * boxh);
 
@@ -1710,7 +1710,7 @@ Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
 
             if (!flash_message)
             {
-                putText(renderer, "SELECT 4 Skills for your character.", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, boxh, startx, starty);
+                putText(renderer, "SELECT 4 Skills for your character.", font, text_space, clrWH, intLB, TTF_STYLE_NORMAL, splashw, boxh, startx, starty);
             }
 
             Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
