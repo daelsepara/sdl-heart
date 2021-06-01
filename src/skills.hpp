@@ -86,6 +86,23 @@ namespace Skill
         return found;
     }
 
+    int FIND_LIST(std::vector<int> selection, int item)
+    {
+        auto found = -1;
+
+        for (auto i = 0; i < selection.size(); i++)
+        {
+            if (selection[i] == item)
+            {
+                found = i;
+
+                break;
+            }
+        }
+
+        return found;
+    }
+
     bool VERIFY(std::vector<Skill::Base> &skills, Skill::Base skill)
     {
         return FIND(skills, skill.Type) >= 0;

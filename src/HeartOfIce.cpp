@@ -1514,6 +1514,386 @@ void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font
     putText(renderer, player.Items.size() > 0 ? possessions.c_str() : "(None)", font, space, clrBK, intBE, TTF_STYLE_NORMAL, profilew, profileh, startx, starty + profileh + 4 * headerh + 3 * marginh + 2 * boxh);
 }
 
+std::vector<Button> skillsList(SDL_Window *window, SDL_Renderer *renderer, int start, int last, int limit)
+{
+    auto text_space = 8;
+
+    auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
+
+    auto controls = std::vector<Button>();
+
+    for (int i = 0; i < last - start; i++)
+    {
+        auto index = start + i;
+
+        std::string item_string = Skill::ALL[index].Name;
+
+        auto text = createText(item_string.c_str(), FONT_FILE, 20, clrBK, textwidth - 4 * text_space, TTF_STYLE_NORMAL);
+
+        auto y = texty + (i > 0 ? controls[i - 1].Y + controls[i - 1].H : 2 * text_space);
+
+        controls.push_back(Button(i, text, i, i, (i > 0 ? i - 1 : i), (i < (last - start) ? i + 1 : i), textx + 2 * text_space, y, Control::Type::ACTION));
+
+        controls[i].W = textwidth - 4 * text_space;
+
+        controls[i].H = text->h;
+    }
+
+    auto idx = controls.size();
+
+    if (Skill::ALL.size() > limit)
+    {
+        if (start > 0)
+        {
+            controls.push_back(Button(idx, "icons/up-arrow.png", 0, idx, idx, idx + 1, (1.0 - Margin) * SCREEN_WIDTH - arrow_size, texty + border_space, Control::Type::SCROLL_UP));
+
+            idx++;
+        }
+
+        if (Skill::ALL.size() - last > 0)
+        {
+            controls.push_back(Button(idx, "icons/down-arrow.png", 0, idx, start > 0 ? idx - 1 : idx, idx + 1, (1.0 - Margin) * SCREEN_WIDTH - arrow_size, (texty + 2 * text_bounds / 3 - arrow_size - border_space), Control::Type::SCROLL_DOWN));
+
+            idx++;
+        }
+    }
+
+    idx = controls.size();
+
+    auto button_width = 100;
+    auto button_space = 25;
+    auto button_height = 48;
+
+    controls.push_back(Button(idx, createHeaderButton(window, "Glossary", clrWH, intBK, button_width, button_height, -1), idx - 1, idx + 1, idx - 1, idx, startx, buttony, Control::Type::GLOSSARY));
+    controls.push_back(Button(idx + 1, createHeaderButton(window, "Start", clrWH, intBK, button_width, button_height, -1), idx, idx + 2, idx - 1, idx + 1, startx + button_width + button_space, buttony, Control::Type::NEW));
+    controls.push_back(Button(idx + 2, createHeaderButton(window, "Back", clrWH, intBK, button_width, button_height, -1), idx + 1, idx + 2, idx - 1, idx + 2, startx + 2 * (button_width + button_space), buttony, Control::Type::BACK));
+
+    return controls;
+}
+
+Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
+{
+    std::string title = "Down Among the Dead Men: Create Character";
+
+    auto done = false;
+
+    Character::Base player = Character::Base();
+
+    // Render the image
+    if (window && renderer)
+    {
+        auto flash_message = false;
+        auto flash_color = intRD;
+
+        std::string message = "";
+
+        Uint32 start_ticks = 0;
+        Uint32 duration = 5000;
+
+        auto selected = false;
+        auto current = -1;
+        auto character = 0;
+
+        auto font_size = 20;
+
+        auto text_space = 8;
+
+        auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
+
+        auto Limit = 4;
+        auto offset = 0;
+        auto last = offset + Limit;
+
+        if (last > Skill::ALL.size())
+        {
+            last = Skill::ALL.size();
+        }
+
+        auto controls = skillsList(window, renderer, offset, last, Limit);
+
+        TTF_Init();
+
+        auto font = TTF_OpenFont(FONT_FILE, font_size);
+
+        bool scrollUp = false;
+        bool scrollDown = false;
+        bool hold = false;
+        auto scrollSpeed = 1;
+
+        auto selection = std::vector<int>();
+
+        auto infoh = 0.07 * SCREEN_HEIGHT;
+        auto boxh = 0.150 * SCREEN_HEIGHT;
+        auto box_space = 10;
+        auto messageh = 0.25 * SCREEN_HEIGHT;
+
+        while (!done)
+        {
+            last = offset + Limit;
+
+            if (last > Skill::ALL.size())
+            {
+                last = Skill::ALL.size();
+            }
+
+            SDL_SetWindowTitle(window, title.c_str());
+
+            fillWindow(renderer, intWH);
+
+            std::string selection_string = "";
+
+            if (selection.size() > 0)
+            {
+                for (auto i = 0; i < selection.size(); i++)
+                {
+                    if (i > 0)
+                    {
+                        selection_string += ", ";
+                    }
+
+                    std::string description = Skill::ALL[selection[i]].Name;
+
+                    selection_string += description;
+                }
+            }
+
+            putText(renderer, "SELECTED", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, infoh, startx, starty + text_bounds - (2 * boxh + infoh));
+
+            putText(renderer, selection.size() > 0 ? selection_string.c_str() : "(None)", font, text_space, clrBK, intBE, TTF_STYLE_NORMAL, splashw, 2 * boxh, startx, starty + text_bounds - 2 * boxh);
+
+            fillRect(renderer, textwidth, 2 * text_bounds / 3, textx, texty, intBE);
+
+            fillRect(renderer, textwidth, text_bounds / 3 - texty, textx, 2 * (texty + text_bounds / 3), intLB);
+
+            if (current >= 0 && current < Limit)
+            {
+                auto text = createText(Skill::ALL[current + offset].Description, FONT_FILE, font_size, clrWH, textwidth - 2 * text_space, TTF_STYLE_NORMAL);
+
+                renderText(renderer, text, intLB, textx + text_space, 2 * (texty + text_bounds / 3) + text_space, text_bounds / 3 - texty, 0);
+
+                SDL_FreeSurface(text);
+
+                text = NULL;
+            }
+
+            renderButtons(renderer, controls, current, intGR, 8, 4);
+
+            if (last - offset > 0)
+            {
+                for (auto i = 0; i < last - offset; i++)
+                {
+                    if (Skill::FIND_LIST(selection, offset + i) >= 0)
+                    {
+                        drawRect(renderer, controls[i].W + 2 * text_space, controls[i].H + 2 * text_space, controls[i].X - text_space, controls[i].Y - text_space, intDB);
+                    }
+                }
+            }
+
+            if (flash_message)
+            {
+                if ((SDL_GetTicks() - start_ticks) < duration)
+                {
+                    putText(renderer, message.c_str(), font, text_space, clrWH, flash_color, TTF_STYLE_NORMAL, splashw, boxh * 2, startx, starty);
+                }
+                else
+                {
+                    flash_message = false;
+                }
+            }
+
+            if (!flash_message)
+            {
+                putText(renderer, "SELECT 4 Skills for your character.", font, text_space, clrWH, intDB, TTF_STYLE_NORMAL, splashw, boxh, startx, starty);
+            }
+
+            Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
+
+            if (selected && current >= 0 && current < controls.size() || scrollUp || scrollDown || hold)
+            {
+                if (controls[current].Type == Control::Type::SCROLL_UP || (controls[current].Type == Control::Type::SCROLL_UP && hold) || scrollUp)
+                {
+                    if (offset > 0)
+                    {
+                        offset -= scrollSpeed;
+
+                        if (offset < 0)
+                        {
+                            offset = 0;
+                        }
+
+                        last = offset + Limit;
+
+                        if (last > Skill::ALL.size())
+                        {
+                            last = Skill::ALL.size();
+                        }
+
+                        controls.clear();
+
+                        controls = skillsList(window, renderer, offset, last, Limit);
+
+                        SDL_Delay(50);
+                    }
+
+                    if (offset <= 0)
+                    {
+                        current = -1;
+
+                        selected = false;
+                    }
+                }
+                else if (controls[current].Type == Control::Type::SCROLL_DOWN || ((controls[current].Type == Control::Type::SCROLL_DOWN && hold) || scrollDown))
+                {
+                    if (Skill::ALL.size() - last > 0)
+                    {
+                        if (offset < Skill::ALL.size() - Limit)
+                        {
+                            offset += scrollSpeed;
+                        }
+
+                        if (offset > Skill::ALL.size() - Limit)
+                        {
+                            offset = Skill::ALL.size() - Limit;
+                        }
+
+                        last = offset + Limit;
+
+                        if (last > Skill::ALL.size())
+                        {
+                            last = Skill::ALL.size();
+                        }
+
+                        controls.clear();
+
+                        controls = skillsList(window, renderer, offset, last, Limit);
+
+                        SDL_Delay(50);
+
+                        if (offset > 0)
+                        {
+                            if (controls[current].Type != Control::Type::SCROLL_DOWN)
+                            {
+                                current++;
+                            }
+                        }
+                    }
+
+                    if (Skill::ALL.size() - last <= 0)
+                    {
+                        selected = false;
+
+                        current = -1;
+                    }
+                }
+                else if (controls[current].Type == Control::Type::ACTION && !hold)
+                {
+                    if ((current + offset >= 0) && (current + offset) < Skill::ALL.size())
+                    {
+                        auto result = Skill::FIND_LIST(selection, current + offset);
+
+                        if (result >= 0)
+                        {
+                            selection.erase(selection.begin() + result);
+                        }
+                        else
+                        {
+                            if (selection.size() < player.SKILLS_LIMIT)
+                            {
+                                selection.push_back(offset + current);
+                            }
+                        }
+                    }
+
+                    selected = false;
+                }
+                else if (controls[current].Type == Control::Type::NEW)
+                {
+                    if (selection.size() == player.SKILLS_LIMIT)
+                    {
+                        Character::CUSTOM.Skills.clear();
+                        Character::CUSTOM.Items.clear();
+
+                        for (auto i = 0; i < selection.size(); i++)
+                        {
+                            Character::CUSTOM.Skills.push_back(Skill::ALL[selection[i]]);
+
+                            if (Skill::ALL[selection[i]].Type == Skill::Type::SHOOTING)
+                            {
+                                Character::CUSTOM.Items.push_back(Item::BARYSAL_GUN);
+                            }
+                            else if (Skill::ALL[selection[i]].Type == Skill::Type::ESP || Skill::ALL[selection[i]].Type == Skill::Type::PARADOXING)
+                            {
+                                if (!Character::VERIFY_ITEMS(Character::CUSTOM, {Item::Type::PSIONIC_FOCUS}))
+                                {
+                                    Character::CUSTOM.Items.push_back(Item::PSIONIC_FOCUS);
+                                }
+                            }
+                        }
+
+                        Character::CUSTOM.Money = 10;
+                        Character::CUSTOM.Life = 10;
+
+                        player = Character::CUSTOM;
+
+                        current = -1;
+
+                        selected = false;
+
+                        done = true;
+
+                        break;
+                    }
+                    else
+                    {
+                        flash_message = true;
+
+                        flash_color = intRD;
+
+                        start_ticks = SDL_GetTicks();
+
+                        message = "Please select " + std::to_string(player.SKILLS_LIMIT) + " skills.";
+
+                        selected = false;
+
+                        current = -1;
+                    }
+                }
+                else if (controls[current].Type == Control::Type::GLOSSARY)
+                {
+                    glossaryScreen(window, renderer, Skill::ALL);
+
+                    current = -1;
+
+                    selected = false;
+                }
+                else if (controls[current].Type == Control::Type::BACK)
+                {
+                    player = Character::Base();
+
+                    current = -1;
+
+                    selected = false;
+
+                    done = true;
+
+                    break;
+                }
+            }
+        }
+
+        if (font)
+        {
+            TTF_CloseFont(font);
+
+            font = NULL;
+        }
+
+        TTF_Quit();
+    }
+
+    return player;
+}
+
 Character::Base selectCharacter(SDL_Window *window, SDL_Renderer *renderer)
 {
     std::string title = "Heart of Ice: Select Character";
@@ -1533,15 +1913,16 @@ Character::Base selectCharacter(SDL_Window *window, SDL_Renderer *renderer)
 
         auto font_size = 18;
 
-        const char *choices[5] = {"Previous", "Next", "Glossary", "Start", "Back"};
+        const char *choices[6] = {"Previous", "Next", "Glossary", "Custom", "Start", "Back"};
 
-        auto controls = createHTextButtons(choices, 5, main_buttonh, startx, SCREEN_HEIGHT * (1.0 - Margin) - main_buttonh);
+        auto controls = createHTextButtons(choices, 6, main_buttonh, startx, SCREEN_HEIGHT * (1.0 - Margin) - main_buttonh);
 
         controls[0].Type = Control::Type::BACK;
         controls[1].Type = Control::Type::NEXT;
         controls[2].Type = Control::Type::GLOSSARY;
-        controls[3].Type = Control::Type::NEW;
-        controls[4].Type = Control::Type::QUIT;
+        controls[3].Type = Control::Type::CUSTOM;
+        controls[4].Type = Control::Type::NEW;
+        controls[5].Type = Control::Type::QUIT;
 
         TTF_Init();
 
@@ -1596,6 +1977,25 @@ Character::Base selectCharacter(SDL_Window *window, SDL_Renderer *renderer)
                         glossaryScreen(window, renderer, Skill::ALL);
 
                         current = -1;
+                    }
+                    else if (controls[current].Type == Control::Type::CUSTOM)
+                    {
+                        player = customCharacter(window, renderer);
+
+                        if (player.Skills.size() == player.SKILLS_LIMIT)
+                        {
+                            current = -1;
+
+                            selected = false;
+
+                            done = true;
+
+                            break;
+                        }
+                        else
+                        {
+                            current = -1;
+                        }
                     }
                     else if (controls[current].Type == Control::Type::QUIT)
                     {

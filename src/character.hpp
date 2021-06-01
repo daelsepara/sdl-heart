@@ -100,6 +100,7 @@ namespace Character
     auto VISIONARY = Character::Base("The Visionary", Character::Type::VISIONARY, "Cursed with second sight, you know that mankind has no future unless something is done to save the world.", {Skill::CLOSE_COMBAT, Skill::CUNNING, Skill::ESP, Skill::PARADOXING}, {Item::PSIONIC_FOCUS}, 30);
     auto SCIENTIST = Character::Base("The Scientist", Character::Type::SCIENTIST, "Most people understand nothing of the machines created by their ancestors, but you've learned that knowledge is power.", {Skill::CYBERNETICS, Skill::LORE, Skill::PILOTING, Skill::SURVIVAL}, {}, 30);
     auto MUTANT = Character::Base("The Mutant", Character::Type::MUTANT, "Born with strange powers, you are more than human. Others would kill you if they knew your secret.", {Skill::AGILITY, Skill::CUNNING, Skill::PARADOXING, Skill::ROGUERY}, {Item::PSIONIC_FOCUS}, 30);
+    auto CUSTOM = Character::Base("Custom Character", Character::Type::CUSTOM, "This is a player generated character.", {}, {}, 10);
 
     std::vector<Character::Base> Classes = {EXPLORER, BOUNTY_HUNTER, SPY, TRADER, VISIONARY, SCIENTIST, MUTANT};
 
