@@ -601,8 +601,8 @@ bool characterScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
         auto marginw = Margin * SCREEN_WIDTH;
         auto marginh = Margin * SCREEN_HEIGHT / 2;
 
-        auto headerw = 0.6 * splashw;
-        auto headerh = 0.06 * SCREEN_HEIGHT;
+        auto headerw = 0.8 * splashw;
+        auto headerh = 0.07 * SCREEN_HEIGHT;
         auto space = 8;
         auto font_size = 18;
 
@@ -1438,8 +1438,8 @@ void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font
     const int profilew = SCREEN_WIDTH * (1.0 - 2.0 * Margin);
     const int profileh = 0.12 * SCREEN_HEIGHT;
 
-    auto headerw = 0.6 * splashw;
-    auto headerh = 0.06 * SCREEN_HEIGHT;
+    auto headerw = 0.8 * splashw;
+    auto headerh = 0.07 * SCREEN_HEIGHT;
     auto space = 8;
 
     auto marginw = Margin * SCREEN_WIDTH;
