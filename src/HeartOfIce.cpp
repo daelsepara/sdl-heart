@@ -824,7 +824,7 @@ bool inventoryScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
         auto font_size = 20;
         auto text_space = 8;
         auto scrollSpeed = 1;
-        auto display_limit = (text_bounds) / (font_size + 7 * text_space / 2);
+        auto display_limit = (text_bounds - 2 * text_space) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + display_limit;
 
@@ -1155,7 +1155,7 @@ bool takeScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base &pla
         auto text_space = 8;
         auto font_size = 20;
         auto scrollSpeed = 1;
-        auto limit = (text_bounds) / (font_size + 7 * text_space / 2);
+        auto limit = (text_bounds - 2 * text_space) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + limit;
 
@@ -1606,7 +1606,7 @@ Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
 
         auto textwidth = ((1 - Margin) * SCREEN_WIDTH) - (textx + arrow_size + button_space);
 
-        auto Limit = (2 * text_bounds / 3) / (font_size + 7 * text_space / 2);
+        auto Limit = (2 * text_bounds / 3 - 2 * text_space) / (font_size + 7 * text_space / 2);
         auto offset = 0;
         auto last = offset + Limit;
 
@@ -2564,7 +2564,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
         auto offset = 0;
         auto last = 0;
-        int limit = (text_bounds) / (boxh + 3 * text_space);
+        int limit = (text_bounds - 2 * text_space) / (boxh + 3 * text_space);
 
         last = offset + limit;
 
