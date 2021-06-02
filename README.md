@@ -1,4 +1,4 @@
-# Heart of Ice (Critical IF Gamebooks) - Work in Progress
+# Heart of Ice (Critical IF Gamebooks)
 
 This is an implementation of the **Heart of Ice** game book (Critical IF Gamebooks) by [Dave Morris](https://fabledlands.blogspot.com/). The game is written in C/C++ and uses the [Simple DirectMedia Library (SDL)](https://www.libsdl.org/).
 
