@@ -1712,7 +1712,7 @@ Character::Base customCharacter(SDL_Window *window, SDL_Renderer *renderer)
 
             Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
 
-            if (selected && current >= 0 && current < controls.size() || scrollUp || scrollDown || hold)
+            if ((selected && current >= 0 && current < controls.size()) || scrollUp || scrollDown || hold)
             {
                 if (controls[current].Type == Control::Type::SCROLL_UP || (controls[current].Type == Control::Type::SCROLL_UP && hold) || scrollUp)
                 {
