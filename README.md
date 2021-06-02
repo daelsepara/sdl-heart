@@ -62,6 +62,10 @@ This is an implementation of the **Heart of Ice** game book (Critical IF Gameboo
 # Copyright Information 
 
 ```
+DEDICATED TO JACK VANCE
+
+A Critical IF gamebook
+
 Originally published 1994 by Reed Consumer Books Limited
 Revised edition published 2013 by Fabled Lands Publishing an Imprint of Fabled Lands LLP
 
@@ -82,3 +86,4 @@ Feel free to report any bugs, issues, and/or suggestions. Thanks!
 # Other Gamebooks implemented with SDL
 
 [Necklace of Skulls](https://www.github.com/daelsepara/sdl-skulls)
+[Down Among the Dead Men](https://www.github.com/daelsepara/sdl-dead)
