@@ -4484,7 +4484,14 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
                 }
                 else
                 {
-                    SDL_SetWindowTitle(window, (std::string("Heart of Ice: ") + std::to_string(story->ID)).c_str());
+                    if (story->ID > 0)
+                    {
+                        SDL_SetWindowTitle(window, (std::string("Heart of Ice: ") + std::string(3 - std::to_string(story->ID).length(), '0') + std::to_string(story->ID)).c_str());
+                    }
+                    else
+                    {
+                        SDL_SetWindowTitle(window, "Heart of Ice");
+                    }
                 }
 
                 fillWindow(renderer, intWH);
