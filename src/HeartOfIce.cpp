@@ -64,6 +64,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 Story::Base *processChoices(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
 Story::Base *renderChoices(SDL_Window *window, SDL_Renderer *renderer, Character::Base &player, Story::Base *story);
 
+void clipValue(int &val, int min, int max);
 void renderAdventurer(SDL_Window *window, SDL_Renderer *renderer, TTF_Font *font, Character::Base &player);
 
 SDL_Surface *createImage(const char *image)
@@ -3358,10 +3359,11 @@ bool mapScreen(SDL_Window *window, SDL_Renderer *renderer)
     auto done = false;
 
     auto splash = createImage("images/map-earth-23rd.png");
+    auto texture = SDL_CreateTextureFromSurface(renderer, splash);
     auto background = createImage("images/background.png");
 
     // Render the image
-    if (window && renderer && splash && background)
+    if (window && renderer && splash && texture && background)
     {
         SDL_SetWindowTitle(window, "Map: Earth in the 23rd Century");
 
@@ -3387,6 +3389,67 @@ bool mapScreen(SDL_Window *window, SDL_Renderer *renderer)
             bool scrollDown = false;
             bool hold = false;
 
+            if (splash && texture)
+            {
+                auto mousex = 0;
+                auto mousey = 0;
+
+                auto state = SDL_GetMouseState(&mousex, &mousey);
+
+                auto zoomw = (int)(0.40 * (double)(marginw - 2 * offset_x));
+                auto zoomh = (int)(0.40 * (double)text_bounds);
+
+                if (zoomw > zoomh)
+                {
+                    zoomw = zoomh;
+                }
+                else
+                {
+                    zoomh = zoomw;
+                }
+
+                clipValue(zoomw, 0, splash->w);
+                clipValue(zoomh, 0, splash->h);
+
+                auto boundx = (int)((double)text_bounds / splash->h * (double)splash->w);
+
+                if ((mousex >= startx + offset_x) && mousex <= (startx + offset_x + boundx) && mousey >= starty && mousey <= (starty + text_bounds))
+                {
+                    auto scalex = (double)(mousex - (startx + offset_x)) / boundx;
+                    auto scaley = (double)(mousey - starty) / text_bounds;
+
+                    auto centerx = (int)(scalex * (double)splash->w);
+                    auto centery = (int)(scaley * (double)splash->h);
+
+                    clipValue(centerx, zoomw / 2, splash->w - zoomw / 2);
+                    clipValue(centery, zoomh / 2, splash->h - zoomh / 2);
+
+                    if (texture)
+                    {
+                        SDL_Rect src;
+
+                        src.w = zoomw;
+                        src.h = zoomh;
+                        src.x = centerx - zoomw / 2;
+                        src.y = centery - zoomh / 2;
+
+                        SDL_Rect dst;
+
+                        dst.w = zoomw;
+                        dst.h = zoomh;
+                        dst.x = mousex + buttonw / 4;
+                        dst.y = mousey - (buttonh / 4 + zoomh);
+
+                        clipValue(dst.x, buttonw / 4, SCREEN_WIDTH - buttonw / 4 - zoomw);
+                        clipValue(dst.y, buttonh / 4, SCREEN_HEIGHT - buttonh / 4 - zoomh);
+
+                        SDL_RenderCopy(renderer, texture, &src, &dst);
+
+                        drawRect(renderer, dst.w, dst.h, dst.x, dst.y, intBK);
+                    }
+                }
+            }
+
             done = Input::GetInput(renderer, controls, current, selected, scrollUp, scrollDown, hold);
 
             if (selected && current >= 0 && current < controls.size() && controls[current].Type == Control::Type::BACK)
@@ -3396,9 +3459,11 @@ bool mapScreen(SDL_Window *window, SDL_Renderer *renderer)
         }
 
         SDL_FreeSurface(splash);
+        SDL_DestroyTexture(texture);
         SDL_FreeSurface(background);
 
         splash = NULL;
+        texture = NULL;
         background = NULL;
     }
 
