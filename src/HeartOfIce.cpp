@@ -618,16 +618,19 @@ bool characterScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
         controls.push_back(Button(1, possessions, 0, 2, 0, 2, startx, starty + profileh + 3 * headerh + 3 * marginh + 2 * boxh, Control::Type::ACTION));
         controls.push_back(Button(2, "icons/back-button.png", 1, 2, 1, 2, (1 - Margin) * SCREEN_WIDTH - buttonw, buttony, Control::Type::BACK));
 
-        std::string codewords;
+        std::string codewords = "";
 
         for (auto i = 0; i < player.Codewords.size(); i++)
         {
-            if (i > 0)
+            if (!Codeword::IsInvisible(player.Codewords[i]))
             {
-                codewords += ", ";
-            }
+                if (i > 0 && codewords.length() > 0)
+                {
+                    codewords += ", ";
+                }
 
-            codewords += Codeword::Descriptions.at(player.Codewords[i]);
+                codewords += Codeword::Descriptions.at(player.Codewords[i]);
+            }
         }
 
         TTF_Init();
@@ -645,7 +648,7 @@ bool characterScreen(SDL_Window *window, SDL_Renderer *renderer, Character::Base
 
                 renderAdventurer(window, renderer, font, player);
 
-                if (player.Codewords.size() > 0)
+                if (player.Codewords.size() > 0 && codewords.length() > 0)
                 {
                     putText(renderer, "Codewords", font, text_space, clrWH, intLB, TTF_STYLE_NORMAL, headerw, headerh, startx, starty + 2 * profileh + 4 * headerh + 4 * marginh + 2 * boxh);
                     putText(renderer, codewords.c_str(), font, text_space, clrBK, intBE, TTF_STYLE_ITALIC, profilew - buttonw - 2 * text_space, boxh, startx, starty + 2 * profileh + 5 * headerh + 4 * marginh + 2 * boxh);
@@ -2426,7 +2429,7 @@ std::vector<Button> createFilesList(SDL_Window *window, SDL_Renderer *renderer, 
 
             if (character.StoryID != -1)
             {
-                auto storyID = std::to_string(character.StoryID);
+                auto storyID = std::to_string(std::abs(character.StoryID));
 
                 game_string += std::string(4 - std::to_string(index + 1).length(), '0') + std::to_string(index + 1) + ". " + character.Name + "\n";
                 game_string += "Date: " + time_string(epoch_long) + "\n";
@@ -2636,7 +2639,7 @@ Control::Type gameScreen(SDL_Window *window, SDL_Renderer *renderer, Character::
 
                 if (character.StoryID != -1)
                 {
-                    auto storyID = std::to_string(character.StoryID);
+                    auto storyID = std::to_string(std::abs(character.StoryID));
 
                     game_string = "Date: " + time_string(epoch_long) + "\n";
                     game_string += std::string(4 - storyID.length(), '0') + storyID + ": " + character.Name;
