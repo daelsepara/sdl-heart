@@ -89,3 +89,4 @@ Feel free to report any bugs, issues, and/or suggestions. Thanks!
 - [Down Among the Dead Men](https://www.github.com/daelsepara/sdl-dead)
 - [Green Blood](https://www.github.com/daelsepara/sdl-green)
 - [Once Upon a Time in Arabia](https://www.github.com/daelsepara/sdl-arabia)
+- [The Coils of Hate](https://www.github.com/daelsepara/sdl-coils)
