@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Heart of Ice
 Comment=Heart of Ice
-Version=1.0.1
+Version=1.0.2
 TryExec=/usr/local/games/HeartOfIce/HeartOfIce.exe
 Exec=/usr/local/games/HeartOfIce/HeartOfIce.exe
 Icon=/usr/local/games/HeartOfIce/icons/snowflakes.png
