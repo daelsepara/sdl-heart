@@ -16,6 +16,7 @@ namespace Control
         SCROLL_UP,
         SCROLL_DOWN,
         MAP,
+        CHART,
         CHARACTER,
         GAME,
         NEW,
@@ -35,11 +36,14 @@ namespace Control
         MINUS,
         TRADE,
         GIVE,
+        STEAL,
         LOSE,
         YES,
         NO,
         BUY,
-        SELL
+        SELL,
+        BARTER,
+        GENDER
     };
 
     class Base
@@ -145,6 +149,10 @@ public:
 
     SDL_Surface *Surface = NULL;
 
+    Button()
+    {
+    }
+
     Button(int id, const char *file, int left, int right, int up, int down, int x, int y)
     {
         construct(id, file, left, right, up, down, x, y);
@@ -163,10 +171,79 @@ public:
 
         Surface = image;
 
-        W = Surface->w;
-        H = Surface->h;
+        if (Surface)
+        {
+            W = Surface->w;
+            H = Surface->h;
+        }
 
         construct(id, left, right, up, down, x, y);
+    }
+
+    // constructor for making deep copies of Button controls
+    Button(const Button &src)
+    {
+        ID = src.ID;
+        Type = src.Type;
+        File = src.File;
+        Left = src.Left;
+        Right = src.Right;
+        Up = src.Up;
+        Down = src.Down;
+        X = src.X;
+        Y = src.Y;
+        W = src.W;
+        H = src.H;
+
+        if (src.Surface)
+        {
+            Surface = SDL_ConvertSurface(src.Surface, src.Surface->format, 0);
+        }
+    }
+
+    // operator overload for making deep copies of Button controls
+    Button &operator=(const Button &src)
+    {
+        // self-assignment protection
+        if (this != &src)
+        {
+            ID = src.ID;
+            Type = src.Type;
+            File = src.File;
+            Left = src.Left;
+            Right = src.Right;
+            Up = src.Up;
+            Down = src.Down;
+            X = src.X;
+            Y = src.Y;
+            W = src.W;
+            H = src.H;
+
+            if (Surface)
+            {
+                SDL_FreeSurface(Surface);
+
+                Surface = NULL;
+            }
+
+            if (src.Surface)
+            {
+                Surface = SDL_ConvertSurface(src.Surface, src.Surface->format, 0);
+            }
+        }
+
+        return *this;
+    }
+
+    // free allocated surface
+    ~Button()
+    {
+        if (Surface)
+        {
+            SDL_FreeSurface(Surface);
+
+            Surface = NULL;
+        }
     }
 };
 #endif
