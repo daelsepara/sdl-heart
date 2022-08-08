@@ -93,13 +93,6 @@ void createWindow(Uint32 flags, SDL_Window **window, SDL_Renderer **renderer, co
     }
     else
     {
-        SDL_DisplayMode mode;
-
-        SDL_GetCurrentDisplayMode(0, &mode);
-
-        SCREEN_WIDTH = (mode.w) * 0.8;
-        SCREEN_HEIGHT = (mode.h) * 0.8;
-
         Recompute();
 
         // Create window and renderer

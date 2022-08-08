@@ -32,8 +32,8 @@ Uint8 B(Uint32 c) { return (Uint8)(c & 0x0000FF); }
 Uint8 A(Uint32 c) { return (Uint8)(c >> 24); }
 
 // Screen dimension constants
-int SCREEN_WIDTH = 1024;
-int SCREEN_HEIGHT = 768;
+int SCREEN_WIDTH = 980;
+int SCREEN_HEIGHT = 700;
 
 double Margin = 0.05;
 
