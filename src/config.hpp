@@ -29,7 +29,7 @@ public:
 
     int headerw;
     int profilew;
-    
+
     void ComputeBounds()
     {
         startx = (SCREEN_WIDTH * Margin);

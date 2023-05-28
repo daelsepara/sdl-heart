@@ -248,7 +248,7 @@ namespace Item
     int FIND_LEAST(std::vector<Item::Base> &list, Item::Type item)
     {
         auto found = -1;
-        
+
         auto min = 255;
 
         for (auto i = 0; i < list.size(); i++)

@@ -2,7 +2,7 @@
 [![C/C++ CI](https://github.com/daelsepara/sdl-heart/actions/workflows/HeartOfIce.yml/badge.svg)](https://github.com/daelsepara/sdl-heart/actions/workflows/HeartOfIce.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
  [![Release](https://img.shields.io/github/v/release/daelsepara/sdl-heart.svg)](https://img.shields.io/github/v/release/daelsepara/sdl-heart.svg)
- 
+
 This is an implementation of the **Heart of Ice** game book (Critical IF Gamebooks) by [Dave Morris](https://fabledlands.blogspot.com/). The game is written in C/C++ and uses the [Simple DirectMedia Library (SDL)](https://www.libsdl.org/).
 
 # Planned Features
@@ -62,7 +62,7 @@ This is an implementation of the **Heart of Ice** game book (Critical IF Gameboo
 
 ![Loading and Saving Games](/screenshots/load-save-screen.png)
 
-# Copyright Information 
+# Copyright Information
 
 ```
 DEDICATED TO JACK VANCE
