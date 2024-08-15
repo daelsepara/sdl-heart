@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.games.HeartOfIce</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0</project_license>
+	<name>com.games.HeartOfIce</name>
+	<summary>Heart of Ice (SDL)</summary>
+	<description>
+		<p>This is an Implementation of Heart of Ice gamebook in C++ and SDL.</p>
+	</description>
+	<url type="homepage">https://github.com/daelsepara/sdl-heart/</url>
+	<screenshots>
+		<screenshot typegi="default">
+			<image>https://raw.githubusercontent.com/daelsepara/sdl-heart/main/src/icons/snowflakes.png</image>
+		</screenshot>
+	</screenshots>
+	<provides>
+		<id>com.games.HeartOfIce.desktop</id>
+	</provides>
+</component>

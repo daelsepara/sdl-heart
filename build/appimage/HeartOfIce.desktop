@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Heart of Ice
+Exec=HeartOfIce.exe
+TryExec=HeartOfIce.exe
+Icon=snowflakes
+Terminal=false
+Categories=Game;
+Type=Application
+Name[en_DK]=Heart of Ice
+Name[en_US]=Heart of Ice
