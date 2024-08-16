@@ -80,6 +80,13 @@ SDL_Surface *createImage(const char *image)
     return surface;
 }
 
+void initWindowRenderer(SDL_Renderer *renderer)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+}
+
 void createWindow(Uint32 flags, SDL_Window **window, SDL_Renderer **renderer, const char *title, const char *icon)
 {
     // The window we'll be rendering to
@@ -122,13 +129,7 @@ void createWindow(Uint32 flags, SDL_Window **window, SDL_Renderer **renderer, co
             surface = NULL;
         }
 
-        SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 255);
-        SDL_RenderClear(*renderer);
-        SDL_RenderPresent(*renderer);
-
-        SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 255);
-        SDL_RenderClear(*renderer);
-        SDL_RenderPresent(*renderer);
+        initWindowRenderer(*renderer);
     }
 }
 
@@ -362,6 +363,7 @@ void putText(SDL_Renderer *renderer, const char *text, TTF_Font *font, int space
 void fillWindow(SDL_Renderer *renderer, Uint32 color)
 {
     SDL_SetRenderDrawColor(renderer, R(color), G(color), B(color), A(color));
+
     SDL_RenderClear(renderer);
 }
 
@@ -4588,7 +4590,7 @@ bool processStory(SDL_Window *window, SDL_Renderer *renderer, Character::Base &p
 
                 fillWindow(renderer, intWH);
 
-                //Fill the surface with background
+                // Fill the surface with background
                 stretchImage(renderer, background, 0, 0, SCREEN_WIDTH, buttony - button_space);
 
                 if (splash)
