@@ -326,6 +326,8 @@ namespace Input
                 }
             }
 
+            SDL_FlushEvent(result.type);
+
             if (SDL_GetTicks() - start_ticks > 1000)
             {
                 break;
@@ -376,6 +378,8 @@ namespace Input
             {
                 break;
             }
+
+            SDL_FlushEvent(result.type);
         }
     }
 } // namespace Input
